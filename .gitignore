@@ -1,15 +1,19 @@
-syntax:glob
+# Maven
+target/
+
+# Eclipse/Idea
 .classpath
 .metadata
 .project
 .settings
-bin
-.DS_Store
-target
-build.properties
-*~
-*.orig
+bin/
 *.iml
 *.ipr
 *.iws
+
+# Others
+.DS_Store
+build.properties
+*~
+*.orig
 
