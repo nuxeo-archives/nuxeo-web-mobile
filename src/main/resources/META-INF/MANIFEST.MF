@@ -1,0 +1,10 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Name: nuxeo-web-mobile
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Nuxeo
+Bundle-Version: 1.0-SNAPSHOT
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: nuxeo-web-mobile
+Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=nuxeo;extends=base;package=org/nuxeo/ecm/mobile/webengine
