@@ -1,0 +1,15 @@
+syntax:glob
+.classpath
+.metadata
+.project
+.settings
+bin
+.DS_Store
+target
+build.properties
+*~
+*.orig
+*.iml
+*.ipr
+*.iws
+
