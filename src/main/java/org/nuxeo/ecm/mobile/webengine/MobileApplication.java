@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2006-2011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ * (C) Copyright 2006-2012 Nuxeo SAS (http://nuxeo.com/) and contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser General Public License
@@ -33,15 +33,23 @@ import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 
 /**
  * @author Benjamin JALON <bjalon@nuxeo.com>
+ *
+ * Entry point of the webengine application
  */
 @Path("mobile")
 @Produces("text/html;charset=UTF-8")
 @WebObject(type="MobileApplication")
 public class MobileApplication extends ModuleRoot {
 
+    /**
+     * Home binding
+     * @return
+     */
     @GET
     public Object doGet() {
         return getView("index");
     }
+
+
 
 }
