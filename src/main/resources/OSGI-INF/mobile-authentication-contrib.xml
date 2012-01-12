@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<component name="org.nuxeo.webengine.mobile.authenticator.contrib">
+<component name="org.nuxeo.web.mobile.authenticator.contrib">
 
   <require>org.nuxeo.ecm.platform.ui.web.auth.WebEngineConfig</require>
 
@@ -11,7 +11,7 @@
         class="org.nuxeo.ecm.mobile.filter.WebMobileFormAuthenticator">
       <needStartingURLSaving>true</needStartingURLSaving>
       <parameters>
-        <parameter name="LoginPage">mobile/login-mobile.jsp</parameter>
+        <parameter name="LoginPage">site/mobile/auth/login</parameter>
         <parameter name="UsernameKey">user_name</parameter>
         <parameter name="PasswordKey">user_password</parameter>
       </parameters>

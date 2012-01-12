@@ -2,8 +2,20 @@
 <fragment version="1">
 
   <extension target="web#LISTENER">
-  <!-- redirect to navigation choice/mobile application if Mobile Browser and user choose -->
 
+  <!-- redirect to navigation choice if type of Navigation not set -->
+   <filter>
+      <display-name>NavigationSelectionWebMobileFilter</display-name>
+      <filter-name>NavigationSelectionWebMobileFilter</filter-name>
+      <filter-class>org.nuxeo.ecm.mobile.filter.WebMobileNavigationSelectionFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>NavigationSelectionWebMobileFilter</filter-name>
+      <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+   <!-- Redirect to Web Mobile Application if Mobile navigation chosen -->
    <filter>
       <display-name>WebMobileFilter</display-name>
       <filter-name>WebMobileFilter</filter-name>

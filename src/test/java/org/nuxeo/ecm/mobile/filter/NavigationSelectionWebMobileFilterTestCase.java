@@ -19,6 +19,7 @@ package org.nuxeo.ecm.mobile.filter;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,31 +35,27 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import static org.nuxeo.ecm.mobile.WebMobileConstants.FORCE_STANDARD_NAVIGATION_COOKIE_NAME;
-import static org.nuxeo.ecm.mobile.WebMobileConstants.getWebMobileURL;
+import static org.nuxeo.ecm.mobile.WebMobileConstants.getNavigationSelectionURL;
 import static org.nuxeo.ecm.mobile.WebMobileConstants.isUnitTestExecution;
 
 /**
  * @author bjalon
  *
  */
-public class WebMobileFilterTestCase {
+public class NavigationSelectionWebMobileFilterTestCase {
 
-    private WebMobileFilter filter;
+    private WebMobileNavigationSelectionFilter filter;
 
     @Before
     public void init() throws ServletException {
 
         isUnitTestExecution = true;
 
-        // initialize the filter to return the value is mobile for the user
-        // Agent and take the default context path
-        filter = new WebMobileFilter() {
-            @Override
-            protected String getContextPath() {
-                return "/nuxeo";
-            }
-        };
-        filter.init(null);
+        FilterConfig fc = mock(FilterConfig.class);
+        when(fc.getInitParameter("navigation.selection.url")).thenReturn(
+                "/web-mobile/navigation-selection.jsp");
+        filter = new WebMobileNavigationSelectionFilter();
+        filter.init(fc);
 
     }
 
@@ -66,7 +63,6 @@ public class WebMobileFilterTestCase {
     public void shouldNoRedirectIfUserAgentNotMobile() throws IOException,
             ServletException {
 
-        // don't care about initialURI
         String initialURI = null;
         boolean isMobile = false;
         Cookie[] cookies = new Cookie[0];
@@ -83,10 +79,32 @@ public class WebMobileFilterTestCase {
     }
 
     @Test
+    public void shouldRedirectToNavigationChoiceViewIfMobileBrowserAndNoCookieAndNotMobileURL()
+            throws IOException, ServletException {
+
+        String initialURI = "/nuxeo/anything/else/url";
+        boolean isMobile = true;
+        Cookie[] cookies = new Cookie[0];
+
+        String redirectURLExpected = "/nuxeo/web-mobile/navigation-choice.jsp?"
+                + "initialURLRequested=%2Fnuxeo%2Fanything%2Felse%2Furl";
+
+        // Create a mock request with target URL and no cookie
+        HttpServletRequest request = initializeRequest(initialURI, isMobile,
+                cookies);
+
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain chain = mock(FilterChain.class);
+
+        filter.doFilter(request, response, chain);
+        verify(response, times(1)).sendRedirect(redirectURLExpected);
+    }
+
+    @Test
     public void shouldNoRedirectIfUserAgentMobileAndUserChooseStandardNavigation()
             throws IOException, ServletException {
 
-        String initialURI = "/nuxeo/anything/else/than/mobile/url";
+        String initialURI = "/nuxeo/anything/else/url";
         boolean isMobile = true;
         Cookie[] cookies = initializeCookiesWithStandardNavigationChoice("true");
 
@@ -102,10 +120,10 @@ public class WebMobileFilterTestCase {
     }
 
     @Test
-    public void shouldNoRedirectIfUserAgentMobileAndUserChooseMobileNavigationAndURLIsMobile()
+    public void shouldNoRedirectIfUserAgentMobileAndUserChooseMobileNavigation()
             throws IOException, ServletException {
 
-        String initialURI = getWebMobileURL() + "/anything/you/want";
+        String initialURI = "/nuxeo/anything/else/url";
         boolean isMobile = true;
         Cookie[] cookies = initializeCookiesWithStandardNavigationChoice("false");
 
@@ -121,10 +139,30 @@ public class WebMobileFilterTestCase {
     }
 
     @Test
-    public void shouldRedirectToMobileHomeIfUserAgentMobileAndUserChooseMobileNavigationAndURLIsNotMobile()
+    public void shouldNoRedirectIfMobileUserAgentAndURLIsNavigationChoiceAndNoNavigationChoiceSet()
             throws IOException, ServletException {
 
-        String initialURI = "/nuxeo/anything/else/than/mobile/url";
+        String initialURI = getNavigationSelectionURL();
+        boolean isMobile = true;
+        Cookie[] cookies = new Cookie[0];
+
+        // Create a mock request with target URL and no cookie
+        HttpServletRequest request = initializeRequest(initialURI, isMobile,
+                cookies);
+
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain chain = mock(FilterChain.class);
+
+        filter.doFilter(request, response, chain);
+        // TODO: Enabled runtime and enable PluggableAuthenticationService with contribution
+        // verifyZeroInteractions(response);
+    }
+
+    @Test
+    public void shouldNoRedirectIfUserAgentURLIsNavigationChoiceAndMobileNavigationSet()
+            throws IOException, ServletException {
+
+        String initialURI = getNavigationSelectionURL();
         boolean isMobile = true;
         Cookie[] cookies = initializeCookiesWithStandardNavigationChoice("false");
 
@@ -132,14 +170,11 @@ public class WebMobileFilterTestCase {
         HttpServletRequest request = initializeRequest(initialURI, isMobile,
                 cookies);
 
-        String redirectURLExpected = "/nuxeo/site/mobile"
-                + "?targetURL=%2Fnuxeo%2Fanything%2Felse%2Fthan%2Fmobile%2Furl";
-
         HttpServletResponse response = mock(HttpServletResponse.class);
         FilterChain chain = mock(FilterChain.class);
 
         filter.doFilter(request, response, chain);
-        verify(response, times(1)).sendRedirect(redirectURLExpected);
+        verifyZeroInteractions(response);
     }
 
     /**

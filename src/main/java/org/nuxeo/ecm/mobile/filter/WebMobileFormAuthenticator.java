@@ -16,58 +16,87 @@
  */
 package org.nuxeo.ecm.mobile.filter;
 
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.ERROR_USERNAME_MISSING;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_ERROR;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_FAILED;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_MISSING;
-
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.common.utils.URIUtils;
-import org.nuxeo.ecm.mobile.WebMobileConstants;
-import org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants;
+import org.nuxeo.ecm.platform.ui.web.auth.interfaces.LoginResponseHandler;
 import org.nuxeo.ecm.platform.ui.web.auth.plugins.FormAuthenticator;
+
+;
 
 /**
  * Filter that redirects user to mobile authentication form if Mobile Browser
  * and user not authenticated.
- * 
+ *
  * @author bjalon
- * 
+ *
  */
-public class WebMobileFormAuthenticator extends FormAuthenticator {
+public class WebMobileFormAuthenticator extends FormAuthenticator implements
+        LoginResponseHandler {
 
     protected static final Log log = LogFactory.getLog(WebMobileFormAuthenticator.class);
 
-    protected static final String MOBILE_HOME_PAGE = "nxstartup.faces";
-
     @Override
     public Boolean needLoginPrompt(HttpServletRequest httpRequest) {
-        if (WebMobileConstants.isMobileUserAgent(httpRequest)) {
+        RequestAdapter request = new RequestAdapterImpl(httpRequest);
+
+        if (request.isMobileBrowser()) {
+            log.debug("Mobile browser => Mobile login page redirect: "
+                    + loginPage + ". target URL: " + request.getFullURL());
             return Boolean.TRUE;
         }
-        
+
         return Boolean.FALSE;
     }
 
     @Override
     public Boolean handleLoginPrompt(HttpServletRequest httpRequest,
             HttpServletResponse httpResponse, String baseURL) {
-        
-        if (WebMobileConstants.isMobileUserAgent(httpRequest)) {
-            return super.handleLoginPrompt(httpRequest, httpResponse, baseURL);
-        }
-        
-        return Boolean.FALSE;
+        return super.handleLoginPrompt(httpRequest, httpResponse, baseURL);
     }
 
+    @Override
+    public boolean onError(HttpServletRequest request,
+            HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        try {
+            response.sendRedirect(getUrlLoginPageClean(request) + "&failed=true");
+        } catch (IOException e) {
+            log.error(e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * return the Login page cleaned means without submit information (if we
+     * navigate with this parameter the login module will parse the request and
+     * without the password written. This method is used to generate the
+     * redirect url if an error occured during the authentication.
+     *
+     */
+    protected String getUrlLoginPageClean(HttpServletRequest request) {
+
+        String url = request.getRequestURI() + "?";
+        @SuppressWarnings("unchecked")
+        Enumeration<String> names = request.getAttributeNames();
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            if (!"Submit".equals(name) && !passwordKey.equals(name)) {
+                url += name + "=" + request.getParameter(name) + "&";
+            }
+        }
+        return url;
+    }
+
+    @Override
+    public boolean onSuccess(HttpServletRequest request,
+            HttpServletResponse response) {
+        return false;
+    }
 }

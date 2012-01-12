@@ -18,6 +18,7 @@ package org.nuxeo.ecm.mobile.filter;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -26,102 +27,158 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.RequestFacade;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.URIUtils;
+import org.nuxeo.ecm.mobile.WebMobileConstants;
+import org.nuxeo.ecm.platform.ui.web.auth.service.OpenUrlDescriptor;
+import org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService;
 import org.nuxeo.runtime.api.Framework;
 
-import static org.nuxeo.ecm.mobile.WebMobileConstants.FORCE_STANDARD_NAVIGATION_COOKIE_NAME;
-import static org.nuxeo.ecm.mobile.WebMobileConstants.MOBILE_HOME_URL_SUFFIX;
-import static org.nuxeo.ecm.mobile.WebMobileConstants.NAVIGATION_SELECTION_URL_SUFFIX;
-import static org.nuxeo.ecm.mobile.WebMobileConstants.isMobileUserAgent;
+import static org.nuxeo.ecm.mobile.WebMobileConstants.getWebMobileURL;
+import static org.nuxeo.ecm.mobile.WebMobileConstants.TARGET_URL_PARAMETER;
+import static org.nuxeo.ecm.mobile.WebMobileConstants.getWebengineResourcesUrlPrefix;
 
+/**
+ * Filter that redirects to the mobile navigation URL, if mobile navigation
+ * chosen. See {@code WebMobileNavigationSelectionFilter} to understand how the
+ * navigation choice is fetched. If the navigation is not set into this filter,
+ * the default choice will be gotten. Means for a mobile browser the Mobile
+ * navigation will be chosen and Standard navigation for other.
+ *
+ * @author bjalon
+ *
+ */
 public class WebMobileFilter implements Filter {
 
     protected static final Log log = LogFactory.getLog(WebMobileFilter.class);
 
-    private static String mobileHomeURL;
+    private String mobileHomeURL;
 
-    public static String navigationSelectionURL;
+    private PluggableAuthenticationService service;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        if (mobileHomeURL == null) {
-            log.debug("Initialize Filter parameters");
-            String contextPath = getContextPath();
-
-            mobileHomeURL = contextPath + MOBILE_HOME_URL_SUFFIX;
-            navigationSelectionURL = contextPath
-                    + NAVIGATION_SELECTION_URL_SUFFIX;
-        }
+        mobileHomeURL = getWebMobileURL();
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         if (!(request instanceof HttpServletRequest)) {
-            log.debug("Not a http request, so move to the next Filter");
-            chain.doFilter(request, response);
-            return;
+            log.debug("Not an Http request, no redirection");
+            doNoRedirect(request, response, chain);
         }
 
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
+        RequestAdapter req = new RequestAdapterImpl(
+                (HttpServletRequest) request);
 
-        if (!isMobileBrowserRequester(req)) {
-            log.debug("Not Mobile device, so move to the next filter");
-            chain.doFilter(request, response);
-            return;
-        }
-        
-        String initialURL = req.getRequestURI();
-        if (initialURL == null || initialURL.startsWith(mobileHomeURL) || initialURL.startsWith(navigationSelectionURL) || initialURL.startsWith("/nuxeo/mobile/")) {
-            log.debug("Mobile device, and mobile URL so move to the next filter");
-            chain.doFilter(request, response);
-            return;
-            
-        }
-
-        // If request is RequestFacade get cookie throw an error
-        if (! (request instanceof RequestFacade)) {
-            for (Cookie cookie : req.getCookies()) {
-                if (FORCE_STANDARD_NAVIGATION_COOKIE_NAME.equals(cookie.getName())) {
-                    if ("true".equals(cookie.getValue())) {
-                        log.debug("User don't want mobile navigation");
-                        chain.doFilter(request, response);
-                        return;
-                    } else {
-                        log.debug("User want mobile navigation");
-                        Map<String, String> param = new HashMap<String, String>();
-                        param.put("initialURLRequested", initialURL);
-                        String redirect = URIUtils.addParametersToURIQuery(
-                                mobileHomeURL, param);
-                        res.sendRedirect(redirect);
-                        res.flushBuffer();
-                        return;
-
-                    }
-                }
+        if (req.isStandardNavigationChosen()) {
+            if (req.isMobileBrowser()) {
+                log.debug("Mobile browser/Standard Navigation "
+                        + "=> no redirect: target URL: " + req.getUrl());
+            } else {
+                log.debug("Desktop browser/Standard Navigation "
+                        + "=> no redirect: target URL: " + req.getUrl());
             }
-        } else {
-            log.debug("RequestFacade so no cookie exposed: throw Exception");
+            doNoRedirect(request, response, chain);
+            return;
         }
 
-        log.debug("Redirect to the question about mobile navigation");
-        Map<String, String> param = new HashMap<String, String>();
-        param.put("initialURLRequested", initialURL);
-        String redirect = URIUtils.addParametersToURIQuery(
-                navigationSelectionURL, param);
-        res.sendRedirect(redirect);
-        res.flushBuffer();
+        if (req.isMobileNavigationChosen() && isMobileURL(req)) {
+            log.debug("Mobile browser/Mobile Navigation/Web Mobile URL "
+                    + "=> no redirect: target URL: " + req.getUrl());
+            doNoRedirect(request, response, chain);
+            return;
+        }
 
+        // not redirected urls
+        if (isNotRedirectedURL((HttpServletRequest) request)) {
+            doNoRedirect(request, response, chain);
+        }
+
+        doMobileRedirect((HttpServletRequest) request,
+                (HttpServletResponse) response, chain);
     }
 
+    /**
+     * Return if the url is not redirected. We check open url declared into
+     * {@link PluggableAuthenticationService} and also webengine resources.
+     *
+     * @return
+     */
+    protected boolean isNotRedirectedURL(HttpServletRequest request) {
+
+        RequestAdapter req = new RequestAdapterImpl(
+                (HttpServletRequest) request);
+
+        if (getOpenURLsService() != null) {
+            List<OpenUrlDescriptor> openUrls = service.getOpenUrls();
+            for (OpenUrlDescriptor openUrl : openUrls) {
+                if (openUrl.allowByPassAuth(request)) {
+                    log.debug("Mobile browser/Mobile Navigation/Open URL "
+                            + "(into PluggableAuthenticationService) "
+                            + "=> no redirect: target URL: " + req.getUrl());
+                    return true;
+                }
+            }
+        }
+
+        if (req.getUri().startsWith(getWebengineResourcesUrlPrefix())) {
+            log.debug("Mobile browser/Mobile Navigation/Webengine resources "
+                    + "=> no redirect: target URL: " + req.getFullURL());
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Redirect the browser navigation to the mobile application with the
+     * target URL as parameter into the
+     * {@value WebMobileConstants#TARGET_URL_PARAMETER} url parameter.
+     *
+     */
+    protected void doMobileRedirect(HttpServletRequest request,
+            HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        RequestAdapter req = new RequestAdapterImpl(
+                (HttpServletRequest) request);
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put(TARGET_URL_PARAMETER, req.getUri());
+        String redirect = URIUtils.addParametersToURIQuery(mobileHomeURL, param);
+        log.debug("Mobile Browser/Mobile navigation => web mobile redirect: target URL: "
+                + redirect);
+
+        response.sendRedirect(redirect);
+        response.flushBuffer();
+        return;
+    }
+
+    /**
+     * Do no redirection and let filters application to be done.
+     */
+    protected void doNoRedirect(ServletRequest request,
+            ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
+        chain.doFilter(request, response);
+        return;
+    }
+
+    /**
+     * Return true is the request url is a mobile url.
+     */
+    protected boolean isMobileURL(RequestAdapter req) {
+        return (req.getUri().startsWith(mobileHomeURL));
+    }
+
+    /**
+     * Return context path
+     */
     protected String getContextPath() {
         String contextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
         log.debug("Nuxeo Context Path detected " + contextPath);
@@ -132,8 +189,17 @@ public class WebMobileFilter implements Filter {
         return contextPath;
     }
 
-    protected boolean isMobileBrowserRequester(HttpServletRequest request) {
-        return isMobileUserAgent(request);
+    protected PluggableAuthenticationService getOpenURLsService() {
+        if (service == null && Framework.getRuntime() != null) {
+            service = (PluggableAuthenticationService) Framework.getRuntime().getComponent(
+                    PluggableAuthenticationService.NAME);
+            if (service == null) {
+                log.error("Unable to get Service "
+                        + PluggableAuthenticationService.NAME);
+                return null;
+            }
+        }
+        return service;
     }
 
     @Override

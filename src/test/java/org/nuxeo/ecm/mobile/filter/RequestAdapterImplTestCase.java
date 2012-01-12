@@ -14,35 +14,37 @@
  * Contributors:
  *     bjalon
  */
-package org.nuxeo.ecm.mobile;
+package org.nuxeo.ecm.mobile.filter;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 /**
  * Test User agent Mobile detector
- * 
+ *
  * @author bjalon
  *
  */
-public class WebMobileConstantsTestCase {
-    
+public class RequestAdapterImplTestCase {
+
     @Test
     public void shouldDetectMobileUserAgent() {
-        
-        assertTrue(WebMobileConstants.isMobileUserAgent(CHROME_ANDROID_USER_AGENT));
-        assertTrue(WebMobileConstants.isMobileUserAgent(SAFARI_IOS_USER_AGENT));
+        RequestAdapterImpl adapter = new RequestAdapterImpl();
+
+        assertTrue(adapter.isMobileBrowser(CHROME_ANDROID_USER_AGENT));
+        assertTrue(adapter.isMobileBrowser(SAFARI_IOS_USER_AGENT));
     }
-    
-    
+
+
     @Test
     public void shouldDetectNonMobileUserAgent() {
-        
-        assertFalse(WebMobileConstants.isMobileUserAgent(CHROME_DESKTOP_USER_AGENT));
-        assertFalse(WebMobileConstants.isMobileUserAgent(SAFARI_DESKTOP_USER_AGENT));
-        assertFalse(WebMobileConstants.isMobileUserAgent(FIREFOX_DESKTOP_USER_AGENT));
+        RequestAdapterImpl adapter = new RequestAdapterImpl();
+
+        assertFalse(adapter.isMobileBrowser(CHROME_DESKTOP_USER_AGENT));
+        assertFalse(adapter.isMobileBrowser(SAFARI_DESKTOP_USER_AGENT));
+        assertFalse(adapter.isMobileBrowser(FIREFOX_DESKTOP_USER_AGENT));
     }
 
     private static final String SAFARI_DESKTOP_USER_AGENT = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-us) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27";

@@ -1,11 +1,14 @@
 Manifest-Version: 1.0
-Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=nuxeo;extends=base;package=org/nuxeo/ecm/mobile/webengine
+Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=nuxe
+ o;extends=base;package=org/nuxeo/ecm/mobile/webengine
 Bundle-Vendor: Nuxeo
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0-SNAPSHOT
 Bundle-Name: nuxeo-web-mobile
+Nuxeo-Component: OSGI-INF/mobile-authentication-contrib.xml,
+ OSGI-INF/mobile-open-urls-contrib.xml
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: nuxeo-web-mobile
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Nuxeo-Component: OSGI-INF/mobile-authentication-contrib.xml
+
