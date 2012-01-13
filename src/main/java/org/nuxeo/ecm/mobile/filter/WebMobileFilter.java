@@ -108,7 +108,6 @@ public class WebMobileFilter implements Filter {
      * Return if the url is not redirected. We check open url declared into
      * {@link PluggableAuthenticationService} and also webengine resources.
      *
-     * @return
      */
     protected boolean isNotRedirectedURL(HttpServletRequest request) {
 

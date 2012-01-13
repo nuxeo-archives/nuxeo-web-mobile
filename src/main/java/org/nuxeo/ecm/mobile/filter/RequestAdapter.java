@@ -46,7 +46,6 @@ public interface RequestAdapter {
      * cookie is not set means the user has not yet select his type of
      * navigation.
      *
-     * @return
      */
     boolean isStandardNavigationChosen();
 
@@ -59,7 +58,6 @@ public interface RequestAdapter {
      * cookie is not set means the user has not yet select his type of
      * navigation (if his browser is a mobile browser)
      *
-     * @return
      */
     boolean isMobileNavigationChosen();
 
@@ -68,13 +66,11 @@ public interface RequestAdapter {
      * the {@value WebMobileConstants#FORCE_STANDARD_NAVIGATION_COOKIE_NAME}
      * cookie has been set.
      *
-     * @return
      */
     boolean isNavigationChosen();
 
     /**
      * Return the URL with parameters set
-     * @return
      */
     public abstract String getFullURL();
 

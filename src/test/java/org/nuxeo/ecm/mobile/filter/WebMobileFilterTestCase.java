@@ -148,7 +148,6 @@ public class WebMobileFilterTestCase {
      * @param uri Initial URI send by the browser
      * @param isMobileBrowser Is the Browser a mobile or not
      * @param cookies Arrays of cookie sent by the browser
-     * @return
      */
     private HttpServletRequest initializeRequest(String uri,
             boolean isMobileBrowser, Cookie[] cookies) {
@@ -173,7 +172,6 @@ public class WebMobileFilterTestCase {
      *
      * @param isStandardNavigationChosen If true the choice set will be Standard
      *            navigation esle Mobile Navigation.
-     * @return
      */
     private Cookie[] initializeCookiesWithStandardNavigationChoice(
             String isStandardNavigationChosen) {

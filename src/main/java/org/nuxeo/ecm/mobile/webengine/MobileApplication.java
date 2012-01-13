@@ -37,7 +37,6 @@ public class MobileApplication extends ModuleRoot {
     /**
      * Home binding
      *
-     * @return
      */
     @GET
     public Object doGet() {
