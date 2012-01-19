@@ -48,4 +48,9 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("WebMobileAuthentication");
     }
 
+    @Path("proto")
+    public Object doPrototype() {
+        return ctx.newObject("Prototype");
+    }
+
 }
