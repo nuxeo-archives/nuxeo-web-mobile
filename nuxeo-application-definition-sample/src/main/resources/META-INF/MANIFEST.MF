@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=myAp
+ plication;extends=base;package=org/nuxeo/application/definition
+Bundle-Vendor: Nuxeo
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-Version: 1.0.qualifier
+Bundle-Name: nuxeo-application-defintion-sample
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: nuxeo-application-defintion-sample
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Nuxeo-Component: OSGI-INF/application-definition-contrib.xml

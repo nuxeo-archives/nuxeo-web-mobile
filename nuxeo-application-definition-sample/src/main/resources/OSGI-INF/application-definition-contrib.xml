@@ -1,0 +1,14 @@
+<component name="com.mycompany.myproject.application.contrib">
+
+  <extension
+    target="org.nuxeo.ecm.application.definition.service"
+    point="applicationDefinition">
+        <application name="MyApplication" order="10" disable="false">
+          <baseURL>/site/myApplication</baseURL>
+          <loginPage>/login</loginPage>
+          <logoutPage>/logout</logoutPage>
+          <handler>org.nuxeo.application.definition.MyApplicationRequestHandler</handler>
+        </application>
+
+  </extension>
+</component>

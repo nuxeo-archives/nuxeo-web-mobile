@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.web.mobile.authenticator.contrib">
+
+  <require>org.nuxeo.ecm.platform.ui.web.auth.WebEngineConfig</require>
+
+  <extension
+      target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"
+      point="authenticators">
+
+    <authenticationPlugin name="FORM_WEBENGINE_APPLICATION_AUTH" enabled="true"
+        class="org.nuxeo.ecm.mobile.filter.ApplicationFormAuthenticator">
+      <needStartingURLSaving>true</needStartingURLSaving>
+      <parameters>
+        <parameter name="UsernameKey">user_name</parameter>
+        <parameter name="PasswordKey">user_password</parameter>
+      </parameters>
+    </authenticationPlugin>
+
+  </extension>
+
+  <extension
+      target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"
+      point="chain">
+
+    <authenticationChain>
+      <plugins>
+        <plugin>BASIC_AUTH</plugin>
+        <plugin>FORM_WEBENGINE_APPLICATION_AUTH</plugin>
+        <plugin>FORM_AUTH</plugin>
+        <plugin>ANONYMOUS_AUTH</plugin>
+        <plugin>WEBSERVICES_AUTH</plugin>
+      </plugins>
+    </authenticationChain>
+
+  </extension>
+
+</component>

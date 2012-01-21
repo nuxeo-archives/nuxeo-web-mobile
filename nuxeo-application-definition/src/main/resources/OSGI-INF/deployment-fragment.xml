@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<fragment version="1">
+
+  <extension target="web#LISTENER">
+
+  <!-- redirect to navigation choice for the first connexion and is service enabled -->
+   <filter>
+      <display-name>ApplicationSelectionFilter</display-name>
+      <filter-name>ApplicationSelectionFilter</filter-name>
+      <filter-class>org.nuxeo.ecm.mobile.filter.ApplicationSelectionFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>ApplicationSelectionFilter</filter-name>
+      <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+   <!-- Redirect to Application according the RequestHandler  -->
+   <filter>
+      <display-name>ApplicationRedirectionFilter</display-name>
+      <filter-name>ApplicationRedirectionFilter</filter-name>
+      <filter-class>org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>ApplicationRedirectionFilter</filter-name>
+      <url-pattern>*</url-pattern>
+    </filter-mapping>
+  </extension>
+
+
+  <install>
+    <unzip from="${bundle.fileName}" to="/" prefix="web">
+      <include>web/nuxeo.war/**</include>
+    </unzip>
+  </install>
+
+
+</fragment>
