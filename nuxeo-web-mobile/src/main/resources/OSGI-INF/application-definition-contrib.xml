@@ -1,0 +1,15 @@
+<component name="org.nuxeo.ecm.platform.mobile.application.definition.contribution">
+
+  <extension
+    target="org.nuxeo.ecm.application.definition.service"
+    point="applicationDefinition">
+        <application name="Mobile" order="5" disable="false">
+          <baseURL>/site/mobile</baseURL>
+          <loginPage>/auth/login</loginPage>
+          <logoutPage>/auth/logout</logoutPage>
+          <handler>org.nuxeo.ecm.mobile.handler.MobileRequestHandler</handler>
+          <resourcesBaseURL>/site/skin/nuxeo</resourcesBaseURL>
+        </application>
+
+  </extension>
+</component>
