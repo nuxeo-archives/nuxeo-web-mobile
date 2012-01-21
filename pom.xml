@@ -1,100 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.nuxeo</groupId>
-    <artifactId>nuxeo-addons-parent</artifactId>
-    <version>5.6-SNAPSHOT</version>
+    <groupId>org.nuxeo.ecm.platform</groupId>
+    <artifactId>nuxeo-features-parent</artifactId>
+    <version>5.5</version>
   </parent>
-
   <groupId>org.nuxeo.ecm.mobile</groupId>
-  <artifactId>nuxeo-web-mobile</artifactId>
-  <name>nuxeo-web-mobile</name>
+  <artifactId>nuxeo-web-mobile-parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>nuxeo-web-mobile-parent</name>
+  <packaging>pom</packaging>
+  
   <description/>
-  <dependencies>
-    <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>jsr311-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.ecm.webengine</groupId>
-      <artifactId>nuxeo-webengine-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.ecm.webengine</groupId>
-      <artifactId>nuxeo-webengine-base</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <optional>false</optional>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.common</groupId>
-      <artifactId>nuxeo-common</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.ecm.platform</groupId>
-      <artifactId>nuxeo-platform-web-common</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.runtime</groupId>
-      <artifactId>nuxeo-runtime</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.8.5</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.tomcat</groupId>
-      <artifactId>catalina</artifactId>
-      <version>6.0.20</version>
-    </dependency>
+  <properties>
+    <nuxeo.web.mobile.version>1.0-SNAPSHOT</nuxeo.web.mobile.version>
+  </properties>
+  
+  <modules>
+    <module>nuxeo-application-definition</module>
+    <!--module>nuxeo-web-mobile</module-->
+    <module>nuxeo-application-definition-sample</module>
+    <!--module>nuxeo-web-mobile-ftest</module-->
+  </modules>
 
-  </dependencies>
+  <dependencyManagement>
+   <dependencies>
+    <dependency>
+      <groupId>org.nuxeo.ecm.mobile</groupId>
+      <artifactId>nuxeo-application-definition</artifactId>
+      <version>${nuxeo.web.mobile.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.mobile</groupId>
+      <artifactId>nuxeo-web-mobile</artifactId>
+      <version>${nuxeo.web.mobile.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.mobile.sample</groupId>
+      <artifactId>nuxeo-application-definition-sample</artifactId>
+      <version>${nuxeo.web.mobile.version}</version>
+    </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <repositories>
-    <repository>
-      <id>public</id>
-      <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>public-snapshot</id>
-      <url>http://maven.nuxeo.org/nexus/content/groups/public-snapshot</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
 
-  <scm>
-    <connection>scm:git:git://github.com/nuxeo/nuxeo-web-mobile.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:nuxeo/nuxeo-web-mobile.git</developerConnection>
-    <url>https://github.com/nuxeo/nuxeo-web-mobile</url>
-  </scm>
+
 </project>
