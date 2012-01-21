@@ -21,8 +21,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import org.nuxeo.ecm.mobile.filter.RequestAdapter;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
+import org.nuxeo.runtime.api.Framework;
 
 /**
  * @author Benjamin JALON <bjalon@nuxeo.com>
@@ -34,13 +36,24 @@ import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 @WebObject(type = "MobileApplication")
 public class MobileApplication extends ModuleRoot {
 
+    private String nuxeoContextPath;
+
     /**
      * Home binding
      *
      */
     @GET
     public Object doGet() {
-        return getView("index");
+        RequestAdapter adapter = new RequestAdapter(request);
+        String initialRequest = adapter.getInitialRequest();
+        if (initialRequest == null
+                || !initialRequest.startsWith(getNuxeoContextPath() + "/")
+                || initialRequest.equals(getNuxeoContextPath() + "/")) {
+            return getView("index");
+        }
+        // get the path after the context path + slash
+        String relativePath = initialRequest.substring(getNuxeoContextPath().length() + 1);
+        return redirect(getPath() + "/" + relativePath);
     }
 
     @Path("auth")
@@ -48,9 +61,26 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("WebMobileAuthentication");
     }
 
+    @Path("nxdoc")
+    public Object doFetchDocById() {
+        return "nxdoc";
+    }
+
+    @Path("nxpath")
+    public Object doFetchDocByPath() {
+        return "nxpath";
+    }
+
     @Path("proto")
     public Object doPrototype() {
         return ctx.newObject("Prototype");
+    }
+
+    private String getNuxeoContextPath() {
+        if (nuxeoContextPath == null) {
+            nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
+        }
+        return nuxeoContextPath;
     }
 
 }

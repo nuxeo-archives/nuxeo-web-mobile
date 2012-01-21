@@ -63,9 +63,6 @@ public class RequestAdapter {
 
     private PluggableAuthenticationService authenticationService;
 
-    public RequestAdapter() {
-    }
-
     public RequestAdapter(HttpServletRequest request) {
         uri = request.getRequestURI();
         url = request.getRequestURL();

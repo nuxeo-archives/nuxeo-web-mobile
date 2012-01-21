@@ -66,19 +66,26 @@ public class ApplicationSelectionFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
+        if (!(request instanceof HttpServletRequest)) {
+            log.debug("Not an Http request, no redirection");
+            chain.doFilter(request, response);
+            return;
+        }
+
         if (!selectionViewService.isApplicationSelectionViewEnabled()) {
             log.debug("Application Selection View disabled");
             chain.doFilter(request, response);
             return;
         }
 
-        if (applicationDefinitionService.getTargetApplication((HttpServletRequest) request) != null) {
+        HttpServletRequest req = (HttpServletRequest) request;
+        if (applicationDefinitionService.getTargetApplication(req) != null) {
             log.debug("Navigation already chosen, no redirection needed.");
             chain.doFilter(request, response);
             return;
         }
 
-        RequestAdapter reqAdapter = new RequestAdapter();
+        RequestAdapter reqAdapter = new RequestAdapter(req);
 
         if (reqAdapter.getNavigationSelectionCookieValue() != null) {
             log.debug("User has chosen the default navigation as cookie "
