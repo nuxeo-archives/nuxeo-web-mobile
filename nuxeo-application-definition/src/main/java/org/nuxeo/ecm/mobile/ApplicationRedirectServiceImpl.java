@@ -52,7 +52,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
 
     private String applicationSelectionViewURL;
 
-    private List<String> loginPages;
+    private List<String> unAuthenticatedURLPrefix;
 
     private String getNuxeoContextPath() {
         if (nuxeoContextPath == null) {
@@ -77,7 +77,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
             break;
         case applicationSelector:
             // invalidate login pages
-            loginPages = null;
+            unAuthenticatedURLPrefix = null;
             ApplicationSelectionViewDescriptor descriptor = (ApplicationSelectionViewDescriptor) contribution;
             if (!descriptor.enabled) {
                 applicationSelectionViewURL = null;
@@ -100,8 +100,8 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
 
     }
 
-    protected void registerApplication(ApplicationDefinitionDescriptor appDescriptor,
-            String componentName) {
+    protected void registerApplication(
+            ApplicationDefinitionDescriptor appDescriptor, String componentName) {
         String name = appDescriptor.getName();
 
         validateApplicationDescriptor(appDescriptor, componentName);
@@ -211,7 +211,6 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
 
     }
 
-
     @Override
     public String getLoginURL(HttpServletRequest request) {
         ApplicationDefinitionDescriptor app = getTargetApplication(request);
@@ -276,16 +275,20 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
     }
 
     @Override
-    public List<String> getLoginPages() {
-        if (loginPages == null) {
-            loginPages = new ArrayList<String>();
+    public List<String> getUnAuthenticatedURLPrefix() {
+        if (unAuthenticatedURLPrefix == null) {
+            unAuthenticatedURLPrefix = new ArrayList<String>();
             for (ApplicationDefinitionDescriptor app : applicationsOrdered) {
                 String loginPage = app.getBaseUrl() + app.getLoginPage();
                 // Remove the first slash
-                loginPages.add(loginPage.substring(1));
+                unAuthenticatedURLPrefix.add(loginPage.substring(1));
+                if (app.getResourcesBaseUrl() != null) {
+                    unAuthenticatedURLPrefix.add(app.getResourcesBaseUrl().substring(
+                            1));
+                }
             }
         }
-        return loginPages;
+        return unAuthenticatedURLPrefix;
     }
 }
 

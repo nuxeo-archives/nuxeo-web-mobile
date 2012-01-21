@@ -74,14 +74,15 @@ public class ApplicationRedirectionFilter implements Filter {
             return;
         }
 
-        if (req.getRequestURI().startsWith(baseURL)) {
+        if (isTargetApplicationURL(req, baseURL)) {
             log.debug("Request URI is the target application so no redirect:"
                     + " final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
             return;
         }
 
-        if (resourcesBaseURL != null && req.getRequestURI().startsWith(resourcesBaseURL)) {
+        if (resourcesBaseURL != null
+                && req.getRequestURI().startsWith(resourcesBaseURL)) {
             log.debug("Request URI is a resource of the target application so no redirect:"
                     + " final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
@@ -98,6 +99,25 @@ public class ApplicationRedirectionFilter implements Filter {
 
         doApplicationRedirection((HttpServletRequest) request,
                 (HttpServletResponse) response, chain);
+    }
+
+    /**
+     * @param req
+     * @return
+     */
+    private boolean isTargetApplicationURL(HttpServletRequest req, String targetApplicationURL) {
+        String uri = req.getRequestURI();
+        if (!uri.startsWith(targetApplicationURL)) {
+            return false;
+        }
+        if (uri.equals(targetApplicationURL)) {
+            return true;
+        }
+        char character = uri.charAt(targetApplicationURL.length());
+        if (character != '/' && character != '?' && character != '#' && character != '@') {
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -174,7 +174,7 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
 
     @Override
     public List<String> getUnAuthenticatedURLPrefix() {
-        List<String> result = getService().getLoginPages();
+        List<String> result = getService().getUnAuthenticatedURLPrefix();
         log.debug("List of skipped URL:" + result);
         return result;
     }

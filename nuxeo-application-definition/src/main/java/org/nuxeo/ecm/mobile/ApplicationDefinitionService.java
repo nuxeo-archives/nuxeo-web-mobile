@@ -88,7 +88,7 @@ public interface ApplicationDefinitionService {
     /**
      * return the list of login pages (witout nuxeo context path)
      */
-    public List<String> getLoginPages();
+    public List<String> getUnAuthenticatedURLPrefix();
 
     /**
      * return the base URL of resources needed by the application

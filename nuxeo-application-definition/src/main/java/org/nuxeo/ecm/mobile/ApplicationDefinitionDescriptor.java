@@ -123,9 +123,12 @@ public class ApplicationDefinitionDescriptor {
 
     /**
      * Resource Base URL of the resources needed by the application described
-     * (without the Nuxeo Context Path)
+     * (without the Nuxeo Context Path) add a slash at the end of the base url.
      */
     public String getResourcesBaseUrl() {
+        if (!resourcesBaseUrl.endsWith("/")) {
+            resourcesBaseUrl = resourcesBaseUrl + "/";
+        }
         return resourcesBaseUrl;
     }
 

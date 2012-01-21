@@ -53,9 +53,6 @@ public class RequestAdapter {
 
     private static final Log log = LogFactory.getLog(RequestAdapter.class);
 
-    // private static List<String> MOBILE_USER_AGENT_REGEXP = Arrays.asList(
-    // "(.*)Mobile(.*)Safari(.*)", "(.*)AppleWebKit(.*)Mobile(.*)");
-    //
     private String uri;
 
     private StringBuffer url;
@@ -173,7 +170,7 @@ public class RequestAdapter {
         Map<String, String> result = getParameters();
 
         if (!result.containsKey(TARGET_URL_PARAMETER)) {
-            log.debug("Put the target URL into the URL parameter" + getUri());
+            log.debug("Put the target URL into the URL parameter: " + getUri());
             result.put(TARGET_URL_PARAMETER, getUri());
         } else {
             log.debug("Forward the target URL parameter again into the target URL parameter: " + result.get(TARGET_URL_PARAMETER));
