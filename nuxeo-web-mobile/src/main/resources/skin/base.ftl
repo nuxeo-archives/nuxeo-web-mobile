@@ -1,34 +1,30 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>
      <@block name="title">
-     WebEngine Project
+       WebEngine Project
      </@block>
   </title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-  <link rel="stylesheet" href="${skinPath}/css/site.css" type="text/css" media="screen" charset="utf-8">
-  <link rel="shortcut icon" href="${skinPath}/image/favicon.gif" />
-  <@block name="stylesheets" />
-  <@block name="header_scripts" />
-</head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <!-- Force IE to use his real rendering engine -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<body style="margin:0px 0px 0px 0px;">
+    <!-- Icon for Application into the springboard -->
+    <link rel="apple-touch-icon" href="${skinPath}/img/nuxeo.png" />
+    <!-- spash screen for this "application" -->
+    <link rel="apple-touch-startup-image" href="${skinPath}/img/nuxeo_splash_screen.png" />
 
-  <table class="main">
-    <tr>
-      <td>
-        <table class="header">
-            <tr>
-            <td><img src="${skinPath}/img/logo.png"</td>
-            <td align="right"><@block name="header">The Header</@block></td>
-            </tr>
-        </table>
-      </td>
-    </tr>
-    <tr height="98%">
-      <td valign="top"><@block name="content">The Content</@block></td>
-    </tr>
-  </table/>
+    <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css" />
+    <script src="${skinPath}/script/jquery-1.7.js"></script>
+    <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>
 
+
+    <@block name="stylesheets" />
+    <@block name="header_scripts" />
+  </head>
+
+<body>
+ <@block name="content">The Content</@block>
 </body>
 </html>
