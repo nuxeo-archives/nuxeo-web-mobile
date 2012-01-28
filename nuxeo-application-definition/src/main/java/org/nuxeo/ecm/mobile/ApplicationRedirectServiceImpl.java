@@ -37,7 +37,7 @@ import static org.nuxeo.ecm.mobile.ApplicationConstants.APPLICATION_SELECTED_COO
 
 /**
  * @author bjalon
- *
+ * 
  */
 public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         ApplicationDefinitionService, ApplicationSelectionViewService {
@@ -200,14 +200,18 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
     }
 
     @Override
-    public String getResourcesApplicationBaseURL(HttpServletRequest request) {
+    public List<String> getResourcesApplicationBaseURL(HttpServletRequest request) {
+        List<String> result = new ArrayList<String>();
         ApplicationDefinitionDescriptor app = getTargetApplication(request);
         if (app == null) {
             log.debug(String.format("No application matched for this request,"
                     + " no Application base url found"));
             return null;
         }
-        return getNuxeoContextPath() + app.getResourcesBaseUrl();
+        for (String resourcesBaseURL : app.getResourcesBaseUrl()) {
+            result.add(getNuxeoContextPath() + resourcesBaseURL);
+        }
+        return result;
 
     }
 
@@ -283,8 +287,9 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                 // Remove the first slash
                 unAuthenticatedURLPrefix.add(loginPage.substring(1));
                 if (app.getResourcesBaseUrl() != null) {
-                    unAuthenticatedURLPrefix.add(app.getResourcesBaseUrl().substring(
-                            1));
+                    for (String url : app.getResourcesBaseUrl()) {
+                        unAuthenticatedURLPrefix.add(url.substring(1));
+                    }
                 }
             }
         }

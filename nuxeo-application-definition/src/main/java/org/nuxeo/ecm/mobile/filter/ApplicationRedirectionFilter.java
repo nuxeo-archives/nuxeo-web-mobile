@@ -17,6 +17,7 @@
 package org.nuxeo.ecm.mobile.filter;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -65,7 +66,7 @@ public class ApplicationRedirectionFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         String baseURL = service.getApplicationBaseURL(req);
-        String resourcesBaseURL = service.getResourcesApplicationBaseURL(req);
+        List<String> resourcesBaseURL = service.getResourcesApplicationBaseURL(req);
 
         if (baseURL == null) {
             log.debug("No application match this request context "
@@ -81,8 +82,7 @@ public class ApplicationRedirectionFilter implements Filter {
             return;
         }
 
-        if (resourcesBaseURL != null
-                && req.getRequestURI().startsWith(resourcesBaseURL)) {
+        if (isResourceURL(resourcesBaseURL, req.getRequestURI())) {
             log.debug("Request URI is a resource of the target application so no redirect:"
                     + " final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
@@ -118,6 +118,18 @@ public class ApplicationRedirectionFilter implements Filter {
             return false;
         }
         return true;
+    }
+    
+    private boolean isResourceURL(List<String> resourcesBaseURL, String uri) {
+        if (resourcesBaseURL == null || resourcesBaseURL.size() == 0) {
+            return false;
+        }
+        for (String resourceBaseURL : resourcesBaseURL) {
+            if (uri.startsWith(resourceBaseURL)) {
+                return true;
+            }
+        }
+        return false; 
     }
 
     /**

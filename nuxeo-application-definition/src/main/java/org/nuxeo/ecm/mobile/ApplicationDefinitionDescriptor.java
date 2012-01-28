@@ -16,7 +16,11 @@
  */
 package org.nuxeo.ecm.mobile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.nuxeo.common.xmap.annotation.XNode;
+import org.nuxeo.common.xmap.annotation.XNodeList;
 import org.nuxeo.common.xmap.annotation.XObject;
 import org.nuxeo.ecm.mobile.handler.RequestHandler;
 
@@ -24,9 +28,9 @@ import org.nuxeo.ecm.mobile.handler.RequestHandler;
  * Descriptor that represent a definition of an application and a handler that
  * will detect request context that will make the user redirect to this
  * application.
- *
+ * 
  * @author bjalon
- *
+ * 
  */
 @XObject("application")
 public class ApplicationDefinitionDescriptor {
@@ -52,8 +56,8 @@ public class ApplicationDefinitionDescriptor {
     @XNode("logoutPage")
     public String logoutPage;
 
-    @XNode("resourcesBaseURL")
-    private String resourcesBaseUrl;
+    @XNodeList(value = "resources/resourcesBaseURL", type = ArrayList.class, componentType = String.class)
+    private List<String> resourcesBaseUrl = new ArrayList<String>();
 
     /**
      * Application name described
@@ -121,13 +125,22 @@ public class ApplicationDefinitionDescriptor {
         return logoutPage;
     }
 
+    private boolean isResourcesBaseUrlChecked = false;
+
     /**
      * Resource Base URL of the resources needed by the application described
      * (without the Nuxeo Context Path) add a slash at the end of the base url.
      */
-    public String getResourcesBaseUrl() {
-        if (!resourcesBaseUrl.endsWith("/")) {
-            resourcesBaseUrl = resourcesBaseUrl + "/";
+    public List<String> getResourcesBaseUrl() {
+        if (!isResourcesBaseUrlChecked) {
+            List<String> result = new ArrayList<String>();
+            isResourcesBaseUrlChecked = true;
+            for (String url : resourcesBaseUrl) {
+                if (!url.endsWith("/")) {
+                    result.add(url + "/");
+                }
+            }
+            resourcesBaseUrl = result;
         }
         return resourcesBaseUrl;
     }

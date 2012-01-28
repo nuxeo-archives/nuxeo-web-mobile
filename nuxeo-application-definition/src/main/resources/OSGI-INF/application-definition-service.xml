@@ -125,7 +125,10 @@
           <loginPage>/auth/login</loginPage>
           <logoutPage>/auth/logout</logoutPage>
           <handler>com.mycompany.myproject.RequestHandler</handler>
-          <resourcesBaseURL>/site/skin/app1</resourcesBaseURL>
+          <resources>
+            <resourcesBaseURL>/site/skin/app1</resourcesBaseURL>
+            <resourcesBaseURL>/restAPI/preview</resourcesBaseURL>
+          </resources>
         </application>
       </code>
       Like that request to resources of your application will not be redirected to the base url.

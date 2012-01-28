@@ -91,8 +91,8 @@ public interface ApplicationDefinitionService {
     public List<String> getUnAuthenticatedURLPrefix();
 
     /**
-     * return the base URL of resources needed by the application
+     * return the list of base URL of resources needed by the application
      */
-    public String getResourcesApplicationBaseURL(HttpServletRequest req);
+    public List<String> getResourcesApplicationBaseURL(HttpServletRequest req);
 
 }
