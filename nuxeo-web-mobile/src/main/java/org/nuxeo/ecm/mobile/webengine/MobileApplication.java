@@ -19,12 +19,22 @@ package org.nuxeo.ecm.mobile.webengine;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
-import org.nuxeo.ecm.mobile.filter.RequestAdapter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.IdRef;
+import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
+import org.nuxeo.ecm.platform.url.api.DocumentView;
+import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
+
+import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
 
 /**
  * @author Benjamin JALON <bjalon@nuxeo.com>
@@ -36,44 +46,44 @@ import org.nuxeo.runtime.api.Framework;
 @WebObject(type = "MobileApplication")
 public class MobileApplication extends ModuleRoot {
 
+    private static final Log log = LogFactory.getLog(MobileApplication.class);
+
     private String nuxeoContextPath;
 
+    private DocumentViewCodecManager codecManager;
+
     /**
+     * Try to fetch document in targetURL parameter in URL if not this is the
      * Home binding
      *
      */
     @GET
-    public Object doGet() {
-        RequestAdapter adapter = new RequestAdapter(request);
-        String initialRequest = adapter.getInitialRequest();
-        if (initialRequest == null
-                || !initialRequest.startsWith(getNuxeoContextPath() + "/")
-                || initialRequest.equals(getNuxeoContextPath() + "/")) {
-            return getView("index");
+    public Object doGet(@QueryParam(TARGET_URL_PARAMETER) String initialURL)
+            throws Exception {
+        if (initialURL != null) {
+            DocumentView docView = getCodecManager().getDocumentViewFromUrl(
+                    initialURL, true, getNuxeoContextPath() + "/");
+            if (docView != null) {
+                log.debug("Request from home: Target URL given into url parameter detected as a "
+                        + "document request from url codec service: "
+                        + initialURL);
+                MobileDocument docResolved = new MobileDocument(ctx,
+                        docView.getDocumentLocation().getDocRef());
+                return docResolved.doGet();
+            }
         }
-        // get the path after the context path + slash
-        String relativePath = initialRequest.substring(getNuxeoContextPath().length() + 1);
-        return redirect(getPath() + "/" + relativePath);
+        return getView("index");
     }
 
     @Path("auth")
-    public Object doAuthenticationComputation() {
+    public Object doTraverseAuthentication() {
         return ctx.newObject("WebMobileAuthentication");
     }
 
-    @Path("nxdoc")
-    public Object doFetchDocById() {
-        return "nxdoc";
-    }
-
-    @Path("nxpath")
-    public Object doFetchDocByPath() {
-        return "nxpath";
-    }
-
-    @Path("proto")
-    public Object doPrototype() {
-        return ctx.newObject("Prototype");
+    @Path("doc/{docId}")
+    public Object doTraverseDocument(@PathParam("docId") String docId) {
+        DocumentRef ref = new IdRef(docId);
+        return new MobileDocument(ctx, ref);
     }
 
     private String getNuxeoContextPath() {
@@ -81,6 +91,13 @@ public class MobileApplication extends ModuleRoot {
             nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
         }
         return nuxeoContextPath;
+    }
+
+    private DocumentViewCodecManager getCodecManager() throws Exception {
+        if (codecManager == null) {
+            codecManager = Framework.getService(DocumentViewCodecManager.class);
+        }
+        return codecManager;
     }
 
 }

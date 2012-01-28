@@ -8,7 +8,10 @@
           <loginPage>/auth/login</loginPage>
           <logoutPage>/auth/logout</logoutPage>
           <handler>org.nuxeo.ecm.mobile.handler.MobileRequestHandler</handler>
-          <resourcesBaseURL>/site/skin/nuxeo</resourcesBaseURL>
+          <resources>
+            <resourcesBaseURL>/site/skin/nuxeo</resourcesBaseURL>
+            <resourcesBaseURL>/restAPI/preview</resourcesBaseURL>
+          </resources>
         </application>
 
   </extension>
