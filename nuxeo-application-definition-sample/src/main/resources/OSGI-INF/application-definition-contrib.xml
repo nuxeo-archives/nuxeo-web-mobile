@@ -8,7 +8,9 @@
           <loginPage>/login</loginPage>
           <logoutPage>/logout</logoutPage>
           <handler>org.nuxeo.application.definition.MyApplicationRequestHandler</handler>
-          <resourcesBaseURL>/site/skin/myApplication</resourcesBaseURL>
+          <resources>
+            <resourcesBaseURL>/site/skin/myApplication</resourcesBaseURL>
+          </resources>
         </application>
 
   </extension>
