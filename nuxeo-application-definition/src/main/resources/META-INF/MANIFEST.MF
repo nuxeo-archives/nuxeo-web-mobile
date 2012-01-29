@@ -4,9 +4,10 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0-SNAPSHOT
 Bundle-Name: nuxeo-application-definition
+Bundle-ManifestVersion: 2
 Nuxeo-Component: OSGI-INF/application-authentication-contrib.xml,
  OSGI-INF/application-open-urls-contrib.xml,
  OSGI-INF/application-definition-service.xml
-Bundle-ManifestVersion: 2
 Bundle-SymbolicName: nuxeo-application-definition
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

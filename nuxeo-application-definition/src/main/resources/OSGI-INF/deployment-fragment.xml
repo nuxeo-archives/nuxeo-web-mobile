@@ -3,18 +3,6 @@
 
   <extension target="web#LISTENER">
 
-  <!-- redirect to navigation choice for the first connexion and is service enabled -->
-   <filter>
-      <display-name>ApplicationSelectionFilter</display-name>
-      <filter-name>ApplicationSelectionFilter</filter-name>
-      <filter-class>org.nuxeo.ecm.mobile.filter.ApplicationSelectionFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-      <filter-name>ApplicationSelectionFilter</filter-name>
-      <url-pattern>*</url-pattern>
-    </filter-mapping>
-
    <!-- Redirect to Application according the RequestHandler  -->
    <filter>
       <display-name>ApplicationRedirectionFilter</display-name>

@@ -141,40 +141,4 @@
     <object class="org.nuxeo.ecm.mobile.ApplicationDefinitionDescriptor" />
   </extension-point>
 
-
-
-  <extension-point name="applicationSelector">
-    <documentation>
-      In this extension you will activate or not the filter that will
-      redirect the user to a jsp
-      on his first to let him choose the kind of navigation.
-
-      If you don't enable this service, no redirection will be executed. if
-      you enable it, by default
-      the user will be rdirected to
-      /${nuxeoContextPath}/application-selection/index.jsp that will let
-      him choose the kind of navigation from the list of all application
-      declared into the service.
-
-      Contribution is really simple
-
-      <code>
-        <configuration enable="true"
-          applicationSelectionURL="index.jsp" />
-      </code>
-
-      Here we ask to enable the redirect at the first connexion. The
-      choice will be stored into the
-      ApplicationConstants#APPLICATION_SELECTED_COOKIE_NAME cookie name.
-      The value stored will be the
-      name of the application.
-
-      We recommend to override the index.jsp created if you want to adapt
-      this page for your need.
-
-      By default the redirect is disabled.
-
-    </documentation>
-    <object class="org.nuxeo.ecm.mobile.ApplicationDefinitionDescriptor" />
-  </extension-point>
 </component>

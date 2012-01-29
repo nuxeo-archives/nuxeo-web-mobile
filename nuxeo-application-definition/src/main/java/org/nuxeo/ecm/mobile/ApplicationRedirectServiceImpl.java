@@ -40,7 +40,7 @@ import static org.nuxeo.ecm.mobile.ApplicationConstants.APPLICATION_SELECTED_COO
  * 
  */
 public class ApplicationRedirectServiceImpl extends DefaultComponent implements
-        ApplicationDefinitionService, ApplicationSelectionViewService {
+        ApplicationDefinitionService {
 
     private static final Log log = LogFactory.getLog(ApplicationRedirectServiceImpl.class);
 
@@ -49,8 +49,6 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
     private final Map<String, ApplicationDefinitionDescriptor> applications = new HashMap<String, ApplicationDefinitionDescriptor>();
 
     private final List<ApplicationDefinitionDescriptor> applicationsOrdered = new ArrayList<ApplicationDefinitionDescriptor>();
-
-    private String applicationSelectionViewURL;
 
     private List<String> unAuthenticatedURLPrefix;
 
@@ -75,24 +73,6 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
             registerApplication((ApplicationDefinitionDescriptor) contribution,
                     contributor.getName().getName());
             break;
-        case applicationSelector:
-            // invalidate login pages
-            unAuthenticatedURLPrefix = null;
-            ApplicationSelectionViewDescriptor descriptor = (ApplicationSelectionViewDescriptor) contribution;
-            if (!descriptor.enabled) {
-                applicationSelectionViewURL = null;
-            }
-            String url = descriptor.applicationSelectionURL;
-            if (url == null || "".equals(url)) {
-                applicationSelectionViewURL = null;
-                String messageTemplate = "Application Selection URL invalide, "
-                        + "please check your bundle: %s";
-                String message = String.format(messageTemplate,
-                        contributor.getName().getName());
-                throw new RuntimeException(message);
-
-            }
-            applicationSelectionViewURL = descriptor.applicationSelectionURL;
         default:
             throw new RuntimeException(
                     "error in exception handling configuration");
@@ -266,16 +246,6 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     componentName);
             throw new RuntimeException(message);
         }
-    }
-
-    @Override
-    public boolean isApplicationSelectionViewEnabled() {
-        return applicationSelectionViewURL != null;
-    }
-
-    @Override
-    public String getApplicationSelectionURL() {
-        return applicationSelectionViewURL;
     }
 
     @Override
