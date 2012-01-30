@@ -2,8 +2,6 @@
 
 <@block name="header_scripts">
   <script type="application/x-javascript">
-    document.onload = function() { document.getElementById('submit').disabled=true; }
-
     function valideUsernameValue() {
       var value = document.getElementById('username').value;
       if (value == null || value.trim() == '') {
