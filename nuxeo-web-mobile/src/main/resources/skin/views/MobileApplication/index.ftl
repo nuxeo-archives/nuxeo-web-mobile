@@ -24,7 +24,7 @@ In a view you can access the object instance owning the view using ${r"${This}"}
 Also, you can use @block statements to create reusable layouts.
 </p>
 
-<a href="/nuxeo/site/mobile/auth/logout">Logout</a>
+<a data-ajax="false" href="/nuxeo/site/mobile/auth/logout">Logout</a>
 
 </div>
 
