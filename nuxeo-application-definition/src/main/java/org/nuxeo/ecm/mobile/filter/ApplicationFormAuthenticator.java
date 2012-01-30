@@ -46,9 +46,9 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE
  * Authenticator that redirects user to dedicated application authentication
  * form if user has selected this application or if this application matched the
  * request context.
- *
+ * 
  * @author bjalon
- *
+ * 
  */
 public class ApplicationFormAuthenticator implements LoginResponseHandler,
         NuxeoAuthenticationPlugin {
@@ -80,7 +80,11 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
 
     @Override
     public Boolean needLoginPrompt(HttpServletRequest httpRequest) {
-        return true;
+        if (getService().getTargetApplication(httpRequest) != null) {
+            return true;
+        }
+        log.debug("No Application match this request, next authenticator to expose login prompt");
+        return false;
     }
 
     @Override
@@ -127,16 +131,19 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
             params.remove(usernameKey);
             params.remove("Submit");
             params.remove(passwordKey);
-            redirect = URIUtils.addParametersToURIQuery(request.getRequestURI(), params);
+            redirect = URIUtils.addParametersToURIQuery(
+                    request.getRequestURI(), params);
         } catch (UnsupportedEncodingException e) {
-            log.error("Can't transmit param on login post error, problem during parameter extraction", e);
+            log.error("Can't transmit param on login post error, "
+                    + "problem during parameter extraction", e);
         }
         try {
             response.sendRedirect(redirect);
             response.flushBuffer();
             return true;
         } catch (IOException e) {
-            log.error("Problem during the redirect to the login form after bad authentication value send", e);
+            log.error("Problem during the redirect to the login form "
+                    + "after bad authentication value send", e);
             return false;
         }
     }
@@ -148,7 +155,6 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
         Map<String, String> parameters;
         try {
             RequestAdapter adapter = new RequestAdapter(httpRequest);
-            ((CachableUserIdentificationInfo) (httpRequest.getSession().getAttribute("org.nuxeo.ecm.login.identity"))).getPrincipal();
             parameters = adapter.getParameters();
             // avoid resending the password in clear !!!
             parameters.remove(passwordKey);
@@ -182,6 +188,11 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     @Override
     public UserIdentificationInfo handleRetrieveIdentity(
             HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+
+        if (getService().getTargetApplication(httpRequest) == null) {
+            log.debug("No Application match this request, use next Authenticator in chain to retrieve identity");
+            return null;
+        }
         String userName = httpRequest.getParameter(usernameKey);
         String password = httpRequest.getParameter(passwordKey);
 
@@ -194,6 +205,5 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
         }
         return new UserIdentificationInfo(userName, password);
     }
-
 
 }
