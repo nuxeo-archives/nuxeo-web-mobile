@@ -21,7 +21,7 @@
   <modules>
     <module>nuxeo-application-definition</module>
     <module>nuxeo-web-mobile</module>
-    <module>nuxeo-application-definition-sample</module>
+    <!--module>nuxeo-application-definition-sample</module-->
     <!--module>nuxeo-web-mobile-ftest</module-->
   </modules>
 
