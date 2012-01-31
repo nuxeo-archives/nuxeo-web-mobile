@@ -43,7 +43,7 @@ public class PreviewAdapter extends DefaultAdapter {
         if (!(targetObject instanceof MobileDocument)) {
             throw new WebException("Target Object must be MobileDocument");
         }
-        return getNuxeoContextPath()
+        return getNuxeoContextPath() + "/"
                 + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
     }
 
