@@ -9,17 +9,21 @@
     </div>
 
     <div data-role="content">
+        <ul data-role="listview" data-inset="true">
         <#list Adapter.children as child>
           <li>
-            <#if child.common.icon != null && child.common.icon != "">
-              <img src="${skinPath}${child.common.icon}" />
+            <#if child.isFolder>
+              <a href="${basePath}/mobile/doc/${child.id}/@folderish">
+            <#else>
+              <a href="${basePath}/mobile/doc/${child.id}">
             </#if>
-          <#if child.isFolder>
-            <a href="${basePath}/mobile/doc/${child.id}/@folderish">${child.title}</a>
-          <#else>
-            <a href="${basePath}/mobile/doc/${child.id}">${child.title}</a>
-          </#if>
+            <#if child.common.icon != null && child.common.icon != "">
+                <img src="${skinPath}${child.common.icon}" />
+            </#if>
+                <span>${child.title}</span>
+              </a>
         </#list>
+        </ul>        
     </div>
 
     <div data-role="footer">

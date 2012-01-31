@@ -9,13 +9,18 @@
     </div>
 
     <div data-role="content">
+        <ul data-role="listview" data-inset="true">
         <#list docs as doc>
           <li>
-            <#if doc.common.icon != null && doc.common.icon != "">
-              <img src="${skinPath}${doc.common.icon}" />
-            </#if>
-          <a href="${basePath}/mobile/doc/${doc.id}">${doc.title}</a></li>
+            <a href="${basePath}/mobile/doc/${doc.id}">
+              <#if doc.common.icon != null && doc.common.icon != "">
+                <img src="${skinPath}${doc.common.icon}" alt="icon1" class="ui-li-icon"/>
+              </#if>
+              <span class="ui-li-count">${doc.title}</span>
+            </a>
+          </li>
         </#list>
+        </ul>        
     </div>
 
     <div data-role="footer">

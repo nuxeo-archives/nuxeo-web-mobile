@@ -52,7 +52,11 @@
             </li>
           </ul>
         </div>
-
+        <div data-role="controlgroup" data-type="horizontal" >
+            <a href="index.html" data-role="button" data-icon="arrow-u">Up</a>
+            <a href="index.html" data-role="button" data-icon="arrow-d">Down</a>
+            <a href="index.html" data-role="button" data-icon="delete">Delete</a>
+        </div>
     </div>
 
     <div data-role="footer">
