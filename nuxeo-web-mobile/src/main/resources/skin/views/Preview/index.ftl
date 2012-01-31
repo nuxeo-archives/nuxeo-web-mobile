@@ -10,7 +10,7 @@
 
     <div data-role="content">
        <#if This.hasPreview()>
-         <iframe src="${Adapter.previewURL}" frameborder="1" width="100%" scrolling="auto" class="preview"/>
+         <iframe src="${Adapter.previewURL}" class="preview"/>
        <#else>
          <br/>
          <br/>

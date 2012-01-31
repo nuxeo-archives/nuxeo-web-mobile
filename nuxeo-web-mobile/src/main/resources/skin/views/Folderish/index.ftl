@@ -9,16 +9,16 @@
     </div>
 
     <div data-role="content">
-        <ul data-role="listview" data-inset="true">
+        <ul data-role="listview" class="ui-listview">
         <#list Adapter.children as child>
-          <li>
+          <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
             <#if child.isFolder>
-              <a href="${Root.path}/doc/${child.id}/@folderish">
+              <a class="ui-link-inherit" href="${Root.path}/doc/${child.id}/@folderish">
             <#else>
-              <a href="${Root.path}/doc/${child.id}">
+              <a class="ui-link-inherit" href="${Root.path}/doc/${child.id}">
             </#if>
             <#if child.common.icon != null && child.common.icon != "">
-                <img src="${skinPath}${child.common.icon}" />
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}${child.common.icon}" />
             </#if>
                 <span>${child.title}</span>
               </a>
@@ -26,9 +26,6 @@
         </ul>        
     </div>
 
-    <div data-role="footer">
-        <h4>Page Footer</h4>
-    </div>
 </div>
 
 </@block>

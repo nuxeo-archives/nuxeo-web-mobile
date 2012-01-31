@@ -1,0 +1,25 @@
+/* -- Nuxeo Web Mobile default CSS -- */
+
+/* View document */
+.documentInfo { padding: 1.1em }
+  .documentInfo div { line-height: 130% }
+	.documentInfo .title { font-weight: bold; font-size: 110% }
+	.documentInfo .title img { margin-right: .3em }
+	.documentInfo .description { color: #888; font-size: 95%; margin-bottom: .5em; padding-left: 1.3em }
+	.documentInfo .modificationDate { color: #aaa; font-size: 85%; margin-bottom: .2em; padding-left: 1.4em }
+	.documentInfo .tag { background-color: #0089bd ; border-radius: .2em; color: #fff;
+			cursor: default;
+	    font-size: 80%;
+			margin: .15em .1em;
+			padding: .25em .3em .15em;
+			white-space: nowrap }
+	.tag .ui-link, .tag .ui-link:hover { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
+
+/* Preview */
+.preview {  border: medium none; height: 150em; overflow: visible; padding-top: 2.7em; width: 100% }
+	.preview body { background-color: #fff; overflow: visible }
+
+/* Generic classes */
+.white { background-color: #fff }
+.nospace { margin: -15px -15px 0 }
+.shadow { box-shadow: 0 0 8px #6e6e6e }
