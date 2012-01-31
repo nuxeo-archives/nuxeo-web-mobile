@@ -5,12 +5,12 @@
 <div data-role="page">
 
     <div data-role="header">
-        <h1>${Adapter.getPreviewURL()}</h1>
+        <h1>${Adapter.previewURL}</h1>
     </div>
 
     <div data-role="content">
        
-       <iframe src="${Adapter.getPreviewURL()}" frameborder="1" width="100%" scrolling="auto" class="preview">
+       <iframe src="${Adapter.previewURL}" frameborder="1" width="100%" scrolling="auto" class="preview">
     </div>
 
     <div data-role="footer">

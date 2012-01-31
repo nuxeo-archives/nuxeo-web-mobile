@@ -16,34 +16,49 @@
  */
 package org.nuxeo.ecm.mobile.webengine.document;
 
+import java.util.Collections;
+
 import javax.ws.rs.GET;
 
-import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
-import org.nuxeo.ecm.webengine.WebEngine;
+import org.nuxeo.ecm.core.api.ClientException;
+import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModelList;
+import org.nuxeo.ecm.core.api.Filter;
+import org.nuxeo.ecm.core.api.impl.CompoundFilter;
+import org.nuxeo.ecm.core.api.impl.FacetFilter;
+import org.nuxeo.ecm.core.api.impl.LifeCycleFilter;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
 import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
 /**
  * @author bjalon
- *
+ * 
  */
-@WebAdapter(name="preview", type="Preview", targetType="MobileDocument")
-public class PreviewAdapter extends DefaultAdapter {
+@WebAdapter(name="folderish", type="Folderish", targetType="MobileDocument")
+public class FolderishAdapter extends DefaultAdapter {
+    
+    public static final Filter ONLY_VISIBLE_CHILDREN = new CompoundFilter(
+            new FacetFilter(null,
+                    Collections.singletonList("HiddenInNavigation")),
+            new LifeCycleFilter(null, Collections.singletonList("deleted")));
+
 
     @GET
     public Object doGet() {
-      return getView("index");
+        return getView("index");
     }
-    
-    public String getPreviewURL() {
+
+    public DocumentModelList getChildren() throws ClientException {
         Object targetObject = ctx.getTargetObject();
         if (!(targetObject instanceof MobileDocument)) {
             throw new WebException("Target Object must be MobileDocument");
         }
-        return WebEngine.getActiveContext().getServerURL() + "/nuxeo/"
-                + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
-    }
+        MobileDocument doc = (MobileDocument) targetObject;
+        CoreSession session = ctx.getCoreSession();
 
+        return session.getChildren(doc.getDocument().getRef(), null, ONLY_VISIBLE_CHILDREN,
+                null);
+    }
 
 }
