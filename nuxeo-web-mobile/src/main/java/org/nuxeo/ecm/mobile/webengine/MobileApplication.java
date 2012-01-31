@@ -86,6 +86,11 @@ public class MobileApplication extends ModuleRoot {
         return new MobileDocument(ctx, ref);
     }
 
+    @Path("search")
+    public Object doTraverseSearch() {
+        return ctx.newObject("Search");
+    }
+
     private String getNuxeoContextPath() {
         if (nuxeoContextPath == null) {
             nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");

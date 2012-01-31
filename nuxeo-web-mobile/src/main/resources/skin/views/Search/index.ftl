@@ -9,16 +9,12 @@
     </div>
 
     <div data-role="content">
-        <#list Adapter.children as child>
+        <#list docs as doc>
           <li>
-            <#if child.common.icon != null && child.common.icon != "">
-              <img src="${skinPath}${child.common.icon}" />
+            <#if doc.common.icon != null && doc.common.icon != "">
+              <img src="${skinPath}${doc.common.icon}" />
             </#if>
-          <#if child.isFolder>
-            <a href="${basePath}/mobile/doc/${child.id}/@folderish">${child.title}</a>
-          <#else>
-            <a href="${basePath}/mobile/doc/${child.id}">${child.title}</a>
-          </#if>
+          <a href="${basePath}/mobile/doc/${doc.id}">${doc.title}</a></li>
         </#list>
     </div>
 
