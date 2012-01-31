@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.rest.DocumentObject;
 import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
@@ -93,6 +94,14 @@ public class MobileDocument extends DocumentObject {
             return PreviewHelper.typeSupportsPreview(doc);
         }
         return false;
+    }
+    
+    public NuxeoPrincipal getPrincipal() {
+        if (ctx.getPrincipal() instanceof NuxeoPrincipal) {
+            return (NuxeoPrincipal) ctx.getPrincipal();
+        }
+        
+        throw new WebException("Principal found is not a NuxeoPrincipal can't generate it!");
     }
 
 }
