@@ -9,7 +9,16 @@
     </div>
 
     <div data-role="content">
-      TODO Comment
+        <ul data-role="listview" data-inset="true">
+        <#list Adapter.comments as comment>
+          <li>
+            <div class="commentHeader">
+              ${comment.comment.creationDate.time?datetime} - ${comment.comment.author} wrote:
+            </div> 
+            <div class="commentText">${comment.comment.text}</div>
+          </li>
+        </#list>
+        </ul>        
     </div>
 
     <div data-role="footer">

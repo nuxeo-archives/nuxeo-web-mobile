@@ -96,8 +96,14 @@ public class MobileApplication extends ModuleRoot {
         return new MobileDocument(ctx, ref);
     }
 
+    @Path("search")
     public Object doTraverseSearch() {
         return ctx.newObject("Search");
+    }
+
+    @Path("task")
+    public Object doTraverseTask() {
+        return ctx.newObject("Workflow");
     }
 
     private String getNuxeoContextPath() {
