@@ -9,7 +9,15 @@
     </div>
 
     <div data-role="content">
-       <iframe src="${Adapter.previewURL}" frameborder="1" width="100%" scrolling="auto" class="preview">
+       <#if This.hasPreview()>
+         <iframe src="${Adapter.previewURL}" frameborder="1" width="100%" scrolling="auto" class="preview"/>
+       <#else>
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         THIS DOCUMENT HAS NO PREVIEW
+       </#if>
     </div>
 
     <div data-position="fixed" data-role="footer">

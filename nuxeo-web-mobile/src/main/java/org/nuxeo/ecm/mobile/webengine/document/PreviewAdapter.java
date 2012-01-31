@@ -19,10 +19,10 @@ package org.nuxeo.ecm.mobile.webengine.document;
 import javax.ws.rs.GET;
 
 import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
-import org.nuxeo.ecm.webengine.WebEngine;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
 import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
+import org.nuxeo.runtime.api.Framework;
 
 /**
  * @author bjalon
@@ -30,6 +30,8 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
  */
 @WebAdapter(name="preview", type="Preview", targetType="MobileDocument")
 public class PreviewAdapter extends DefaultAdapter {
+
+    private String nuxeoContextPath;
 
     @GET
     public Object doGet() {
@@ -41,8 +43,15 @@ public class PreviewAdapter extends DefaultAdapter {
         if (!(targetObject instanceof MobileDocument)) {
             throw new WebException("Target Object must be MobileDocument");
         }
-        return WebEngine.getActiveContext().getServerURL() + "/nuxeo/"
+        return getNuxeoContextPath()
                 + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
+    }
+
+    private String getNuxeoContextPath() {
+        if (nuxeoContextPath == null) {
+            nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
+        }
+        return nuxeoContextPath;
     }
 
 

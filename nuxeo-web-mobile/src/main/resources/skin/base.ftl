@@ -18,6 +18,14 @@
     <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css" />
     <script src="${skinPath}/script/jquery-1.7.js"></script>
     <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>
+    
+    <!-- rewrite the URL after a redirect from JSF to have mobile URL, 
+         initial request accessible in the history -->
+    <script>
+        if ('${mobileURL}' != null) {
+          window.history.pushState(null, 'Mobile URL', '${mobileURL}');
+        } 
+    </script>
 
 
     <@block name="stylesheets" />

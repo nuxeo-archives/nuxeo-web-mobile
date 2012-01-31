@@ -9,7 +9,6 @@
     </div>
 
     <div data-role="content">
-
         <div id="${This.document.id}" title="Details"  class="panel">
           <h2>Dublincore</h2>
           <fieldset>

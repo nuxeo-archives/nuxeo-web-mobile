@@ -13,9 +13,9 @@
         <#list Adapter.children as child>
           <li>
             <#if child.isFolder>
-              <a href="${basePath}/mobile/doc/${child.id}/@folderish">
+              <a href="${Root.path}/doc/${child.id}/@folderish">
             <#else>
-              <a href="${basePath}/mobile/doc/${child.id}">
+              <a href="${Root.path}/doc/${child.id}">
             </#if>
             <#if child.common.icon != null && child.common.icon != "">
                 <img src="${skinPath}${child.common.icon}" />

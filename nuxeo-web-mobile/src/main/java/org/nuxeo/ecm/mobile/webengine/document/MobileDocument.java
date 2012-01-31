@@ -19,6 +19,9 @@
 
 package org.nuxeo.ecm.mobile.webengine.document;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.nuxeo.ecm.core.api.ClientException;
@@ -31,6 +34,8 @@ import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
+
+import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
 
 /**
  * This Class resolve a DocumentModel and expose differents restitutions
@@ -76,6 +81,8 @@ public class MobileDocument extends DocumentObject {
 
     @Override
     public Object doGet() {
+        Map<String, Object> args = new HashMap<String, Object>();
+
         // must override the original doGet to override the resolution
         // so get parameter into the request instead injection
         HttpServletRequest request = ctx.getRequest();
@@ -83,9 +90,18 @@ public class MobileDocument extends DocumentObject {
 
         mode = Mode.valueOfWithDefault(mode).name();
 
+        // if url from JSF => ask to push mobile URL into browser history
+        if (request.getParameter(TARGET_URL_PARAMETER) != null) {
+            String mobileURL = String.format("%s/doc/%s?mode=%s",
+                    ctx.getRoot().getPath(), doc.getId(), mode);
+            args.put("mobileURL", mobileURL);
+        }
+
+        // Add the JSON DForm export
         DFormJSONAdapter json = (DFormJSONAdapter) ctx.newObject("DFormJSON");
-        return getView(mode).arg("doc",
-                json.doGet(request.getRequestURI(), "post"));
+        args.put("doc", json.doGet(request.getRequestURI(), "post"));
+
+        return getView(mode).args(args);
     }
 
     public boolean hasPreview() throws PropertyException, ClientException {
@@ -95,13 +111,14 @@ public class MobileDocument extends DocumentObject {
         }
         return false;
     }
-    
+
     public NuxeoPrincipal getPrincipal() {
         if (ctx.getPrincipal() instanceof NuxeoPrincipal) {
             return (NuxeoPrincipal) ctx.getPrincipal();
         }
-        
-        throw new WebException("Principal found is not a NuxeoPrincipal can't generate it!");
+
+        throw new WebException(
+                "Principal found is not a NuxeoPrincipal can't generate it!");
     }
 
 }
