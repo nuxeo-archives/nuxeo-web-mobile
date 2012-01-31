@@ -27,6 +27,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
+import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
@@ -38,7 +39,7 @@ import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
 
 /**
  * @author Benjamin JALON <bjalon@nuxeo.com>
- *
+ * 
  *         Entry point of the webengine application
  */
 @Path("mobile")
@@ -55,7 +56,7 @@ public class MobileApplication extends ModuleRoot {
     /**
      * Try to fetch document in targetURL parameter in URL if not this is the
      * Home binding
-     *
+     * 
      */
     @GET
     public Object doGet(@QueryParam(TARGET_URL_PARAMETER) String initialURL)
@@ -80,13 +81,21 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("WebMobileAuthentication");
     }
 
+    /**
+     * Return the root of the repository
+     */
+    @Path("doc")
+    public Object doTraverseRootDocument() {
+        DocumentRef ref = new PathRef("/");
+        return new MobileDocument(ctx, ref).disptachAdapter("folderish");
+    }
+
     @Path("doc/{docId}")
     public Object doTraverseDocument(@PathParam("docId") String docId) {
         DocumentRef ref = new IdRef(docId);
         return new MobileDocument(ctx, ref);
     }
 
-    @Path("search")
     public Object doTraverseSearch() {
         return ctx.newObject("Search");
     }
