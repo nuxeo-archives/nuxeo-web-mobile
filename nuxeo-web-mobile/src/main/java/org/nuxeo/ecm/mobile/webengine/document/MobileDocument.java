@@ -98,7 +98,7 @@ public class MobileDocument extends DocumentObject {
         }
 
         // Add the JSON DForm export
-        DFormJSONAdapter json = (DFormJSONAdapter) ctx.newObject("DFormJSON");
+        JSonExportAdapter json = (JSonExportAdapter) ctx.newObject("JSONExport");
         args.put("doc", json.doGet(request.getRequestURI(), "post"));
 
         return getView(mode).args(args);

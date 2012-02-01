@@ -17,6 +17,7 @@
 package org.nuxeo.ecm.mobile.webengine.document;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
@@ -29,9 +30,9 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
  * @author bjalon
  * 
  */
-@WebAdapter(name = "dformJSON", type = "DFormJSON", targetType = "MobileDocument")
+@WebAdapter(name = "jsonExport", type = "JSONExport", targetType = "MobileDocument")
 @Produces("application/json;charset=UTF-8")
-public class DFormJSONAdapter extends DefaultAdapter {
+public class JSonExportAdapter extends DefaultAdapter {
 
     /**
      * Return the JSON export of document for dform layout manager 
@@ -40,6 +41,7 @@ public class DFormJSONAdapter extends DefaultAdapter {
      * @return
      */
     @GET
+    @Path("dform")
     public Object doGet(@QueryParam("action") String action,
             @QueryParam("actionType") String actionType) {
 
