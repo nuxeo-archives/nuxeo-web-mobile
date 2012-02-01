@@ -19,12 +19,11 @@ package org.nuxeo.ecm.mobile.webengine.document;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.QueryParam;
 
 import org.nuxeo.ecm.core.api.ClientException;
-import org.nuxeo.ecm.core.api.ClientRuntimeException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.platform.comment.api.CommentableDocument;
@@ -51,12 +50,10 @@ public class CommentAdapter extends DefaultAdapter {
     }
 
     @POST
-    public Object doPost(@QueryParam("newComment") String newComment)
+    public Object doPost(@FormParam("newComment") String newTextComment)
             throws PropertyException, ClientException {
-        DocumentModel comment = ctx.getCoreSession().createDocumentModel(
-                "Comment");
-        initializeComment(comment);
-        comment.setPropertyValue("comment:text", newComment);
+        DocumentModel comment = initializeEmptyComment();
+        comment.setPropertyValue("comment:text", newTextComment);
         getCommentableDocument().addComment(comment);
         ctx.getCoreSession().saveDocument(getDocumentModel());
         return getView("index");
@@ -66,6 +63,10 @@ public class CommentAdapter extends DefaultAdapter {
         List<DocumentModel> comments = getCommentableDocument().getComments();
         return comments;
 
+    }
+    
+    public boolean hasWriteRightOnComment(DocumentModel comment) throws ClientException {
+        return ctx.getCoreSession().hasPermission(comment.getRef(), "Write");
     }
 
     private CommentableDocument getCommentableDocument() {
@@ -94,32 +95,21 @@ public class CommentAdapter extends DefaultAdapter {
     }
 
     public boolean hasAddingCommentRight() throws ClientException {
-        return ctx.getCoreSession().hasPermission(getDocumentModel().getRef(), "Write");
-    }
-    
-    protected DocumentModel initializeComment(DocumentModel comment) {
-        if (comment != null) {
-            try {
-                if (comment.getProperty("dublincore", "contributors") == null) {
-                    String[] contributors = new String[1];
-                    contributors[0] = ctx.getPrincipal().getName();
-                    comment.setProperty("dublincore", "contributors",
-                            contributors);
-                }
-            } catch (ClientException e) {
-                throw new ClientRuntimeException(e);
-            }
-            try {
-                if (comment.getProperty("dublincore", "created") == null) {
-                    comment.setProperty("dublincore", "created",
-                            Calendar.getInstance());
-                }
-            } catch (ClientException e) {
-                throw new ClientRuntimeException(e);
-            }
-        }
-        return comment;
+        return ctx.getCoreSession().hasPermission(getDocumentModel().getRef(),
+                "Write");
     }
 
+    protected DocumentModel initializeEmptyComment() throws ClientException {
+        DocumentModel comment = ctx.getCoreSession().createDocumentModel(
+                "Comment");
+
+        String[] contributors = new String[1];
+        contributors[0] = ctx.getPrincipal().getName();
+        comment.setProperty("dublincore", "contributors", contributors);
+        comment.setProperty("dublincore", "created", Calendar.getInstance());
+        comment.setProperty("comment", "author", ctx.getPrincipal().getName());
+        comment.setProperty("comment", "creationDate", Calendar.getInstance());
+        return comment;
+    }
 
 }

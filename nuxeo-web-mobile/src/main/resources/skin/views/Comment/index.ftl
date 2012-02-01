@@ -15,13 +15,18 @@
             <div class="commentHeader">
               ${comment.comment.creationDate.time?datetime} - ${comment.comment.author} wrote:
             </div> 
+            <#if Adapter.hasAddingCommentRight()>
+              <div class="commentHeader">
+                reply | <#if Adapter.hasWriteRightOnComment(comment)>remove</#if>
+              </div>
+            </#if>
             <div class="commentText">${comment.comment.text}</div>
           </li>
         </#list>
         </ul>
         <#if Adapter.hasAddingCommentRight()>
           <form id="newComment" method="post">
-            <textarea name="textarea" id="textarea-a" placeholder="Add your own comment"></textarea>
+            <textarea name="newComment" id="newComment" placeholder="Add your own comment"></textarea>
             <button data-inline="true" data-icon="check">Post your comment</button>
           </form>
         </#if>
