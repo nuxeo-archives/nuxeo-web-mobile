@@ -12,17 +12,15 @@
         <ul>
         <#list Adapter.comments as comment>
           <li class="white">
-            <div class="header clear">
-              <div class="details">
-                <span class="author"><a href="#">${comment.comment.author}</a></span><span class="time">${comment.comment.creationDate.time?datetime}</span>
-              </div>
-              <#if Adapter.hasAddingCommentRight()>
-                <div class="actions">
-                  <a href="#">reply</a> | <#if Adapter.hasWriteRightOnComment(comment)><a href="#">remove</a></#if>
-                </div>
-              </#if>
+            <div class="details">
+              <span class="author"><a href="#">${comment.comment.author}</a></span><span class="time">${comment.comment.creationDate.time?datetime}</span>
             </div>
             <div class="comment">${comment.comment.text}</div>
+            <#if Adapter.hasAddingCommentRight()>
+              <div class="actions">
+                <#if Adapter.hasWriteRightOnComment(comment)><a href="#">Delete</a> | </#if><a href="#">Reply</a>
+              </div>
+            </#if>
           </li>
         </#list>
         </ul>

@@ -7,14 +7,6 @@
 	.documentInfo .title img { margin-right: .3em }
 	.documentInfo .description { color: #888; font-size: 95%; margin-bottom: .5em; padding-left: 1.3em }
 	.documentInfo .modificationDate { color: #aaa; font-size: 85%; margin-bottom: .2em; padding-left: 1.4em }
-	.documentInfo .tag { background-color: #0089bd ; border-radius: .2em; color: #fff;
-			cursor: default;
-	    font-size: 80%;
-			margin: .15em .1em;
-			padding: .2em .3em;
-			text-shadow: none;
-			white-space: nowrap }
-	.tag .ui-link, .tag .ui-link:hover, .tag .ui-link:visited { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
 
 .documentView fieldset .ui-btn-inner { padding: .5em }
 
@@ -23,21 +15,40 @@
 	.preview body { background-color: #fff; overflow: visible }
 
 /* Comments */
-.comments { }
+.comments {}
 	.comments ul { list-style: none; 	padding: 0 }
 	.comments li { box-shadow: 0 5px 8px #6e6e6e; padding: .4em .5em; margin: 0 0 .3em }
-	.comments .details, .comments .actions { font-size: 85% }
-	.comments .details { float: left }
-	.comments .actions { float: right }
+	.comments .details, .comments .actions { font-size: 80% }
+	.comments .actions { text-align: right }
 	.comments .details span { margin: .2em }
 	.comments .time { color: #aaa }
-	.comments .comment { padding: .3em }
+	.comments .comment { line-height: 125%; padding: .3em }
+
+/* Profile */
+.profile .profileDetail{ margin-bottom: -15px;	padding: 1.1em }
+  .profileDetail .avatar { float: left; height: 5em; width: 5em }
+    .profileDetail .avatar img { max-height: 4.5em; max-width: 4.5em }
+  .profilInfo { margin-left: 5.5em }
+    .profilInfo .name { font-weight: bold; font-size: 115%; margin-bottom: .5em }
+    .profilInfo .email { font-size: 90%; margin-bottom: .4em }
+  .profileDetail .moreInfo li label { color: #999 }
+  .profileDetail .moreInfo li span { font-size: 16px; font-weight: normal; line-height: 1.4 }
+
 
 /* ================================ */
 /* Generic classes */
 .white { background-color: #fff }
 .nospace { margin: -15px -15px 0 }
 .shadow { box-shadow: 0 0 8px #6e6e6e }
+
+.tag { background-color: #0089bd ; border-radius: .2em; color: #fff;
+		cursor: default;
+    font-size: 80%;
+		margin: .15em .1em;
+		padding: .2em .3em;
+		text-shadow: none;
+		white-space: nowrap }
+.tag .ui-link, .tag .ui-link:hover, .tag .ui-link:visited { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
 
 .clear:before, .clear:after { content:""; display:table }
 .clear:after { clear:both }
