@@ -12,6 +12,7 @@
 	    font-size: 80%;
 			margin: .15em .1em;
 			padding: .2em .3em;
+			text-shadow: none;
 			white-space: nowrap }
 	.tag .ui-link, .tag .ui-link:hover { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
 
