@@ -19,8 +19,15 @@
           </div>
           <div class="participants">
             <!-- TODO: Add contributors correct value -->
-            <span class="tag"><a href="#">Lise Kemen</a></span><span class="tag"><a href="#">Benjamin Jalon</a></span><span class="tag"><a href="#">Delphine Renevey</a></span>
-            <span>${This.document.dublincore.issued}</span>
+            <#list This.document.dublincore.contributors as contributor>
+              <span class="tag">
+                <#if contributor == "system">
+                ${contributor}
+                <#else>
+                <a href="${Root.path}/profile/${contributor}">${contributor}</a>
+                </#if>
+              </span>
+            </#list>
           </div>
         </div>
           
