@@ -17,7 +17,10 @@
             </div> 
             <#if Adapter.hasAddingCommentRight()>
               <div class="commentHeader">
-                reply | <#if Adapter.hasWriteRightOnComment(comment)>remove</#if>
+                <a href="#">reply</a> | 
+                <#if Adapter.hasWriteRightOnComment(comment)>
+                  <a href="#">delete</a>
+                </#if>
               </div>
             </#if>
             <div class="commentText">${comment.comment.text}</div>
