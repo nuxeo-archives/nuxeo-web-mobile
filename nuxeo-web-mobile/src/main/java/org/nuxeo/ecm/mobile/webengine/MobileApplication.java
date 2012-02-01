@@ -81,16 +81,15 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("WebMobileAuthentication");
     }
 
-    /**
-     * Return the root of the repository
-     */
-    @Path("doc")
-    public Object doTraverseRootDocument() {
-        DocumentRef ref = new PathRef("/");
-        return new MobileDocument(ctx, ref).disptachAdapter("folderish");
     @Path("profile")
     public Object doTraverseProfile() {
         return ctx.newObject("Profile");
+    }
+
+    @Path("docPath/{docPathValue:((?:(?!/@).)*)}")
+    public Object doTraverseDocumentByPath(@PathParam("docPathValue") String docPath) {
+        DocumentRef ref = new PathRef(docPath);
+        return new MobileDocument(ctx, ref);
     }
 
     @Path("doc/{docId}")

@@ -17,7 +17,7 @@
     <div data-role="content">
       <ul data-role="listview" class="ui-listview">
         <li>
-          <a href="${Root.path}/doc/" class="ui-link-inherit">
+          <a href="${Root.path}/docPath/" class="ui-link-inherit">
             <img src="${skinPath}/icons/browse.png" class="ui-li-thumb">
             <h3 class="ui-li-heading">Browse</h3>
             <p class="ui-li-desc">Dive into your tree</p>
