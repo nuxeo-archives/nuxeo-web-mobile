@@ -43,7 +43,7 @@ public class Search extends DefaultObject {
 
 
     @GET
-    public Object doLogin(@QueryParam("q") String queryString) {
+    public Object doGet(@QueryParam("q") String queryString) {
         CoreSession session = ctx.getCoreSession();
         DocumentModelList docs;
         try {
