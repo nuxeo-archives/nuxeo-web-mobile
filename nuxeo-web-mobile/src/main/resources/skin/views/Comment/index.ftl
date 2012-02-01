@@ -5,25 +5,24 @@
 <div data-role="page">
 
     <div data-role="header">
-        <h1>Page Title</h1>
+        <h1>Comments</h1>
     </div>
 
-    <div data-role="content">
-        <ul data-role="listview" data-inset="true">
+    <div data-role="content" class="comments">
+        <ul>
         <#list Adapter.comments as comment>
-          <li>
-            <div class="commentHeader">
-              ${comment.comment.creationDate.time?datetime} - ${comment.comment.author} wrote:
-            </div> 
-            <#if Adapter.hasAddingCommentRight()>
-              <div class="commentHeader">
-                <a href="#">reply</a> | 
-                <#if Adapter.hasWriteRightOnComment(comment)>
-                  <a href="#">delete</a>
-                </#if>
+          <li class="white">
+            <div class="header clear">
+              <div class="details">
+                <span class="author"><a href="#">${comment.comment.author}</a></span><span class="time">${comment.comment.creationDate.time?datetime}</span>
               </div>
-            </#if>
-            <div class="commentText">${comment.comment.text}</div>
+              <#if Adapter.hasAddingCommentRight()>
+                <div class="actions">
+                  <a href="#">reply</a> | <#if Adapter.hasWriteRightOnComment(comment)><a href="#">remove</a></#if>
+                </div>
+              </#if>
+            </div>
+            <div class="comment">${comment.comment.text}</div>
           </li>
         </#list>
         </ul>

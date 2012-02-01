@@ -8,7 +8,7 @@
         <h1>View</h1>
     </div>
 
-    <div data-role="content">
+    <div data-role="content" class="documentView">
       <div id="${This.document.id}" title="Details"  class="panel">
         <div class="white nospace shadow documentInfo">
           <div class="title"><img alt="Document icon" src="${skinPath}/icons/doc.png" />${This.document.dublincore.title}</div>
@@ -35,7 +35,7 @@
         <ul data-role="listview" data-inset="true">
           <#if This.hasPreview()>
             <li class="nxDocumentItem">
-              <a href="${Document.id}/@preview">Preview</a>
+              <a href="@preview">Preview</a>
             </li>
           </#if>
           <li class="nxDocumentItem">
@@ -44,9 +44,7 @@
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${basePath}/mobile/comments/${This.document.id}">
-              Comments
-            </a>
+          <a href="${This.document.id}/@comment">Comments</a>
           </li>
           <li class="nxDocumentItem">
             <a href="${basePath}/mobile/annotations/${This.document.id}">
@@ -55,11 +53,17 @@
           </li>
         </ul>
       </div>
-      <div data-role="controlgroup" data-type="horizontal" class="ui-corner-all" >
-          <a href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL" class="ui-btn-icon-left" data-role="button">Mail</a>
-          <a href="${Document.id}?mode=edit" class="ui-btn-icon-left" data-role="button">Edit</a>
-          <a href="index.html" class="ui-btn-icon-left" data-role="button">Delete</a>
-      </div>
+      <fieldset class="ui-grid-b">
+        <div class="ui-block-a">
+          <a href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL" data-role="button">Mail</a>
+        </div>
+        <div class="ui-block-b">
+          <a href="${Document.id}?mode=edit" data-role="button">Edit</a>
+        </div>
+        <div class="ui-block-c">
+          <a href="index.html" data-role="button">Delete</a
+        </div>
+      </fieldset>
     </div>
 
     <div data-role="footer">

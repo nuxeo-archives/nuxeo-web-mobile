@@ -16,7 +16,7 @@
          <br/>
          <br/>
          <br/>
-         THIS DOCUMENT HAS NO PREVIEW
+         The preview is not available for this type of document.
        </#if>
     </div>
 
