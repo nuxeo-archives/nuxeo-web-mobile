@@ -88,6 +88,9 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseRootDocument() {
         DocumentRef ref = new PathRef("/");
         return new MobileDocument(ctx, ref).disptachAdapter("folderish");
+    @Path("profile")
+    public Object doTraverseProfile() {
+        return ctx.newObject("Profile");
     }
 
     @Path("doc/{docId}")

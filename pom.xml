@@ -16,6 +16,7 @@
   <description/>
   <properties>
     <nuxeo.web.mobile.version>1.0-SNAPSHOT</nuxeo.web.mobile.version>
+    <nuxeo.ep.version>5.5</nuxeo.ep.version>
   </properties>
   
   <modules>
@@ -27,6 +28,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-user-profile</artifactId>
+        <version>${nuxeo.ep.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.nuxeo.ecm.mobile</groupId>
         <artifactId>nuxeo-application-definition</artifactId>
