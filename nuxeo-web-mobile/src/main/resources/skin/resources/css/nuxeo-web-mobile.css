@@ -14,7 +14,7 @@
 			padding: .2em .3em;
 			text-shadow: none;
 			white-space: nowrap }
-	.tag .ui-link, .tag .ui-link:hover { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
+	.tag .ui-link, .tag .ui-link:hover, .tag .ui-link:visited { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
 
 .documentView fieldset .ui-btn-inner { padding: .5em }
 
