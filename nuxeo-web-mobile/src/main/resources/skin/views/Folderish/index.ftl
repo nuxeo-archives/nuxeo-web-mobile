@@ -1,11 +1,10 @@
 <@extends src="base.ftl">
-<@block name="header">You signed in as ${Context.principal}</@block>
 
 <@block name="content">
 <div data-role="page">
 
     <div data-role="header">
-        <h1>Page Title</h1>
+        <h1>Content</h1>
     </div>
 
     <div data-role="content">
@@ -19,9 +18,12 @@
             </#if>
             <#if child.common.icon != null && child.common.icon != "">
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}${child.common.icon}" />
+            </#else>
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
             </#if>
                 <span>${child.title}</span>
               </a>
+          </li>
         </#list>
         </ul>        
     </div>
