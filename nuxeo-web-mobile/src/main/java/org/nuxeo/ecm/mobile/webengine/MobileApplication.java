@@ -90,6 +90,9 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseRootDocumentByPath(
             @PathParam("adapter") String adapter) {
         DocumentRef ref = new PathRef("/");
+        if ("search".equals(adapter)) {
+            return new MobileDocument(ctx, ref).search();
+        }
         return new MobileDocument(ctx, ref).disptachAdapter(adapter);
     }
 

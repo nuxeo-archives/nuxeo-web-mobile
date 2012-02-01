@@ -10,7 +10,10 @@
 
     <div data-role="content">
         <ul data-role="listview" data-inset="true">
-        <#list docs as doc>
+        <#if result?size == 0>
+        No document found
+        </#if>
+        <#list result as doc>
           <li>
             <a href="${Root.path}/doc/${doc.id}">
               <#if doc.common.icon != null && doc.common.icon != "">

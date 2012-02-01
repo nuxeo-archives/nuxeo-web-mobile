@@ -48,26 +48,6 @@ import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
  */
 public class MobileDocument extends DocumentObject {
 
-    public enum Mode {
-        view, edit, create;
-
-        /**
-         * return the mode as enum and if value is unknown return the default
-         * value.
-         * 
-         * @param value
-         * @return
-         */
-        public static Mode valueOfWithDefault(String value) {
-            for (Mode mode : Mode.values()) {
-                if (mode.name().equalsIgnoreCase(value)) {
-                    return mode;
-                }
-            }
-            return view;
-        }
-    }
-
     public MobileDocument(WebContext ctx, DocumentRef docRef) {
         try {
             ResourceType resType = ctx.getModule().getType("Document");
@@ -87,8 +67,9 @@ public class MobileDocument extends DocumentObject {
         // so get parameter into the request instead injection
         HttpServletRequest request = ctx.getRequest();
         String mode = request.getParameter("mode");
-
-        mode = Mode.valueOfWithDefault(mode).name();
+        if (mode == null) {
+            mode = "view";
+        }
 
         // if url from JSF => ask to push mobile URL into browser history
         if (request.getParameter(TARGET_URL_PARAMETER) != null) {
