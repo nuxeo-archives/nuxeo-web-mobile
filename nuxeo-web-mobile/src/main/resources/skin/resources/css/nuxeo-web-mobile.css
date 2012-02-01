@@ -31,7 +31,7 @@
   .profilInfo { margin-left: 5.5em }
     .profilInfo .name { font-weight: bold; font-size: 115%; margin-bottom: .5em }
     .profilInfo .email { font-size: 90%; margin-bottom: .4em }
-  .profileDetail .moreInfo li label { color: #999 }
+  .profileDetail .moreInfo li label { color: #999; display: inline; margin-right: .4em }
   .profileDetail .moreInfo li span { font-size: 16px; font-weight: normal; line-height: 1.4 }
 
 
@@ -43,6 +43,7 @@
 
 .tag { background-color: #0089bd ; border-radius: .2em; color: #fff;
 		cursor: default;
+		display: inline-block;
     font-size: 80%;
 		margin: .15em .1em;
 		padding: .2em .3em;
