@@ -86,8 +86,16 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("Profile");
     }
 
-    @Path("docPath/{docPathValue:((?:(?!/@).)*)}")
-    public Object doTraverseDocumentByPath(@PathParam("docPathValue") String docPath) {
+    @Path("docPath/@{adapter}")
+    public Object doTraverseRootDocumentByPath(
+            @PathParam("adapter") String adapter) {
+        DocumentRef ref = new PathRef("/");
+        return new MobileDocument(ctx, ref).disptachAdapter(adapter);
+    }
+
+    @Path("docPath{docPathValue:(/(?:(?!/@).)*)}")
+    public Object doTraverseDocumentByPath(
+            @PathParam("docPathValue") String docPath) {
         DocumentRef ref = new PathRef(docPath);
         return new MobileDocument(ctx, ref);
     }
