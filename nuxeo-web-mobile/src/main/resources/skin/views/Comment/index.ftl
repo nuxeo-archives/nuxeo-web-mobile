@@ -18,8 +18,16 @@
             <div class="commentText">${comment.comment.text}</div>
           </li>
         </#list>
-        </ul>        
+        </ul>
+        <#if Adapter.hasAddingCommentRight()>
+          <form id="newComment" method="post">
+            <textarea name="textarea" id="textarea-a" placeholder="Add your own comment"></textarea>
+            <button data-inline="true" data-icon="check">Post your comment</button>
+          </form>
+        </#if>
+        
     </div>
+    
 
     <div data-role="footer">
         <h4>Page Footer</h4>
