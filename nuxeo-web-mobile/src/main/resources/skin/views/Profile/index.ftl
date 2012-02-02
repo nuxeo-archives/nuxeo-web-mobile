@@ -12,7 +12,7 @@
         <div class="avatar">
           <img src="${This.getAvatarURI(username)}" alt="Avatar">
         </div>
-        <div class="profilInfo clear">
+        <div class="profileInfo clear">
           <div class="name">
 	          <#if userMainInfo.user.firstName != "" && userMainInfo.user.firstName != "">
 	            ${userMainInfo.user.firstName} ${userMainInfo.user.lastName}

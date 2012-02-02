@@ -28,17 +28,20 @@
 .profile .profileDetail{ margin-bottom: -15px;	padding: 1.1em }
   .profileDetail .avatar { float: left; height: 5em; width: 5em }
     .profileDetail .avatar img { max-height: 4.5em; max-width: 4.5em }
-  .profilInfo { margin-left: 5.5em }
-    .profilInfo .name { font-weight: bold; font-size: 115%; margin-bottom: .5em }
-    .profilInfo .email { font-size: 90%; margin-bottom: .4em }
-  .profileDetail .moreInfo li label { color: #999; display: inline; margin-right: .4em }
+  .profileInfo { margin-left: 5.5em }
+    .profileInfo .name { font-weight: bold; font-size: 115%; margin-bottom: .5em }
+    .profileInfo .email { font-size: 90% }
+    .profileInfo .groups { padding-top: .4em }
+  .profileDetail .moreInfo li label { color: #999; margin-right: .4em; width: 7em }
   .profileDetail .moreInfo li span { font-size: 16px; font-weight: normal; line-height: 1.4 }
-
+  .profileDetail .moreInfo fieldset.ui-controlgroup { display: inline-block	}
+  .profileDetail .moreInfo li label.radioLabel { color: #000; margin-right: .4em; width: auto }
 
 /* ================================ */
 /* Generic classes */
 .white { background-color: #fff }
 .nospace { margin: -15px -15px 0 }
+.marginBottom { margin-bottom: .4em }
 .shadow { box-shadow: 0 0 8px #6e6e6e }
 
 .tag { background-color: #0089bd ; border-radius: .2em; color: #fff;
@@ -50,6 +53,11 @@
 		text-shadow: none;
 		white-space: nowrap }
 .tag .ui-link, .tag .ui-link:hover, .tag .ui-link:visited { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
+
+.gray { color: #999 }
+
+.floatL { float: left }
+.floatR { float: right }
 
 .clear:before, .clear:after { content:""; display:table }
 .clear:after { clear:both }
