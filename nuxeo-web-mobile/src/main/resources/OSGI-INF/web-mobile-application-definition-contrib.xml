@@ -11,6 +11,7 @@
           <resources>
             <resourcesBaseURL>/site/skin/nuxeo</resourcesBaseURL>
             <resourcesBaseURL>/restAPI/preview</resourcesBaseURL>
+            <resourcesBaseURL>/nxfile</resourcesBaseURL>
           </resources>
         </application>
 
