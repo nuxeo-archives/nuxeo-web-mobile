@@ -17,6 +17,7 @@
 package org.nuxeo.ecm.mobile.webengine;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
@@ -24,8 +25,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.ecm.core.api.DocumentModelList;
+import org.nuxeo.ecm.core.api.IterableQueryResult;
 import org.nuxeo.ecm.webengine.WebException;
+import org.nuxeo.ecm.webengine.model.Template;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.DefaultObject;
 
@@ -41,18 +43,43 @@ public class Search extends DefaultObject {
 
     private static final Log log = LogFactory.getLog(Search.class);
 
+    private static final String QUERY_PATTERN = "SELECT ecm:uuid, dc:title, dc:description, common:icon "
+            + "FROM Document WHERE ecm:fulltext = '%s' "
+            + "AND (ecm:isCheckedInVersion = 0) "
+            + "AND (ecm:mixinType != 'HiddenInNavigation') "
+            + "AND (ecm:currentLifeCycleState != 'deleted') %s";
+
+    private static final String ORDER_PATTERN = "ORDER BY %s";
 
     @GET
-    public Object doGet(@QueryParam("q") String queryString) {
+    public Template doGet(@QueryParam("q") String fulltext,
+            @QueryParam("order") String orderParam,
+            @QueryParam("max") Integer max) {
+        String order = (orderParam != null && !"".equals(orderParam.trim())) ? String.format(ORDER_PATTERN,
+                orderParam) : "";
+        String query = String.format(QUERY_PATTERN, fulltext, order);
+
+        return doGetNXQL(query, max).arg("fulltext", fulltext);
+    }
+
+    @GET
+    @Path("nxql")
+    public Template doGetNXQL(@QueryParam("q") String queryString,
+            @QueryParam("max") Integer max) {
         CoreSession session = ctx.getCoreSession();
-        DocumentModelList docs;
+        IterableQueryResult docs;
+
+        if (max == null) {
+            max = 20;
+        }
+
         try {
-            docs = session.query("SELECT * FROM Document WHERE ecm:fulltext = '" + queryString + "'");
+            docs = session.queryAndFetch(queryString, "NXQL");
         } catch (ClientException e) {
             log.error(e, e);
             throw new WebException(e.getMessage());
-        };
-        return getView("index").arg("docs", docs);
+        }
+        return getView("index").arg("docs", docs.iterator()).arg("size",
+                docs.size()).arg("max", max).arg("q", queryString);
     }
-    
 }

@@ -16,8 +16,10 @@
     <div data-role="content">
       <ul data-role="listview" class="ui-listview">
         <li>
-          <form method="get" action="${Root.path}/docPath/@search">
-            <input type="search" name="fullText" id="fullText" value="" />
+          <form method="get" action="${Root.path}/search">
+            <input type="search" name="q" id="q" value="" placeholder="Fulltext Search"/>
+            <input type="hidden" name="order" id="order" value="dc:modified DESC" />
+            <input type="hidden" name="max" id="max" value="20" />
           </form>
         </li>
         <li>
