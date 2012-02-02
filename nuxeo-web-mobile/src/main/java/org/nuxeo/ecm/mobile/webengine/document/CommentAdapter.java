@@ -22,9 +22,12 @@ import java.util.List;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.platform.comment.api.CommentableDocument;
 import org.nuxeo.ecm.webengine.WebException;
@@ -55,6 +58,25 @@ public class CommentAdapter extends DefaultAdapter {
         DocumentModel comment = initializeEmptyComment();
         comment.setPropertyValue("comment:text", newTextComment);
         getCommentableDocument().addComment(comment);
+        ctx.getCoreSession().saveDocument(getDocumentModel());
+        return getView("index");
+    }
+
+    @POST
+    @Path("{commentIdParent}")
+    public Object doPost(@FormParam("newComment") String newTextComment, @PathParam("commentIdParent") String commentIdParent)
+            throws PropertyException, ClientException {
+        DocumentModel commentParent = null;
+        if (commentIdParent != null) {
+            commentParent = ctx.getCoreSession().getDocument(new IdRef(commentIdParent));
+        }
+        DocumentModel comment = initializeEmptyComment();
+        comment.setPropertyValue("comment:text", newTextComment);
+        if (commentParent != null) {
+            getCommentableDocument().addComment(commentParent, comment);
+        } else {
+            getCommentableDocument().addComment(comment);
+        }
         ctx.getCoreSession().saveDocument(getDocumentModel());
         return getView("index");
     }
