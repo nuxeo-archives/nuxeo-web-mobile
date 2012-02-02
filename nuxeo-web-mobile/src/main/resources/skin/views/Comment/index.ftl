@@ -12,7 +12,10 @@
         <#list Adapter.comments as comment>
           <li class="white">
             <div class="details">
-              <span class="author"><a href="#">${comment.comment.author}</a></span><span class="time">${comment.comment.creationDate.time?datetime}</span>
+              <span class="author">
+                <a href="${Root.path}/profile/${comment.comment.author}">${comment.comment.author}</a>
+                </span><span class="time">${comment.comment.creationDate.time?datetime}</span>
+              </span>
             </div>
             <div class="comment">${comment.comment.text}</div>
             <#if Adapter.hasAddingCommentRight()>
