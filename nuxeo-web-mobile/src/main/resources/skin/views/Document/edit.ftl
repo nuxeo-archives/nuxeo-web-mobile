@@ -19,26 +19,14 @@
 			  </div>
 			  <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
 			    <label for="textarea" class="ui-input-text">Description</label>
-<<<<<<< Updated upstream
 			    <textarea id="textarea" value="${This.document.description}" name="dc:description"  rows="8" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
-=======
-			    <textarea id="textarea" name="textarea" rows="8" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
->>>>>>> Stashed changes
 			  </div>
 			  <fieldset class="ui-grid-a">
 			    <div class="ui-block-a">
-			      <div data-theme="d" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-up-d" aria-disabled="false">
-			        <span class="ui-btn-inner ui-btn-corner-all">
-			          <button class="ui-btn-text">Cancel</button>
-			        </span>
-			      </div>
+			      <button class="ui-btn-text">Cancel</button>
 			    </div>
 			    <div class="ui-block-b">
-			      <div data-theme="a" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-up-b" aria-disabled="false">
-			        <span class="ui-btn-inner ui-btn-corner-all">
-			          <button class="ui-btn-text">Submit</button>
-			        </span>
-			      </div>
+			      <button class="ui-btn-text" data-theme="b">Submit</button>
 			    </div>
 			  </fieldset>
       </form>
