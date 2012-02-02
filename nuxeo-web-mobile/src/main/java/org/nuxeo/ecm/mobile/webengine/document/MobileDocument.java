@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -58,6 +60,21 @@ public class MobileDocument extends DocumentObject {
         } catch (Exception e) {
             throw WebException.wrap(e);
         }
+    }
+
+    /**
+     * Needed to not break the navigation after a false PUT see NXP-8778 as I'm
+     * redirected to this /@put URL
+     * 
+     */
+    @GET
+    @Path("@put")
+    public Object redirectToRealURL() {
+        String uri = ctx.getRequest().getRequestURI();
+        // Remove the @put
+        uri = uri.substring(0, uri.length() - "@put".length() - 1);
+        String queryString = ctx.getRequest().getQueryString();
+        return redirect(uri + (queryString!=null? "?" + queryString:""));
     }
 
     @Override
@@ -102,8 +119,9 @@ public class MobileDocument extends DocumentObject {
         throw new WebException(
                 "Principal found is not a NuxeoPrincipal can't generate it!");
     }
-    
-    // *************** TODO REMOVE WHEN PREVIEW WITH NAVIGATION RESOLVED ************
+
+    // *************** TODO REMOVE WHEN PREVIEW WITH NAVIGATION RESOLVED
+    // ************
     private String nuxeoContextPath;
 
     public String getPreviewURL() {
@@ -111,7 +129,8 @@ public class MobileDocument extends DocumentObject {
         if (!(targetObject instanceof MobileDocument)) {
             throw new WebException("Target Object must be MobileDocument");
         }
-        return getNuxeoContextPath() + "/"
+        return getNuxeoContextPath()
+                + "/"
                 + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
     }
 
