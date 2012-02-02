@@ -7,8 +7,8 @@
         <h1>Search</h1>
     </div>
 
-    <div data-role="content" class="comments">
-        <ul data-role="listview" class="ui-listview">
+    <div data-role="content">
+        <ul data-role="listview" class="ui-listview search">
         <#if size = 0>
         No document found
         </#if>
@@ -23,13 +23,14 @@
               <#else>
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
               </#if>
-                <span>${doc["dc:title"]}</span>
+                <h3>${doc["dc:title"]}</h3>
+                <p class="ui-li-desc">Description of the document</p>
               </a>
         </li>
         <#if (index > max)><#break></#if>
         </#list>
         <#if (size > max)>
-          <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
+          <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c" data-theme="e">
             Too much result too return please affine your request.
           </li>
           <li>

@@ -1,5 +1,13 @@
 /* -- Nuxeo Web Mobile default CSS -- */
 
+/* Login */
+.login { background: #d3e5fd url('../img/nuxeo_login.jpg') no-repeat bottom left }
+
+  .login .ui-field-contain { border: none; padding: .2em .4em }
+  .login .logo { background-color: #000; padding: .6em 0 .5em; text-align: center }
+    .login .logo img { max-height: 10em; max-width: 5.7em }
+  .login .authentification { margin: 3.5em auto 0; width: 70% }
+
 /* View document */
 .documentInfo { padding: 1.1em }
   .documentInfo div { line-height: 130% }
@@ -39,6 +47,9 @@
   .profileDetail .moreInfo li span { font-size: 16px; font-weight: normal; line-height: 1.4 }
   .profileDetail .moreInfo fieldset.ui-controlgroup { display: inline-block	}
   .profileDetail .moreInfo li label.radioLabel { color: #000; margin-right: .4em; width: auto }
+
+/* Searches */
+.search h3.ui-li-heading { margin: .3em 0 .6em }
 
 /* ================================ */
 /* Generic classes */

@@ -20,9 +20,10 @@
                 <#if doc.common.icon != null && doc.common.icon != "">
                   <img class="ui-li-icon ui-li-thumb" src="${skinPath}${doc.common.icon}" />
                 <#else>
-                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
+                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
                 </#if>
-                <span>${doc.title}</span>
+                <h3>${doc.title}</h3>
+                <p class="ui-li-desc">Description of the document</p>
               </a>
             </li>
           </#list>
@@ -40,9 +41,10 @@
                 <#if doc.common.icon != null && doc.common.icon != "">
                   <img class="ui-li-icon ui-li-thumb" src="${skinPath}${doc.common.icon}" />
                 <#else>
-                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
+                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
                 </#if>
-                <span>${doc.title}</span>
+                <h3>${doc.title}</h3>
+                <p class="ui-li-desc">Description of the document</p>
               </a>
             </li>
           </#list>

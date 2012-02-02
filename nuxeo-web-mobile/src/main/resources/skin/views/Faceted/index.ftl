@@ -11,7 +11,7 @@
         <#if page?size = 0>
           No Document returned
         </#if>
-        <ul data-role="listview" class="ui-listview">
+        <ul data-role="listview" class="ui-listview search">
         <#list page as doc>
           <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
             <#if doc.isFolder>
@@ -22,9 +22,10 @@
             <#if doc.common.icon != null && doc.common.icon != "">
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}${doc.common.icon}" />
             <#else>
-                <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
             </#if>
-                <span>${doc.title}</span>
+                <h3>${doc.title}</h3>
+                <p class="ui-li-desc">Description of the document</p>
               </a>
           </li>
         </#list>
