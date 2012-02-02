@@ -19,11 +19,11 @@
           </div>
           <div class="participants">
             <#list This.document.dublincore.contributors as contributor>
-              <span class="tag">
-                <#if contributor != "system">
-                <a href="${Root.path}/profile/${contributor}">${contributor}</a>
-                </#if>
-              </span>
+              <#if contributor != "system">
+                <span class="tag">
+                  <a href="${Root.path}/profile/${contributor}">${contributor}</a>
+                </span>
+              </#if>
             </#list>
           </div>
         </div>
