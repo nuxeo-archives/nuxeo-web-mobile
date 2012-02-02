@@ -24,6 +24,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -33,6 +34,8 @@ import org.nuxeo.ecm.platform.comment.api.CommentableDocument;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
 import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
+
+import bsh.This;
 
 /**
  * Provide view and action on document comments
@@ -64,7 +67,7 @@ public class CommentAdapter extends DefaultAdapter {
 
     @POST
     @Path("{commentIdParent}")
-    public Object doPost(@FormParam("newComment") String newTextComment, @PathParam("commentIdParent") String commentIdParent)
+    public Object doPostReplyForm(@FormParam("newComment") String newTextComment, @PathParam("commentIdParent") String commentIdParent)
             throws PropertyException, ClientException {
         DocumentModel commentParent = null;
         if (commentIdParent != null) {
@@ -78,7 +81,23 @@ public class CommentAdapter extends DefaultAdapter {
             getCommentableDocument().addComment(comment);
         }
         ctx.getCoreSession().saveDocument(getDocumentModel());
-        return getView("index");
+        return redirect(this.getPath());
+    }
+
+    @GET
+    @Path("{commentIdParent}")
+    public Object doGetReplyForm(
+            @PathParam("commentIdParent") String commentIdParent)
+            throws PropertyException, ClientException {
+        return getView("new").arg("parentId", commentIdParent);
+    }
+
+    @GET
+    @Path("{commentId}/@delete")
+    public Object doDeleteComment(@PathParam("commentId") String commentId)
+            throws PropertyException, ClientException {
+        ctx.getCoreSession().removeDocument(new IdRef(commentId));
+        return Response.ok().build();
     }
 
     public List<DocumentModel> getComments() throws ClientException {
@@ -86,8 +105,17 @@ public class CommentAdapter extends DefaultAdapter {
         return comments;
 
     }
-    
-    public boolean hasWriteRightOnComment(DocumentModel comment) throws ClientException {
+
+    public List<DocumentModel> getComments(DocumentModel commentParent)
+            throws ClientException {
+        List<DocumentModel> comments = getCommentableDocument().getComments(
+                commentParent);
+        return comments;
+
+    }
+
+    public boolean hasWriteRightOnComment(DocumentModel comment)
+            throws ClientException {
         return ctx.getCoreSession().hasPermission(comment.getRef(), "Write");
     }
 
