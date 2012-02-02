@@ -9,7 +9,7 @@
 
     <div data-role="content" class="comments">
         <ul data-role="listview" class="ui-listview">
-        <#if size == 0>
+        <#if size = 0>
         No document found
         </#if>
 
