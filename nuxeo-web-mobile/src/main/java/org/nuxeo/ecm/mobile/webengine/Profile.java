@@ -16,7 +16,9 @@
  */
 package org.nuxeo.ecm.mobile.webengine;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -53,14 +55,28 @@ public class Profile extends DefaultObject {
     @Path("{username}")
     public Object doGet(@PathParam("username") String username)
             throws ClientException, Exception {
+        HttpServletRequest request = ctx.getRequest();
+        String mode = request.getParameter("mode");
+        if (mode == null) {
+            mode = "view";
+        }
+        
+        String targetView = mode + getViewSuffix();
+
         DocumentModel userProfile = getUserProfile(username);
         DocumentModel userMainInfo = getUserManager().getUserModel(username);
-        return getView("index").arg("userProfile", userProfile).arg(
+        return getView(targetView).arg("userProfile", userProfile).arg(
                 "userMainInfo", userMainInfo);
     }
 
     @GET
     public Object doGet() throws ClientException, Exception {
+        String userName = ctx.getPrincipal().getName();
+        return doGet(userName);
+    }
+
+    @POST
+    public Object doPost() throws ClientException, Exception {
         String userName = ctx.getPrincipal().getName();
         return doGet(userName);
     }
@@ -94,6 +110,14 @@ public class Profile extends DefaultObject {
             userManager = Framework.getService(UserManager.class);
         }
         return userManager;
+    }
+    
+    private String getViewSuffix() throws Exception {
+        if (isRichProfileDeployed()) {
+            return "_rich";
+        } else {
+            return "_standard";
+        }
     }
 
     private UserProfileService getUserProfileService() throws Exception {

@@ -37,32 +37,7 @@
 	          </#if>
 	      </div>
         </div>
-      <#if This.isRichProfileDeployed()>
-        <div class="moreInfo">
-          <ul data-inset="true" data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
-            <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">Phone number</label>
-              <#if userProfile.userprofile.phonenumber != "">
-                <span><a href="tel:${userProfile.userprofile.phonenumber}">${userProfile.userprofile.phonenumber}</a></span>
-              </#if>
-            </li>
-            <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">Birth Date</label>
-              <#if userProfile.userprofile.birthdate != "">
-                <span>${userProfile.userprofile.birthdate?date}</span>
-              </#if>
-            </li>
-            <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">Gender</label>
-              <#if userProfile.userprofile.gender = true>
-                <span>Male</span>
-              <#else>
-                <span>Female</span>
-              </#if>
-            </li>
-	        <ul>
-        </div>
-      </#if>
+
       </div>
     </div>
 

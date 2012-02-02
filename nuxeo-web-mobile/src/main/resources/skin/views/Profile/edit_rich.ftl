@@ -15,28 +15,15 @@
           </div>
           <div class="profileInfo clear">
             <div class="name">
-	            <#if userMainInfo.user.firstName != "" && userMainInfo.user.firstName != "">
-	              <div class="marginBottom">
-	                <input type="text" value="" placeholder="${userMainInfo.user.firstName}">
-	              </div>
-	              <div class="email">
-	                <input type="text" name="name" id="name" value="" placeholder="${userMainInfo.user.lastName}">
-	              </div>
-	            <#else>
-	              <div class="marginBottom">
-	                <input type="text" value="" placeholder="First name">
-	              </div>
-	              <div class="email">
-	                <input type="text" name="name" id="name" value="" placeholder="Last name">
-	              </div>
-	            </#if>
+              <div class="marginBottom">
+                <input type="text" name="user:firstName" value="${userMainInfo.user.firstName}" placeholder="First Name">
+              </div>
+              <div class="email">
+                <input type="text" name="user:lastName" value="${userMainInfo.user.lastName}" placeholder="Last Name">
+              </div>
             </div>
             <div class="email">
-	            <#if userMainInfo.user.email != "">
-	              <input type="text" value="" placeholder="${userMainInfo.user.email}">
-	            <#else>
-	              <input type="text" value="" placeholder="email address">
-	            </#if>
+	          <input type="text" name="user:email" value="${userMainInfo.user.email}" placeholder="User Mail">
             </div>
             <div class="groups">
               <label class="gray">Groups:</label>
@@ -49,24 +36,15 @@
 	            </#if>
 	          </div>
           </div>
-          <#if This.isRichProfileDeployed()>
             <div class="moreInfo">
               <ul data-inset="true" data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
                 <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
                   <label for="name" class="ui-input-text">Phone number</label>
-                  <#if userProfile.userprofile.phonenumber != "">
-                    <input type="text"  value="" placeholder="${userProfile.userprofile.phonenumber}">
-                  <#else>
-                    <input type="text" value="">
-                  </#if>
+                  <input type="text" name="" value="${userProfile.userprofile.phonenumber}" placeholder="Phone Number"></input>
                 </li>
                 <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
                   <label for="name" class="ui-input-text">Birth Date</label>
-                  <#if userProfile.userprofile.birthdate != "">
-                    <input type="text"  value="" placeholder="${userProfile.userprofile.birthdate?date}">
-                  <#else>
-                    <input type="text" value="">
-                  </#if>
+                  <input type="text" name="" value="${userProfile.userprofile.birthdate?date}" placeholder="Birth Date">
                 </li>
                 <li data-role="fieldcontain" class="clear ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
                   <label class="gray ui-input-text">Gender</label>
@@ -79,7 +57,6 @@
                 </li>
 	            </ul>
             </div>
-          </#if>
         </form>
       </div>
     </div>
