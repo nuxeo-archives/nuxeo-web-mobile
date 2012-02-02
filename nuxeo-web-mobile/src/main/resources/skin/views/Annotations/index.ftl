@@ -13,7 +13,9 @@
         <#list Adapter.annotations as annotation>
           <li class="white">
             <div class="details">
-              <span class="author"><a href="#">${annotation.creator}</a></span>
+              <span class="author">
+                <a href="${Root.path}/profile/${annotation.creator}">${annotation.creator}</a>
+              </span>
             </div>
             <div class="annotation">${annotation.bodyAsText}</div>
           </li>
