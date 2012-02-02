@@ -19,7 +19,11 @@
 			  </div>
 			  <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
 			    <label for="textarea" class="ui-input-text">Description</label>
+<<<<<<< Updated upstream
 			    <textarea id="textarea" value="${This.document.description}" name="dc:description"  rows="8" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
+=======
+			    <textarea id="textarea" name="textarea" rows="8" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
+>>>>>>> Stashed changes
 			  </div>
 			  <fieldset class="ui-grid-a">
 			    <div class="ui-block-a">
@@ -44,3 +48,4 @@
 
 </@block>
 </@extends>
+
