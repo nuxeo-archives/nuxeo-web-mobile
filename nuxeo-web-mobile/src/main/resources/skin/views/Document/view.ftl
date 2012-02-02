@@ -41,7 +41,7 @@
             </li>
           </#if>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}">
+            <a href="@relation">
               Relations
             </a>
           </li>
