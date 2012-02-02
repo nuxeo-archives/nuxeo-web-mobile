@@ -37,21 +37,21 @@
           </a>
         </li>
         <li>
-          <a href="/nuxeo/site/mobile/auth/logout" class="ui-link-inherit">
+          <a href="#" class="ui-link-inherit">
             <img src="${skinPath}/icons/tasks.png" class="ui-li-thumb">
             <h3 class="ui-li-heading">Tasks</h3>
             <p class="ui-li-desc">Check if someone is waiting a action from you</p>
           </a>
         </li>
         <li>
-          <a href="/nuxeo/site/mobile/auth/logout" class="ui-link-inherit">
+          <a href="#" class="ui-link-inherit">
             <img src="${skinPath}/icons/feed.png" class="ui-li-thumb">
             <h3 class="ui-li-heading">Activity feed</h3>
             <p class="ui-li-desc">See what is happening since the last time you work</p>
           </a>
         </li>
         <li>
-          <a href="/nuxeo/site/mobile/auth/logout" class="ui-link-inherit">
+          <a href="${Root.path}/profile" class="ui-link-inherit">
             <img src="${skinPath}/icons/profile.png" class="ui-li-thumb">
             <h3 class="ui-li-heading">Profile</h3>
             <p class="ui-li-desc">Enrich your profile</p>
