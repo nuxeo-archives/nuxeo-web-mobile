@@ -30,7 +30,7 @@
           </a>
         </li>
         <li>
-          <a href="/nuxeo/site/mobile/auth/logout" class="ui-link-inherit">
+          <a href="${Root.path}/search/faceted" class="ui-link-inherit">
             <img src="${skinPath}/icons/annuaire.png" class="ui-li-thumb">
             <h3 class="ui-li-heading">Search</h3>
             <p class="ui-li-desc">Find your document quickly</p>

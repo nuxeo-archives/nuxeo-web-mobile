@@ -16,6 +16,10 @@
  */
 package org.nuxeo.ecm.mobile.webengine;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,17 +29,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IterableQueryResult;
+import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.Template;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.DefaultObject;
+import org.nuxeo.runtime.api.Framework;
 
 /**
  * Manage authentication form and logout action
- *
+ * 
  * @author bjalon
- *
+ * 
  */
 @WebObject(type = "Search")
 @Produces("text/html;charset=UTF-8")
@@ -51,12 +58,14 @@ public class Search extends DefaultObject {
 
     private static final String ORDER_PATTERN = "ORDER BY %s";
 
+    private FacetedSearchService facetedSearchService;
+
     @GET
     public Template doGet(@QueryParam("q") String fulltext,
             @QueryParam("order") String orderParam,
             @QueryParam("max") Integer max) {
-        String order = (orderParam != null && !"".equals(orderParam.trim())) ? String.format(ORDER_PATTERN,
-                orderParam) : "";
+        String order = (orderParam != null && !"".equals(orderParam.trim())) ? String.format(
+                ORDER_PATTERN, orderParam) : "";
         String query = String.format(QUERY_PATTERN, fulltext, order);
 
         return doGetNXQL(query, max).arg("fulltext", fulltext);
@@ -81,5 +90,46 @@ public class Search extends DefaultObject {
         }
         return getView("index").arg("docs", docs.iterator()).arg("size",
                 docs.size()).arg("max", max).arg("q", queryString);
+    }
+
+    @GET
+    @Path("faceted")
+    public Object doGetFacetedSearches() throws ClientException {
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("mySearches", mySearch());
+        args.put("sharedSearches", sharedSearches());
+        return getView("faceted-searches").args(args);
+    }
+
+    private List<DocumentModel> mySearch() throws ClientException {
+        CoreSession session = ctx.getCoreSession();
+        List<DocumentModel> searches = getFacetedSearchService().getCurrentUserSavedSearches(
+                session);
+        return searches;
+    }
+
+    private Object sharedSearches() throws ClientException {
+        CoreSession session = ctx.getCoreSession();
+        List<DocumentModel> searches = getFacetedSearchService().getOtherUsersSavedSearches(
+                session);
+        return searches;
+    }
+
+    private FacetedSearchService getFacetedSearchService()
+            throws ClientException {
+        if (facetedSearchService == null) {
+            try {
+                facetedSearchService = Framework.getService(FacetedSearchService.class);
+            } catch (Exception e) {
+                final String errMsg = "Error connecting to FacetedSearchService. "
+                        + e.getMessage();
+                throw new ClientException(errMsg, e);
+            }
+            if (facetedSearchService == null) {
+                throw new ClientException(
+                        "FacetedSearchService service not bound");
+            }
+        }
+        return facetedSearchService;
     }
 }

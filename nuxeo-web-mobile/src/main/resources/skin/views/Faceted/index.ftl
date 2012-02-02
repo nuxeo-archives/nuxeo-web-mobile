@@ -1,0 +1,37 @@
+<@extends src="base.ftl">
+
+<@block name="content">
+<div data-role="page">
+
+    <div data-role="header">
+        <h1>Request Result ${pageIndex}/${pageNumber}</h1>
+    </div>
+
+    <div data-role="content">
+        <#if page?size>
+          No Document returned
+        </#if>
+        <ul data-role="listview" class="ui-listview">
+        <#list page as doc>
+          <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
+            <#if doc.isFolder>
+              <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@folderish">
+            <#else>
+              <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}">
+            </#if>
+            <#if doc.common.icon != null && doc.common.icon != "">
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}${doc.common.icon}" />
+            <#else>
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
+            </#if>
+                <span>${doc.title}</span>
+              </a>
+          </li>
+        </#list>
+        </ul>        
+    </div>
+
+</div>
+
+</@block>
+</@extends>

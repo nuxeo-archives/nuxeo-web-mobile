@@ -1,0 +1,43 @@
+<component name="org.nuxeo.webengine.mobile.pageproviders.contrib">
+
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+    point="providers">
+
+      <coreQueryPageProvider name="faceted_search_core_default">
+        <property name="coreSession">#{documentManager}</property>
+        <whereClause docType="FacetedSearchDefault">
+          <fixedPart>
+            ecm:mixinType != 'HiddenInNavigation' AND
+            ecm:mixinType != 'HiddenInFacetedSearch' AND ecm:isCheckedInVersion = 0
+            AND ecm:currentLifeCycleState != 'deleted'
+          </fixedPart>
+          <predicate parameter="ecm:fulltext" operator="FULLTEXT">
+            <field schema="faceted_search_default" name="ecm_fulltext" />
+          </predicate>
+          <predicate parameter="dc:created" operator="BETWEEN">
+            <field schema="faceted_search_default" name="dc_created_min" />
+            <field schema="faceted_search_default" name="dc_created_max" />
+          </predicate>
+          <predicate parameter="dc:modified" operator="BETWEEN">
+            <field schema="faceted_search_default" name="dc_modified_min" />
+            <field schema="faceted_search_default" name="dc_modified_max" />
+          </predicate>
+          <predicate parameter="dc:creator" operator="IN">
+            <field schema="faceted_search_default" name="dc_creator" />
+          </predicate>
+          <predicate parameter="dc:coverage" operator="STARTSWITH">
+            <field schema="faceted_search_default" name="dc_coverage" />
+          </predicate>
+          <predicate parameter="dc:subjects" operator="STARTSWITH">
+            <field schema="faceted_search_default" name="dc_subjects" />
+          </predicate>
+          <predicate parameter="ecm:path" operator="STARTSWITH">
+            <field schema="faceted_search_default" name="ecm_path" />
+          </predicate>
+        </whereClause>
+        <sort column="dc:title" ascending="true" />
+        <pageSize>20</pageSize>
+      </coreQueryPageProvider>
+
+  </extension>
+</component>

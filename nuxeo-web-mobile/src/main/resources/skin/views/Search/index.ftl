@@ -9,6 +9,10 @@
 
     <div data-role="content" class="comments">
         <ul data-role="listview" class="ui-listview">
+        <#if size == 0>
+        No document found
+        </#if>
+
         <#assign index = 0>
         <#list docs as doc>
         <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
@@ -31,7 +35,7 @@
           <li>
             <#if fulltext != null>
             <form method="get" action="${Root.path}/search">
-              <input type="search" name="q" id="q" value="" placeholder="Fulltext Search"/>
+              <input type="search" name="q" id="q" value="${fulltext}" placeholder="Fulltext Search"/>
               <input type="hidden" name="order" id="order" value="dc:modified DESC" />
               <input type="hidden" name="max" id="max" value="20" />
             </form>
