@@ -27,7 +27,7 @@
             </#list>
           </div>
         </div>
-          
+
 
         <ul data-role="listview" data-inset="true">
           <#if This.hasPreview()>
@@ -51,7 +51,7 @@
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}">
+            <a href="${Root.path}/doc/${This.document.id}/@annotations">
               Annotations
             </a>
           </li>
