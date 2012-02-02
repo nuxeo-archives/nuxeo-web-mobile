@@ -14,15 +14,18 @@
 .preview {  border: medium none; height: 150em; overflow: visible; padding-top: 2.7em; width: 100% }
 	.preview body { background-color: #fff; overflow: visible }
 
-/* Comments */
+/* Comments & Annotations */
 .comments {}
-	.comments ul { list-style: none; 	padding: 0 }
-	.comments li { box-shadow: 0 5px 8px #6e6e6e; padding: .4em .5em; margin: 0 0 .3em }
-	.comments .details, .comments .actions { font-size: 80% }
-	.comments .actions { text-align: right }
-	.comments .details span { margin: .2em }
+	.comments ul, .annotations ul { list-style: none; 	padding: 0 }
+	.comments li, .annotations li { box-shadow: 0 5px 8px #6e6e6e; padding: .4em .5em; margin: 0 0 .3em }
+	.comments .details, .comments .actions,
+		.annotations .details, .annotations .actions { font-size: 80% }
+	.comments .actions, .annotations .actions { text-align: right }
+	.comments .details span,
+		.annotations .details span, { margin: .2em }
 	.comments .time { color: #aaa }
-	.comments .comment { line-height: 125%; padding: .3em }
+	.comments .comment,
+		.annotations .annotation { line-height: 125%; padding: .3em; word-wrap: break-word }
 
 /* Profile */
 .profile .profileDetail{ margin-bottom: -15px;	padding: 1.1em }

@@ -8,7 +8,7 @@
     </div>
 
     <div data-role="content">
-        <#if page?size>
+        <#if page?size = 0>
           No Document returned
         </#if>
         <ul data-role="listview" class="ui-listview">
