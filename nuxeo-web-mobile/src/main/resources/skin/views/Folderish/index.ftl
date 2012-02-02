@@ -18,7 +18,7 @@
             </#if>
             <#if child.common.icon != null && child.common.icon != "">
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}${child.common.icon}" />
-            </#else>
+            <#else>
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
             </#if>
                 <span>${child.title}</span>

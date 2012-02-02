@@ -32,7 +32,10 @@
         <ul data-role="listview" data-inset="true">
           <#if This.hasPreview()>
             <li class="nxDocumentItem">
+              <!-- TODO: FIND A SOLUTION TO KEEP THE NAVIGATION WITH THE PREVIEW
               <a href="${Root.path}/doc/${Document.id}/@preview">
+              -->
+              <a data-ajax="false" href="${This.previewURL}">
                 Preview
               </a>
             </li>

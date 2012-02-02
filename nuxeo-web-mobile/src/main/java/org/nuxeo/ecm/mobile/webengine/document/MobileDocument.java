@@ -34,6 +34,7 @@ import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
+import org.nuxeo.runtime.api.Framework;
 
 import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
 
@@ -101,5 +102,25 @@ public class MobileDocument extends DocumentObject {
         throw new WebException(
                 "Principal found is not a NuxeoPrincipal can't generate it!");
     }
+    
+    // *************** TODO REMOVE WHEN PREVIEW WITH NAVIGATION RESOLVED ************
+    private String nuxeoContextPath;
+
+    public String getPreviewURL() {
+        Object targetObject = ctx.getTargetObject();
+        if (!(targetObject instanceof MobileDocument)) {
+            throw new WebException("Target Object must be MobileDocument");
+        }
+        return getNuxeoContextPath() + "/"
+                + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
+    }
+
+    private String getNuxeoContextPath() {
+        if (nuxeoContextPath == null) {
+            nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
+        }
+        return nuxeoContextPath;
+    }
+
 
 }
