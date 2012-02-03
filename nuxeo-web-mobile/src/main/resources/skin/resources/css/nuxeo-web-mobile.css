@@ -48,13 +48,23 @@
   .profileDetail .moreInfo fieldset.ui-controlgroup { display: inline-block	}
   .profileDetail .moreInfo li label.radioLabel { color: #000; margin-right: .4em; width: auto }
 
-/* Searches */
-.search h3.ui-li-heading { margin: .3em 0 .6em }
+/* Searches & Browse */
+.search h3.ui-li-heading, .browse h3.ui-li-heading { margin: .3em 0 .6em }
+
+/* Loader */
+.ui-loader { background-color: #fff; background-image: none;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px #bbb;
+    color: #000;
+    opacity: 1;
+    text-shadow: none }
+.ui-icon-loading { background-image: url('../icons/waiter.gif') }
 
 /* ================================ */
 /* Generic classes */
 .white { background-color: #fff }
 .nospace { margin: -15px -15px 0 }
+.noSidespace { margin: 0 -15px }
 .marginBottom { margin-bottom: .4em }
 .shadow { box-shadow: 0 0 8px #6e6e6e }
 
@@ -72,6 +82,7 @@
 
 .floatL { float: left }
 .floatR { float: right }
+.alignC { text-align: center }
 
 .clear:before, .clear:after { content:""; display:table }
 .clear:after { clear:both }

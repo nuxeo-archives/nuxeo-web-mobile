@@ -28,54 +28,43 @@
           </div>
         </div>
 
+        <div data-role="navbar" class="noSidespace">
+          <ul>
+            <#if This.hasPreview()>
+              <li><a data-ajax="false" href="${This.previewURL}"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
+            </#if>
+            <li><a href="${Root.path}/doc/${This.document.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>
+            <li><a href="${Root.path}/doc/${This.document.id}/@annotions"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
+            <li><a href="${Root.path}/doc/${This.document.id}/@relation"><img alt="Relations" src="${skinPath}/icons/relations.png" /></a></li>
+          </ul>
+        </div>
 
         <ul data-role="listview" data-inset="true">
-          <#if This.hasPreview()>
-            <li class="nxDocumentItem">
-              <!-- TODO: FIND A SOLUTION TO KEEP THE NAVIGATION WITH THE PREVIEW
-              <a href="${Root.path}/doc/${Document.id}/@preview">
-              -->
-              <a data-ajax="false" href="${This.previewURL}">
-                Preview
-              </a>
-            </li>
-          </#if>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}/@relation">
-              Relations
+            <a data-ajax="false" href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL">
+              Mail it
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}/@comment">
-              Comments
+            <a data-ajax="false" href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL">
+              Mail me
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}/@annotations">
-              Annotations
+            <a href="${Root.path}/doc/${This.document.id}?mode=edit">
+              Edit
+            </a>
+          </li>
+          <li class="nxDocumentItem">
+            <a href="${Root.path}/doc/${This.document.id}?mode=delete-confirmation" data-rel="dialog">
+              Delete
             </a>
           </li>
         </ul>
-
+        
       </div>
-      <fieldset class="ui-grid-b">
-        <div class="ui-block-a">
-          <a href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL" data-role="button">Mail</a>
-        </div>
-        <div class="ui-block-b">
-          <a href="${Root.path}/doc/${This.document.id}?mode=edit" data-role="button">Edit</a>
-        </div>
-        <div class="ui-block-c">
-          <a href="${Root.path}/doc/${This.document.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">Delete</a>
-        </div>
-      </fieldset>
     </div>
 
     </div>
-</div>
-
-      <div data-role="footer">
-          <h4>Page Footer</h4>
-      </div>
 </@block>
 </@extends>

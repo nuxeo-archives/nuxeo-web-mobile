@@ -7,7 +7,7 @@
         <h1>Search</h1>
     </div>
 
-    <div data-role="content">
+    <div data-role="content" class="search">
         <ul data-role="listview" class="ui-listview search">
         <#if size = 0>
         No document found
@@ -24,7 +24,11 @@
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
               </#if>
                 <h3>${doc["dc:title"]}</h3>
-                <p class="ui-li-desc">Description of the document</p>
+                <#if doc.dublincore.description = null || doc.dublincore.description = "" >
+                  <p class="ui-li-desc">&nbsp;</p>
+                <#else>
+                  <p class="ui-li-desc">${doc.dublincore.description}</p>
+                </#if>
               </a>
         </li>
         <#if (index > max)><#break></#if>
