@@ -38,6 +38,20 @@
   </head>
 
 <body>
- <@block name="content">The Content</@block>
+  <@block name="content">The Content</@block>
+
+  <@block name="footer">
+    <div data-role="footer">
+      <div data-role="navbar">
+        <ul>
+          <li><a data-ajax="false" href="${This.previewURL}"><img alt="Home" src="${skinPath}/icons/footer_home.png" /></a></li>
+          <li><a href="#"><img alt="Personal Workspace" src="${skinPath}/icons/footer_personalworkspace.png" /></a></li>
+          <li><a href="#"><img alt="Profile" src="${skinPath}/icons/footer_profile.png" /></a></li>
+          <li><a href="#"><img alt="Search" src="${skinPath}/icons/footer_search.png" /></a></li>
+        </ul>
+      </div>
+    </div>
+  </@block>
+
 </body>
 </html>

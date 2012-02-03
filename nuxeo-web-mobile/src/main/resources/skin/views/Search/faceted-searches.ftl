@@ -7,7 +7,7 @@
         <h1>Search</h1>
     </div>
 
-    <div data-role="content">
+    <div data-role="content" class="search">
 
       <h2>My Searches</h2>
       <#if mySearches?size == 0>
@@ -23,7 +23,11 @@
                   <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
                 </#if>
                 <h3>${doc.title}</h3>
-                <p class="ui-li-desc">Description of the document</p>
+                <#if doc.dublincore.description = null || doc.dublincore.description = "" >
+                  <p class="ui-li-desc">&nbsp;</p>
+                <#else>
+                  <p class="ui-li-desc">${doc.dublincore.description}</p>
+                </#if>
               </a>
             </li>
           </#list>
@@ -44,7 +48,11 @@
                   <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
                 </#if>
                 <h3>${doc.title}</h3>
-                <p class="ui-li-desc">Description of the document</p>
+                <#if doc.dublincore.description = null || doc.dublincore.description = "" >
+                  <p class="ui-li-desc">&nbsp;</p>
+                <#else>
+                  <p class="ui-li-desc">${doc.dublincore.description}</p>
+                </#if>
               </a>
             </li>
           </#list>
