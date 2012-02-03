@@ -22,7 +22,7 @@
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
             </#if>
                 <h3>${child.title}</h3>
-                <#if child.dublincore.description = null || child.dublincore.description = "" >
+                <#if child.dublincore.description == null || child.dublincore.description == "" >
                   <p class="ui-li-desc">&nbsp;</p>
                 <#else>
                   <p class="ui-li-desc">${child.dublincore.description}</p>

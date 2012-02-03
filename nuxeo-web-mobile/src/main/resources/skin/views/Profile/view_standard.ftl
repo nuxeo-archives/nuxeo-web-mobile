@@ -13,11 +13,14 @@
           <img src="${This.getAvatarURI(username)}" alt="Avatar">
         </div>
         <div class="profileInfo clear">
-          <div class="name">
-	          <#if userMainInfo.user.firstName != "" && userMainInfo.user.firstName != "">
-	            ${userMainInfo.user.firstName} ${userMainInfo.user.lastName}
+          <#if userMainInfo.user.firstName != "" && userMainInfo.user.firstName != "">
+            <div class="name">
+              ${userMainInfo.user.firstName} ${userMainInfo.user.lastName}
+            </div>
 	          <#else>
-	            No information set for First Name/Last Name
+            <div class="name gray">
+	            John Doe
+            </div>
 	          </#if>
           </div>
           <div class="email">
