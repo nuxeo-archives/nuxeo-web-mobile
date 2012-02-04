@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page">
+<div data-role="page" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
         <h1>${username}'s Profile</h1>
@@ -37,6 +37,14 @@
 	          </#if>
 	      </div>
         </div>
+      <fieldset class="ui-grid-b">
+        <div class="ui-block-a">
+          <a href="?mode=edit" data-role="button">Edit</a>
+        </div>
+        <div class="ui-block-c">
+          <a href="?mode=password" data-role="button">Password</a>
+        </div>
+      </fieldset>
 
       </div>
     </div>

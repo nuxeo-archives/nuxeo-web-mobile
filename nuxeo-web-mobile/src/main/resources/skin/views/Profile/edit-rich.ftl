@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page">
+<div data-role="page" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
         <h1>${username}'s Profile</h1>
@@ -9,7 +9,7 @@
 
     <div data-role="content" class="profile">
             <div class="white nospace profileDetail">
-        <form>
+        <form action="${username}?mode=edit" method="post">
           <div class="avatar">
             <img src="${This.getAvatarURI(username)}" alt="Avatar">
           </div>
@@ -23,7 +23,7 @@
               </div>
             </div>
             <div class="email">
-	          <input type="text" name="user:email" value="${userMainInfo.user.email}" placeholder="User Mail">
+              <input type="text" name="user:email" value="${userMainInfo.user.email}" placeholder="User Mail">
             </div>
             <div class="groups">
               <label class="gray">Groups:</label>
@@ -31,10 +31,10 @@
                 <span class="tag">No Group</span>
               <#else>
                 <#list userMainInfo.user.groups as group>
-	                <span class="tag">${group}</span>
-	              </#list>
-	            </#if>
-	          </div>
+                    <span class="tag">${group}</span>
+                  </#list>
+                </#if>
+              </div>
           </div>
             <div class="moreInfo">
               <ul data-inset="true" data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
@@ -49,14 +49,22 @@
                 <li data-role="fieldcontain" class="clear ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
                   <label class="gray ui-input-text">Gender</label>
                   <fieldset data-role="controlgroup">
-                    <input type="radio" name="male" id="male" value="male" checked="checked" />
-                    <label class="radioLabel" for="male">Male</label>
-                    <input type="radio" name="female" id="female" value="female"  />
-                    <label class="radioLabel" for="female">Female</label>
+                    <input type="radio" name="true" id="true" value="true" checked="checked" />
+                    <label class="radioLabel" for="true">Male</label>
+                    <input type="radio" name="false" id="false" value="false"  />
+                    <label class="radioLabel" for="false">Female</label>
                   </fieldset>
                 </li>
-	            </ul>
+                </ul>
             </div>
+            <fieldset class="ui-grid-b">
+              <div class="ui-block-a">
+                <button onclick="$.mobile.urlHistory.clearForward();$.mobile.urlHistory.clearForward();" type="submit" class="ui-btn-text" data-theme="b">Save</button>
+              </div>
+              <div class="ui-block-c">
+                <a href="#" data-rel="back" data-role="button">Cancel</a>
+              </div>
+            </fieldset>
         </form>
       </div>
     </div>

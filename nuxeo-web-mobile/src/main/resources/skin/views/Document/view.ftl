@@ -56,7 +56,6 @@
             </a>
           </li>
         </ul>
-
       </div>
       <fieldset class="ui-grid-b">
         <div class="ui-block-a">
@@ -66,7 +65,7 @@
           <a href="${Root.path}/doc/${This.document.id}?mode=edit" data-role="button">Edit</a>
         </div>
         <div class="ui-block-c">
-          <a href="${Root.path}/doc/${This.document.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">Delete</a>
+          <a href="${Root.path}/doc/${This.document.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">Delete</a
         </div>
       </fieldset>
     </div>
