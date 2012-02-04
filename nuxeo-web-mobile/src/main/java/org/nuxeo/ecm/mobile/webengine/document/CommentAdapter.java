@@ -35,8 +35,6 @@ import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
 import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
-import bsh.This;
-
 /**
  * Provide view and action on document comments
  * 

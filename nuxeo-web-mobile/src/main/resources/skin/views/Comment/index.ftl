@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 
-<#macro "childCommentView" comments>
+<#macro "childCommentView" data-add-back-btn="true" comments>
     <#list comments as comment>
       <li class="white">
         <div class="details">

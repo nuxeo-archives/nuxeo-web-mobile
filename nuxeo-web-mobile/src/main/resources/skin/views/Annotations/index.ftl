@@ -2,7 +2,7 @@
 <@block name="header">You signed in as ${Context.principal}</@block>
 
 <@block name="content">
-<div data-role="page">
+<div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
         <h1>Annotations</h1>

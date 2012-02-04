@@ -22,10 +22,8 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.platform.annotations.api.Annotation;
 import org.nuxeo.ecm.platform.annotations.api.AnnotationsService;
@@ -50,8 +48,6 @@ import org.nuxeo.runtime.api.Framework;
 public class AnnotationsAdapter extends DefaultAdapter {
 
     public static String DOCUMENT_PATH_CODED = "docpath";
-
-    private MobileDocument doc;
 
     @GET
     public Object doGet() {
