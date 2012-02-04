@@ -24,7 +24,7 @@
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
               </#if>
                 <h3>${doc["dc:title"]}</h3>
-                <#if doc.dublincore.description = null || doc.dublincore.description = "" >
+                <#if doc["dublincore:description"] = null || doc["dublincore:description"] = "" >
                   <p class="ui-li-desc">&nbsp;</p>
                 <#else>
                   <p class="ui-li-desc">${doc.dublincore.description}</p>
