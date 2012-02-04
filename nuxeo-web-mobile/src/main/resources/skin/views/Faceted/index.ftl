@@ -4,7 +4,7 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>Request Result ${pageIndex}/${pageNumber}</h1>
+        <h1>Result ${pageIndex + 1}/${pageNumber}</h1>
     </div>
 
     <div data-role="content">
