@@ -7,22 +7,18 @@
     </div>
 
     <div data-role="content" class="documentView" id="main">
-    
-      <#assign doc = This.document>
-      <div id="${doc.id}" title="Details"  class="panel">
+      <div id="${This.document.id}" title="Details"  class="panel">
         <div class="white nospace shadow documentInfo">
-          <div class="title">
-            <img alt="Document icon" src="${skinPath}${doc.common.icon}" />${doc.dublincore.title}
-          </div>
-          <div class="description">${doc.dublincore.description}</div>
+          <div class="title"><img alt="Document icon" src="${skinPath}/icons/doc.png" />${This.document.dublincore.title}</div>
+          <div class="description">${This.document.dublincore.description}</div>
           <div class="modificationDate">
-            <#if doc.dublincore.modified != null>
+            <#if This.document.dublincore.modified != null>
               <span>modified</span>
-              <span>${doc.dublincore.modified.time?datetime}</span>
+              <span>${This.document.dublincore.modified.time?datetime}</span>
             </#if>
           </div>
           <div class="participants">
-            <#list doc.dublincore.contributors as contributor>
+            <#list This.document.dublincore.contributors as contributor>
               <#if contributor != "system">
                 <span class="tag">
                   <a href="${Root.path}/profile/${contributor}">${contributor}</a>
@@ -30,62 +26,47 @@
               </#if>
             </#list>
           </div>
-        </div><!-- documentInfo -->
+        </div>
 
+        <div data-role="navbar" class="noSidespace">
+          <ul>
+            <#if This.hasPreview()>
+              <li><a data-ajax="false" href="${This.previewURL}"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
+            </#if>
+            <li><a href="${Root.path}/doc/${This.document.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>
+            <li><a href="${Root.path}/doc/${This.document.id}/@annotions"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
+            <li><a href="${Root.path}/doc/${This.document.id}/@relation"><img alt="Relations" src="${skinPath}/icons/relations.png" /></a></li>
+          </ul>
+        </div>
 
         <ul data-role="listview" data-inset="true">
-          <#if This.hasPreview()>
-            <li class="nxDocumentItem">
-              <!-- TODO: FIND A SOLUTION TO KEEP THE NAVIGATION WITH THE PREVIEW
-              <a href="${Root.path}/doc/${Document.id}/@preview">
-              -->
-              <a data-ajax="false" href="${This.previewURL}">
-                Preview
-              </a>
-            </li>
-          </#if>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}/@relation">
-              Relations
+            <a data-ajax="false" href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL">
+              Mail it
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${doc.id}/@comment">
-              Comments
+            <a data-ajax="false" href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL">
+              Mail me
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${doc.id}/@annotations">
-              Annotations
+            <a href="${Root.path}/doc/${This.document.id}?mode=edit">
+              Edit
+            </a>
+          </li>
+          <li class="nxDocumentItem">
+            <a href="${Root.path}/doc/${This.document.id}?mode=delete-confirmation" data-rel="dialog">
+              Delete
             </a>
           </li>
         </ul>
-      </div><!-- Panel detail -->
-      
-      <fieldset class="ui-grid-b">
-        <div class="ui-block-a">
-          <a href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL" data-role="button">Mail</a>
-        </div>
-        <div class="ui-block-b">
-          <a href="${Root.path}/doc/${doc.id}?mode=edit" data-role="button">Edit</a>
-        </div>
-        <div class="ui-block-c">
-          <a href="${Root.path}/doc/${doc.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">Delete</a>
-        </div>
-      </fieldset>
-    </div><!-- content -->
-
-    <div data-role="footer">
-      <div data-role="navbar">
-        <ul>
-          <li><a href="${Root.path}"><img alt="Home" src="${skinPath}/icons/footer_home.png" /></a></li>
-          <li><a href="${Root.path}/docPath/@folderish"><img alt="Personal Workspace" src="${skinPath}/icons/footer_personalworkspace.png" /></a></li>
-          <li><a href="${Root.path}/profile"><img alt="Profile" src="${skinPath}/icons/footer_profile.png" /></a></li>
-          <li><a href="${Root.path}/search/faceted"><img alt="Search" src="${skinPath}/icons/footer_search.png" /></a></li>
-        </ul>
+        
       </div>
     </div>
-    </div>
+
+    <#import "../../footer.ftl" as footer/>
+    <@footer.basic false/>
   </div>
 
 </@block>

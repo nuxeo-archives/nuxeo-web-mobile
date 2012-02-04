@@ -48,9 +48,8 @@
       </div>
     </div>
 
-    <div data-role="footer">
-        <h4>Page Footer</h4>
-    </div>
+    <#import "../../footer.ftl" as footer/>
+    <@footer.basic />
 </div>
 
 </@block>

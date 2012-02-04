@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 
-<#macro "childCommentView" data-add-back-btn="true" comments>
+<#macro "childCommentView" comments>
     <#list comments as comment>
       <li class="white">
         <div class="details">
@@ -27,7 +27,7 @@
 </#macro>
 
 <@block name="content">
-<div data-role="page">
+<div data-add-back-btn="true" data-role="page">
 
     <div data-role="header">
         <h1>Comments</h1>
@@ -45,10 +45,8 @@
         </#if>
     </div>
     
-
-    <div data-role="footer">
-        <h4>Page Footer</h4>
-    </div>
+    <#import "../../footer.ftl" as footer/>
+    <@footer.basic />
 </div>
 
 </@block>
