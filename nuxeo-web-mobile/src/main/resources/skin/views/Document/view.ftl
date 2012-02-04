@@ -7,18 +7,22 @@
     </div>
 
     <div data-role="content" class="documentView" id="main">
-      <div id="${This.document.id}" title="Details"  class="panel">
+    
+      <#assign doc = This.document>
+      <div id="${doc.id}" title="Details"  class="panel">
         <div class="white nospace shadow documentInfo">
-          <div class="title"><img alt="Document icon" src="${skinPath}/icons/doc.png" />${This.document.dublincore.title}</div>
-          <div class="description">${This.document.dublincore.description}</div>
+          <div class="title">
+            <img alt="Document icon" src="${skinPath}${doc.common.icon}" />${doc.dublincore.title}
+          </div>
+          <div class="description">${doc.dublincore.description}</div>
           <div class="modificationDate">
-            <#if This.document.dublincore.modified != null>
+            <#if doc.dublincore.modified != null>
               <span>modified</span>
-              <span>${This.document.dublincore.modified.time?datetime}</span>
+              <span>${doc.dublincore.modified.time?datetime}</span>
             </#if>
           </div>
           <div class="participants">
-            <#list This.document.dublincore.contributors as contributor>
+            <#list doc.dublincore.contributors as contributor>
               <#if contributor != "system">
                 <span class="tag">
                   <a href="${Root.path}/profile/${contributor}">${contributor}</a>
@@ -26,7 +30,7 @@
               </#if>
             </#list>
           </div>
-        </div>
+        </div><!-- documentInfo -->
 
 
         <ul data-role="listview" data-inset="true">
@@ -46,32 +50,31 @@
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}/@comment">
+            <a href="${Root.path}/doc/${doc.id}/@comment">
               Comments
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}/@annotations">
+            <a href="${Root.path}/doc/${doc.id}/@annotations">
               Annotations
             </a>
           </li>
         </ul>
-      </div>
+      </div><!-- Panel detail -->
+      
       <fieldset class="ui-grid-b">
         <div class="ui-block-a">
           <a href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL" data-role="button">Mail</a>
         </div>
         <div class="ui-block-b">
-          <a href="${Root.path}/doc/${This.document.id}?mode=edit" data-role="button">Edit</a>
+          <a href="${Root.path}/doc/${doc.id}?mode=edit" data-role="button">Edit</a>
         </div>
         <div class="ui-block-c">
-          <a href="${Root.path}/doc/${This.document.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">Delete</a
+          <a href="${Root.path}/doc/${doc.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">Delete</a>
         </div>
       </fieldset>
-    </div>
+    </div><!-- content -->
 
-    </div>
-</div>
 
       <div data-role="footer">
           <h4>Page Footer</h4>
