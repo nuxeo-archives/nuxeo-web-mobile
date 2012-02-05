@@ -3,7 +3,7 @@
 <head>
   <title>
      <@block name="title">
-       WebEngine Project
+       Nuxeo
      </@block>
   </title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
