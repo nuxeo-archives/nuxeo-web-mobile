@@ -3,8 +3,8 @@
 <@block name="content">
 <div data-role="page" data-add-back-btn="true">
 
-    <div data-position="fixed" data-role="header">
-        <h1>${Adapter.previewURL}</h1>
+    <div data-role="header">
+        <h1>Preview</h1>
     </div>
 
     <div data-role="content">
