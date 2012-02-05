@@ -9,7 +9,7 @@
     <div data-role="content" class="documentView" id="main">
       <div id="${This.document.id}" title="Details"  class="panel">
         <div class="white nospace shadow documentInfo">
-          <div class="title"><img alt="Document icon" src="${skinPath}/icons/doc.png" />${This.document.dublincore.title}</div>
+          <div class="title"><img alt="Document icon" src="${skinPath}${This.document.common.icon}" />${This.document.dublincore.title}</div>
           <div class="description">${This.document.dublincore.description}</div>
           <div class="modificationDate">
             <#if This.document.dublincore.modified != null>
