@@ -6,44 +6,38 @@
     <div data-role="header">
       <h1>Page Title</h1>
     </div>
-    <div data-role="content">
-      <ul data-role="listview" class="ui-listview">
-        <li>
-          <form method="get" action="${Root.path}/search">
-            <input type="search" name="q" id="q" value="" placeholder="Fulltext Search"/>
-            <input type="hidden" name="order" id="order" value="dc:modified DESC" />
-            <input type="hidden" name="max" id="max" value="20" />
-          </form>
-        </li>
-        <li>
-          <a href="${Root.path}/root" class="ui-link-inherit">
-            <img src="${skinPath}/icons/browse.png" class="ui-li-thumb">
-            <h3 class="ui-li-heading">Browse</h3>
-            <p class="ui-li-desc">Dive into your tree</p>
+    <div data-role="content" class="home">
+      <form method="get" action="${Root.path}/search">
+        <input type="search" name="q" id="q" value="" placeholder="Search"/>
+        <input type="hidden" name="order" id="order" value="dc:modified DESC" />
+        <input type="hidden" name="max" id="max" value="20" />
+      </form>
+      <div class="ui-grid-a">
+        <div class="ui-block-a">
+          <a href="${Root.path}/root" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-up-c">
+            <img src="${skinPath}/icons/browse.png" class="">
+            <p class="">Browse</p>
           </a>
-        </li>
-        <li>
-          <a href="${Root.path}/search/faceted" class="ui-link-inherit">
-            <img src="${skinPath}/icons/annuaire.png" class="ui-li-thumb">
-            <h3 class="ui-li-heading">Search</h3>
-            <p class="ui-li-desc">Find your document quickly</p>
+        </div>
+        <div class="ui-block-b">
+          <a href="${Root.path}/search/faceted" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-up-c">
+            <img src="${skinPath}/icons/annuaire.png" class="">
+            <p class="">Search</p>
           </a>
-        </li>
-        <li>
-          <a href="${Root.path}/profile/${Context.principal.name}" class="ui-link-inherit">
-            <img src="${skinPath}/icons/profile.png" class="ui-li-thumb">
-            <h3 class="ui-li-heading">Profile</h3>
-            <p class="ui-li-desc">Enrich your profile</p>
+        </div>
+        <div class="ui-block-a">
+          <a href="${Root.path}/profile/${Context.principal.name}" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-up-c">
+            <img src="${skinPath}/icons/profile.png" class="">
+            <p class="">Profile</p>
           </a>
-        </li>
-        <li>
-          <a data-ajax="false" href="/nuxeo/site/mobile/auth/logout">
-            <img src="${skinPath}/icons/deconnexion.png" class="ui-li-thumb">
-            <h3 class="ui-li-heading">Deconnexion</h3>
-            <p class="ui-li-desc">Log out your application</p>
+        </div>
+        <div class="ui-block-b">
+          <a data-ajax="false" href="/nuxeo/site/mobile/auth/logout" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-up-c">
+            <img src="${skinPath}/icons/deconnexion.png" class="">
+            <p class="">Deconnexion</p>
           </a>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
   </div>
