@@ -16,7 +16,7 @@
           </form>
         </li>
         <li>
-          <a href="${Root.path}/docPath/@folderish" class="ui-link-inherit">
+          <a href="${Root.path}/root" class="ui-link-inherit">
             <img src="${skinPath}/icons/browse.png" class="ui-li-thumb">
             <h3 class="ui-li-heading">Browse</h3>
             <p class="ui-li-desc">Dive into your tree</p>

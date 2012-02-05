@@ -17,6 +17,9 @@
 
 package org.nuxeo.ecm.mobile.webengine;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -25,17 +28,22 @@ import javax.ws.rs.QueryParam;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
+import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
 
 import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
+import static org.nuxeo.ecm.mobile.webengine.document.FolderishAdapter.ONLY_VISIBLE_CHILDREN;
 
 /**
  * @author Benjamin JALON <bjalon@nuxeo.com>
@@ -52,6 +60,8 @@ public class MobileApplication extends ModuleRoot {
     private String nuxeoContextPath;
 
     private DocumentViewCodecManager codecManager;
+
+    private UserWorkspaceService userWorkspaceService;
 
     /**
      * Try to fetch document in targetURL parameter in URL if not this is the
@@ -84,6 +94,35 @@ public class MobileApplication extends ModuleRoot {
     @Path("profile")
     public Object doTraverseProfile() {
         return ctx.newObject("Profile");
+    }
+
+    /**
+     * Generate the root view of the repository. First root descendant and user
+     * workspace are rendered
+     */
+    @GET
+    @Path("root")
+    public Object getRootRepositoryView() throws Exception {
+        Map<String, Object> args = new HashMap<String, Object>();
+
+        CoreSession session = ctx.getCoreSession();
+        DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(
+                session, null);
+        args.put("userwokspace", session.getChildren(userWorkspace.getRef(),
+                null, ONLY_VISIBLE_CHILDREN, null));
+
+        DocumentModel doc = session.getRootDocument();
+        DocumentModelList children;
+        do {
+            children = session.getChildren(doc.getRef(), null,
+                    ONLY_VISIBLE_CHILDREN, null);
+            if (children.size() == 1) {
+                doc = children.get(0);
+            }
+        } while (children.size() == 1);
+        args.put("domain", children);
+
+        return getView("root").args(args);
     }
 
     @Path("docPath/@{adapter}")
@@ -131,6 +170,13 @@ public class MobileApplication extends ModuleRoot {
             codecManager = Framework.getService(DocumentViewCodecManager.class);
         }
         return codecManager;
+    }
+
+    public UserWorkspaceService getUserWorkspaceService() throws Exception {
+        if (userWorkspaceService == null) {
+            userWorkspaceService = Framework.getService(UserWorkspaceService.class);
+        }
+        return userWorkspaceService;
     }
 
 }
