@@ -49,12 +49,15 @@
 
         <ul data-role="listview" data-inset="true">
           <li class="nxDocumentItem">
-            <a data-ajax="false" href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL">
+            <a href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL">
               Mail it
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a data-ajax="false" href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL">
+            <a href="#" 
+               onclick="var jqxhr = $.get('${Root.path}/doc/${This.document.id}/mailIt', null)
+                .success(function() { alert('Mail sent to your personnal account'); })
+                .error(function() { alert('Problem occured during, please contact your administrator'); })">
               Mail me
             </a>
           </li>

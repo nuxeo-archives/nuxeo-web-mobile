@@ -25,7 +25,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.nuxeo.ecm.automation.AutomationService;
+import org.nuxeo.ecm.automation.OperationContext;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
@@ -51,6 +56,10 @@ import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
  */
 public class MobileDocument extends DocumentObject {
 
+    private static final Log log = LogFactory.getLog(MobileDocument.class);
+
+    private AutomationService automationService;
+
     public MobileDocument(WebContext ctx, DocumentRef docRef) {
         try {
             ResourceType resType = ctx.getModule().getType("Document");
@@ -74,7 +83,22 @@ public class MobileDocument extends DocumentObject {
         // Remove the @put
         uri = uri.substring(0, uri.length() - "@put".length() - 1);
         String queryString = ctx.getRequest().getQueryString();
-        return redirect(uri + (queryString!=null? "?" + queryString:""));
+        return redirect(uri + (queryString != null ? "?" + queryString : ""));
+    }
+
+    @GET
+    @Path("mailIt")
+    public Object doMailIt() {
+        try {
+            OperationContext subctx = new OperationContext(ctx.getCoreSession(),
+                    null);
+            subctx.setInput(getDocument());
+            getAutomationService().run(subctx, "sendEmailToMe");
+        } catch (Exception e) {
+            log.error(e, e);
+            return Response.status(400).build();
+        }
+        return Response.ok().build(); 
     }
 
     @Override
@@ -141,5 +165,11 @@ public class MobileDocument extends DocumentObject {
         return nuxeoContextPath;
     }
 
+    private AutomationService getAutomationService() throws Exception {
+        if (automationService == null) {
+            automationService = Framework.getService(AutomationService.class);
+        }
+        return automationService;
+    }
 
 }
