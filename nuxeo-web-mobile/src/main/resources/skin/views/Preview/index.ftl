@@ -1,21 +1,15 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-fullscreen="true" data-role="page">
+<div data-role="page" data-add-back-btn="true">
 
     <div data-position="fixed" data-role="header">
         <h1>${Adapter.previewURL}</h1>
     </div>
 
     <div data-role="content">
-       <#if This.hasPreview()>
-         <iframe src="${Adapter.previewURL}" class="preview"/>
-       <#else>
-         <br/>
-         <br/>
-         <br/>
-         <br/>
-         The preview is not available for this type of document.
+       <#if This.document.schemas?seq_contains("note")>
+         ${This.document.note.note}
        </#if>
     </div>
 

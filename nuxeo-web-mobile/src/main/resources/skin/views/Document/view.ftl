@@ -33,6 +33,12 @@
             <#if This.hasPreview()>
               <li><a data-ajax="false" href="${This.previewURL}"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
             </#if>
+            <#if This.document.schemas?seq_contains("note")>
+              <li><a href="${Root.path}/doc/${This.document.id}/@preview"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
+            </#if>
+            <#if This.isFolder>
+              <li><a href="${This.previewURL}"><img alt="Content" src="${Root.path}/doc/${This.id}/@folderish" /></a></li>
+            </#if>
             <li><a href="${Root.path}/doc/${This.document.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>
             <li><a href="${Root.path}/doc/${This.document.id}/@annotions"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
             <li><a href="${Root.path}/doc/${This.document.id}/@relation"><img alt="Relations" src="${skinPath}/icons/relations.png" /></a></li>
