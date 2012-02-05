@@ -9,6 +9,12 @@
 
     <div data-role="content" class="search">
 
+      <form method="get" action="${Root.path}/search">
+        <input type="search" name="q" id="q" value="" placeholder="Fulltext Search"/>
+        <input type="hidden" name="order" id="order" value="dc:modified DESC" />
+        <input type="hidden" name="max" id="max" value="20" />
+      </form>
+
       <h2>My Searches</h2>
       <#if mySearches?size == 0>
         <h3>You have no Faceted stored</h3>
