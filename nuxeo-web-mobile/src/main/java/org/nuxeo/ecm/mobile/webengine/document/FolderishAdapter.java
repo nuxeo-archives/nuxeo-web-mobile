@@ -35,14 +35,13 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
  * @author bjalon
  * 
  */
-@WebAdapter(name="folderish", type="Folderish", targetType="MobileDocument")
+@WebAdapter(name = "folderish", type = "Folderish", targetType = "MobileDocument")
 public class FolderishAdapter extends DefaultAdapter {
-    
+
     public static final Filter ONLY_VISIBLE_CHILDREN = new CompoundFilter(
             new FacetFilter(null,
                     Collections.singletonList("HiddenInNavigation")),
             new LifeCycleFilter(null, Collections.singletonList("deleted")));
-
 
     @GET
     public Object doGet() {
@@ -57,8 +56,8 @@ public class FolderishAdapter extends DefaultAdapter {
         MobileDocument doc = (MobileDocument) targetObject;
         CoreSession session = ctx.getCoreSession();
 
-        return session.getChildren(doc.getDocument().getRef(), null, ONLY_VISIBLE_CHILDREN,
-                null);
+        return session.getChildren(doc.getDocument().getRef(), null,
+                ONLY_VISIBLE_CHILDREN, null);
     }
 
 }
