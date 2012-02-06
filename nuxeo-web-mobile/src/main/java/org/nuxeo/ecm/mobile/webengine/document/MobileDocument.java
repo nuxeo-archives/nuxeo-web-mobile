@@ -37,7 +37,11 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.rest.DocumentObject;
+import org.nuxeo.ecm.platform.ec.notification.service.NotificationServiceHelper;
 import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
+import org.nuxeo.ecm.platform.url.DocumentViewImpl;
+import org.nuxeo.ecm.platform.url.api.DocumentView;
+import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
@@ -90,15 +94,15 @@ public class MobileDocument extends DocumentObject {
     @Path("mailIt")
     public Object doMailIt() {
         try {
-            OperationContext subctx = new OperationContext(ctx.getCoreSession(),
-                    null);
+            OperationContext subctx = new OperationContext(
+                    ctx.getCoreSession(), null);
             subctx.setInput(getDocument());
             getAutomationService().run(subctx, "sendEmailToMe");
         } catch (Exception e) {
             log.error(e, e);
             return Response.status(400).build();
         }
-        return Response.ok().build(); 
+        return Response.ok().build();
     }
 
     @Override
