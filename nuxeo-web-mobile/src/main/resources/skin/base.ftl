@@ -14,11 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <link rel="apple-touch-icon" href="${skinPath}/icons/nuxeo_logo.png" />
-    <link rel="apple-touch-startup-image" href="${skinPath}/images/nuxeo_splash_screen.png" />
-
-    <!-- Icon for Application into the springboard -->
-    <link rel="apple-touch-icon" href="${skinPath}/img/nuxeo.png" />
-    <!-- spash screen for this "application" -->
     <link rel="apple-touch-startup-image" href="${skinPath}/img/nuxeo_splash_screen.png" />
 
     <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css" />
