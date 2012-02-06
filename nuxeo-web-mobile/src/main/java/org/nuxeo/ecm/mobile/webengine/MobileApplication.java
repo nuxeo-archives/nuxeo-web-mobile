@@ -158,6 +158,11 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("Workflow");
     }
 
+    @Path("activity")
+    public Object doTraverseActivity() {
+        return ctx.newObject("Activity");
+    }
+
     private String getNuxeoContextPath() {
         if (nuxeoContextPath == null) {
             nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");

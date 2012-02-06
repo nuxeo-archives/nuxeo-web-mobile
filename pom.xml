@@ -28,6 +28,16 @@
 
   <dependencyManagement>
     <dependencies>
+     <dependency>
+       <groupId>org.nuxeo.ecm.social</groupId>
+       <artifactId>nuxeo-user-activity-stream</artifactId>
+       <version>${nuxeo.ep.version}</version>
+     </dependency>
+     <dependency>
+       <groupId>org.nuxeo.ecm.social</groupId>
+       <artifactId>nuxeo-activity</artifactId>
+       <version>${nuxeo.ep.version}</version>
+     </dependency>
       <dependency>
         <groupId>org.nuxeo.ecm.platform</groupId>
         <artifactId>nuxeo-platform-faceted-search-api</artifactId>
