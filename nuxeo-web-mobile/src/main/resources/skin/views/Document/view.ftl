@@ -71,6 +71,11 @@
             </a>
           </li>
           <li class="nxDocumentItem">
+            <a data-ajax="false" href="${This.downloadURL}">
+              Download it
+            </a>
+          </li>
+          <li class="nxDocumentItem">
             <a href="#" 
                onclick="var jqxhr = $.get('${Root.path}/doc/${doc.id}/mailIt', function() { displayNotification('Request sent to server please '); })
                 .success(function() { displayNotification('Mail sent to your personnal account'); })

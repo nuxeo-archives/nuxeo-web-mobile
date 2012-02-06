@@ -26,12 +26,12 @@ function displayNotification(message) {
 
 function doDisplayNotification(message) {
   noticationDisplayInProgress = true;
-  var notificationItem = '<div class="quickNotification">' + message + '</div>';
+  var notificationItem = '<div class="quick-notification">' + message + '</div>';
 
   $(notificationItem)
     .insertAfter( $("body") )
     .fadeIn('slow')
-    .animate({opacity: 1.0}, 2000)
+    .animate({opacity: 1.0}, 3000)
     .fadeOut('slow', function() {
       noticationDisplayInProgress = false;
       if (notificationList.length > 0) {

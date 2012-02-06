@@ -156,6 +156,27 @@ public class MobileDocument extends DocumentObject {
                 NotificationServiceHelper.getNotificationService().getServerUrlPrefix());
     }
 
+    public String getDownloadURL()
+            throws Exception {
+        DocumentModel docModel = getDocument();
+
+        return getDownloadURL(docModel);
+    }
+
+    public String getDownloadURL(DocumentModel docModel)
+            throws Exception {
+        String filename = (String) doc.getPropertyValue("file:filename");
+
+        String downloadURL = getNuxeoContextPath() + "/";
+        downloadURL += "nxbigfile" + "/";
+        downloadURL += doc.getRepositoryName() + "/";
+        downloadURL += doc.getRef().toString() + "/";
+        downloadURL += "blobholder:0" + "/";
+        downloadURL += filename;
+
+        return downloadURL;
+    }
+
     public String getJSFURLPath() throws Exception {
         return getJSFURLPath(getDocument());
     }
