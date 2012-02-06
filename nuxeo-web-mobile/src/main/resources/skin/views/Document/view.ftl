@@ -70,11 +70,13 @@
               Mail it
             </a>
           </li>
+          <#if doc.schemas?seq_contains("file")>
           <li class="nxDocumentItem">
             <a data-ajax="false" href="${This.downloadURL}">
               Download it
             </a>
           </li>
+          </#if>
           <li class="nxDocumentItem">
             <a href="#" 
                onclick="var jqxhr = $.get('${Root.path}/doc/${doc.id}/mailIt', function() { displayNotification('Request sent to server please '); })

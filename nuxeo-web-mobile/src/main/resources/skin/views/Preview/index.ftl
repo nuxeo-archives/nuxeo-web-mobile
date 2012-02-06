@@ -12,9 +12,7 @@
     </div>
 
     <div data-role="content">
-       <#if This.document.schemas?seq_contains("note")>
-         ${This.document.note.note}
-       </#if>
+       ${Adapter.previewContent}
     </div>
 
 </div>
