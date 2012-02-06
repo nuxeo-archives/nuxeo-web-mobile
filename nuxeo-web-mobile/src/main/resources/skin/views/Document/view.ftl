@@ -1,12 +1,12 @@
 <#macro "emailSubject">New%20Document%20will%20send</#macro>
 
-<#macro "emailBody">
+<#macro "emailBody" document>
   Hi,%0D
   %0D
-  ${Context.principal.name} found a funny document named '${This.document.title}' to share it with you. As this document stored
+  ${Context.principal.name} found a funny document named '${document.title}' to share it with you. As this document stored
   in your Nuxeo, it can't be a spam. So click quickly on this following link and enjoy.%0D
   %0D
-  ${This.getJSFURLPath(This.document)}%0D
+  ${This.getJSFURLPath(document)}%0D
   %0D
   regards,%0D
   Your sincerely Nuxeo Server.
@@ -21,18 +21,21 @@
     </div>
 
     <div data-role="content" class="documentView" id="main">
-      <div id="${This.document.id}" title="Details"  class="panel">
+      <#assign doc = This.document>
+      <div id="${doc.id}" title="Details"  class="panel">
         <div class="white nospace shadow documentInfo">
-          <div class="title"><img alt="Document icon" src="${skinPath}${This.document.common.icon}" />${This.document.dublincore.title}</div>
-          <div class="description">${This.document.dublincore.description}</div>
+          <div class="title">
+            <img alt="Document icon" src="${skinPath}${doc.common.icon}" />${doc.dublincore.title}
+          </div>
+          <div class="description">${doc.dublincore.description}</div>
           <div class="modificationDate">
-            <#if This.document.dublincore.modified != null>
+            <#if doc.dublincore.modified != null>
               <span>modified</span>
-              <span>${This.document.dublincore.modified.time?datetime}</span>
+              <span>${doc.dublincore.modified.time?datetime}</span>
             </#if>
           </div>
           <div class="participants">
-            <#list This.document.dublincore.contributors as contributor>
+            <#list doc.dublincore.contributors as contributor>
               <#if contributor != "system">
                 <span class="tag">
                   <a href="${Root.path}/profile/${contributor}">${contributor}</a>
@@ -40,24 +43,24 @@
               </#if>
             </#list>
           </div>
-        </div>
+        </div><!-- documentInfo -->
 
         <div data-role="navbar" class="noSidespace">
           <ul>
             <#if This.hasPreview()>
               <li><a data-ajax="false" href="${This.previewURL}"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
             </#if>
-            <#if This.document.schemas?seq_contains("note")>
-              <li><a href="${Root.path}/doc/${This.document.id}/@preview"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
+            <#if doc.schemas?seq_contains("note")>
+              <li><a href="${Root.path}/doc/${doc.id}/@preview"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
             </#if>
-            <#if This.document.isFolder>
+            <#if doc.isFolder>
               <li>
-                <a href="${Root.path}/doc/${This.document.id}/@folderish"><img alt="Content" src="${skinPath}/icons/preview.png" /></a>
+                <a href="${Root.path}/doc/${doc.id}/@folderish"><img alt="Content" src="${skinPath}/icons/preview.png" /></a>
               </li>
             </#if>
-            <li><a href="${Root.path}/doc/${This.document.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>
-            <li><a href="${Root.path}/doc/${This.document.id}/@annotations"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
-            <li><a href="${Root.path}/doc/${This.document.id}/@relation"><img alt="Relations" src="${skinPath}/icons/relations.png" /></a></li>
+            <li><a href="${Root.path}/doc/${doc.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>
+            <li><a href="${Root.path}/doc/${doc.id}/@annotations"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
+            <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="Relations" src="${skinPath}/icons/relations.png" /></a></li>
           </ul>
         </div>
 
@@ -76,12 +79,12 @@
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}?mode=edit">
+            <a href="${Root.path}/doc/${doc.id}?mode=edit">
               Edit
             </a>
           </li>
           <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${This.document.id}?mode=delete-confirmation" data-rel="dialog">
+            <a href="#" onclick="${Root.path}/doc/${doc.id}?mode=delete-confirmation" data-rel="dialog">
               Delete
             </a>
           </li>

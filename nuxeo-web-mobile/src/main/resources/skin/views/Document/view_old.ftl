@@ -1,3 +1,17 @@
+<#macro "emailSubject">New%20Document%20will%20send</#macro>
+
+<#macro "emailBody" document>
+  Hi,%0D
+  %0D
+  ${Context.principal.name} found a funny document named '${document.title}' to share it with you. As this document stored
+  in your Nuxeo, it can't be a spam. So click quickly on this following link and enjoy.%0D
+  %0D
+  ${This.getJSFURLPath(document)}%0D
+  %0D
+  regards,%0D
+  Your sincerely Nuxeo Server.
+</#macro>
+
 <@extends src="base.ftl">
 <@block name="content">
 <div data-role="page" data-add-back-btn="true">
