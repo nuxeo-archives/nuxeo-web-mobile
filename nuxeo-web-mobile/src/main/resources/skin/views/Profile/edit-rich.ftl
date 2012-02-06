@@ -42,11 +42,21 @@
                   <label for="name" class="ui-input-text">Phone number</label>
                   <input type="text" name="" value="${userProfile.userprofile.phonenumber}" placeholder="Phone Number"></input>
                 </li>
-                <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-                  <label for="name" class="ui-input-text">Birth Date</label>
-                  <input type="text" name="" value="${userProfile.userprofile.birthdate?date}" placeholder="Birth Date">
-                </li>
-                <li data-role="fieldcontain" class="clear ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
+	            <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
+	              <label for="name" class="ui-input-text">Birth Date</label>
+	              <#if userProfile.userprofile.birthdate != "">
+	                <span>${userProfile.userprofile.birthdate?date}</span>
+	              </#if>
+	            </li>
+	            <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
+	              <label for="name" class="ui-input-text">Gender</label>
+	              <#if userProfile.userprofile.gender = true>
+	                <span>Male</span>
+	              <#else>
+	                <span>Female</span>
+	              </#if>
+	            </li>
+                <!--li data-role="fieldcontain" class="clear ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
                   <label class="gray ui-input-text">Gender</label>
                   <fieldset data-role="controlgroup">
                     <input type="radio" name="true" id="true" value="true" checked="checked" />
@@ -54,7 +64,7 @@
                     <input type="radio" name="false" id="false" value="false"  />
                     <label class="radioLabel" for="false">Female</label>
                   </fieldset>
-                </li>
+                </li-->
                 </ul>
             </div>
             <fieldset class="ui-grid-b">
