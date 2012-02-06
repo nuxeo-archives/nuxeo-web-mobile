@@ -42,7 +42,7 @@
               </li>
             </#if>
             <li><a href="${Root.path}/doc/${This.document.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>
-            <li><a href="${Root.path}/doc/${This.document.id}/@annotions"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
+            <li><a href="${Root.path}/doc/${This.document.id}/@annotations"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
             <li><a href="${Root.path}/doc/${This.document.id}/@relation"><img alt="Relations" src="${skinPath}/icons/relations.png" /></a></li>
           </ul>
         </div>
