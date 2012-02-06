@@ -66,7 +66,7 @@
 
         <ul data-role="listview" data-inset="true">
           <li class="nxDocumentItem">
-            <a href="mailto:?cc=${This.principal.email}&amp;subject=<@emailSubject/>t&amp;body=<@emailBody/>">
+            <a href="mailto:?cc=${This.principal.email}&amp;subject=<@emailSubject/>t&amp;body=<@emailBody document=doc/>">
               Mail it
             </a>
           </li>

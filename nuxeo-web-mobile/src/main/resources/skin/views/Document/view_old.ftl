@@ -78,7 +78,9 @@
       
       <fieldset class="ui-grid-b">
         <div class="ui-block-a">
-          <a href="mailto:?cc=${This.principal.email}&amp;subject=New%20Document%20will%20sent&amp;body=Mettre%20l'URL" data-role="button">Mail</a>
+          <a href="mailto:?cc=${This.principal.email}&amp;subject=<@emailSubject/>t&amp;body=<@emailBody document=doc/>">
+            Mail
+          </a>
         </div>
         <div class="ui-block-b">
           <a href="${Root.path}/doc/${doc.id}?mode=edit" data-role="button">Edit</a>
