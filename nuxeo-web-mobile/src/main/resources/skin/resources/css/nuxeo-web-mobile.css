@@ -12,6 +12,7 @@
 .home .ui-grid-a { padding-top: 2em }
 .home .ui-block-a, .home .ui-block-b { text-align: center }
 
+/* == Pages == */
 /* View document */
 .documentInfo { padding: 1.1em }
   .documentInfo div { line-height: 130% }
@@ -54,6 +55,21 @@
 
 /* Searches & Browse */
 .search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
+
+/* == Messages == */
+/* Notifications */
+.quickNotification { background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px #bbb;
+    display: none;
+    font: 13px Arial,sans-serif;
+    left: 0;
+    padding: 0.5em 2em;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 220 }
 
 /* Loader */
 .ui-loader { background-color: #fff; background-image: none;
