@@ -7,13 +7,20 @@
       <operation id="Context.FetchDocument"/>
       <operation id="Notification.SendMail">
         <param type="string" name="from">noreply@nuxeo.com</param>
-        <param type="string" name="message">&lt;html&gt;
-  &lt;head&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    You asked to send an email to your own email account. You will find files attached to this email.
-  &lt;/body&gt;
-&lt;/html&gt;</param>
+        <param type="string" name="message">
+          &lt;html&gt;
+            &lt;head&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+              You asked to send an email to your own email account.
+              You will find files attached to this email.
+              &lt;br/&gt;
+              Original document is &lt;a href="${docUrl}"&gt;${Document['dc:title']}&lt;/a&gt;. 
+              &lt;br/&gt;
+              Sent from Nuxeo.
+            &lt;/body&gt;
+          &lt;/html&gt;
+        </param>
         <param type="string" name="subject">[Nuxeo] MailMe Service - new Binary sent</param>
         <param type="stringlist" name="to">expr:Fn.getEmail(Context.principal.name)</param>
         <param type="boolean" name="HTML">true</param>
