@@ -25,10 +25,12 @@
     <!-- rewrite the URL after a redirect from JSF to have mobile URL, 
          initial request accessible in the history -->
     <script>
+        var mobileHomePath = "${Root.path}";
         if ('${mobileURL}' != null) {
           window.history.pushState(null, 'Mobile URL', '${mobileURL}');
         } 
     </script>
+    <script src="${skinPath}/script/nuxeo-navigation-jquerymobile.js"></script>
 
 
     <@block name="stylesheets" />

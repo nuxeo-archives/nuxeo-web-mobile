@@ -72,9 +72,9 @@
           </li>
           <li class="nxDocumentItem">
             <a href="#" 
-               onclick="var jqxhr = $.get('${Root.path}/doc/${This.document.id}/mailIt', null)
-                .success(function() { alert('Mail sent to your personnal account'); })
-                .error(function() { alert('Problem occured during, please contact your administrator'); })">
+               onclick="var jqxhr = $.get('${Root.path}/doc/${doc.id}/mailIt', function() { displayNotification('Request sent to server please '); })
+                .success(function() { displayNotification('Mail sent to your personnal account'); })
+                .error(function() { displayNotification('Problem occured during, please contact your administrator'); })">
               Mail me
             </a>
           </li>
