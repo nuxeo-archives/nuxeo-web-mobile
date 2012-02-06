@@ -15,7 +15,6 @@
 
       <h2>User Workspace</h2>
       <@docListing userwokspace "No Document found in your Workspace"/> 
-      
 
     </div>
 

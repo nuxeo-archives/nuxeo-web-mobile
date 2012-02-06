@@ -8,6 +8,10 @@
     .login .logo img { max-height: 10em; max-width: 5.7em }
   .login .authentification { margin: 3.5em auto 0; width: 70% }
 
+/* Home */
+.home .ui-grid-a { padding-top: 2em }
+.home .ui-block-a, .home .ui-block-b { text-align: center }
+
 /* View document */
 .documentInfo { padding: 1.1em }
   .documentInfo div { line-height: 130% }
@@ -49,7 +53,7 @@
   .profileDetail .moreInfo li label.radioLabel { color: #000; margin-right: .4em; width: auto }
 
 /* Searches & Browse */
-.search h3.ui-li-heading, .browse h3.ui-li-heading { margin: .3em 0 .6em }
+.search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
 
 /* Loader */
 .ui-loader { background-color: #fff; background-image: none;

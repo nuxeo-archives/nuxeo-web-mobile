@@ -52,7 +52,7 @@
             </#if>
             <#if This.document.isFolder>
               <li>
-                <a href="${Root.path}/doc/${This.document.id}/@folderish"><img alt="Content" src="" />Content</a>
+                <a href="${Root.path}/doc/${This.document.id}/@folderish"><img alt="Content" src="${skinPath}/icons/preview.png" /></a>
               </li>
             </#if>
             <li><a href="${Root.path}/doc/${This.document.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>

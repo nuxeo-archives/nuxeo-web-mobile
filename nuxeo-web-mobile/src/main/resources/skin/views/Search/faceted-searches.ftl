@@ -10,7 +10,7 @@
     <div data-role="content" class="search">
 
       <form method="get" action="${Root.path}/search">
-        <input type="search" name="q" id="q" value="" placeholder="Fulltext Search"/>
+        <input type="search" name="q" id="q" value="" placeholder="Search"/>
         <input type="hidden" name="order" id="order" value="dc:modified DESC" />
         <input type="hidden" name="max" id="max" value="20" />
       </form>
