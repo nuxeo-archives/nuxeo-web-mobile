@@ -13,7 +13,19 @@ $(document).bind ("pageloadfailed", function (event, data) {
 //  alert ("pageloadfailed data.url = " + data.url);
 });
 
+var notificationList = new Array();
+var noticationDisplayInProgress = false;
+
 function displayNotification(message) {
+  if (noticationDisplayInProgress) {
+    notificationList[length] = message;
+  } else {
+    doDisplayNotification(message);
+  }
+}
+
+function doDisplayNotification(message) {
+  noticationDisplayInProgress = true;
   var notificationItem = '<div class="quick-notification">' + message + '</div>';
 
   $(notificationItem)
@@ -21,6 +33,12 @@ function displayNotification(message) {
     .fadeIn('slow')
     .animate({opacity: 1.0}, 3000)
     .fadeOut('slow', function() {
+      noticationDisplayInProgress = false;
+      if (notificationList.length > 0) {
+        message = notificationList.shift();
+        displayNotification(message);
+      }
       $(this).remove();
+      
      });   
 }
