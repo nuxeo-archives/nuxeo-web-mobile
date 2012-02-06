@@ -24,8 +24,9 @@
 .documentView fieldset .ui-btn-inner { padding: .5em }
 
 /* Preview */
-.preview {  border: medium none; height: 150em; overflow: visible; padding-top: 2.7em; width: 100% }
+.preview { background: #fff !important; border: medium none; height: 150em; overflow: visible; width: 100% }
 	.preview body { background-color: #fff; overflow: visible }
+	.preview .ui-content p img { max-width: 100% }
 
 /* Comments & Annotations */
 .comments {}

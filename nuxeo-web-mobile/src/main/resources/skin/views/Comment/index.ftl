@@ -20,9 +20,7 @@
           </div>
         </#if>
       </li>
-      <li class="details">
-        <@childCommentView comments=Adapter.getComments(comment)/>
-      </li>
+      <@childCommentView comments=Adapter.getComments(comment)/>
     </#list>
 </#macro>
 
