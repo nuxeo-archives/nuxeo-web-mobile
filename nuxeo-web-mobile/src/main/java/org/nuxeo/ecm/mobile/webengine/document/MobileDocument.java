@@ -144,9 +144,23 @@ public class MobileDocument extends DocumentObject {
                 "Principal found is not a NuxeoPrincipal can't generate it!");
     }
 
+    public String getJSFURLPath(DocumentModel docModel) throws Exception {
+        DocumentView view = new DocumentViewImpl(docModel);
+        return getCodecManager().getUrlFromDocumentView(
+                view,
+                true,
+                NotificationServiceHelper.getNotificationService().getServerUrlPrefix());
+    }
+
+    public String getJSFURLPath() throws Exception {
+        return getJSFURLPath(getDocument());
+    }
+
     // *************** TODO REMOVE WHEN PREVIEW WITH NAVIGATION RESOLVED
     // ************
     private String nuxeoContextPath;
+
+    private DocumentViewCodecManager codecManager;
 
     public String getPreviewURL() {
         Object targetObject = ctx.getTargetObject();
@@ -170,6 +184,13 @@ public class MobileDocument extends DocumentObject {
             automationService = Framework.getService(AutomationService.class);
         }
         return automationService;
+    }
+
+    private DocumentViewCodecManager getCodecManager() throws Exception {
+        if (codecManager == null) {
+            codecManager = Framework.getService(DocumentViewCodecManager.class);
+        }
+        return codecManager;
     }
 
 }
