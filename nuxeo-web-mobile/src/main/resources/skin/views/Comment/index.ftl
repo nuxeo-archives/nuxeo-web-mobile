@@ -29,18 +29,16 @@
 
     <div data-role="header">
         <h1>Comments</h1>
+        <a href="@comment/null" class="ui-btn-right squared">
+          <img src="${skinPath}/icons/add.png"/>
+        </a>
+        
     </div>
 
     <div data-role="content" class="comments">
         <ul>
         <@childCommentView comments=Adapter.comments/>
         </ul>
-        <#if Adapter.hasAddingCommentRight()>
-          <form id="newComment" method="post">
-            <textarea name="newComment" id="newComment" placeholder="Add your own comment"></textarea>
-            <button data-inline="true" data-icon="check">Post your comment</button>
-          </form>
-        </#if>
     </div>
     
     <#import "../../footer.ftl" as footer/>

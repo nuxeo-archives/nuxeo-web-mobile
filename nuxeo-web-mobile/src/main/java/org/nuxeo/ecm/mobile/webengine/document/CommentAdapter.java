@@ -65,11 +65,14 @@ public class CommentAdapter extends DefaultAdapter {
 
     @POST
     @Path("{commentIdParent}")
-    public Object doPostReplyForm(@FormParam("newComment") String newTextComment, @PathParam("commentIdParent") String commentIdParent)
+    public Object doPostReplyForm(
+            @FormParam("newComment") String newTextComment,
+            @PathParam("commentIdParent") String commentIdParent)
             throws PropertyException, ClientException {
         DocumentModel commentParent = null;
-        if (commentIdParent != null) {
-            commentParent = ctx.getCoreSession().getDocument(new IdRef(commentIdParent));
+        if (commentIdParent != null && !"null".equals(commentIdParent)) {
+            commentParent = ctx.getCoreSession().getDocument(
+                    new IdRef(commentIdParent));
         }
         DocumentModel comment = initializeEmptyComment();
         comment.setPropertyValue("comment:text", newTextComment);
