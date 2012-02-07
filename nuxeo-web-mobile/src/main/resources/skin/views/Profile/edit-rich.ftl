@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="dialog" data-add-back-btn="true">
+<div data-role="dialog">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
         <h1>${username}'s Profile</h1>

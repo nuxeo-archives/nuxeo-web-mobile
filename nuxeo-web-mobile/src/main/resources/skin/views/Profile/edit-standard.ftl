@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="dialog" data-add-back-btn="true">
+<div data-role="dialog">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
         <h1>${username}'s Profile</h1>
@@ -38,7 +38,7 @@
           </div>
             <fieldset class="ui-grid-b">
               <div class="ui-block-a">
-                <button onclick="$.mobile.urlHistory.clearForward();$.mobile.urlHistory.clearForward();" type="submit" class="ui-btn-text" data-theme="b">Save</button>
+                <button data-rel="back" type="submit" class="ui-btn-text" data-theme="b">Save</button>
               </div>
               <div class="ui-block-c">
                 <a href="#" data-rel="back" data-role="button" data-theme="c">Cancel</a>
