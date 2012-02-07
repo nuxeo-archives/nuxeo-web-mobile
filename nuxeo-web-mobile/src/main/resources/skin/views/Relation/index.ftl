@@ -26,17 +26,17 @@
 
               <#if node.documentModel>
                 <#if node.documentModel.common.icon != null && node.documentModel.common.icon != "">
-                  <img class="ui-li-icon ui-li-thumb" src="${contextPath}/${node.documentModel.common.icon}" />
+                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}/${node.documentModel.common.icon}" />
                 </#if>
               </#if>
               <#if node.resource && !node.QNameResource>
-                <img class="ui-li-icon ui-li-thumb" src="${contextPath}/icons/html.png" />
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/html.png" />
               </#if>
               <#if node.QNameResource && !node.documentVisible>
-                <img class="ui-li-icon ui-li-thumb" src="${contextPath}/icons/relation_not_visible" />
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/relation_not_visible" />
               </#if>
               <#if node.literal>
-                <img class="ui-li-icon ui-li-thumb" src="${contextPath}/icons/page_text.gif" />
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/page_text.gif" />
               </#if>
               <span>
                 <#if node.QNameResource>
@@ -48,7 +48,7 @@
                   </#if>
                 </#if>
                 <#if node.resource && !node.QNameResource>
-                  ${note.title}
+                  ${node.title}
                 </#if>
                 <#if node.literal>
                   ${node.title}
