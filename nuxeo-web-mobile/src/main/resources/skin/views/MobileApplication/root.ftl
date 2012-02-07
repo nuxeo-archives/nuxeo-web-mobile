@@ -11,10 +11,10 @@
     <div data-role="content" class="repository">
 
       <h2>Domain</h2>
-      <@docListing domain "No Document found in Domain"/> 
+      <@docListing domain "No Document in the Domain"/>
 
       <h2>User Workspace</h2>
-      <@docListing userwokspace "No Document found in your Workspace"/> 
+      <@docListing userwokspace "No Document in your Workspace"/>
 
     </div>
 
@@ -27,7 +27,7 @@
 <#macro "docListing" docs emptyMessage>
       <#if docs?size == 0>
         <p class="feedback">
-         <h3>${emptyMessage}</h3>
+         ${emptyMessage}
         </p>
       <#else>
         <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
