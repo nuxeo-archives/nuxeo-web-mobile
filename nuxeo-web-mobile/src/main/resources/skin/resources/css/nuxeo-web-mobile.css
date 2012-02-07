@@ -24,8 +24,6 @@
 	.documentInfo .description { color: #888; font-size: 95%; margin-bottom: .5em; padding-left: 1.3em }
 	.documentInfo .modificationDate { color: #aaa; font-size: 85%; margin-bottom: .2em; padding-left: 1.4em }
 
-.documentView fieldset .ui-btn-inner { padding: .5em }
-
 /* Preview */
 .preview { background: #fff !important; border: medium none; height: 150em; overflow: visible; width: 100% }
 	.preview body { background-color: #fff; overflow: visible }
@@ -71,7 +69,7 @@
 .ui-overlay-a, .ui-mobile [data-role="dialog"] { background: transparent !important}
 .ui-dialog .ui-header { margin: 0; border-radius: 0; max-width: 100%; width: auto }
 .ui-dialog .ui-content { border-radius: 0; margin: 0; max-width: 100%; width: auto }
-.ui-dialog .ui-overlay-shadow { box-shadow: 0 0 0 #fff }
+.ui-dialog .ui-overlay-shadow { box-shadow: 0 10px 0 #fff }
 
 /* Notifications */
 .quickNotification { background-color: #fff;
@@ -86,6 +84,9 @@
     text-align: center;
     top: 0;
     z-index: 220 }
+
+/* Feedback Messages */
+.feedback {}
 
 /* Loader */
 .ui-loader { background-color: #fff; background-image: none;
@@ -113,6 +114,11 @@
 		text-shadow: none;
 		white-space: nowrap }
 .tag .ui-link, .tag .ui-link:hover, .tag .ui-link:visited { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
+
+.squared, .squared .ui-btn-corner-all { border-radius: 3px !important }
+.squared .ui-btn-inner { padding: .4em .6em .2em }
+
+fieldset .ui-btn-inner { padding: .5em }
 
 .gray { color: #999 }
 

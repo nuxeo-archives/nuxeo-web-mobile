@@ -67,11 +67,11 @@
                 </li-->
                 </ul>
             </div>
-            <fieldset class="ui-grid-b">
+            <fieldset class="ui-grid-a">
               <div class="ui-block-a">
                 <button data-rel="back" class="ui-btn-text" data-theme="b">Save</button>
               </div>
-              <div class="ui-block-c">
+              <div class="ui-block-b">
                 <a href="#" data-rel="back" data-role="button" data-theme="c">Cancel</a>
               </div>
             </fieldset>

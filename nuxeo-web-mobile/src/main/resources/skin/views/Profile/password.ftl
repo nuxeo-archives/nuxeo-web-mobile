@@ -16,7 +16,7 @@
         <div class="marginBottom">
           <input type="password" name="user:password_bis" placeholder="Type it again">
         </div>
-        <fieldset class="ui-grid-b">
+        <fieldset class="ui-grid-a">
           <div class="ui-block-a">
             <button onclick="history.back();" data-direction="reverse" data-theme="b" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-up-b">Save</button>
           </div>

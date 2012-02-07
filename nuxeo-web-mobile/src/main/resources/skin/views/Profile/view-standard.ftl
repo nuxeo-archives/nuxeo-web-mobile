@@ -40,11 +40,11 @@
 	          </#if>
 	      </div>
         </div>
-      <fieldset class="ui-grid-b">
+      <fieldset class="ui-grid-a">
         <div class="ui-block-a">
           <a href="?mode=edit" data-role="button">Edit</a>
         </div>
-        <div class="ui-block-c">
+        <div class="ui-block-b">
           <a href="?mode=password" data-role="button">Password</a>
         </div>
       </fieldset>
