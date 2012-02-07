@@ -29,10 +29,11 @@
 
     <div data-role="header">
         <h1>Comments</h1>
-        <a href="@comment/null" class="ui-btn-right squared">
-          <img src="${skinPath}/icons/add.png"/>
-        </a>
-        
+        <#if Adapter.hasWriteRightOnComment(This.document)>
+          <a href="@comment/null" class="ui-btn-right squared">
+            <img src="${skinPath}/icons/add.png"/>
+          </a>
+        </#if>
     </div>
 
     <div data-role="content" class="comments">

@@ -9,7 +9,7 @@
   <div data-role="content">
     <ul class="ui-listview" data-role="listview">
       <#assign relations = Adapter.relations/>
-      <#if Adapter.hasRelation()>
+      <#if !Adapter.hasRelation()>
         <p class="feedback">
           There is no relation between your document and another item.
         </p>
@@ -19,7 +19,11 @@
           ${Context.getMessage(label)}
         </li>
         <#list relations[label] as statement>
-          <#assign node = statement.objectInfo />
+          <#if statement.objectInfo.documentModel.id != This.document.id>
+            <#assign node = statement.objectInfo />
+          <#else>
+            <#assign node = statement.subjectInfo />
+          </#if>
           <li class="ui-btn ui-btn-icon-right ui-li-has-icon ui-li-has-arrow ui-btn-up-c">
             <#if node.documentVisible>
               <a class="ui-link-inherit" href="${Root.path}/doc/${node.documentModel.id}">
