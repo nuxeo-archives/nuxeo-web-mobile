@@ -67,6 +67,12 @@
 .searchResult .ui-header .ui-btn-inner { padding: .2em .4em }
 
 /* == Messages == */
+/* Dialog */
+.ui-overlay-a, .ui-mobile [data-role="dialog"] { background: transparent !important}
+.ui-dialog .ui-header { margin: 0; border-radius: 0; max-width: 100%; width: auto }
+.ui-dialog .ui-content { border-radius: 0; margin: 0; max-width: 100%; width: auto }
+.ui-dialog .ui-overlay-shadow { box-shadow: 0 0 0 #fff }
+
 /* Notifications */
 .quickNotification { background-color: #fff;
     border: 1px solid #ccc;

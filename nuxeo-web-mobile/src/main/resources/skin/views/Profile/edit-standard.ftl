@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page" data-add-back-btn="true">
+<div data-role="dialog" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
         <h1>${username}'s Profile</h1>
@@ -41,15 +41,13 @@
                 <button onclick="$.mobile.urlHistory.clearForward();$.mobile.urlHistory.clearForward();" type="submit" class="ui-btn-text" data-theme="b">Save</button>
               </div>
               <div class="ui-block-c">
-                <a href="#" data-rel="back" data-role="button">Cancel</a>
+                <a href="#" data-rel="back" data-role="button" data-theme="c">Cancel</a>
               </div>
             </fieldset>
         </form>
       </div>
     </div>
 
-    <#import "../../footer.ftl" as footer/>
-    <@footer.basic />
 </div>
 
 </@block>
