@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 public class MobileRequestHandler implements RequestHandler {
 
     private static List<String> MOBILE_USER_AGENT_REGEXP = Arrays.asList(
-            "(.*)Mobile(.*)Safari(.*)", "(.*)AppleWebKit(.*)Mobile(.*)");
+            "(.*)Mobile(.*)Safari(.*)", "(.*)AppleWebKit(.*)Mobile(.*)", "(.*)Android(.*)");
 
     @Override
     public boolean isRequestRedirectedToApplication(HttpServletRequest request) {

@@ -39,6 +39,9 @@ public class MobileRequestHandlerTestCase {
             + "(iPod; U; CPU iPhone OS 2_2_1 like Mac OS X; en-us) "
             + "AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5H11a Safari/525.20";
 
+    private static final String FENNEC_MOBILE_USER_AGENT = "Mozilla/5.0 (Android; Linux armv7l;"
+            + " rv:10.0) Gecko/20120129 Firefox/10.0 Fennec/10.0";
+
     @Test
     public void SafariMobileUserAgentShouldBeSelected() {
         RequestHandler handler = new MobileRequestHandler();
@@ -56,6 +59,16 @@ public class MobileRequestHandlerTestCase {
         when(request.getHeader("User-Agent")).thenReturn(SAFARI_USER_AGENT);
 
         assertFalse(handler.isRequestRedirectedToApplication(request));
+    }
+
+    @Test
+    public void FennecMobileUserAgentShouldBeSelected() {
+        RequestHandler handler = new MobileRequestHandler();
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getHeader("User-Agent")).thenReturn(
+                FENNEC_MOBILE_USER_AGENT);
+
+        assertTrue(handler.isRequestRedirectedToApplication(request));
     }
 
 }
