@@ -8,11 +8,10 @@
     </div>
 
     <div data-role="content" class="search">
-        <ul data-role="listview" class="ui-listview search">
-        <#if size = 0>
-        No document found
-        </#if>
-
+      <#if size = 0>
+        <p class="feedback">No document matches your query.</p>
+      </#if>
+      <ul data-role="listview" class="ui-listview search">
         <#assign index = 0>
         <#list docs as doc>
         <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
@@ -34,8 +33,8 @@
         <#if (index > max)><#break></#if>
         </#list>
         <#if (size > max)>
-          <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c" data-theme="e">
-            Too much result too return please affine your request.
+          <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c feedback" data-theme="e">
+            Too many results! Please refine your request.
           </li>
           <li>
             <#if fulltext != null>

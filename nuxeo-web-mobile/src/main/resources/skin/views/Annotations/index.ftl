@@ -12,7 +12,7 @@
         <ul>
         <#if Adapter.annotations?size == 0>
           <p class="feedback">
-            No Annotations set on this document
+            There is no annotation on this document.
           </p>
         </#if>
         <#list Adapter.annotations as annotation>

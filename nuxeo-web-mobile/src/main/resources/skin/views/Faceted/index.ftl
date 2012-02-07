@@ -1,17 +1,22 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page" class="searchResult">
+<div data-role="page"
+   <#if page?size = 0>
+   data-add-back-btn="true"
+   </#if>
+   class="searchResult">
+
 
     <div data-role="header" data-position="inline">
       <#if (pageIndex > 0)>
-        <a data-direction="reverse" href="@faceted?pageIndex=${pageIndex - 1}" class="ui-btn-left">
+        <a data-direction="reverse" href="@faceted?pageIndex=${pageIndex - 1}" class="ui-btn-left smallButton">
           <img src="${skinPath}/icons/arrow_left.png"/>
         </a>
       </#if>
       <h1>Result ${pageIndex + 1}/${pageNumber}</h1>
       <#if (pageIndex < pageNumber - 1)>
-        <a href="@faceted?pageIndex=${pageIndex + 1}" class="ui-btn-right">
+        <a href="@faceted?pageIndex=${pageIndex + 1}" class="ui-btn-right smallButton">
           <img src="${skinPath}/icons/arrow_right.png"/>
         </a>
       </#if>
@@ -20,7 +25,7 @@
     <div data-role="content">
         <#if page?size = 0>
           <p class="feedback">
-            No Document returned
+            No document matches your query.
           </p>
         </#if>
         <ul data-role="listview" class="ui-listview search">

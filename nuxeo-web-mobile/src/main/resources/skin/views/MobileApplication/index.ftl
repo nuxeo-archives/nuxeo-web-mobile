@@ -14,7 +14,7 @@
       </form>
       <div class="ui-grid-a">
         <div class="ui-block-a">
-          <a href="${Root.path}/root" class="menuItem">
+          <a href="${Root.path}/root" data-add-back-btn="true" class="menuItem">
             <img src="${skinPath}/icons/browse.png" class="">
             <p class="">Browse</p>
           </a>

@@ -47,7 +47,7 @@
       <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
       <#if sharedSearches?size == 0>
         <p class="feedback">
-          No Shared Search
+          You have no shared search.
         </p>
       <#else>
           <#list mySearches as doc>

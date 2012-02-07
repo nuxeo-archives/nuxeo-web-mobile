@@ -11,7 +11,7 @@
         <ul data-role="listview" data-inset="true">
         <#if result?size == 0>
           <p class="feedback">
-            No document match
+            No document matches your query.
           </p>
         </#if>
         <#list result as doc>

@@ -2,7 +2,7 @@
 <#import "../../footer.ftl" as footer/>
 
 <@block name="content">
-<div data-role="page">
+<div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
         <h1>Repository</h1>

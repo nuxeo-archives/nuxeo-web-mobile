@@ -62,7 +62,7 @@
 /* Searches & Browse */
 .search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
 
-.searchResult .ui-header .ui-btn-inner { padding: .2em .4em }
+.smallButton .ui-btn-inner { padding: .2em .4em }
 
 /* == Messages == */
 /* Dialog */
@@ -86,7 +86,18 @@
     z-index: 220 }
 
 /* Feedback Messages */
-.feedback {}
+.feedback { background: 			#ffefa8 /*{e-bup-background-color}*/;
+	  background-image: -webkit-gradient(linear, left top, left bottom, from( #fff8d7), to( #ffefa8*/));
+	  background-image: -webkit-linear-gradient(#fff8d7, #ffefa8);
+	  background-image:    -moz-linear-gradient(#fff8d7, #ffefa8);
+	  background-image:     -ms-linear-gradient(#fff8d7, #ffefa8);
+	  background-image:      -o-linear-gradient(#fff8d7, #ffefa8);
+	  background-image:         linear-gradient(#fff8d7, #ffefa8);
+    border: 1px solid #ffde4a;
+    border-radius: 7px;
+    color: #5f5f5f;
+    margin: 0;
+    padding: .5em }
 
 /* Loader */
 .ui-loader { background-color: #fff; background-image: none;

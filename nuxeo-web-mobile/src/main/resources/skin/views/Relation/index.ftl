@@ -11,7 +11,7 @@
       <#assign relations = Adapter.relations/>
       <#if Adapter.hasRelation()>
         <p class="feedback">
-          No Annotations set on this document
+          There is no relation between your document and another item.
         </p>
       </#if>
       <#list relations?keys as label>

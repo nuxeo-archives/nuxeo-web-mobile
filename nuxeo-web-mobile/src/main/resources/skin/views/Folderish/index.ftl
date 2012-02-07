@@ -8,13 +8,13 @@
     </div>
 
     <div data-role="content" class="browse">
+      <#if Adapter.children?size == 0>
+        <p class="feedback">
+          There is no document in this container.
+        </p>
+      </#if>
+      <#list Adapter.children as child>
         <ul data-role="listview" class="ui-listview">
-        <#if Adapter.children?size == 0>
-          <p class="feedback">
-            No Document in this container
-          </p>
-        </#if>
-        <#list Adapter.children as child>
           <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
             <#if child.isFolder>
               <a class="ui-link-inherit" href="${Root.path}/doc/${child.id}/@folderish">
@@ -34,8 +34,8 @@
                 </#if>
               </a>
           </li>
-        </#list>
-        </ul>        
+        </ul>
+      </#list>
     </div>
 
     <#import "../../footer.ftl" as footer/>
