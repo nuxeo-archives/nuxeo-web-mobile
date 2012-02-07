@@ -127,7 +127,7 @@ public class Profile extends DefaultObject {
         if (message == null) {
             message = "Update done";
         }
-        return doGetUser(username).arg("message", message);
+        return redirect(this.getPath() + "/" + username);
 
     }
 

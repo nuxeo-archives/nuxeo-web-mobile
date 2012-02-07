@@ -9,7 +9,7 @@
 
     <div data-role="content" class="profile">
             <div class="white nospace profileDetail">
-        <form action="${username}?mode=edit" method="post">
+        <form method="post">
           <div class="avatar">
             <img src="${This.getAvatarURI(username)}" alt="Avatar">
           </div>
@@ -69,7 +69,7 @@
             </div>
             <fieldset class="ui-grid-b">
               <div class="ui-block-a">
-                <button onclick="$.mobile.urlHistory.clearForward();$.mobile.urlHistory.clearForward();" type="submit" class="ui-btn-text" data-theme="b">Save</button>
+                <button data-rel="back" class="ui-btn-text" data-theme="b">Save</button>
               </div>
               <div class="ui-block-c">
                 <a href="#" data-rel="back" data-role="button" data-theme="c">Cancel</a>
