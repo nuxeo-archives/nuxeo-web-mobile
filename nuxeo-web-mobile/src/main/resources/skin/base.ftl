@@ -13,8 +13,12 @@
     <!-- Control layout on mobile browsers -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <link rel="apple-touch-icon" href="${skinPath}/icons/nuxeo_logo.png" />
-    <link rel="apple-touch-startup-image" href="${skinPath}/img/nuxeo_splash_screen.png" />
+    <link rel="apple-touch-icon" href="${skinPath}/img/home_icon_57_57.jpg" media="screen and (resolution: 163dpi)"/>
+    <link rel="apple-touch-icon" href="${skinPath}/img/home_icon_72_72.jpg" media="screen and (resolution: 132dpi)" />
+    <link rel="apple-touch-icon" href="${skinPath}/img/home_icon_114_114.jpg" media="screen and (resolution: 326dpi)" />
+    <link rel="apple-touch-startup-image" href="${skinPath}/img/splash_screen_1024_748.jpg" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)" />
+    <link rel="apple-touch-startup-image" href="${skinPath}/img/splash_screen_768_1004.jpg" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)" />
+    <link rel="apple-touch-startup-image" href="${skinPath}/img/splash_screen_320_460.jpg" media="screen and (max-device-width: 480px)" />
 
     <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css" />
     <link rel="stylesheet" href="${skinPath}/css/nuxeo-web-mobile.css" />
