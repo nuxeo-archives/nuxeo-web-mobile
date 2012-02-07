@@ -1,12 +1,12 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-  <div data-role="page" data-dom-cache="true">
+  <div data-role="page" data-dom-cache="true" class="home">
 
     <div data-role="header">
       <h1>Home</h1>
     </div>
-    <div data-role="content" class="home">
+    <div data-role="content">
       <form method="get" action="${Root.path}/search">
         <input type="search" name="q" id="q" value="" placeholder="Search"/>
         <input type="hidden" name="order" id="order" value="dc:modified DESC" />

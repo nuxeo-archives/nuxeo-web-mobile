@@ -10,10 +10,11 @@
   .login .authentification form { margin: auto; max-width: 22em }
 
 /* Home */
+.home { background: #dfecff }
 .home .ui-grid-a { padding-top: 2em }
 .home .ui-block-a, .home .ui-block-b { text-align: center }
 .home .menuItem { display: block; margin: .3em 0 .8em; text-decoration: none }
-	.home .menuItem p { margin: 0 0 1em }
+	.home .menuItem p { color: #4c78a2; margin: 0 0 1em }
 
 /* == Pages == */
 /* View document */
