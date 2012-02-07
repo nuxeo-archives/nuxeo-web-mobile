@@ -3,10 +3,11 @@
 /* Login */
 .login { background: #d3e5fd url('../img/nuxeo_login.jpg') no-repeat bottom left }
 
-  .login .ui-field-contain { border: none; padding: .2em .4em }
+  .login .ui-field-contain { border: none; margin: 0; padding: .2em .4em }
   .login .logo { background-color: #000; padding: .6em 0 .5em; text-align: center }
     .login .logo img { max-height: 10em; max-width: 5.7em }
-  .login .authentification { margin: 3.5em auto 0; width: 70% }
+  .login .authentification { margin: 13% auto 0; width: 70% }
+  .login .authentification form { margin: auto; max-width: 22em }
 
 /* Home */
 .home .ui-grid-a { padding-top: 2em }
@@ -58,6 +59,8 @@
 
 /* Searches & Browse */
 .search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
+
+.searchResult .ui-header .ui-btn-inner { padding: .2em .4em }
 
 /* == Messages == */
 /* Notifications */

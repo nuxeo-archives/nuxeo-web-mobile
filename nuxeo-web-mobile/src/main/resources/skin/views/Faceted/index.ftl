@@ -1,22 +1,20 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page">
+<div data-role="page" class="searchResult">
 
-    <div data-role="header">
-        <h1>
-          <#if (pageIndex > 0)>
-            <a data-direction="reverse" href="@faceted?pageIndex=${pageIndex - 1}">
-              <img src="${skinPath}/icons/arrow_left.png"/>
-            </a>
-          </#if>
-          Result ${pageIndex + 1}/${pageNumber}
-          <#if (pageIndex < pageNumber - 1)>
-            <a href="@faceted?pageIndex=${pageIndex + 1}">
-              <img src="${skinPath}/icons/arrow_right.png"/>
-            </a>
-          </#if>
-        </h1>
+    <div data-role="header" data-position="inline">
+      <#if (pageIndex > 0)>
+        <a data-direction="reverse" href="@faceted?pageIndex=${pageIndex - 1}">
+          <img src="${skinPath}/icons/arrow_left.png"/>
+        </a>
+      </#if>
+      <h1>Result ${pageIndex + 1}/${pageNumber}</h1>
+      <#if (pageIndex < pageNumber - 1)>
+        <a href="@faceted?pageIndex=${pageIndex + 1}">
+          <img src="${skinPath}/icons/arrow_right.png"/>
+        </a>
+      </#if>
     </div>
 
     <div data-role="content">
