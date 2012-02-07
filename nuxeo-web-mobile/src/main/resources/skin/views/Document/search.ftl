@@ -10,7 +10,9 @@
     <div data-role="content">
         <ul data-role="listview" data-inset="true">
         <#if result?size == 0>
-        No document found
+          <p class="feedback">
+            No document match
+          </p>
         </#if>
         <#list result as doc>
           <li>

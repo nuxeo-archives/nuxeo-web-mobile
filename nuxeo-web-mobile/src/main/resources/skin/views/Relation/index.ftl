@@ -9,6 +9,11 @@
   <div data-role="content">
     <ul class="ui-listview" data-role="listview">
       <#assign relations = Adapter.relations/>
+      <#if Adapter.hasRelation()>
+        <p class="feedback">
+          No Annotations set on this document
+        </p>
+      </#if>
       <#list relations?keys as label>
         <li data-role="list-divider" role="heading" class="ui-bar-b">
           ${Context.getMessage(label)}

@@ -9,6 +9,11 @@
 
     <div data-role="content" class="browse">
         <ul data-role="listview" class="ui-listview">
+        <#if Adapter.children?size == 0>
+          <p class="feedback">
+            No Document in this container
+          </p>
+        </#if>
         <#list Adapter.children as child>
           <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
             <#if child.isFolder>

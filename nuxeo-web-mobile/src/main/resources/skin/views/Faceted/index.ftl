@@ -19,7 +19,9 @@
 
     <div data-role="content">
         <#if page?size = 0>
-          No Document returned
+          <p class="feedback">
+            No Document returned
+          </p>
         </#if>
         <ul data-role="listview" class="ui-listview search">
         <#list page as doc>

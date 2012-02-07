@@ -37,6 +37,11 @@
 
     <div data-role="content" class="comments">
         <ul>
+        <#if Adapter.comments?size == 0>
+          <p class="feedback">
+            No Comments on this document
+          </p>
+        </#if>
         <@childCommentView comments=Adapter.comments/>
         </ul>
     </div>

@@ -18,10 +18,10 @@
       <h2>My Searches</h2>
       <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
       <#if mySearches?size == 0>
-        <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
+        <p class="feedback">
         You have no faceted search stored in your preference. You can easily create ones from a desktop browser.
             Click on the second navigation tab, create your query, and save. This query will be available here.
-        </li>
+        </p>
       <#else>
           <#list mySearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
@@ -46,9 +46,9 @@
       <h2>Shared Searches</h2>
       <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
       <#if sharedSearches?size == 0>
-        <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
+        <p class="feedback">
           No Shared Search
-        </li>
+        </p>
       <#else>
           <#list mySearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">

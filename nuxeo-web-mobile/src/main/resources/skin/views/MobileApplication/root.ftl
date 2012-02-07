@@ -26,7 +26,9 @@
 
 <#macro "docListing" docs emptyMessage>
       <#if docs?size == 0>
-        <h3>${emptyMessage}</h3>
+        <p class="feedback">
+         <h3>${emptyMessage}</h3>
+        </p>
       <#else>
         <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
           <#list docs as doc>

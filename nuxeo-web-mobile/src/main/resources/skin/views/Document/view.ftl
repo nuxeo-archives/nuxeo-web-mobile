@@ -85,7 +85,8 @@
               Mail me
             </a>
           </li>
-          <li class="nxDocumentItem">
+          <!-- Disable until we found a navigation management solution -->
+          <!--li class="nxDocumentItem">
             <a href="${Root.path}/doc/${doc.id}?mode=edit">
               Edit
             </a>
@@ -94,7 +95,7 @@
             <a href="#" onclick="${Root.path}/doc/${doc.id}?mode=delete-confirmation" data-rel="dialog">
               Delete
             </a>
-          </li>
+          </li-->
         </ul>
         
       </div>

@@ -69,7 +69,8 @@ public class RelationAdapter extends DefaultAdapter {
         return getView("index");
     }
 
-    public Map<String, List<StatementInfo>> getRelations() throws ClientException {
+    public Map<String, List<StatementInfo>> getRelations()
+            throws ClientException {
         DocumentModel doc = getDocumentModel();
         RelationManager relationManager = Framework.getLocalService(RelationManager.class);
         Resource docResource = getDocumentResource(doc);
@@ -98,6 +99,16 @@ public class RelationAdapter extends DefaultAdapter {
             relations.put(label, statements);
         }
         return relations;
+    }
+
+    public boolean hasRelation() throws ClientException {
+        Map<String, List<StatementInfo>> relation = getRelations();
+        for (String key : relation.keySet()) {
+            if (relation.get(key).size() > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private DocumentModel getDocumentModel() {

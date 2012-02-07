@@ -10,6 +10,11 @@
 
     <div data-role="content" class="annotations">
         <ul>
+        <#if Adapter.annotations?size == 0>
+          <p class="feedback">
+            No Annotations set on this document
+          </p>
+        </#if>
         <#list Adapter.annotations as annotation>
           <li class="white">
             <div class="details">
