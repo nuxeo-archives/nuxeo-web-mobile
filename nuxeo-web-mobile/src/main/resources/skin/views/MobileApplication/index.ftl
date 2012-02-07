@@ -15,25 +15,25 @@
       <div class="ui-grid-a">
         <div class="ui-block-a">
           <a href="${Root.path}/root" data-add-back-btn="true" class="menuItem">
-            <img src="${skinPath}/icons/browse.png" class="">
+            <img src="${skinPath}/icons/browse.png">
             <p class="">Browse</p>
           </a>
         </div>
         <div class="ui-block-b">
           <a href="${Root.path}/search/faceted" class="menuItem">
-            <img src="${skinPath}/icons/annuaire.png" class="">
-            <p class="">Search</p>
+            <img src="${skinPath}/icons/searches.png">
+            <p class="">Searches</p>
           </a>
         </div>
         <div class="ui-block-a">
           <a href="${Root.path}/profile/${Context.principal.name}" class="menuItem">
-            <img src="${skinPath}/icons/profile.png" class="">
+            <img src="${skinPath}/icons/profile.png">
             <p class="">Profile</p>
           </a>
         </div>
         <div class="ui-block-b">
           <a data-ajax="false" href="/nuxeo/site/mobile/auth/logout" class="menuItem">
-            <img src="${skinPath}/icons/deconnexion.png" class="">
+            <img src="${skinPath}/icons/deconnexion.png">
             <p class="">Deconnexion</p>
           </a>
         </div>
