@@ -11,6 +11,8 @@
 /* Home */
 .home .ui-grid-a { padding-top: 2em }
 .home .ui-block-a, .home .ui-block-b { text-align: center }
+.home .menuItem { display: block; margin: .4em }
+	.home .menuItem p { margin: .2em 0 1em }
 
 /* == Pages == */
 /* View document */
