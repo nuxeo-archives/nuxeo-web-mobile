@@ -44,6 +44,10 @@
 	.comments .comment,
 		.annotations .annotation { line-height: 125%; padding: .3em; word-wrap: break-word }
 
+/* Relations */
+.relations .ui-li-divider, .relations .ui-li-static { font-size: 16px }
+.relations .ui-listview .ui-li-icon { margin-top: -4px }
+
 /* Profile */
 .profile .profileDetail{ margin-bottom: -15px;	padding: 1.1em }
   .profileDetail .avatar { float: left; height: 5em; width: 5em }

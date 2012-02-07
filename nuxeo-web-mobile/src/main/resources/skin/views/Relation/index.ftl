@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page" data-add-back-btn="true">
+<div data-role="page" data-add-back-btn="true" class="relations">
 
   <div data-role="header">
     <h1>Document relations</h1>
@@ -10,12 +10,12 @@
     <ul class="ui-listview" data-role="listview">
       <#assign relations = Adapter.relations/>
       <#list relations?keys as label>
-        <li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-btn ui-bar-b ui-btn-up-undefined">
+        <li data-role="list-divider" role="heading" class="ui-bar-b">
           ${Context.getMessage(label)}
         </li>
         <#list relations[label] as statement>
           <#assign node = statement.objectInfo />
-          <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
+          <li class="ui-btn ui-btn-icon-right ui-li-has-icon ui-li-has-arrow ui-btn-up-c">
             <#if node.documentVisible>
               <a class="ui-link-inherit" href="${Root.path}/doc/${node.documentModel.id}">
             <#elseif node.resource && !node.QNameResource>
