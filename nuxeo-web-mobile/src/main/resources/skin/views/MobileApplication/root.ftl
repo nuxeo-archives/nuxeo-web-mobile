@@ -18,7 +18,7 @@
 
     </div>
 
-    <@footer.basic />
+    <@footer.basic false/>
   </div>
 
 </@block>

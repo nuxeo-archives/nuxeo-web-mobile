@@ -4,7 +4,7 @@
   <div data-role="page" data-dom-cache="true">
 
     <div data-role="header">
-      <h1>Page Title</h1>
+      <h1>Home</h1>
     </div>
     <div data-role="content" class="home">
       <form method="get" action="${Root.path}/search">

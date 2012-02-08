@@ -9,12 +9,12 @@
     </div>
 
     <div data-role="content" class="annotations">
-        <ul>
         <#if Adapter.annotations?size == 0>
           <p class="feedback">
             There is no annotation on this document.
           </p>
-        </#if>
+        <#else>
+        <ul>
         <#list Adapter.annotations as annotation>
           <li class="white">
             <div class="details">
@@ -26,6 +26,7 @@
           </li>
         </#list>
         </ul>
+      </#if>
     </div>
 
     <#import "../../footer.ftl" as footer/>

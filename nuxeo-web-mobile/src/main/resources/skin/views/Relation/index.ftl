@@ -4,14 +4,15 @@
 <div data-role="page" data-add-back-btn="true" class="relations">
 
   <div data-role="header">
-    <h1>Document relations</h1>
+    <h1>Relations</h1>
   </div>
+  
   <div data-role="content">
     <ul class="ui-listview" data-role="listview">
       <#assign relations = Adapter.relations/>
       <#if !Adapter.hasRelation()>
         <p class="feedback">
-          There is no relation between your document and another item.
+          There is no relation on your document
         </p>
       </#if>
       <#list relations?keys as label>
@@ -78,7 +79,7 @@
   </div>
 
     <#import "../../footer.ftl" as footer/>
-    <@footer.basic />
+    <@footer.basic false/>
 </div>
 
 </@block>

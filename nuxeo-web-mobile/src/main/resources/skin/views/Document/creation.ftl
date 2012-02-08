@@ -12,7 +12,7 @@
     </div>
 
     <#import "../../footer.ftl" as footer/>
-    <@footer.basic />
+    <@footer.basic false/>
 </div>
 
 </@block>

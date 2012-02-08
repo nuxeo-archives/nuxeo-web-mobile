@@ -37,13 +37,13 @@
     </div>
 
     <div data-role="content" class="comments">
-        <ul>
         <#if Adapter.comments?size == 0>
           <p class="feedback">
             There is no comment on this document.
           </p>
         </#if>
-        <@childCommentView comments=Adapter.comments/>
+        <ul>
+          <@childCommentView comments=Adapter.comments/>
         </ul>
     </div>
     
