@@ -16,13 +16,13 @@
       </form>
 
       <h2>My Searches</h2>
-      <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
       <#if mySearches?size == 0>
         <p class="feedback">
         You have no faceted search stored in your preference. You can easily create ones from a desktop browser.
-            Click on the second navigation tab, create your query, and save. This query will be available here.
+            Click on the second navigation tab, create your query, and save it. This query will be available here.
         </p>
       <#else>
+        <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
           <#list mySearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
               <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@faceted">
@@ -44,13 +44,13 @@
       </#if>
 
       <h2>Shared Searches</h2>
-      <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
       <#if sharedSearches?size == 0>
         <p class="feedback">
           You have no shared search.
         </p>
       <#else>
-          <#list mySearches as doc>
+        <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+          <#list sharedSearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
               <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@faceted">
                 <#if doc.common.icon != null && doc.common.icon != "">
