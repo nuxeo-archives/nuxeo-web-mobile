@@ -4,7 +4,7 @@
 <div data-role="dialog">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
-        <h1>${username}'s Profile</h1>
+        <h1>Edit</h1>
     </div>
 
     <div data-role="content" class="profile">

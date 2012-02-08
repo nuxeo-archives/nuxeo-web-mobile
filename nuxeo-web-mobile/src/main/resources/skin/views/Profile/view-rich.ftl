@@ -4,7 +4,7 @@
 <div data-role="page" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
-        <h1>${username}'s Profile</h1>
+        <h1>Profile</h1>
     </div>
 
     <div data-role="content" class="profile">
