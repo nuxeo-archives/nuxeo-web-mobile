@@ -5,15 +5,15 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>Repository</h1>
+        <h1>Browse</h1>
     </div>
 
     <div data-role="content" class="repository">
 
-      <h2>Domain</h2>
+      <h3>Domain</h3>
       <@docListing domain "No Document in the Domain"/>
 
-      <h2>User Workspace</h2>
+      <h3>User Workspace</h3>
       <@docListing userwokspace "No Document in your Workspace"/>
 
     </div>
