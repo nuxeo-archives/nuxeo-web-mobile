@@ -62,6 +62,7 @@
 
 /* Searches & Browse */
 .search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
+.repository h3 { margin: 1.6em 0 0 }
 
 .smallButton .ui-btn-inner { padding: .2em .4em }
 
@@ -117,7 +118,9 @@
 .marginBottom { margin-bottom: .4em }
 .shadow { box-shadow: 0 0 8px #6e6e6e }
 
-.tag { background-color: #0089bd ; border-radius: .2em; color: #fff;
+.ui-body-c .ui-link { color: #00a9e9; text-decoration: none }
+
+.tag { background-color: #8a6d47 ; border-radius: .2em; color: #fff;
 		cursor: default;
 		display: inline-block;
     font-size: 80%;

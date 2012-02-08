@@ -1,7 +1,7 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page" data-add-back-btn="true">
+<div data-role="page" data-theme="d" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
         <h1>Profile</h1>
@@ -40,7 +40,7 @@
 	      </div>
         </div>
         <div class="moreInfo">
-          <ul data-inset="true" data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+          <ul data-inset="true" data-role="listview" data-theme="c" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
             <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
               <label for="name" class="ui-input-text">Phone number</label>
                 <span><a href="tel:${userProfile.userprofile.phonenumber}">${userProfile.userprofile.phonenumber}</a></span>
@@ -63,10 +63,10 @@
         </div>
       <fieldset class="ui-grid-a">
         <div class="ui-block-a">
-          <a href="?mode=edit" data-role="button">Edit</a>
+          <a href="?mode=edit" data-role="button" data-theme="c">Edit</a>
         </div>
         <div class="ui-block-b">
-          <a href="?mode=password" data-role="button">Password</a>
+          <a href="?mode=password" data-role="button" data-theme="c">Password</a>
         </div>
       </fieldset>
 
