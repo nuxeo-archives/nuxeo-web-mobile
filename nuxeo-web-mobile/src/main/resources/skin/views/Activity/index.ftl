@@ -18,9 +18,9 @@
         <#if Adapter.hasAddingCommentRight()>
           <div class="actions">
             <#if Adapter.hasWriteRightOnComment(comment)>
-              <a href="#" onclick="$.get('@comment/${comment.id}/@delete', function(data) {alert('success');});">Delete</a> | 
+              <a href="#" onclick="$.get('@comment/${comment.id}/@delete', function(data) {alert('success');});">${Context.getMessage('label.action.Delete')}</a> | 
             </#if>
-            <a href="@comment/${comment.id}" data-rel="dialog">Reply</a>
+            <a href="@comment/${comment.id}" data-rel="dialog">${Context.getMessage('label.action.Reply')}</a>
           </div>
         </#if>
       </li>
@@ -34,7 +34,7 @@
 <div data-add-back-btn="true" data-role="page">
 
     <div data-role="header">
-        <h1>Activity</h1>
+        <h1>${Context.getMessage('label.header.title.ActivityStream')}</h1>
     </div>
 
     <div data-role="content" class="comments">

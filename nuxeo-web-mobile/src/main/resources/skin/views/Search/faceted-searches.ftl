@@ -4,22 +4,21 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>Search</h1>
+        <h1>${Context.getMessage('label.header.title.Searches')}</h1>
     </div>
 
     <div data-role="content" class="search">
 
       <form method="get" action="${Root.path}/search">
-        <input type="search" name="q" id="q" value="" placeholder="Search"/>
+        <input type="search" name="q" id="q" value="" placeholder="${Context.getMessage('label.header.title.Search')}"/>
         <input type="hidden" name="order" id="order" value="dc:modified DESC" />
         <input type="hidden" name="max" id="max" value="20" />
       </form>
 
-      <h2>My Searches</h2>
+      <h2>${Context.getMessage('label.search.title.SavedSearches')}</h2>
       <#if mySearches?size == 0>
         <p class="feedback">
-        You have no faceted search stored in your preference. You can easily create ones from a desktop browser.
-            Click on the second navigation tab, create your query, and save it. This query will be available here.
+          ${Context.getMessage('label.message.NoSavedSearch')}
         </p>
       <#else>
         <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
@@ -43,10 +42,10 @@
         </ul>
       </#if>
 
-      <h2>Shared Searches</h2>
+      <h2>${Context.getMessage('label.search.title.SharedSearches')}</h2>
       <#if sharedSearches?size == 0>
         <p class="feedback">
-          You have no shared search.
+          ${Context.getMessage('label.search.title.NoSharedSearch')}
         </p>
       <#else>
         <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">

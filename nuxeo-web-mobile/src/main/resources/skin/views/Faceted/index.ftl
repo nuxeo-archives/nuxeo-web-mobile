@@ -14,7 +14,7 @@
           <img src="${skinPath}/icons/arrow_left.png"/>
         </a>
       </#if>
-      <h1>Result ${pageIndex + 1}/${pageNumber}</h1>
+      <h1>${Context.getMessage('label.header.title.Results')} ${pageIndex + 1}/${pageNumber}</h1>
       <#if (pageIndex < pageNumber - 1)>
         <a href="@faceted?pageIndex=${pageIndex + 1}" class="ui-btn-right smallButton">
           <img src="${skinPath}/icons/arrow_right.png"/>
@@ -25,7 +25,7 @@
     <div data-role="content">
         <#if page?size = 0>
           <p class="feedback">
-            No document matches your query.
+            ${Context.getMessage('label.message.NoDocumentMatches')}
           </p>
         </#if>
         <ul data-role="listview" class="ui-listview search">
@@ -42,8 +42,12 @@
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
             </#if>
                 <h3>${doc.title}</h3>
-                <p class="ui-li-desc">Description of the document</p>
-              </a>
+                <#if doc.dublincore.description = null || doc.dublincore.description = "" >
+                  <p class="ui-li-desc">&nbsp;</p>
+                <#else>
+                  <p class="ui-li-desc">${doc.dublincore.description}</p>
+                </#if>
+            </a>
           </li>
         </#list>
         </ul>        

@@ -4,14 +4,14 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>Page Title</h1>
+        <h1>${Context.getMessage('label.header.title.Search')}</h1>
     </div>
 
     <div data-role="content">
         <ul data-role="listview" data-inset="true">
         <#if result?size == 0>
           <p class="feedback">
-            No document matches your query.
+            ${Context.getMessage('label.message.NoDocumentMatches')}
           </p>
         </#if>
         <#list result as doc>

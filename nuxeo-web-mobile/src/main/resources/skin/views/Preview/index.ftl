@@ -8,7 +8,7 @@
 <div data-role="page" data-add-back-btn="true" class="preview">
 
     <div data-role="header">
-        <h1>Preview</h1>
+        <h1>${Context.getMessage('label.header.title.Preview')}</h1>
     </div>
 
     <div data-role="content">

@@ -17,7 +17,7 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>View</h1>
+        <h1>${Context.getMessage('label.header.title.View')}</h1>
     </div>
 
     <div data-role="content" class="documentView" id="main">
@@ -54,23 +54,23 @@
               <a href="${Root.path}/doc/${Document.id}/@preview">
               -->
               <a data-ajax="false" href="${This.previewURL}">
-                Preview
+                ${Context.getMessage('label.header.title.Preview')}
               </a>
             </li>
           </#if>
           <li class="nxDocumentItem">
             <a href="${Root.path}/doc/${This.document.id}/@relation">
-              Relations
+              ${Context.getMessage('label.header.title.Relations')}
             </a>
           </li>
           <li class="nxDocumentItem">
             <a href="${Root.path}/doc/${doc.id}/@comment">
-              Comments
+              ${Context.getMessage('label.header.title.Comments')}
             </a>
           </li>
           <li class="nxDocumentItem">
             <a href="${Root.path}/doc/${doc.id}/@annotations">
-              Annotations
+              ${Context.getMessage('label.header.title.Annotations')}
             </a>
           </li>
         </ul>
@@ -79,14 +79,14 @@
       <fieldset class="ui-grid-b">
         <div class="ui-block-a">
           <a href="mailto:?cc=${This.principal.email}&amp;subject=<@emailSubject/>t&amp;body=<@emailBody document=doc/>">
-            Mail
+            ${Context.getMessage('label.action.MailIt')}
           </a>
         </div>
         <div class="ui-block-b">
-          <a href="${Root.path}/doc/${doc.id}?mode=edit" data-role="button">Edit</a>
+          <a href="${Root.path}/doc/${doc.id}?mode=edit" data-role="button">${Context.getMessage('label.action.Edit')}</a>
         </div>
         <div class="ui-block-c">
-          <a href="${Root.path}/doc/${doc.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">Delete</a>
+          <a href="${Root.path}/doc/${doc.id}?mode=delete-confirmation" data-rel="dialog" data-role="button">${Context.getMessage('label.action.Delete')}</a>
         </div>
       </fieldset>
     </div><!-- content -->

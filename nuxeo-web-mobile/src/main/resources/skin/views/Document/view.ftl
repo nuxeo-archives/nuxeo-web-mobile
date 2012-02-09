@@ -17,7 +17,7 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>View</h1>
+        <h1>${Context.getMessage('label.header.title.View')}</h1>
     </div>
 
     <div data-role="content" class="documentView" id="main">
@@ -48,52 +48,52 @@
         <div data-role="navbar" class="noSidespace">
           <ul>
             <#if This.hasPreview()>
-              <li><a data-ajax="false" href="${This.previewURL}"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
+              <li><a data-ajax="false" href="${This.previewURL}"><img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" /></a></li>
             </#if>
             <#if doc.schemas?seq_contains("note")>
-              <li><a href="${Root.path}/doc/${doc.id}/@preview"><img alt="Preview" src="${skinPath}/icons/preview.png" /></a></li>
+              <li><a href="${Root.path}/doc/${doc.id}/@preview"><img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" /></a></li>
             </#if>
             <#if doc.isFolder>
               <li>
-                <a href="${Root.path}/doc/${doc.id}/@folderish"><img alt="Content" src="${skinPath}/icons/preview.png" /></a>
+                <a href="${Root.path}/doc/${doc.id}/@folderish"><img alt="${Context.getMessage('label.header.title.Content')}" src="${skinPath}/icons/preview.png" /></a>
               </li>
             </#if>
-            <li><a href="${Root.path}/doc/${doc.id}/@comment"><img alt="Comments" src="${skinPath}/icons/comments.png" /></a></li>
-            <li><a href="${Root.path}/doc/${doc.id}/@annotations"><img alt="Annotations" src="${skinPath}/icons/annotations.png" /></a></li>
-            <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="Relations" src="${skinPath}/icons/relations.png" /></a></li>
+            <li><a href="${Root.path}/doc/${doc.id}/@comment"><img alt="${Context.getMessage('label.header.title.Comments')}" src="${skinPath}/icons/comments.png" /></a></li>
+            <li><a href="${Root.path}/doc/${doc.id}/@annotations"><img alt="${Context.getMessage('label.header.title.Annotations')}" src="${skinPath}/icons/annotations.png" /></a></li>
+            <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="${Context.getMessage('label.header.title.Relations')}" src="${skinPath}/icons/relations.png" /></a></li>
           </ul>
         </div>
 
         <ul data-role="listview" data-inset="true">
           <li class="nxDocumentItem">
             <a href="mailto:?cc=${This.principal.email}&amp;subject=<@emailSubject/>t&amp;body=<@emailBody document=doc/>">
-              Mail it
+              ${Context.getMessage('label.action.MailIt')}
             </a>
           </li>
           <#if doc.schemas?seq_contains("file")>
           <li class="nxDocumentItem">
             <a data-ajax="false" href="${This.downloadURL}">
-              Download it
+              ${Context.getMessage('label.action.Download')}
             </a>
           </li>
           </#if>
           <li class="nxDocumentItem">
             <a href="#" 
-               onclick="var jqxhr = $.get('${Root.path}/doc/${doc.id}/mailIt', function() { displayNotification('Request sent to server please '); })
-                .success(function() { displayNotification('Mail sent to your personnal account'); })
-                .error(function() { displayNotification('Problem occured during, please contact your administrator'); })">
-              Mail me
+               onclick="var jqxhr = $.get('${Root.path}/doc/${doc.id}/mailIt', function() { displayNotification('${Context.getMessage('label.message.RequestSent')}'); })
+                .success(function() { displayNotification('${Context.getMessage('label.message.MailSent')}'); })
+                .error(function() { displayNotification('${Context.getMessage('label.message.ProblemOccured')}'); })">
+              ${Context.getMessage('label.action.MailMe')}
             </a>
           </li>
           <!-- Disable until we found a navigation management solution -->
           <!--li class="nxDocumentItem">
             <a href="${Root.path}/doc/${doc.id}?mode=edit">
-              Edit
+              ${Context.getMessage('label.action.Edit')}
             </a>
           </li>
           <li class="nxDocumentItem">
             <a href="#" onclick="${Root.path}/doc/${doc.id}?mode=delete-confirmation" data-rel="dialog">
-              Delete
+              ${Context.getMessage('label.action.Delete')}
             </a>
           </li-->
         </ul>

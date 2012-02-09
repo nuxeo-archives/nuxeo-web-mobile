@@ -21,7 +21,7 @@
 <div data-role="page">
 
     <div data-role="header">
-      <h1>Page Title</h1>
+      <h1>${Context.getMessage('label.header.title.Edit')}</h1>
     </div>
 
     <div data-role="content">

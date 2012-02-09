@@ -5,13 +5,13 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>Annotations</h1>
+        <h1>${Context.getMessage('label.header.title.Annotations')}</h1>
     </div>
 
     <div data-role="content" class="annotations">
         <#if Adapter.annotations?size == 0>
           <p class="feedback">
-            There is no annotation on this document.
+            ${Context.getMessage('label.message.NoAnnotation')}
           </p>
         <#else>
         <ul>

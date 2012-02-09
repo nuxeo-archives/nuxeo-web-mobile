@@ -4,17 +4,17 @@
 <div data-role="page">
 
     <div data-role="header">
-      <h1>Page Title</h1>
+      <h1>${Context.getMessage('label.header.title.Details')}</h1>
     </div>
 
     <div data-role="content">
       <ul data-role="listview" data-inset="true">
         <li>
-          <label>Action type</label>
+          <label>${Context.getMessage('label.form.ActionType')}</label>
           <span>${task.getDescription()}</span>
         </li>
         <li>
-          <label>Due Date</label>
+          <label>${Context.getMessage('label.form.DueDate')}</label>
           <span>${task.getDueDate()}</span>
         </li>
       </ul>      

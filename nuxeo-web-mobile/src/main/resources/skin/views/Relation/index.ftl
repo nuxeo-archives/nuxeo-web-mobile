@@ -4,7 +4,7 @@
 <div data-role="page" data-add-back-btn="true" class="relations">
 
   <div data-role="header">
-    <h1>Relations</h1>
+    <h1>${Context.getMessage('label.header.title.Relations')}</h1>
   </div>
   
   <div data-role="content">
@@ -12,7 +12,7 @@
       <#assign relations = Adapter.relations/>
       <#if !Adapter.hasRelation()>
         <p class="feedback">
-          There is no relation on your document
+          ${Context.getMessage('label.message.NoRelation')}
         </p>
       </#if>
       <#list relations?keys as label>
@@ -54,7 +54,7 @@
                     ${node.title}
                   </#if>
                   <#if !node.documentVisible>
-                    Referenced document not visible
+                    ${Context.getMessage('label.message.NotVisible')}
                   </#if>
                 </#if>
                 <#if node.resource && !node.QNameResource>

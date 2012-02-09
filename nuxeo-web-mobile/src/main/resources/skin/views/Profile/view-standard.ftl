@@ -4,7 +4,7 @@
 <div data-role="page" data-theme="d" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
-        <h1>Profile</h1>
+        <h1>${Context.getMessage('label.header.title.Profile')}</h1>
     </div>
 
     <div data-role="content" class="profile">
@@ -27,12 +27,12 @@
 	          <#if userMainInfo.user.email != "">
 	            <a href="mailto:${userMainInfo.user.email}">${userMainInfo.user.email}</a>
 	          <#else>
-	            No Mail information
+	            ${Context.getMessage('label.message.NoInfo')}
 	          </#if>
           </div>
           <div class="groups">
               <#if userMainInfo.user.groups?size =0>
-                <span class="tag">No Group</span>
+                <span class="tag">${Context.getMessage('label.message.NoInfo')}</span>
               <#else>
                 <#list userMainInfo.user.groups as group>
 	              <span class="tag">${group}</span>
@@ -42,10 +42,10 @@
         </div>
       <fieldset class="ui-grid-a">
         <div class="ui-block-a">
-          <a href="?mode=edit" data-role="button" data-theme="c">Edit</a>
+          <a href="?mode=edit" data-role="button" data-theme="c">${Context.getMessage('label.action.Edit')}</a>
         </div>
         <div class="ui-block-b">
-          <a href="?mode=password" data-role="button" data-theme="c">Password</a>
+          <a href="?mode=password" data-role="button" data-theme="c">${Context.getMessage('label.action.Password')}</a>
         </div>
       </fieldset>
 

@@ -5,16 +5,16 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>Browse</h1>
+        <h1>${Context.getMessage('label.home.menu.Browse')}</h1>
     </div>
 
     <div data-role="content" class="repository">
 
-      <h3>Domain</h3>
-      <@docListing domain "No Document in the Domain"/>
+      <h3>${Context.getMessage('label.root.title.Domain')}</h3>
+      <@docListing domain "{Context.getMessage('label.message.NoDocumentInDomain')}"/>
 
-      <h3>User Workspace</h3>
-      <@docListing userwokspace "No Document in your Workspace"/>
+      <h3>${Context.getMessage('label.root.title.UserWorkspace')}</h3>
+      <@docListing userwokspace "{Context.getMessage('label.message.NoDocumentInWorkspace')}"/>
 
     </div>
 

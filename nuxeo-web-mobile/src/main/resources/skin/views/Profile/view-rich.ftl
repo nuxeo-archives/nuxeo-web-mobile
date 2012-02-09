@@ -4,7 +4,7 @@
 <div data-role="page" data-theme="d" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
-        <h1>Profile</h1>
+        <h1>${Context.getMessage('label.header.title.Profile')}</h1>
     </div>
 
     <div data-role="content" class="profile">
@@ -26,12 +26,12 @@
 	          <#if userMainInfo.user.email != "">
 	            <a href="mailto:${userMainInfo.user.email}">${userMainInfo.user.email}</a>
 	          <#else>
-	            No Mail information
+	            ${Context.getMessage('label.message.NoInfo')}
 	          </#if>
           </div>
           <div class="groups">
               <#if userMainInfo.user.groups?size =0>
-                <span class="tag">No Group</span>
+                <span class="tag">${Context.getMessage('label.message.NoInfo')}</span>
               <#else>
                 <#list userMainInfo.user.groups as group>
 	              <span class="tag">${group}</span>
@@ -42,31 +42,31 @@
         <div class="moreInfo">
           <ul data-inset="true" data-role="listview" data-theme="c" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
             <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">Phone number</label>
+              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Phone')}</label>
                 <span><a href="tel:${userProfile.userprofile.phonenumber}">${userProfile.userprofile.phonenumber}</a></span>
             </li>
             <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">Birth Date</label>
+              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Birth')}</label>
               <#if userProfile.userprofile.birthdate != "">
                 <span>${userProfile.userprofile.birthdate?date}</span>
               </#if>
             </li>
             <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">Gender</label>
+              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Gender')}</label>
               <#if userProfile.userprofile.gender = true>
-                <span>Male</span>
+                <span>${Context.getMessage('label.form.GenderMale')}</span>
               <#else>
-                <span>Female</span>
+                <span>${Context.getMessage('label.form.GenderFemale')}</span>
               </#if>
             </li>
 	        <ul>
         </div>
       <fieldset class="ui-grid-a">
         <div class="ui-block-a">
-          <a href="?mode=edit" data-role="button" data-theme="c">Edit</a>
+          <a href="?mode=edit" data-role="button" data-theme="c">${Context.getMessage('label.action.Edit')}</a>
         </div>
         <div class="ui-block-b">
-          <a href="?mode=password" data-role="button" data-theme="c">Password</a>
+          <a href="?mode=password" data-role="button" data-theme="c">${Context.getMessage('label.action.Password')}</a>
         </div>
       </fieldset>
 

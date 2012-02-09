@@ -4,13 +4,13 @@
 <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>Content</h1>
+        <h1>${Context.getMessage('label.header.title.Content')}</h1>
     </div>
 
     <div data-role="content" class="browse">
       <#if Adapter.children?size == 0>
         <p class="feedback">
-          There is no document in this container.
+          ${Context.getMessage('label.message.NoDocumentInFolder')}
         </p>
       </#if>
       <#list Adapter.children as child>
