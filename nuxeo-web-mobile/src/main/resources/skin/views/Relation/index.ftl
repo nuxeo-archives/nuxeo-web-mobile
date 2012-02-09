@@ -20,7 +20,7 @@
           ${Context.getMessage(label)}
         </li>
         <#list relations[label] as statement>
-          <#if statement.objectInfo.documentModel.id != This.document.id>
+          <#if statement.objectInfo.documentModel && statement.objectInfo.documentModel.id != This.document.id>
             <#assign node = statement.objectInfo />
           <#else>
             <#assign node = statement.subjectInfo />
