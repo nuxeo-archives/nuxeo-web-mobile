@@ -36,7 +36,7 @@ About the Application Nuxeo Web Mobile: we expose a subset of funconnalities of 
 This application work on all main mobile browser (Webkits - android, iOS, BB6 -, Fennec Mobile and Windows Phone - we never try, but JQuery say it's ok :).
 About iOS you have also the possibility to add the application into your springboard: Browser button will be hidden and you will have a "feeling" to be to a built-in application.
 
-Here is the list of Social modules you can find inside this addon:
+Here is the list of Web Mobile bundles you can find inside this addon:
 
 * Nuxeo Application Definition: service where you describe an application (Base URL, Login relative Path URL, Request Handler) filters will automatically will do the redirection to your app
 * Nuxeo Application Sample: This is a simple example of how to use the Nuxeo Application Definition
