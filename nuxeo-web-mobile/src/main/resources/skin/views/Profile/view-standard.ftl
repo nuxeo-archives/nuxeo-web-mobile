@@ -17,28 +17,28 @@
             <div class="name">
               ${userMainInfo.user.firstName} ${userMainInfo.user.lastName}
             </div>
-	          <#else>
+              <#else>
             <div class="name gray">
-	            John Doe
+                John Doe
             </div>
-	          </#if>
+              </#if>
           </div>
           <div class="email">
-	          <#if userMainInfo.user.email != "">
-	            <a href="mailto:${userMainInfo.user.email}">${userMainInfo.user.email}</a>
-	          <#else>
-	            ${Context.getMessage('label.message.NoInfo')}
-	          </#if>
+              <#if userMainInfo.user.email != "">
+                <a href="mailto:${userMainInfo.user.email}">${userMainInfo.user.email}</a>
+              <#else>
+                ${Context.getMessage('label.message.NoInfo')}
+              </#if>
           </div>
           <div class="groups">
               <#if userMainInfo.user.groups?size =0>
                 <span class="tag">${Context.getMessage('label.message.NoInfo')}</span>
               <#else>
                 <#list userMainInfo.user.groups as group>
-	              <span class="tag">${group}</span>
-	            </#list>
-	          </#if>
-	      </div>
+                  <span class="tag">${group}</span>
+                </#list>
+              </#if>
+          </div>
         </div>
       <fieldset class="ui-grid-a">
         <div class="ui-block-a">

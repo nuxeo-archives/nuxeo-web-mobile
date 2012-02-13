@@ -15,29 +15,29 @@
         <div class="profileInfo clear">
         <#if userMainInfo.user.firstName != "" && userMainInfo.user.firstName != "">
           <div class="name">
-	            ${userMainInfo.user.firstName} ${userMainInfo.user.lastName}
+                ${userMainInfo.user.firstName} ${userMainInfo.user.lastName}
           </div>
-	      <#else>
+          <#else>
           <div class="name gray">
-	            John Doe
-	        </div>
+                John Doe
+            </div>
         </#if>
           <div class="email">
-	          <#if userMainInfo.user.email != "">
-	            <a href="mailto:${userMainInfo.user.email}">${userMainInfo.user.email}</a>
-	          <#else>
-	            ${Context.getMessage('label.message.NoInfo')}
-	          </#if>
+              <#if userMainInfo.user.email != "">
+                <a href="mailto:${userMainInfo.user.email}">${userMainInfo.user.email}</a>
+              <#else>
+                ${Context.getMessage('label.message.NoInfo')}
+              </#if>
           </div>
           <div class="groups">
               <#if userMainInfo.user.groups?size =0>
                 <span class="tag">${Context.getMessage('label.message.NoInfo')}</span>
               <#else>
                 <#list userMainInfo.user.groups as group>
-	              <span class="tag">${group}</span>
-	            </#list>
-	          </#if>
-	      </div>
+                  <span class="tag">${group}</span>
+                </#list>
+              </#if>
+          </div>
         </div>
         <div class="moreInfo">
           <ul data-inset="true" data-role="listview" data-theme="c" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
@@ -59,7 +59,7 @@
                 <span>${Context.getMessage('label.form.GenderFemale')}</span>
               </#if>
             </li>
-	        <ul>
+            <ul>
         </div>
       <fieldset class="ui-grid-a">
         <div class="ui-block-a">

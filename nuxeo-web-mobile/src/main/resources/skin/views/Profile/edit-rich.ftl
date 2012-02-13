@@ -42,20 +42,20 @@
                   <label for="name" class="ui-input-text">${Context.getMessage('label.form.Phone')}</label>
                   <input type="text" name="" value="${userProfile.userprofile.phonenumber}" placeholder="${Context.getMessage('label.form.Phone')}"></input>
                 </li>
-	            <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-	              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Birth')}</label>
-	              <#if userProfile.userprofile.birthdate != "">
-	                <span>${userProfile.userprofile.birthdate?date}</span>
-	              </#if>
-	            </li>
-	            <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-	              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Gender')}</label>
-	              <#if userProfile.userprofile.gender = true>
-	                <span>${Context.getMessage('label.form.GenderMale')}</span>
-	              <#else>
-	                <span>${Context.getMessage('label.form.GenderFemale')}</span>
-	              </#if>
-	            </li>
+                <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
+                  <label for="name" class="ui-input-text">${Context.getMessage('label.form.Birth')}</label>
+                  <#if userProfile.userprofile.birthdate != "">
+                    <span>${userProfile.userprofile.birthdate?date}</span>
+                  </#if>
+                </li>
+                <li data-role="fieldcontain" class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
+                  <label for="name" class="ui-input-text">${Context.getMessage('label.form.Gender')}</label>
+                  <#if userProfile.userprofile.gender = true>
+                    <span>${Context.getMessage('label.form.GenderMale')}</span>
+                  <#else>
+                    <span>${Context.getMessage('label.form.GenderFemale')}</span>
+                  </#if>
+                </li>
                 <!--li data-role="fieldcontain" class="clear ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
                   <label class="gray ui-input-text">${Context.getMessage('label.form.Gender')}</label>
                   <fieldset data-role="controlgroup">

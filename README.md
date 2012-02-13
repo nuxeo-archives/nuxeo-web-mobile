@@ -46,7 +46,7 @@ Here is the list of Web Mobile bundles you can find inside this addon:
 
 You can build Nuxeo Web Mobile application with:
 
-	$ mvn install
+    $ mvn install
 
 By default the sample application is not built if you want to test it, do mvn install in the nuxeo-application-sample
 
