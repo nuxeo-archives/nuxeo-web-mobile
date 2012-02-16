@@ -1,6 +1,6 @@
 # Nuxeo Web Mobile - when WebEngine meet JQuery Mobile
 
-This addon provides a WebApp that expose Nuxeo with a dedicate for Mobile browser. All Mobile browser will automatically redirected to this application after you install it.
+This add-on provides a WebApp that expose Nuxeo with a dedicate view for Mobile browser. All Mobile browser will automatically redirected to this application after its deployment.
 This Application is in alpha version, Nuxeo will not garantee (at all) the API as we think to work on split the data and the UI restitution.
 You are welcome to test it and if you install it you will be no problem to move to the next version, but if you develop on the top of it you will be alone to move your code :D
 
@@ -33,7 +33,7 @@ About the Application Nuxeo Web Mobile: we expose a subset of funconnalities of 
      - Full text search - from the Home page and the search view
      - faceted search: you have access to your personnal and shared faceted search recorded. You can't create new faceted search from the mobile application.
 
-This application work on all main mobile browser (Webkits - android, iOS, BB6 -, Fennec Mobile and Windows Phone - we never try, but JQuery say it's ok :).
+This application works on all main mobile browser (Webkits - android, iOS, BB6 -, Fennec Mobile and Windows Phone - we never try, but JQuery say it's ok :).
 About iOS you have also the possibility to add the application into your springboard: Browser button will be hidden and you will have a "feeling" to be to a built-in application.
 
 Here is the list of Web Mobile bundles you can find inside this addon:
@@ -48,9 +48,7 @@ You can build Nuxeo Web Mobile application with:
 
     $ mvn install
 
-By default the sample application is not built if you want to test it, do mvn install in the nuxeo-application-sample
-
-If you want to test it, take jar built (in nuxeo-web-mobile/target and nuxeo-application-definition/target directories) and put it into your tomcat server in $tomcat/nxserver/bundles or in your jboss server in $jboss/server/default/deploy/nuxeo.ear/bundles.
+If you want to test it, take jars built (in nuxeo-web-mobile/target and nuxeo-application-definition/target directories) and put it into your tomcat server in $tomcat/nxserver/bundles or in your jboss server in $jboss/server/default/deploy/nuxeo.ear/bundles.
 
 ## About Nuxeo
 
