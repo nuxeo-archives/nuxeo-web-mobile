@@ -11,10 +11,12 @@
     <div data-role="content" class="repository">
 
       <h3>${Context.getMessage('label.root.title.Domain')}</h3>
-      <@docListing domain "{Context.getMessage('label.message.NoDocumentInDomain')}"/>
+      <#assign messageEmptyDom = Context.getMessage("label.message.NoDocumentInDomain")/>
+      <@docListing domain "${messageEmptyDom}"/>
 
       <h3>${Context.getMessage('label.root.title.UserWorkspace')}</h3>
-      <@docListing userwokspace "{Context.getMessage('label.message.NoDocumentInWorkspace')}"/>
+      <#assign messageEmptyUW = Context.getMessage("label.message.NoDocumentInWorkspace")/>
+      <@docListing userwokspace "${messageEmptyUW}"/>
 
     </div>
 
