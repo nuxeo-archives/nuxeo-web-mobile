@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.nuxeo.ecm.mobile</groupId>
     <artifactId>nuxeo-web-mobile-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>5.5-SNAPSHOT</version>
   </parent>
-  <groupId>org.nuxeo.ecm.mobile</groupId>
   <artifactId>nuxeo-web-mobile</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <name>nuxeo-web-mobile</name>
-  <description/>
+  <description>WebEngine application using JQuery Mobile to provide a dedicated
+    UI for Mobile browsers.</description>
+
   <dependencies>
     <dependency>
       <groupId>org.nuxeo.ecm.social</groupId>
@@ -69,7 +70,6 @@
       <artifactId>nuxeo-platform-relations-web</artifactId>
     </dependency>
 
-
     <dependency>
       <groupId>javax.ws.rs</groupId>
       <artifactId>jsr311-api</artifactId>
@@ -117,24 +117,5 @@
       <groupId>org.apache.tomcat</groupId>
       <artifactId>catalina</artifactId>
     </dependency>
-
   </dependencies>
-
-  <!-- pluginRepositories>
-    <pluginRepository>
-      <id>moyrax-releases</id>
-      <name>Moyrax Artifactory</name>
-      <url>http://www.moyrax.com:8081/nexus/content/repositories/moyrax-releases/</url>
-      <layout>default</layout>
-
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories-->
-
 </project>
