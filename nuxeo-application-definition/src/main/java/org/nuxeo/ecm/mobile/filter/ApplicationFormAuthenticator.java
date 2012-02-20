@@ -30,7 +30,6 @@ import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.URIUtils;
 import org.nuxeo.ecm.mobile.ApplicationDefinitionService;
 import org.nuxeo.ecm.platform.api.login.UserIdentificationInfo;
-import org.nuxeo.ecm.platform.ui.web.auth.CachableUserIdentificationInfo;
 import org.nuxeo.ecm.platform.ui.web.auth.interfaces.LoginResponseHandler;
 import org.nuxeo.ecm.platform.ui.web.auth.interfaces.NuxeoAuthenticationPlugin;
 import org.nuxeo.runtime.api.Framework;
@@ -41,6 +40,8 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_ERROR;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE_KEY;
 
 ;
+import static org.nuxeo.theme.jsf.URLUtils.getServerURL;
+import static org.nuxeo.theme.jsf.URLUtils.getBaseURL;
 
 /**
  * Authenticator that redirects user to dedicated application authentication
@@ -90,6 +91,9 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     @Override
     public Boolean handleLoginPrompt(HttpServletRequest httpRequest,
             HttpServletResponse httpResponse, String baseURL) {
+        if (log.isDebugEnabled()) {
+            log.debug("Login Prompt - URL :" + httpRequest.getRequestURL() + "?" + httpRequest.getQueryString());
+        }
 
         String loginPage = getService().getLoginURL(httpRequest);
         if (loginPage == null) {
@@ -124,6 +128,9 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     @Override
     public boolean onError(HttpServletRequest request,
             HttpServletResponse response) {
+        if (log.isDebugEnabled()) {
+            log.debug("On Error - URL :" + request.getRequestURL() + "?" + request.getQueryString());
+        }
         Map<String, String> params;
         String redirect = request.getRequestURI();
         try {
@@ -152,6 +159,9 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     public boolean onSuccess(HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
 
+        if (log.isDebugEnabled()) {
+            log.debug("On success - URL :" + httpRequest.getRequestURL() + "?" + httpRequest.getQueryString());
+        }
         Map<String, String> parameters;
         try {
             RequestAdapter adapter = new RequestAdapter(httpRequest);

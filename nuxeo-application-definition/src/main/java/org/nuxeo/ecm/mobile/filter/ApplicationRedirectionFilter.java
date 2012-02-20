@@ -65,6 +65,9 @@ public class ApplicationRedirectionFilter implements Filter {
         }
 
         HttpServletRequest req = (HttpServletRequest) request;
+        if (log.isDebugEnabled()) {
+            log.debug("do filter - URL :" + req.getRequestURL() + "?" + req.getQueryString());
+        }
         String baseURL = service.getApplicationBaseURL(req);
         List<String> resourcesBaseURL = service.getResourcesApplicationBaseURL(req);
 
@@ -107,6 +110,7 @@ public class ApplicationRedirectionFilter implements Filter {
      */
     private boolean isTargetApplicationURL(HttpServletRequest req, String targetApplicationURL) {
         String uri = req.getRequestURI();
+        log.debug("Request uri: " + uri + " and targetApplicationURL: " + targetApplicationURL);
         if (!uri.startsWith(targetApplicationURL)) {
             return false;
         }
