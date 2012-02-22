@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.ecm.mobile.redirect.to.mobile">
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+    point="actions">
+
+    <action id="gotoMobile" enabled="true" label="Mobile Navigation" order="5" link="#"
+      confirm="document.cookie = 'skipMobileRedirection=; expires=Fri, 27 Jul 1970 02:47:11 UTC; path=/'; return true;">
+      <category>USER_MENU_ACTIONS</category>
+    </action>
+  </extension>
+</component>
