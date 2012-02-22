@@ -163,7 +163,7 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("Activity");
     }
 
-    private String getNuxeoContextPath() {
+    public String getNuxeoContextPath() {
         if (nuxeoContextPath == null) {
             nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
         }

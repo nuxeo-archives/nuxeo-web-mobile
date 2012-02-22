@@ -42,3 +42,25 @@ function doDisplayNotification(message) {
       
      });   
 }
+
+function setCookie(name, value, expDays, path, domain, secure) {
+  // Set cookie with name, value etc provided
+  // in function call and date from above
+  // Number of days the cookie should persist NB expDays='' or undef. => non-persistent
+  if (expDays != null ) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (expDays*24*60*60*1000));
+  }
+  var curCookie = name + "=" + escape(value) +
+    ((expires) ? "; expires=" + expires.toGMTString() : "") +
+    ((path) ? "; path=" + path : "") +
+    ((domain) ? "; domain=" + domain : "") +
+    ((secure) ? "; secure" : "");
+    document.cookie = curCookie;
+}
+
+function goToStandardNavigation(targetURL) {
+  alert(targetURL);
+  setCookie('skipMobileRedirection', 'true', 1, '/');
+  window.location.href = targetURL;
+}

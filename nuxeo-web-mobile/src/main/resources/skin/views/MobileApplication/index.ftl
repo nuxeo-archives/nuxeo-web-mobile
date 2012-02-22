@@ -32,9 +32,15 @@
           </a>
         </div>
         <div class="ui-block-b">
-          <a data-ajax="false" href="/nuxeo/site/mobile/auth/logout" class="menuItem">
+          <a data-ajax="false" href="${Root.path}/auth/logout" class="menuItem">
             <img src="${skinPath}/icons/deconnexion.png">
             <p class="">${Context.getMessage('label.home.menu.Logout')}</p>
+          </a>
+        </div>
+        <div class="ui-block-b">
+          <a data-ajax="false" href="#" onclick="goToStandardNavigation('${Root.nuxeoContextPath}');" class="menuItem">
+            <img src="${skinPath}/icons/standard_navigation.png">
+            <p class="">${Context.getMessage('label.home.menu.GoToStandardNavigation')}</p>
           </a>
         </div>
       </div>
