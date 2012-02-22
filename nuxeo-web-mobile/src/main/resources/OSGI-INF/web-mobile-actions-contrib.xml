@@ -7,6 +7,13 @@
     <action id="gotoMobile" enabled="true" label="Mobile Navigation" order="5" link="#"
       confirm="document.cookie = 'skipMobileRedirection=; expires=Fri, 27 Jul 1970 02:47:11 UTC; path=/'; return true;">
       <category>USER_MENU_ACTIONS</category>
+      <filter id="ACTION_GO_TO_MOBILE_NX">
+        <rule grant="true">
+          <condition>
+            #{mobileApplicationActionsBean.isMobileBrowser()}
+          </condition>
+        </rule>
+      </filter>
     </action>
   </extension>
 </component>
