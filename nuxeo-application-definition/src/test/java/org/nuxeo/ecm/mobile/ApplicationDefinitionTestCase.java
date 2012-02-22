@@ -24,11 +24,10 @@ import org.junit.Test;
 import org.nuxeo.ecm.mobile.handler.RequestHandler;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import static org.nuxeo.ecm.mobile.ApplicationConstants.APPLICATION_SELECTED_COOKIE_NAME;
 
 /**
  * @author bjalon
@@ -40,11 +39,14 @@ public class ApplicationDefinitionTestCase {
 
     private HttpServletRequest request;
 
-    private Cookie[] cookies;
-
     @Before
     public void init() {
-        service = new ApplicationRedirectServiceImpl();
+        service = new ApplicationRedirectServiceImpl() {
+            @Override
+            protected String getBaseURL(HttpServletRequest req) {
+                return "https://localhost/nuxeo/";
+            }
+        };
 
     }
 
@@ -59,66 +61,60 @@ public class ApplicationDefinitionTestCase {
         ApplicationDefinitionDescriptor app = initDescriptorWithoutCookie(
                 "app1", true, true, 20);
         service.registerApplication(app, "myComponentName1");
-        assertNull(service.getTargetApplication(request));
+        assertNull(service.getApplicationBaseURL(request));
 
         // handler doen't match and is ordered after
         app = initDescriptorWithoutCookie("app2", false, false, 30);
         service.registerApplication(app, "myComponentName2");
-        assertNull(service.getTargetApplication(request));
+        assertNull(service.getApplicationBaseURL(request));
 
         // handler doen't match and is ordered before
         app = initDescriptorWithoutCookie("app3", false, false, 40);
         service.registerApplication(app, "myComponentName3");
-        assertNull(service.getTargetApplication(request));
+        assertNull(service.getApplicationBaseURL(request));
 
         // handler match and application enabled
         app = initDescriptorWithoutCookie("app4", true, false, 50);
         service.registerApplication(app, "myComponentName4");
-        assertEquals("app4", service.getTargetApplication(request).getName());
+        assertNotNull(service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app4", service.getApplicationBaseURL(request));
 
         // disable previous application
         app = initDescriptorWithoutCookie("app4", true, true, 50);
         service.registerApplication(app, "myComponentName5");
-        assertNull(service.getTargetApplication(request));
+        assertNull(service.getApplicationBaseURL(request));
 
         // handler match and application enabled (in the first position)
         app = initDescriptorWithoutCookie("app5", true, false, 0);
         service.registerApplication(app, "myComponentName6");
-        assertEquals("app5", service.getTargetApplication(request).getName());
+        assertNotNull(service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app5", service.getApplicationBaseURL(request));
 
         // Idem but ordered after
         app = initDescriptorWithoutCookie("app6", true, false, 1);
         service.registerApplication(app, "myComponentName7");
-        assertEquals("app5", service.getTargetApplication(request).getName());
+        assertNotNull(service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app5", service.getApplicationBaseURL(request));
     }
+
 
     @Test
-    public void shouldReturnApplicationTargetAccordingCookieIfNoHandlerMatch() {
+    public void shouldReturnApplicationBaseURL() {
 
-        // Create a request with the app1 application selected => user has
-        // selected app1
-        cookies = new Cookie[1];
-        cookies[0] = mock(Cookie.class);
-        when(cookies[0].getName()).thenReturn(APPLICATION_SELECTED_COOKIE_NAME);
-        when(cookies[0].getValue()).thenReturn("app1");
+        // Here we test values returned by application definition
         request = mock(HttpServletRequest.class);
-        when(request.getCookies()).thenReturn(cookies);
+        when(request.getCookies()).thenReturn(new Cookie[0]);
 
-        // Even cookie = app1, null returned as no app1 defined
-        assertNull(service.getTargetApplication(request));
-
-        // app1 selected as no handler match and cookie = app1 and app 1 defined
         ApplicationDefinitionDescriptor app = initDescriptorWithoutCookie(
-                "app1", false, false, 10);
+                "app1", true, false, 10);
         service.registerApplication(app, "myComponentName1");
-        assertEquals("app1", service.getTargetApplication(request).getName());
+        
+        assertEquals("https://localhost/nuxeo/site/app1", service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app1/login", service.getLoginURL(request));
+        assertEquals("https://localhost/nuxeo/site/app1/logout", service.getLogoutURL(request));
 
-        // Cookie value ignored as app2 handler match
-        app = initDescriptorWithoutCookie("app2", true, false, 20);
-        service.registerApplication(app, "myComponentName2");
-        assertEquals("app2", service.getTargetApplication(request).getName());
     }
-
+    
     /**
      * Return a {@code ApplicationDescriptor} with an handler return always
      * {@value handleReturn}
@@ -141,7 +137,7 @@ public class ApplicationDefinitionTestCase {
         result.name = name;
         result.disabled = disabled;
         result.order = order;
-        result.baseURL = "/site/" + name;
+        result.applicationRelativePath = "/site/" + name;
         result.loginPage = "/login";
         result.logoutPage = "/logout";
         return result;

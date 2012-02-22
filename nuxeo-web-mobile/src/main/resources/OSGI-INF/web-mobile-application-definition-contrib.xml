@@ -4,7 +4,7 @@
     target="org.nuxeo.ecm.application.definition.service"
     point="applicationDefinition">
         <application name="Mobile" order="5" disable="false">
-          <baseURL>/site/mobile</baseURL>
+          <applicationRelativePath>/site/mobile</applicationRelativePath>
           <loginPage>/auth/login</loginPage>
           <logoutPage>/auth/logout</logoutPage>
           <handler>org.nuxeo.ecm.mobile.handler.MobileRequestHandler</handler>

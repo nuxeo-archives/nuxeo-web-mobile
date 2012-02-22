@@ -34,7 +34,6 @@ import org.nuxeo.ecm.platform.ui.web.auth.service.OpenUrlDescriptor;
 import org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService;
 import org.nuxeo.runtime.api.Framework;
 
-import static org.nuxeo.ecm.mobile.ApplicationConstants.APPLICATION_SELECTED_COOKIE_NAME;
 import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.ERROR_USERNAME_MISSING;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_ERROR;
@@ -173,21 +172,6 @@ public class RequestAdapter {
             log.debug("Forward the target URL parameter again into the target URL parameter: " + result.get(TARGET_URL_PARAMETER));
         }
         return result;
-    }
-
-    /**
-     * Return the application selected by the user - if no handler has matched -
-     * (see the
-     * {@code ApplicationDefinitionService#getTargetApplication(HttpServletRequest)}
-     * ) for more information
-     */
-    public String getNavigationSelectionCookieValue() {
-        for (Cookie cookie : cookies) {
-            if (APPLICATION_SELECTED_COOKIE_NAME.equals(cookie.getName())) {
-                return cookie.getValue();
-            }
-        }
-        return null;
     }
 
     /**

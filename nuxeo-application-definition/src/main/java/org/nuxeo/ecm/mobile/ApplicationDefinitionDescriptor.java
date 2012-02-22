@@ -47,8 +47,8 @@ public class ApplicationDefinitionDescriptor {
     @XNode("handler")
     public Class<?> klass;
 
-    @XNode("baseURL")
-    public String baseURL;
+    @XNode("applicationRelativePath")
+    public String applicationRelativePath;
 
     @XNode("loginPage")
     public String loginPage;
@@ -57,7 +57,7 @@ public class ApplicationDefinitionDescriptor {
     public String logoutPage;
 
     @XNodeList(value = "resources/resourcesBaseURL", type = ArrayList.class, componentType = String.class)
-    private List<String> resourcesBaseUrl = new ArrayList<String>();
+    public List<String> resourcesBaseUrl = new ArrayList<String>();
 
     /**
      * Application name described
@@ -107,8 +107,8 @@ public class ApplicationDefinitionDescriptor {
     /**
      * Base URL of the described application (without the Nuxeo Context Path)
      */
-    public String getBaseUrl() {
-        return baseURL;
+    public String getApplicationRelativePath() {
+        return applicationRelativePath;
     }
 
     /**

@@ -23,19 +23,6 @@ package org.nuxeo.ecm.mobile;
 public class ApplicationConstants {
 
     /**
-     * Name of the cookie that will store the application name chosen by the
-     * user in
-     * {@code ApplicationSelectionViewService#getApplicationSelectionURL()} or
-     * selecting according the request context
-     * {@code ApplicationDefinitionService#getTargetApplication(javax.servlet.http.HttpServletRequest)}
-     * . See more information into
-     * {@code ApplicationDefinitionService#getTargetApplication(HttpServletRequest)}
-     * . Once the selection found the application target is stored into the
-     * cookie named {@code APPLICATION_SELECTED_COOKIE_NAME}
-     */
-    public static final String APPLICATION_SELECTED_COOKIE_NAME = "applicationSelected";
-
-    /**
      * After Browser redirect to the application the initial URL asked by the
      * user is store as a parameter into the URI into this parameter name the
      * application URL parameter that will store the initial URL ask by the user

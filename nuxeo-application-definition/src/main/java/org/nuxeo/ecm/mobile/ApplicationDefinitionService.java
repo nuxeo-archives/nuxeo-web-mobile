@@ -33,66 +33,40 @@ import javax.servlet.http.HttpServletRequest;
 public interface ApplicationDefinitionService {
 
     /**
-     * Return the application targeted by the request. The target application is
-     * the first application handler ({@code RequestHandler}) that matches the
-     * request context or the one described into the
-     * {@code ApplicationConstants#APPLICATION_SELECTED_COOKIE_NAME} cookie.
-     * This handler is defined into the application definition contribution (
-     * {@code ApplicationDescriptor}).
-     */
-    public ApplicationDefinitionDescriptor getTargetApplication(
-            HttpServletRequest request);
-
-    /**
-     * Return the default navigation type according the user-agent browser. If
-     * value stored is null or cookie not set, the default navigation type will
-     * be returned: be specific for mobile. If the cookie store the true value,
-     * the standard navigation (JSF) for non mobile browser and mobile
-     * navigation for mobile browser. Redirection to the correct url is managed
-     * by {@code ApplicationSelectionFilter}.
-     */
-
-    /**
-     * Return true, if before first connexion, a page is displayed to the user
-     * to choose the kind of navigation the user wants for mobile browser. The
-     * page url is given by
-     * {@code WebMobileDefinition#getNavigationSelectionURL()}.
-     */
-
-    /**
-     * Return view exposed to mobile user to choose the kind of navigation the
-     * user wants (if enabled). You must take care to let this url unprotected
-     * (to disable nuxeo authentication filter) and all resources used as you
-     * want expose this view before authentication. See {@link http
-     * ://explorer.nuxeo.org/nuxeo/site/distribution
-     * /Nuxeo%20Platform-5.5/viewExtensionPoint
-     * /org.nuxeo.ecm.platform.ui.web.auth
-     * .service.PluggableAuthenticationService--openUrl}
-     */
-
-    /**
-     * Return the root path of the web application according request context.
+     * Return the root path of the web application where the request must be
+     * redirected according request context. If there is no application that
+     * match this request context, null is returned. Absolute URL is retuned
+     * with the protocole, the servername, ...
      */
     public String getApplicationBaseURL(HttpServletRequest request);
 
     /**
-     * Return the login view url according request context
+     * Return the login url according request context. This is the absolute URL
+     * with the protocole, the servername, ...
      */
     public String getLoginURL(HttpServletRequest request);
 
     /**
-     * Return the logout view url according request context
+     * Return the logout url according request context.This is the absolute URL
+     * with the protocole, the servername, ...
      */
     public String getLogoutURL(HttpServletRequest request);
 
     /**
-     * return the list of login pages (witout nuxeo context path)
+     * Return the list of relative login URI
      */
     public List<String> getUnAuthenticatedURLPrefix();
 
     /**
-     * return the list of base URL of resources needed by the application
+     * Return true if the given request is a resource for the application this
+     * request match
      */
-    public List<String> getResourcesApplicationBaseURL(HttpServletRequest req);
+    public boolean isResourceURL(HttpServletRequest request);
+
+    /**
+     * Return true if the request context match one application and the url of
+     * the request is a child of this application.
+     */
+    public boolean isRequestIntoApplication(HttpServletRequest req);
 
 }

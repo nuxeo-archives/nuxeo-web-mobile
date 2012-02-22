@@ -39,10 +39,6 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.FORM_SUBMITTED_
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_ERROR;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE_KEY;
 
-;
-import static org.nuxeo.theme.jsf.URLUtils.getServerURL;
-import static org.nuxeo.theme.jsf.URLUtils.getBaseURL;
-
 /**
  * Authenticator that redirects user to dedicated application authentication
  * form if user has selected this application or if this application matched the
@@ -81,7 +77,7 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
 
     @Override
     public Boolean needLoginPrompt(HttpServletRequest httpRequest) {
-        if (getService().getTargetApplication(httpRequest) != null) {
+        if (getService().getApplicationBaseURL(httpRequest) != null) {
             return true;
         }
         log.debug("No Application match this request, next authenticator to expose login prompt");
@@ -92,7 +88,8 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     public Boolean handleLoginPrompt(HttpServletRequest httpRequest,
             HttpServletResponse httpResponse, String baseURL) {
         if (log.isDebugEnabled()) {
-            log.debug("Login Prompt - URL :" + httpRequest.getRequestURL() + "?" + httpRequest.getQueryString());
+            log.debug("Login Prompt - URL :" + httpRequest.getRequestURL()
+                    + "?" + httpRequest.getQueryString());
         }
 
         String loginPage = getService().getLoginURL(httpRequest);
@@ -129,7 +126,8 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     public boolean onError(HttpServletRequest request,
             HttpServletResponse response) {
         if (log.isDebugEnabled()) {
-            log.debug("On Error - URL :" + request.getRequestURL() + "?" + request.getQueryString());
+            log.debug("On Error - URL :" + request.getRequestURL() + "?"
+                    + request.getQueryString());
         }
         Map<String, String> params;
         String redirect = request.getRequestURI();
@@ -160,7 +158,8 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
             HttpServletResponse httpResponse) {
 
         if (log.isDebugEnabled()) {
-            log.debug("On success - URL :" + httpRequest.getRequestURL() + "?" + httpRequest.getQueryString());
+            log.debug("On success - URL :" + httpRequest.getRequestURL() + "?"
+                    + httpRequest.getQueryString());
         }
         Map<String, String> parameters;
         try {
@@ -199,8 +198,9 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     public UserIdentificationInfo handleRetrieveIdentity(
             HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 
-        if (getService().getTargetApplication(httpRequest) == null) {
-            log.debug("No Application match this request, use next Authenticator in chain to retrieve identity");
+        if (getService().getApplicationBaseURL(httpRequest) == null) {
+            log.debug("No Application match this request, use next Authenticator "
+                    + "in chain to retrieve identity");
             return null;
         }
         String userName = httpRequest.getParameter(usernameKey);

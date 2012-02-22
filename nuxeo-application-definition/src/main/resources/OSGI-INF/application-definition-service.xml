@@ -45,7 +45,7 @@
 
       <code>
         <application name="app1" order="10" disable="false">
-          <baseURL>/site/app1</baseURL>
+          <applicationRelativePath>site/app1</applicationRelativePath>
           <loginPage>/auth/login</loginPage>
           <logoutPage>/auth/logout</logoutPage>
           <handler>com.mycompany.myproject.RequestHandler</handler>
@@ -121,7 +121,7 @@
       You can optionally aslo describe the base URL of resources of your application like that:
       <code>
         <application name="app1" order="10" disable="false">
-          <baseURL>/site/app1</baseURL>
+          <applicationRelativePath>site/app1</applicationRelativePath>
           <loginPage>/auth/login</loginPage>
           <logoutPage>/auth/logout</logoutPage>
           <handler>com.mycompany.myproject.RequestHandler</handler>

@@ -17,7 +17,6 @@
 package org.nuxeo.ecm.mobile.filter;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -68,24 +67,23 @@ public class ApplicationRedirectionFilter implements Filter {
         if (log.isDebugEnabled()) {
             log.debug("do filter - URL :" + req.getRequestURL() + "?" + req.getQueryString());
         }
-        String baseURL = service.getApplicationBaseURL(req);
-        List<String> resourcesBaseURL = service.getResourcesApplicationBaseURL(req);
+        String applicationBaseURL = service.getApplicationBaseURL(req);
 
-        if (baseURL == null) {
+        if (applicationBaseURL == null) {
             log.debug("No application match this request context "
                     + "=> no redirect: final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
             return;
         }
 
-        if (isTargetApplicationURL(req, baseURL)) {
-            log.debug("Request URI is the target application so no redirect:"
+        if (service.isRequestIntoApplication(req)) {
+            log.debug("Request URI is a child of target application so no redirect:"
                     + " final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
             return;
         }
 
-        if (isResourceURL(resourcesBaseURL, req.getRequestURI())) {
+        if (service.isResourceURL(req)) {
             log.debug("Request URI is a resource of the target application so no redirect:"
                     + " final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
@@ -103,39 +101,7 @@ public class ApplicationRedirectionFilter implements Filter {
         doApplicationRedirection((HttpServletRequest) request,
                 (HttpServletResponse) response, chain);
     }
-
-    /**
-     * @param req
-     * @return
-     */
-    private boolean isTargetApplicationURL(HttpServletRequest req, String targetApplicationURL) {
-        String uri = req.getRequestURI();
-        log.debug("Request uri: " + uri + " and targetApplicationURL: " + targetApplicationURL);
-        if (!uri.startsWith(targetApplicationURL)) {
-            return false;
-        }
-        if (uri.equals(targetApplicationURL)) {
-            return true;
-        }
-        char character = uri.charAt(targetApplicationURL.length());
-        if (character != '/' && character != '?' && character != '#' && character != '@') {
-            return false;
-        }
-        return true;
-    }
     
-    private boolean isResourceURL(List<String> resourcesBaseURL, String uri) {
-        if (resourcesBaseURL == null || resourcesBaseURL.size() == 0) {
-            return false;
-        }
-        for (String resourceBaseURL : resourcesBaseURL) {
-            if (uri.startsWith(resourceBaseURL)) {
-                return true;
-            }
-        }
-        return false; 
-    }
-
     /**
      * Redirect the browser to the target application with the initial URL as
      * parameter into the {@value WebMobileConstants#TARGET_URL_PARAMETER} url
