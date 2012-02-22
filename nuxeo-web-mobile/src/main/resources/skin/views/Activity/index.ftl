@@ -18,7 +18,7 @@
         <#if Adapter.hasAddingCommentRight()>
           <div class="actions">
             <#if Adapter.hasWriteRightOnComment(comment)>
-              <a href="#" onclick="$.get('@comment/${comment.id}/@delete', function(data) {alert('success');});">${Context.getMessage('label.action.Delete')}</a> | 
+              <a href="#" onclick="$.get('@comment/${comment.id}/@delete', function(data) {displayNotification('${Context.getMessage('label.activity.comment.deleted')}');});">${Context.getMessage('label.action.Delete')}</a> | 
             </#if>
             <a href="@comment/${comment.id}" data-rel="dialog">${Context.getMessage('label.action.Reply')}</a>
           </div>
