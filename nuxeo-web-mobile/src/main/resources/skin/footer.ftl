@@ -6,6 +6,9 @@
           <li><a href="${Root.path}/root"><img alt="Personal Workspace" src="${skinPath}/icons/footer_browse.png" /></a></li>
           <li><a href="${Root.path}/profile/${Context.principal.name}"><img alt="Profile" src="${skinPath}/icons/footer_profile.png" /></a></li>
           <li><a href="${Root.path}/search/faceted"><img alt="Search" src="${skinPath}/icons/footer_search.png" /></a></li>
+          <li><a data-ajax="false" href="#" onclick="goToStandardNavigation('${Root.nuxeoContextPath}');">
+            <img alt="Standard_Navigation" src="${skinPath}/icons/footer_standard_navigation.png" />
+          </a></li>
         </ul>
       </div>
     </div>

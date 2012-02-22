@@ -60,7 +60,6 @@ function setCookie(name, value, expDays, path, domain, secure) {
 }
 
 function goToStandardNavigation(targetURL) {
-  alert(targetURL);
   setCookie('skipMobileRedirection', 'true', 1, '/');
   window.location.href = targetURL;
 }
