@@ -8,9 +8,8 @@ Bundle-Version: 1.0-SNAPSHOT
 Bundle-Name: nuxeo-web-mobile
 Nuxeo-Component: OSGI-INF/web-mobile-application-definition-contrib.xml,
  OSGI-INF/web-mobile-pageproviders-contrib.xml,
- OSGI-INF/web-mobile-operation-chains-contrib.xml,
- OSGI-INF/web-mobile-actions-contrib.xml
 Bundle-ManifestVersion: 2
+ OSGI-INF/web-mobile-operation-chains-contrib.xml
 Bundle-SymbolicName: nuxeo-web-mobile
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 
