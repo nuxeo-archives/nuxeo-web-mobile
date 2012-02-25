@@ -45,7 +45,7 @@
       <h2>${Context.getMessage('label.search.title.SharedSearches')}</h2>
       <#if sharedSearches?size == 0>
         <p class="feedback">
-          ${Context.getMessage('label.search.title.NoSharedSearch')}
+          ${Context.getMessage('label.message.NoSharedSearch')}
         </p>
       <#else>
         <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
