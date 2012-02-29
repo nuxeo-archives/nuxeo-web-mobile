@@ -34,6 +34,10 @@ public class MobileRequestHandler implements RequestHandler {
     public boolean isRequestRedirectedToApplication(HttpServletRequest request) {
 
         String userAgent = request.getHeader("User-Agent");
+        
+        if (userAgent == null) {
+            return false;
+        }
 
         for (String pattern : MOBILE_USER_AGENT_REGEXP) {
             if (userAgent.matches(pattern)) {
