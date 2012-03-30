@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.nuxeo.ecm.mobile</groupId>
     <artifactId>nuxeo-web-mobile-parent</artifactId>
-    <version>5.6-SNAPSHOT-SNAPSHOT</version>
+    <version>5.6-SNAPSHOT</version>
   </parent>
   <artifactId>nuxeo-web-mobile</artifactId>
   <name>nuxeo-web-mobile</name>
@@ -18,7 +18,7 @@
       <artifactId>nuxeo-user-activity-stream</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.nuxeo.ecm.social</groupId>
+      <groupId>org.nuxeo.activity</groupId>
       <artifactId>nuxeo-activity</artifactId>
     </dependency>
     <dependency>
