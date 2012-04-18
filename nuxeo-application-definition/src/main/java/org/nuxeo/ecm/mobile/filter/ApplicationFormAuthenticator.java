@@ -44,7 +44,8 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE
  * form if user has selected this application or if this application matched the
  * request context.
  * 
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 public class ApplicationFormAuthenticator implements LoginResponseHandler,

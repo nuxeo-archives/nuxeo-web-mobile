@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletRequest;
  * Application descriptor. Here is implemented the logic to tell if the request
  * is candidate for the application described.
  * 
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 public interface RequestHandler {
