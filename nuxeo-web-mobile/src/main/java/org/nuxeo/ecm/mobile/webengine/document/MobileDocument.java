@@ -55,7 +55,8 @@ import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
  * parameter given as parameter into the url. Default mode if given doesn't
  * exist or not set is view mode.
  * 
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 public class MobileDocument extends DocumentObject {

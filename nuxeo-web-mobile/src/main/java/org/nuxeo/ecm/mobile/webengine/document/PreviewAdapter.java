@@ -38,7 +38,8 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  *
  */
 @WebAdapter(name="preview", type="Preview", targetType="MobileDocument")

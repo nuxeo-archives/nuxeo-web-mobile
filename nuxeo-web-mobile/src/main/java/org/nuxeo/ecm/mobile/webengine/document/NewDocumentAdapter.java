@@ -30,7 +30,8 @@ import org.nuxeo.ecm.webengine.model.WebAdapter;
 import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
 /**
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 @WebAdapter(name="newDocument", type="NewDocument", targetType="MobileDocument")

@@ -37,7 +37,8 @@ import static org.nuxeo.ecm.social.activity.stream.UserActivityStreamFilter.QUER
 import static org.nuxeo.ecm.social.activity.stream.UserActivityStreamFilter.QueryType.ACTIVITY_STREAM_FOR_ACTOR;
 
 /**
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 @WebObject(type = "Activity")

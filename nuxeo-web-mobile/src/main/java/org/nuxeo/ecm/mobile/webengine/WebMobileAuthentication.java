@@ -34,7 +34,8 @@ import org.nuxeo.runtime.api.Framework;
 /**
  * Manage authentication form and logout action
  *
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  *
  */
 @WebObject(type = "WebMobileAuthentication")

@@ -45,7 +45,8 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE
 /**
  * Expose needed method on the request.
  *
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  *
  */
 public class RequestAdapter {

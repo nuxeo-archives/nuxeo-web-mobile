@@ -27,6 +27,12 @@ import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.DefaultObject;
 import org.nuxeo.runtime.api.Framework;
 
+/**
+ * 
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
+ *
+ */
 @WebObject(type = "Workflow")
 @Produces("text/html;charset=UTF-8")
 public class Workflow extends DefaultObject {

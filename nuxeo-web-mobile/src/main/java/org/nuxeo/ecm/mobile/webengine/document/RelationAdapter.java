@@ -55,8 +55,8 @@ import org.nuxeo.runtime.api.Framework;
  * {@link org.nuxeo.ecm.platform.relations.web.listener.ejb.RelationActionsBean}
  * class.
  *
- * @author bjalon
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  */
 @WebAdapter(name = "relation", type = "Relation", targetType = "MobileDocument")

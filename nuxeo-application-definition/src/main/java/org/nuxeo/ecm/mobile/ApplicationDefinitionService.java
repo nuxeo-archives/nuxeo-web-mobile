@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletRequest;
  * application according the user-agent browser or the application chosen into
  * the {@code ApplicationSelectionViewService#getApplicationSelectionURL()}.
  *
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  *
  */
 public interface ApplicationDefinitionService {

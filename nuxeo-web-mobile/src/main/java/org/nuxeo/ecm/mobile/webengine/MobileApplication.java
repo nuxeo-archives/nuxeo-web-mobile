@@ -46,9 +46,10 @@ import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
 import static org.nuxeo.ecm.mobile.webengine.document.FolderishAdapter.ONLY_VISIBLE_CHILDREN;
 
 /**
- * @author Benjamin JALON <bjalon@nuxeo.com>
+ * Entry point of the webengine application
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
- *         Entry point of the webengine application
  */
 @Path("mobile")
 @Produces("text/html;charset=UTF-8")

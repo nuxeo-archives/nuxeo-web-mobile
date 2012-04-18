@@ -26,6 +26,7 @@ import org.nuxeo.ecm.mobile.handler.RequestHandler;
 
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  *
  */
 @XObject("requestHandler")

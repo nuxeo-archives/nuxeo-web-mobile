@@ -38,7 +38,8 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 /**
  * Provide view and action on document comments
  * 
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 @WebAdapter(name = "comment", type = "Comment", targetType = "MobileDocument")

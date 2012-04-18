@@ -33,7 +33,8 @@ import static org.mockito.Mockito.when;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.USERIDENT_KEY;
 
 /**
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  *
  */
 public class AnonymousRequestHandlerTestCase {

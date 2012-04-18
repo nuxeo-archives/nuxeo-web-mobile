@@ -34,7 +34,8 @@ import org.nuxeo.runtime.model.DefaultComponent;
 import org.nuxeo.theme.jsf.URLUtils;
 
 /**
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 public class ApplicationRedirectServiceImpl extends DefaultComponent implements

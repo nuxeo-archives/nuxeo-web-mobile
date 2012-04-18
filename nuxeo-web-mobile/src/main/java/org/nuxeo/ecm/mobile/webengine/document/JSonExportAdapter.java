@@ -27,7 +27,8 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
 /**
  * Adapter that expose a document according the DForm Jquery Framework structure.
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 @WebAdapter(name = "jsonExport", type = "JSONExport", targetType = "MobileDocument")

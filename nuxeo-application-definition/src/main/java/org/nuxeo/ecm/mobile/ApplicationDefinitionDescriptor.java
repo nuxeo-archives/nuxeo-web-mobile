@@ -28,7 +28,8 @@ import org.nuxeo.common.xmap.annotation.XObject;
  * will detect request context that will make the user redirect to this
  * application.
  * 
- * @author bjalon
+ * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  * 
  */
 @XObject("application")

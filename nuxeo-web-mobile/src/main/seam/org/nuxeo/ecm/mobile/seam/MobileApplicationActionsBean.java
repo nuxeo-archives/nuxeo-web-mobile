@@ -32,6 +32,7 @@ import org.nuxeo.ecm.mobile.handler.RequestHandler;
  * Actions Bean needed to build JSF actions
  *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
+ * @since 5.5
  *
  */
 @Name("mobileApplicationActions")
