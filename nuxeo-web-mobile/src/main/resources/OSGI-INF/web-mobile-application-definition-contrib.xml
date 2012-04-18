@@ -1,20 +1,29 @@
-<component name="org.nuxeo.ecm.platform.mobile.application.definition.contribution">
+<component
+  name="org.nuxeo.ecm.platform.mobile.application.definition.contribution">
 
-  <extension
-    target="org.nuxeo.ecm.application.definition.service"
+  <extension target="org.nuxeo.ecm.application.definition.service"
     point="applicationDefinition">
-        <application name="Mobile" order="5" disable="false">
-          <applicationRelativePath>site/mobile</applicationRelativePath>
-          <loginPage>/auth/login</loginPage>
-          <logoutPage>/auth/logout</logoutPage>
-          <handler>org.nuxeo.ecm.mobile.handler.MobileWithCookieRequestHandler</handler>
-          <resources>
-            <resourcesBaseURL>site/skin/nuxeo</resourcesBaseURL>
-            <resourcesBaseURL>restAPI/preview</resourcesBaseURL>
-            <resourcesBaseURL>nxfile</resourcesBaseURL>
-            <resourcesBaseURL>nxbigfile</resourcesBaseURL>
-          </resources>
-        </application>
-
+    <application name="Mobile" order="5" disable="false">
+      <applicationRelativePath>site/mobile</applicationRelativePath>
+      <loginPage>/auth/login</loginPage>
+      <logoutPage>/auth/logout</logoutPage>
+      <requestHandlerName>MobileWithCookieRequestHandler</requestHandlerName>
+      <resources>
+        <resourcesBaseURL>site/skin/nuxeo</resourcesBaseURL>
+        <resourcesBaseURL>restAPI/preview</resourcesBaseURL>
+      </resources>
+    </application>
   </extension>
+
+  <extension target="org.nuxeo.ecm.application.definition.service"
+    point="requestHandlers">
+    <requestHandler name="MobileWithCookieRequestHandler"
+      disable="false">
+      <implementation>org.nuxeo.ecm.mobile.handler.MobileWithCookieRequestHandler</implementation>
+      <properties>
+        <property name="urlSkippedPatterns">(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)</property>
+      </properties>
+    </requestHandler>
+  </extension>
+
 </component>

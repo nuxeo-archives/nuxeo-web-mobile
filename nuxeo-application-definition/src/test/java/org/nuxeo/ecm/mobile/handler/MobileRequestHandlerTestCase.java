@@ -16,6 +16,9 @@
  */
 package org.nuxeo.ecm.mobile.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
@@ -27,7 +30,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author bjalon
- *
+ * 
  */
 public class MobileRequestHandlerTestCase {
 
@@ -45,30 +48,59 @@ public class MobileRequestHandlerTestCase {
     @Test
     public void SafariMobileUserAgentShouldBeSelected() {
         RequestHandler handler = new MobileRequestHandler();
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getHeader("User-Agent")).thenReturn(
-                SAFARI_MOBILE_USER_AGENT);
 
+        HttpServletRequest request = initRequest(SAFARI_MOBILE_USER_AGENT,
+                "http://localhost:8080/nuxeo/nxstartup.faces");
         assertTrue(handler.isRequestRedirectedToApplication(request));
     }
 
     @Test
     public void SafariUserAgentShouldNotBeSelected() {
         RequestHandler handler = new MobileRequestHandler();
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getHeader("User-Agent")).thenReturn(SAFARI_USER_AGENT);
 
+        HttpServletRequest request = initRequest(SAFARI_USER_AGENT,
+                "http://localhost:8080/nuxeo/nxstartup.faces");
         assertFalse(handler.isRequestRedirectedToApplication(request));
     }
 
     @Test
     public void FennecMobileUserAgentShouldBeSelected() {
         RequestHandler handler = new MobileRequestHandler();
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getHeader("User-Agent")).thenReturn(
-                FENNEC_MOBILE_USER_AGENT);
 
+        HttpServletRequest request = initRequest(FENNEC_MOBILE_USER_AGENT,
+                "http://localhost:8080/nuxeo/nxstartup.faces");
         assertTrue(handler.isRequestRedirectedToApplication(request));
+    }
+
+    @Test
+    public void URLSkippedShouldNotBeSelectedEvenForSafariMobileUserAgent() {
+        RequestHandler handler = new MobileRequestHandler();
+        Map<String, String> properties = new HashMap<String, String>();
+        properties.put(MobileRequestHandler.URL_SKIPPED_PATTERNS_PROP,
+                "(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)");
+        handler.init(properties);
+
+        HttpServletRequest request = initRequest(SAFARI_MOBILE_USER_AGENT,
+                "http://localhost:8080/nuxeo/nxstartup.faces");
+        assertTrue(handler.isRequestRedirectedToApplication(request));
+        assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
+
+        request = initRequest(SAFARI_MOBILE_USER_AGENT,
+                "http://localhost:8080/nuxeo/nxfile/etc");
+        assertFalse(handler.isRequestRedirectedToApplication(request));
+        assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
+
+        request = initRequest(SAFARI_MOBILE_USER_AGENT,
+                "http://localhost:8080/nuxeo/nxbigfile/etc");
+        assertFalse(handler.isRequestRedirectedToApplication(request));
+        assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
+    }
+
+    private HttpServletRequest initRequest(String userAgent, String url) {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getHeader("User-Agent")).thenReturn(userAgent);
+        when(request.getRequestURL()).thenReturn(new StringBuffer(url));
+        return request;
     }
 
 }

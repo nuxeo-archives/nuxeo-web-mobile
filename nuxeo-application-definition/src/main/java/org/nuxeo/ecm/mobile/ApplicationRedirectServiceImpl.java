@@ -44,16 +44,18 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
 
     private final Map<String, ApplicationDefinitionDescriptor> applications = new HashMap<String, ApplicationDefinitionDescriptor>();
 
+    private final Map<String, RequestHandlerDescriptor> requestHandlers = new HashMap<String, RequestHandlerDescriptor>();
+
     private final List<ApplicationDefinitionDescriptor> applicationsOrdered = new ArrayList<ApplicationDefinitionDescriptor>();
 
     private List<String> unAuthenticatedURLPrefix;
-    
+
     private String nuxeoRelativeContextPath;
 
     public enum ExtensionPoint {
-        applicationDefinition, applicationSelector
+        applicationDefinition, requestHandlers
     }
-    
+
     protected String getNuxeoRelativeContextPath() {
         if (nuxeoRelativeContextPath == null) {
             nuxeoRelativeContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
@@ -77,11 +79,62 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
             registerApplication((ApplicationDefinitionDescriptor) contribution,
                     contributor.getName().getName());
             break;
+        case requestHandlers:
+            registerRequestHandler((RequestHandlerDescriptor) contribution,
+                    contributor.getName().getName());
+            break;
         default:
             throw new RuntimeException(
                     "error in exception handling configuration");
         }
 
+    }
+
+    protected void registerRequestHandler(RequestHandlerDescriptor rhd,
+            String componentName) {
+        RequestHandlerDescriptor finalRH = null;
+
+        String requestHandlerName = rhd.getRequestHandlerName();
+
+        if (requestHandlers.containsKey(requestHandlerName)) {
+            if (!rhd.disabled) {
+                String messageTemplate = "Request Handler definition %s will be"
+                        + " overriden by on declared into %s component";
+                String message = String.format(messageTemplate,
+                        requestHandlerName, componentName);
+                log.info(message);
+            } else {
+                String messageTemplate = "Request Handler definition '%s' will be removed as defined into %s";
+                String message = String.format(messageTemplate,
+                        requestHandlerName, componentName);
+                log.info(message);
+                for (ApplicationDefinitionDescriptor app : applicationsOrdered) {
+                    if (app.getRequestHandlerName().equals(requestHandlerName)) {
+                        messageTemplate = "Request Handler definition '%s' used by %s Application Definition";
+                        message = String.format(messageTemplate,
+                                requestHandlerName, app.getName());
+                        log.warn(message);
+                    }
+                }
+            }
+            finalRH = mergeRequestHandlerDescriptor(
+                    requestHandlers.get(requestHandlerName), rhd);
+        } else {
+            finalRH = rhd;
+        }
+        requestHandlers.put(requestHandlerName, finalRH);
+
+    }
+
+    private RequestHandlerDescriptor mergeRequestHandlerDescriptor(
+            RequestHandlerDescriptor initial, RequestHandlerDescriptor toMerge) {
+        if (toMerge.klass == null) {
+            toMerge.klass = initial.klass;
+        }
+        if (toMerge.properties == null) {
+            toMerge.properties = initial.properties;
+        }
+        return toMerge;
     }
 
     protected void registerApplication(
@@ -93,7 +146,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         if (applications.containsKey(name)) {
             if (!appDescriptor.isDisable()) {
                 String messageTemplate = "Application definition '%s' will be overridden, "
-                        + "replaced by ones declared into %s";
+                        + "replaced by ones declared into %s component";
                 String message = String.format(messageTemplate, name,
                         componentName);
                 log.info(message);
@@ -136,11 +189,24 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         return URLUtils.getBaseURL(request);
     }
 
+    protected RequestHandlerDescriptor getRequestHandlerByName(String name) {
+        return requestHandlers.get(name);
+    }
+
     private ApplicationDefinitionDescriptor getTargetApplication(
             HttpServletRequest request) {
 
         for (ApplicationDefinitionDescriptor application : applicationsOrdered) {
-            RequestHandler handler = application.getRequestHandlerInstance();
+            RequestHandlerDescriptor rhd = getRequestHandlerByName(application.getRequestHandlerName());
+            if (rhd == null) {
+                String message = "Can't find request handler %s for app definition %s, please check your configuration, skipping check";
+                log.error(String.format(message,
+                        application.getRequestHandlerName(),
+                        application.getName()));
+                continue;
+            }
+            RequestHandler handler = rhd.getRequestHandlerInstance();
+
             if (handler.isRequestRedirectedToApplication(request)) {
                 String messageTemplate = "Request '%s' match the application '%s' request handler";
                 String message = String.format(messageTemplate,
@@ -246,11 +312,13 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
             for (ApplicationDefinitionDescriptor app : applicationsOrdered) {
                 String loginPage = app.getApplicationRelativePath()
                         + app.getLoginPage();
-                log.debug("Add login page as Unauthenticated resources" + loginPage);
+                log.debug("Add login page as Unauthenticated resources"
+                        + loginPage);
                 unAuthenticatedURLPrefix.add(loginPage);
                 if (app.getResourcesBaseUrl() != null) {
                     for (String uri : app.getResourcesBaseUrl()) {
-                        log.debug("Add following declared resources as Unauthenticated resources" + uri);
+                        log.debug("Add following declared resources as Unauthenticated resources"
+                                + uri);
                         unAuthenticatedURLPrefix.add(uri);
                     }
                 }
@@ -272,8 +340,9 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         }
         String uri = request.getRequestURI();
         for (String resourceBaseURL : resourcesBaseURL) {
-            log.debug("Check if this is this Resources application : " + getNuxeoRelativeContextPath()
-                    + resourceBaseURL + " for uri : " + uri);
+            log.debug("Check if this is this Resources application : "
+                    + getNuxeoRelativeContextPath() + resourceBaseURL
+                    + " for uri : " + uri);
             if (uri.startsWith(getNuxeoRelativeContextPath() + resourceBaseURL)) {
                 return true;
             }
@@ -291,11 +360,13 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         String uri = req.getRequestURI();
 
         log.debug("Request url: " + uri + " and targetApplicationURI: ");
-        if (!uri.startsWith(getNuxeoRelativeContextPath() + app.getApplicationRelativePath())) {
+        if (!uri.startsWith(getNuxeoRelativeContextPath()
+                + app.getApplicationRelativePath())) {
             log.debug("Request uri is not a child of application base url");
             return false;
         }
-        if (uri.equals(getNuxeoRelativeContextPath() + app.getApplicationRelativePath())) {
+        if (uri.equals(getNuxeoRelativeContextPath()
+                + app.getApplicationRelativePath())) {
             log.debug("Request uri is the root of the application");
             return true;
         }

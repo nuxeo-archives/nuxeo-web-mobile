@@ -48,7 +48,7 @@
           <applicationRelativePath>site/app1</applicationRelativePath>
           <loginPage>/auth/login</loginPage>
           <logoutPage>/auth/logout</logoutPage>
-          <handler>com.mycompany.myproject.RequestHandler</handler>
+          <requestHandlerName>MyRequestHandler</requestHandlerName>
         </application>
       </code>
 
@@ -124,10 +124,10 @@
           <applicationRelativePath>site/app1</applicationRelativePath>
           <loginPage>/auth/login</loginPage>
           <logoutPage>/auth/logout</logoutPage>
-          <handler>com.mycompany.myproject.RequestHandler</handler>
+          <requestHandlerName>myHandler</requestHandlerName>
           <resources>
             <resourcesBaseURL>/site/skin/app1</resourcesBaseURL>
-            <resourcesBaseURL>/restAPI/preview</resourcesBaseURL>
+            <resourcesBaseURL>/nuxeo/resources</resourcesBaseURL>
           </resources>
         </application>
       </code>
@@ -141,4 +141,32 @@
     <object class="org.nuxeo.ecm.mobile.ApplicationDefinitionDescriptor" />
   </extension-point>
 
+  <extension-point name="requestHandlers">
+    <documentation>
+      In this extension point you will contribute the definition of your handler that implements
+      the logic of redirection to your application. Interface to implement for this requestHandler
+      is just for a given request do Nuxeo will redirect the user to the given application.
+
+      <code>
+        <requestHandler name="MobileWithCookieRequestHandler"
+          disable="false">
+          <implementation>org.nuxeo.ecm.mobile.handler.MobileWithCookieRequestHandler</implementation>
+          <properties>
+            <property name="skippedURLPattern">(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)</property>
+          </properties>
+        </requestHandler>
+      </code>
+      And so you will have to implement the interface given by org.nuxeo.ecm.mobile.handler.RequestHandler.
+      Means just to implement this following methods:
+      <code>
+         public RequestHandler init(Map&lt;String, String&gt; properties);
+
+         public boolean isRequestRedirectedToApplication(HttpServletRequest request);
+
+         public boolean isRequestRedirectedToApplicationLoginForm(HttpServletRequest request);
+      </code>
+    </documentation>
+
+    <object class="org.nuxeo.ecm.mobile.RequestHandlerDescriptor" />
+  </extension-point>
 </component>

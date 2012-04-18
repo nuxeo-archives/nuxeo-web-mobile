@@ -16,6 +16,8 @@
  */
 package org.nuxeo.application.definition;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.nuxeo.ecm.mobile.handler.RequestHandler;
@@ -30,6 +32,17 @@ public class MyApplicationRequestHandler implements RequestHandler {
 
     @Override
     public boolean isRequestRedirectedToApplication(HttpServletRequest request) {
+        return true;
+    }
+
+    @Override
+    public RequestHandler init(Map<String, String> arg0) {
+        return this;
+    }
+
+    @Override
+    public boolean isRequestRedirectedToApplicationLoginForm(
+            HttpServletRequest arg0) {
         return true;
     }
 

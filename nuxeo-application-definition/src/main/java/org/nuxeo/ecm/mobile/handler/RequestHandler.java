@@ -16,6 +16,8 @@
  */
 package org.nuxeo.ecm.mobile.handler;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,17 +26,29 @@ import javax.servlet.http.HttpServletRequest;
  * browser). Pointer of the implementation of this interface is given into the
  * Application descriptor. Here is implemented the logic to tell if the request
  * is candidate for the application described.
- *
+ * 
  * @author bjalon
- *
+ * 
  */
 public interface RequestHandler {
 
     /**
-     * return true if the request is a candidate for the Application described into
-     * the {@code ApplicationDescriptor}.
+     * Used for initialize request handler with properties given in descriptor
+     * definition.
      */
-    public boolean isRequestRedirectedToApplication(
+    public RequestHandler init(Map<String, String> properties);
+
+    /**
+     * return true if the request is a candidate for the Application described
+     * into the {@code ApplicationDescriptor}.
+     */
+    public boolean isRequestRedirectedToApplication(HttpServletRequest request);
+
+    /**
+     * return true if the request is a candidate for the specific login form
+     * described by application
+     */
+    public boolean isRequestRedirectedToApplicationLoginForm(
             HttpServletRequest request);
 
 }

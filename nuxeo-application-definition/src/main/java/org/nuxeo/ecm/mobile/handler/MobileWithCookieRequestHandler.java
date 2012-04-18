@@ -22,28 +22,46 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 
  * @author bjalon
- *
+ * 
  */
 public class MobileWithCookieRequestHandler extends MobileRequestHandler {
-    
-    private static final String COOKIE_NAME = "skipMobileRedirection"; 
-    
+
+    private static final String COOKIE_NAME = "skipMobileRedirection";
 
     protected String getCookieName() {
         return COOKIE_NAME;
     }
-    
+
     @Override
     public boolean isRequestRedirectedToApplication(HttpServletRequest request) {
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if (COOKIE_NAME.equals(cookie.getName())) {
-                    return false;
-                }
-            }
+        Boolean checkCookie = checkCookie(request);
+        if (checkCookie != null) {
+            return checkCookie;
         }
 
         return super.isRequestRedirectedToApplication(request);
+    }
+
+    @Override
+    public boolean isRequestRedirectedToApplicationLoginForm(
+            HttpServletRequest request) {
+        Boolean checkCookie = checkCookie(request);
+        if (checkCookie != null) {
+            return checkCookie;
+        }
+
+        return super.isRequestRedirectedToApplicationLoginForm(request);
+    }
+
+    private Boolean checkCookie(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (COOKIE_NAME.equals(cookie.getName())) {
+                    return Boolean.FALSE;
+                }
+            }
+        }
+        return null;
     }
 
 }

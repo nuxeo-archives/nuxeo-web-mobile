@@ -16,6 +16,8 @@
  */
 package org.nuxeo.ecm.mobile;
 
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,9 +33,11 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author bjalon
- *
+ * 
  */
 public class ApplicationDefinitionTestCase {
+
+    private static final String REQUEST_HANDLER_NAME_PREFIX = "requestHandlerTest";
 
     private ApplicationRedirectServiceImpl service;
 
@@ -58,45 +62,82 @@ public class ApplicationDefinitionTestCase {
         when(request.getCookies()).thenReturn(new Cookie[0]);
 
         // descriptor disabled
-        ApplicationDefinitionDescriptor app = initDescriptorWithoutCookie(
-                "app1", true, true, 20);
+        String appName = "app1";
+        boolean requestHandlerReturn = true;
+        boolean applicationDisabled = true;
+        int order = 20;
+        ApplicationDefinitionDescriptor app = initApplicationDescriptor(
+                appName, requestHandlerReturn, applicationDisabled, order);
+
         service.registerApplication(app, "myComponentName1");
         assertNull(service.getApplicationBaseURL(request));
 
         // handler doen't match and is ordered after
-        app = initDescriptorWithoutCookie("app2", false, false, 30);
+        appName = "app2";
+        requestHandlerReturn = false;
+        applicationDisabled = false;
+        order = 30;
+        app = initApplicationDescriptor(appName, requestHandlerReturn,
+                applicationDisabled, order);
         service.registerApplication(app, "myComponentName2");
         assertNull(service.getApplicationBaseURL(request));
 
         // handler doen't match and is ordered before
-        app = initDescriptorWithoutCookie("app3", false, false, 40);
+        appName = "app3";
+        requestHandlerReturn = false;
+        applicationDisabled = false;
+        order = 40;
+        app = initApplicationDescriptor(appName, requestHandlerReturn,
+                applicationDisabled, order);
         service.registerApplication(app, "myComponentName3");
         assertNull(service.getApplicationBaseURL(request));
 
         // handler match and application enabled
-        app = initDescriptorWithoutCookie("app4", true, false, 50);
+        appName = "app4";
+        requestHandlerReturn = true;
+        applicationDisabled = false;
+        order = 50;
+        app = initApplicationDescriptor(appName, requestHandlerReturn,
+                applicationDisabled, order);
         service.registerApplication(app, "myComponentName4");
         assertNotNull(service.getApplicationBaseURL(request));
-        assertEquals("https://localhost/nuxeo/site/app4", service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app4",
+                service.getApplicationBaseURL(request));
 
         // disable previous application
-        app = initDescriptorWithoutCookie("app4", true, true, 50);
+        appName = "app4";
+        applicationDisabled = true;
+        requestHandlerReturn = true;
+        order = 50;
+        app = initApplicationDescriptor(appName, requestHandlerReturn,
+                applicationDisabled, order);
         service.registerApplication(app, "myComponentName5");
         assertNull(service.getApplicationBaseURL(request));
 
         // handler match and application enabled (in the first position)
-        app = initDescriptorWithoutCookie("app5", true, false, 0);
+        appName = "app5";
+        requestHandlerReturn = true;
+        applicationDisabled = false;
+        order = 0;
+        app = initApplicationDescriptor(appName, requestHandlerReturn,
+                applicationDisabled, order);
         service.registerApplication(app, "myComponentName6");
         assertNotNull(service.getApplicationBaseURL(request));
-        assertEquals("https://localhost/nuxeo/site/app5", service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app5",
+                service.getApplicationBaseURL(request));
 
         // Idem but ordered after
-        app = initDescriptorWithoutCookie("app6", true, false, 1);
+        appName = "app6";
+        requestHandlerReturn = true;
+        applicationDisabled = false;
+        order = 1;
+        app = initApplicationDescriptor(appName, requestHandlerReturn,
+                applicationDisabled, order);
         service.registerApplication(app, "myComponentName7");
         assertNotNull(service.getApplicationBaseURL(request));
-        assertEquals("https://localhost/nuxeo/site/app5", service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app5",
+                service.getApplicationBaseURL(request));
     }
-
 
     @Test
     public void shouldReturnApplicationBaseURL() {
@@ -105,41 +146,85 @@ public class ApplicationDefinitionTestCase {
         request = mock(HttpServletRequest.class);
         when(request.getCookies()).thenReturn(new Cookie[0]);
 
-        ApplicationDefinitionDescriptor app = initDescriptorWithoutCookie(
-                "app1", true, false, 10);
+        ApplicationDefinitionDescriptor app = initApplicationDescriptor("app1",
+                true, false, 10);
         service.registerApplication(app, "myComponentName1");
-        
-        assertEquals("https://localhost/nuxeo/site/app1", service.getApplicationBaseURL(request));
-        assertEquals("https://localhost/nuxeo/site/app1/login", service.getLoginURL(request));
-        assertEquals("https://localhost/nuxeo/site/app1/logout", service.getLogoutURL(request));
+
+        assertEquals("https://localhost/nuxeo/site/app1",
+                service.getApplicationBaseURL(request));
+        assertEquals("https://localhost/nuxeo/site/app1/login",
+                service.getLoginURL(request));
+        assertEquals("https://localhost/nuxeo/site/app1/logout",
+                service.getLogoutURL(request));
 
     }
-    
+
     /**
      * Return a {@code ApplicationDescriptor} with an handler return always
      * {@value handleReturn}
-     *
+     * 
      * @param handlerReturn value return by the handler
      */
-    private ApplicationDefinitionDescriptor initDescriptorWithoutCookie(
-            String name, final boolean handlerReturn, boolean disabled,
+    private ApplicationDefinitionDescriptor initApplicationDescriptor(
+            String appName, final boolean handlerReturn, boolean disabled,
             int order) {
-        ApplicationDefinitionDescriptor result = new ApplicationDefinitionDescriptor() {
-            @Override
-            public RequestHandler getRequestHandlerInstance() {
-                RequestHandler handler = mock(RequestHandler.class);
-                when(handler.isRequestRedirectedToApplication(request)).thenReturn(
-                        Boolean.valueOf(handlerReturn));
-                return handler;
-            }
-        };
 
-        result.name = name;
-        result.disabled = disabled;
-        result.order = order;
-        result.applicationRelativePath = "/site/" + name;
-        result.loginPage = "/login";
-        result.logoutPage = "/logout";
-        return result;
+        // Request Handler Descriptor definition
+        RequestHandlerDescriptor rhd = new RequestHandlerDescriptorMock(
+                handlerReturn, appName);
+
+        // Add request handler descriptor into service
+        service.registerRequestHandler(rhd, "mycomponent.name");
+
+        return new ApplicationDefinitionDescriptorMock(appName, disabled, order);
+    }
+
+    class RequestHandlerDescriptorMock extends RequestHandlerDescriptor {
+
+        private boolean handlerReturn;
+
+        public RequestHandlerDescriptorMock(boolean handlerReturn,
+                String appName) {
+            this.handlerReturn = handlerReturn;
+            this.requestHandlerName = REQUEST_HANDLER_NAME_PREFIX + appName;
+        }
+
+        @Override
+        public RequestHandler getRequestHandlerInstance() {
+            return new RequestHandler() {
+
+                @Override
+                public RequestHandler init(Map<String, String> prop) {
+                    return this;
+                }
+
+                @Override
+                public boolean isRequestRedirectedToApplication(
+                        HttpServletRequest req) {
+                    return handlerReturn;
+                }
+
+                @Override
+                public boolean isRequestRedirectedToApplicationLoginForm(
+                        HttpServletRequest req) {
+                    return isRequestRedirectedToApplication(req);
+                }
+
+            };
+        }
+    }
+
+    class ApplicationDefinitionDescriptorMock extends
+            ApplicationDefinitionDescriptor {
+        public ApplicationDefinitionDescriptorMock(String appName,
+                boolean disabled, int order) {
+            this.name = appName;
+            this.disabled = disabled;
+            this.order = order;
+            this.applicationRelativePath = "/site/" + appName;
+            this.loginPage = "/login";
+            this.logoutPage = "/logout";
+            this.requestHandlerName = REQUEST_HANDLER_NAME_PREFIX + appName;
+        }
     }
 }

@@ -1,17 +1,25 @@
 <component name="com.mycompany.myproject.application.contrib">
 
-  <extension
-    target="org.nuxeo.ecm.application.definition.service"
+  <extension target="org.nuxeo.ecm.application.definition.service"
     point="applicationDefinition">
-        <application name="MyApplication" order="10" disable="false">
-          <applicationRelativePath>site/myApplication</applicationRelativePath>
-          <loginPage>/login</loginPage>
-          <logoutPage>/logout</logoutPage>
-          <handler>org.nuxeo.application.definition.MyApplicationRequestHandler</handler>
-          <resources>
-            <resourcesBaseURL>/site/skin/myApplication</resourcesBaseURL>
-          </resources>
-        </application>
+    <application name="MyApplication" order="10" disable="false">
+      <applicationRelativePath>site/myApplication</applicationRelativePath>
+      <loginPage>/login</loginPage>
+      <logoutPage>/logout</logoutPage>
+      <handler>MyApplicationRequestHandler</handler>
+      <resources>
+        <resourcesBaseURL>/site/skin/myApplication</resourcesBaseURL>
+      </resources>
+    </application>
+  </extension>
 
+  <extension target="org.nuxeo.ecm.application.definition.service"
+    point="requestHandlers">
+    <requestHandler name="MobileWithCookieRequestHandler"
+      disable="false">
+      <implementation>org.nuxeo.application.definition.MyApplicationRequestHandler</implementation>
+      <properties>
+      </properties>
+    </requestHandler>
   </extension>
 </component>

@@ -17,6 +17,7 @@
 package org.nuxeo.ecm.mobile.handler;
 
 import java.security.Principal;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,6 +37,13 @@ public class AnonymousRequestHandler implements RequestHandler {
     private static final Log log = LogFactory.getLog(AnonymousRequestHandler.class);
 
     private UserManager um;
+
+    @Override
+    public boolean isRequestRedirectedToApplicationLoginForm(
+            HttpServletRequest request) {
+        // same logic
+        return this.isRequestRedirectedToApplication(request);
+    }
 
     @Override
     public boolean isRequestRedirectedToApplication(HttpServletRequest request) {
@@ -89,6 +97,11 @@ public class AnonymousRequestHandler implements RequestHandler {
             um = Framework.getService(UserManager.class);
         }
         return um.getAnonymousUserId();
+    }
+
+    @Override
+    public RequestHandler init(Map<String, String> properties) {
+        return this;
     }
 
 }

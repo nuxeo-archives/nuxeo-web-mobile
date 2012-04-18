@@ -22,7 +22,6 @@ import java.util.List;
 import org.nuxeo.common.xmap.annotation.XNode;
 import org.nuxeo.common.xmap.annotation.XNodeList;
 import org.nuxeo.common.xmap.annotation.XObject;
-import org.nuxeo.ecm.mobile.handler.RequestHandler;
 
 /**
  * Descriptor that represent a definition of an application and a handler that
@@ -44,8 +43,8 @@ public class ApplicationDefinitionDescriptor {
     @XNode("@disabled")
     public boolean disabled;
 
-    @XNode("handler")
-    public Class<?> klass;
+    @XNode("requestHandlerName")
+    public String requestHandlerName;
 
     @XNode("applicationRelativePath")
     public String applicationRelativePath;
@@ -74,26 +73,12 @@ public class ApplicationDefinitionDescriptor {
     }
 
     /**
-     * Application definition service provide a way to expose easily a new
-     * dedicated UI for a specific type of environment (for instance for user
-     * agent browser selection). Implementation given here implements the logic
-     * to tell if request must be redirected to this application.
+     * Return the name of the handler that implements the logic of redirection
+     * to the application described into this descriptor. Definition of the
+     * handler is defined into the handler extension point.
      */
-    public RequestHandler getRequestHandlerInstance() {
-        Object obj;
-        try {
-            obj = klass.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(
-                    "Problem during the Given class instanciation please check your contribution");
-        }
-        if (obj instanceof RequestHandler) {
-            obj = (RequestHandler) obj;
-            return (RequestHandler) obj;
-        }
-
-        throw new RuntimeException("Given class is not a "
-                + RequestHandler.class + " implementation");
+    public String getRequestHandlerName() {
+        return requestHandlerName;
     }
 
     /**
