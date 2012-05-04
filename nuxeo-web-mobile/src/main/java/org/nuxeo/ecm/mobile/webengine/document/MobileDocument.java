@@ -47,7 +47,7 @@ import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
 import org.nuxeo.runtime.api.Framework;
 
-import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
+import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
 
 /**
  * This Class resolve a DocumentModel and expose differents restitutions
@@ -119,7 +119,7 @@ public class MobileDocument extends DocumentObject {
         }
 
         // if url from JSF => ask to push mobile URL into browser history
-        if (request.getParameter(TARGET_URL_PARAMETER) != null) {
+        if (request.getParameter(INITIAL_TARGET_URL_PARAM_NAME) != null) {
             String mobileURL = String.format("%s/doc/%s?mode=%s",
                     ctx.getRoot().getPath(), doc.getId(), mode);
             args.put("mobileURL", mobileURL);

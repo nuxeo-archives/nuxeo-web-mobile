@@ -27,11 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.mobile.handler.RequestHandler;
+import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.model.ComponentInstance;
 import org.nuxeo.runtime.model.DefaultComponent;
-import org.nuxeo.theme.jsf.URLUtils;
 
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
@@ -51,21 +52,16 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
 
     private List<String> unAuthenticatedURLPrefix;
 
-    private String nuxeoRelativeContextPath;
+    private Path nuxeoRelativeContextPath;
 
     public enum ExtensionPoint {
         applicationDefinition, requestHandlers
     }
 
-    protected String getNuxeoRelativeContextPath() {
+    protected Path getNuxeoRelativeContextPath() {
         if (nuxeoRelativeContextPath == null) {
-            nuxeoRelativeContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
-            if (!nuxeoRelativeContextPath.endsWith("/")) {
-                nuxeoRelativeContextPath = nuxeoRelativeContextPath + "/";
-            }
-            if (!nuxeoRelativeContextPath.startsWith("/")) {
-                nuxeoRelativeContextPath = "/" + nuxeoRelativeContextPath;
-            }
+            nuxeoRelativeContextPath = new Path(
+                    Framework.getProperty("org.nuxeo.ecm.contextPath"));
         }
         return nuxeoRelativeContextPath;
     }
@@ -151,6 +147,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                 String message = String.format(messageTemplate, name,
                         componentName);
                 log.info(message);
+                applicationsOrdered.remove(name);
             } else {
                 String messageTemplate = "Application definition '%s' will be removed as defined into %s";
                 String message = String.format(messageTemplate, name,
@@ -174,6 +171,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         applications.put(name, appDescriptor);
         applicationsOrdered.add(appDescriptor);
         Collections.sort(applicationsOrdered, new MobileApplicationComparator());
+        unAuthenticatedURLPrefix = null;
     }
 
     private void disableApplication(String applicationName) {
@@ -187,7 +185,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
     }
 
     protected String getBaseURL(HttpServletRequest request) {
-        return URLUtils.getBaseURL(request);
+        return VirtualHostHelper.getWebAppName(request);
     }
 
     protected RequestHandlerDescriptor getRequestHandlerByName(String name) {
@@ -230,7 +228,8 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     + " no Application base url found"));
             return null;
         }
-        return getBaseURL(request) + app.getApplicationRelativePath();
+        return getNuxeoRelativeContextPath().append(
+                app.getApplicationRelativePath()).toString();
     }
 
     @Override
@@ -241,8 +240,8 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     + " no Login page found"));
             return null;
         }
-        return getBaseURL(request) + app.getApplicationRelativePath()
-                + app.getLoginPage();
+        return getNuxeoRelativeContextPath().append(
+                app.getApplicationRelativePath()).append(app.getLoginPage()).toString();
     }
 
     @Override
@@ -253,10 +252,14 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     + ", no Logout page found"));
             return null;
         }
-        return getBaseURL(request) + app.getApplicationRelativePath()
-                + app.getLogoutPage();
+        return getNuxeoRelativeContextPath().append(
+                app.getApplicationRelativePath()).append(app.getLogoutPage()).toString();
     }
 
+    /**
+     * Check that application descriptor is valide and can be registred. Also
+     * modify path to if not well formed and log warn.
+     */
     private void validateApplicationDescriptor(
             ApplicationDefinitionDescriptor app, String componentName) {
         if (app.getName() == null) {
@@ -277,6 +280,12 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     + " to change your contribution");
             app.applicationRelativePath = app.getApplicationRelativePath().substring(
                     1);
+        }
+        if (app.getApplicationRelativePath().endsWith("/")) {
+            log.warn("Application relative path must not end with a slash, please think"
+                    + " to change your contribution");
+            app.applicationRelativePath = app.getApplicationRelativePath().substring(
+                    0, app.getApplicationRelativePath().length() - 1);
         }
         List<String> resourcesUriChanged = new ArrayList<String>();
 
@@ -307,22 +316,42 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
     }
 
     @Override
+    public List<String> getUnAuthenticatedURLPrefix(HttpServletRequest request) {
+        ApplicationDefinitionDescriptor app = getTargetApplication(request);
+
+        return getUnAuthenticatedURLPrefix(app);
+    }
+
+    private List<String> getUnAuthenticatedURLPrefix(
+            ApplicationDefinitionDescriptor app) {
+
+        List<String> result = new ArrayList<String>();
+
+        if (app == null) {
+            return null;
+        }
+
+        String loginPage = new Path(app.getApplicationRelativePath()).append(
+                app.getLoginPage()).toString();
+        log.debug("Add login page as Unauthenticated resources" + loginPage);
+        result.add(loginPage);
+        if (app.getResourcesBaseUrl() != null) {
+            result.addAll(app.getResourcesBaseUrl());
+        } else {
+            log.error("No base URL found can't add unauthenticated URL for application: "
+                    + app.getName());
+        }
+
+        return result;
+    }
+
+    @Override
     public List<String> getUnAuthenticatedURLPrefix() {
         if (unAuthenticatedURLPrefix == null) {
             unAuthenticatedURLPrefix = new ArrayList<String>();
+
             for (ApplicationDefinitionDescriptor app : applicationsOrdered) {
-                String loginPage = app.getApplicationRelativePath()
-                        + app.getLoginPage();
-                log.debug("Add login page as Unauthenticated resources"
-                        + loginPage);
-                unAuthenticatedURLPrefix.add(loginPage);
-                if (app.getResourcesBaseUrl() != null) {
-                    for (String uri : app.getResourcesBaseUrl()) {
-                        log.debug("Add following declared resources as Unauthenticated resources"
-                                + uri);
-                        unAuthenticatedURLPrefix.add(uri);
-                    }
-                }
+                unAuthenticatedURLPrefix.addAll(getUnAuthenticatedURLPrefix(app));
             }
         }
         return unAuthenticatedURLPrefix;
@@ -342,49 +371,23 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         String uri = request.getRequestURI();
         for (String resourceBaseURL : resourcesBaseURL) {
             log.debug("Check if this is this Resources application : "
-                    + getNuxeoRelativeContextPath() + resourceBaseURL
-                    + " for uri : " + uri);
-            if (uri.startsWith(getNuxeoRelativeContextPath() + resourceBaseURL)) {
+                    + new Path("/").append(getNuxeoRelativeContextPath()).append(
+                            resourceBaseURL) + " for uri : " + uri);
+            if (uri.startsWith(new Path("/").append(
+                    getNuxeoRelativeContextPath()).append(resourceBaseURL).toString())) {
                 return true;
             }
         }
         return false;
     }
 
-    @Override
-    public boolean isRequestIntoApplication(HttpServletRequest req) {
-        ApplicationDefinitionDescriptor app = getTargetApplication(req);
-        if (app == null) {
-            return false;
-        }
-
-        String uri = req.getRequestURI();
-
-        log.debug("Request url: " + uri + " and targetApplicationURI: ");
-        if (!uri.startsWith(getNuxeoRelativeContextPath()
-                + app.getApplicationRelativePath())) {
-            log.debug("Request uri is not a child of application base url");
-            return false;
-        }
-        if (uri.equals(getNuxeoRelativeContextPath()
-                + app.getApplicationRelativePath())) {
-            log.debug("Request uri is the root of the application");
-            return true;
-        }
-        char character = uri.charAt((getNuxeoRelativeContextPath() + app.getApplicationRelativePath()).length());
-        if (character != '/' && character != '?' && character != '#'
-                && character != '@') {
-            log.debug("Request uri is not a child of application base url");
-            return false;
-        }
-        log.debug("Request uri is a child of application base url");
-        return true;
-    }
-
 }
 
 class MobileApplicationComparator implements
         Comparator<ApplicationDefinitionDescriptor> {
+
+    private static final Log log = LogFactory.getLog(MobileApplicationComparator.class);
+
     @Override
     public int compare(ApplicationDefinitionDescriptor app1,
             ApplicationDefinitionDescriptor app2) {
@@ -393,6 +396,11 @@ class MobileApplicationComparator implements
         }
         if (app2.getOrder() == null) {
             return -1;
+        }
+        if (app1.getOrder().equals(app2.getOrder())) {
+            log.warn("The two following applications have the same order,"
+                    + " please change to have different order: "
+                    + app1.getName() + " / " + app2.getName());
         }
         return app1.getOrder().compareTo(app2.getOrder());
 

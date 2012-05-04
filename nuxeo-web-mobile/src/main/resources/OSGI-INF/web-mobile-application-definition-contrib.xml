@@ -10,7 +10,6 @@
       <requestHandlerName>MobileWithCookieRequestHandler</requestHandlerName>
       <resources>
         <resourcesBaseURL>site/skin/nuxeo</resourcesBaseURL>
-        <resourcesBaseURL>restAPI/preview</resourcesBaseURL>
       </resources>
     </application>
   </extension>
@@ -21,7 +20,7 @@
       disable="false">
       <implementation>org.nuxeo.ecm.mobile.handler.MobileWithCookieRequestHandler</implementation>
       <properties>
-        <property name="urlSkippedPatterns">(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)</property>
+        <property name="urlSkippedPatterns">(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)|(.*)/restAPI/preview/(.*)</property>
       </properties>
     </requestHandler>
   </extension>

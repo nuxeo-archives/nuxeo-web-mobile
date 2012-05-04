@@ -42,7 +42,7 @@ import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
 
-import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
+import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
 import static org.nuxeo.ecm.mobile.webengine.document.FolderishAdapter.ONLY_VISIBLE_CHILDREN;
 
 /**
@@ -70,11 +70,11 @@ public class MobileApplication extends ModuleRoot {
      * 
      */
     @GET
-    public Object doGet(@QueryParam(TARGET_URL_PARAMETER) String initialURL)
+    public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME) String initialURL)
             throws Exception {
         if (initialURL != null) {
             DocumentView docView = getCodecManager().getDocumentViewFromUrl(
-                    initialURL, true, getNuxeoContextPath() + "/");
+                    initialURL, true, "");
             if (docView != null) {
                 log.debug("Request from home: Target URL given into url parameter detected as a "
                         + "document request from url codec service: "

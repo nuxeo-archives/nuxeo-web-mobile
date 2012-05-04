@@ -31,7 +31,6 @@
 
   <service>
     <provide interface="org.nuxeo.ecm.mobile.ApplicationDefinitionService" />
-    <provide interface="org.nuxeo.ecm.mobile.ApplicationSelectionViewService" />
   </service>
 
   <extension-point name="applicationDefinition">
@@ -99,6 +98,10 @@
 
       For the login and logout page, becareful to unprotect resources
       you are using to generate the page.
+      The login page must post to the "${baseURL}/nxstartup.faces"", 
+      login module will do the authentication stuff and will redirect 
+      to the initial url request for you. baseURL is by default /nuxeo, 
+      in the webengine context you can use a relative path (becareful of reverse proxy)
       I mean if you use jquery library from here:
       <code>
         http://server/nuxeo/scripts/jquery.js

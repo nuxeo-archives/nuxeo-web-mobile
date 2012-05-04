@@ -24,12 +24,12 @@ import javax.servlet.http.HttpServletRequest;
  * This service will store all the information needed to redirect the user to
  * the right url according his navigation choice or the request context. This is
  * needed for instance when we want to redirect the user to a dedicated
- * application according the user-agent browser or the application chosen into
- * the {@code ApplicationSelectionViewService#getApplicationSelectionURL()}.
- *
+ * application according the user-agent browser or logic implemented into your
+ * RequestHandler.
+ * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
+ * 
  */
 public interface ApplicationDefinitionService {
 
@@ -54,9 +54,14 @@ public interface ApplicationDefinitionService {
     public String getLogoutURL(HttpServletRequest request);
 
     /**
-     * Return the list of relative login URI
+     * Return the list of relative unprotected URI for all application
      */
     public List<String> getUnAuthenticatedURLPrefix();
+
+    /**
+     * Return the list of relative unprotected URI for this request
+     */
+    public List<String> getUnAuthenticatedURLPrefix(HttpServletRequest request);
 
     /**
      * Return true if the given request is a resource for the application this
@@ -64,10 +69,5 @@ public interface ApplicationDefinitionService {
      */
     public boolean isResourceURL(HttpServletRequest request);
 
-    /**
-     * Return true if the request context match one application and the url of
-     * the request is a child of this application.
-     */
-    public boolean isRequestIntoApplication(HttpServletRequest req);
 
 }

@@ -18,7 +18,6 @@ package org.nuxeo.ecm.mobile.filter;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -30,26 +29,24 @@ import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.URIUtils;
 import org.nuxeo.ecm.mobile.ApplicationDefinitionService;
 import org.nuxeo.ecm.platform.api.login.UserIdentificationInfo;
-import org.nuxeo.ecm.platform.ui.web.auth.interfaces.LoginResponseHandler;
 import org.nuxeo.ecm.platform.ui.web.auth.interfaces.NuxeoAuthenticationPlugin;
 import org.nuxeo.runtime.api.Framework;
 
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.ERROR_USERNAME_MISSING;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.FORM_SUBMITTED_MARKER;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_ERROR;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE_KEY;
 
 /**
  * Authenticator that redirects user to dedicated application authentication
  * form if user has selected this application or if this application matched the
- * request context.
+ * request context. Can't extends Form Authentication as login form is static
+ * and here is dynamic.
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  * 
  */
-public class ApplicationFormAuthenticator implements LoginResponseHandler,
-        NuxeoAuthenticationPlugin {
+public class ApplicationFormAuthenticator implements NuxeoAuthenticationPlugin {
 
     protected static final Log log = LogFactory.getLog(ApplicationFormAuthenticator.class);
 
@@ -88,10 +85,8 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     @Override
     public Boolean handleLoginPrompt(HttpServletRequest httpRequest,
             HttpServletResponse httpResponse, String baseURL) {
-        if (log.isDebugEnabled()) {
-            log.debug("Login Prompt - URL :" + httpRequest.getRequestURL()
-                    + "?" + httpRequest.getQueryString());
-        }
+        log.debug("Login Prompt - URL :" + httpRequest.getRequestURL() + "?"
+                + httpRequest.getQueryString());
 
         String loginPage = getService().getLoginURL(httpRequest);
         if (loginPage == null) {
@@ -105,7 +100,7 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
         Map<String, String> parameters;
         try {
             RequestAdapter adapter = new RequestAdapter(httpRequest);
-            parameters = adapter.getParameters();
+            parameters = adapter.getParametersAndAddTargetURLIfNotSet();
             // avoid resending the password in clear !!!
             parameters.remove(passwordKey);
         } catch (UnsupportedEncodingException e) {
@@ -124,71 +119,6 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
     }
 
     @Override
-    public boolean onError(HttpServletRequest request,
-            HttpServletResponse response) {
-        if (log.isDebugEnabled()) {
-            log.debug("On Error - URL :" + request.getRequestURL() + "?"
-                    + request.getQueryString());
-        }
-        Map<String, String> params;
-        String redirect = request.getRequestURI();
-        try {
-            params = new RequestAdapter(request).getParameters();
-            params.remove(usernameKey);
-            params.remove("Submit");
-            params.remove(passwordKey);
-            redirect = URIUtils.addParametersToURIQuery(
-                    request.getRequestURI(), params);
-        } catch (UnsupportedEncodingException e) {
-            log.error("Can't transmit param on login post error, "
-                    + "problem during parameter extraction", e);
-        }
-        try {
-            response.sendRedirect(redirect);
-            response.flushBuffer();
-            return true;
-        } catch (IOException e) {
-            log.error("Problem during the redirect to the login form "
-                    + "after bad authentication value send", e);
-            return false;
-        }
-    }
-
-    @Override
-    public boolean onSuccess(HttpServletRequest httpRequest,
-            HttpServletResponse httpResponse) {
-
-        if (log.isDebugEnabled()) {
-            log.debug("On success - URL :" + httpRequest.getRequestURL() + "?"
-                    + httpRequest.getQueryString());
-        }
-        Map<String, String> parameters;
-        try {
-            RequestAdapter adapter = new RequestAdapter(httpRequest);
-            parameters = adapter.getParameters();
-            // avoid resending the password in clear !!!
-            parameters.remove(passwordKey);
-        } catch (UnsupportedEncodingException e) {
-            log.error(e, e);
-            return Boolean.FALSE;
-        }
-
-        String initialEncodedRequest = parameters.get(START_PAGE_SAVE_KEY);
-        if (initialEncodedRequest != null) {
-            try {
-                String value = URLDecoder.decode(initialEncodedRequest, "UTF-8");
-                httpResponse.sendRedirect(value);
-                httpResponse.flushBuffer();
-            } catch (IOException e) {
-                log.error(e, e);
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public List<String> getUnAuthenticatedURLPrefix() {
         List<String> result = getService().getUnAuthenticatedURLPrefix();
         log.debug("List of skipped URL:" + result);
@@ -204,16 +134,28 @@ public class ApplicationFormAuthenticator implements LoginResponseHandler,
                     + "in chain to retrieve identity");
             return null;
         }
-        String userName = httpRequest.getParameter(usernameKey);
-        String password = httpRequest.getParameter(passwordKey);
 
-        if (httpRequest.getParameter(FORM_SUBMITTED_MARKER) != null
+        Map<String, String> parameters;
+        try {
+            RequestAdapter adapter = new RequestAdapter(httpRequest);
+            parameters = adapter.getParametersAndAddTargetURLIfNotSet();
+            // avoid resending the password in clear !!!
+        } catch (UnsupportedEncodingException e) {
+            log.error(e, e);
+            return null;
+        }
+
+        String userName = parameters.get(usernameKey);
+        String password = parameters.get(passwordKey);
+
+        if (parameters.get(FORM_SUBMITTED_MARKER) != null
                 && (userName == null || userName.length() == 0)) {
-            httpRequest.setAttribute(LOGIN_ERROR, ERROR_USERNAME_MISSING);
+            parameters.put(LOGIN_ERROR, ERROR_USERNAME_MISSING);
         }
         if (userName == null || userName.length() == 0) {
             return null;
         }
+
         return new UserIdentificationInfo(userName, password);
     }
 

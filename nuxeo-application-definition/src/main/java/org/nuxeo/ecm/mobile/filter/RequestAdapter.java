@@ -23,68 +23,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.URIUtils;
+import org.nuxeo.ecm.mobile.ApplicationDefinitionException;
+import org.nuxeo.ecm.mobile.ApplicationDefinitionService;
 import org.nuxeo.ecm.platform.ui.web.auth.service.OpenUrlDescriptor;
 import org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService;
 import org.nuxeo.runtime.api.Framework;
 
-import static org.nuxeo.ecm.mobile.ApplicationConstants.TARGET_URL_PARAMETER;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.ERROR_USERNAME_MISSING;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_ERROR;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_FAILED;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_MISSING;
-import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.REQUESTED_URL;
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE_KEY;
 
 /**
- * Expose needed method on the request.
- *
+ * Request Wrapper with some needed method.
+ * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
+ * 
  */
 public class RequestAdapter {
+    
+    public static final String TARGET_URL_PARAMETER_NAME = "targetURL";
 
     private static final Log log = LogFactory.getLog(RequestAdapter.class);
-
-    private String uri;
-
-    private StringBuffer url;
-
-    private Cookie[] cookies;
 
     private HttpServletRequest request;
 
     private PluggableAuthenticationService authenticationService;
 
+    private ApplicationDefinitionService service;
+
     public RequestAdapter(HttpServletRequest request) {
-        uri = request.getRequestURI();
-        url = request.getRequestURL();
-        cookies = request.getCookies();
         this.request = request;
-
-        if (cookies == null) {
-            cookies = new Cookie[0];
-        }
-
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public StringBuffer getUrl() {
-        return url;
-    }
-
-    public Cookie[] getCookies() {
-        return cookies;
     }
 
     /**
@@ -102,8 +75,32 @@ public class RequestAdapter {
                     return true;
                 }
             }
+
+            if (service == null) {
+                service = Framework.getLocalService(ApplicationDefinitionService.class);
+            }
+
+            String requestPage = getRequestedPage(request);
+
+            for (String prefix : service.getUnAuthenticatedURLPrefix(request)) {
+                if (requestPage.startsWith(prefix)) {
+                    return true;
+                }
+            }
         }
         return false;
+    }
+
+    protected static String getRequestedPage(HttpServletRequest httpRequest) {
+        String requestURI = httpRequest.getRequestURI();
+        String context = httpRequest.getContextPath() + '/';
+
+        return requestURI.substring(context.length());
+    }
+    
+    private String getRequestURIWithParameters() throws UnsupportedEncodingException {
+        String queryString = request.getQueryString() != null ? "?" + URIUtils.getURIQuery(getParameters()) : "";
+        return request.getRequestURI() + queryString;
     }
 
     private PluggableAuthenticationService getAuthenticationService() {
@@ -119,13 +116,14 @@ public class RequestAdapter {
     }
 
     /**
-     * Create a parameters map with parameters given into the request, initial
-     * request before the login redirect (not before the application
-     * redirection)
-     *
+     * Create the parameter map with parameter given into the request and add
+     * the initial request into the map into the
+     * {@code NXAuthConstants#REQUESTED_URL} key.
+     * 
      */
-    public Map<String, String> getParameters()
+    public Map<String, String> getParametersAndAddTargetURLIfNotSet()
             throws UnsupportedEncodingException {
+
         Map<String, String> result = new HashMap<String, String>();
 
         Enumeration<?> paramNames = request.getParameterNames();
@@ -136,68 +134,47 @@ public class RequestAdapter {
         }
 
         HttpSession session = request.getSession(false);
-        String requestedUrl = null;
-        if (session != null) {
-            requestedUrl = (String) session.getAttribute(START_PAGE_SAVE_KEY);
-            if (requestedUrl != null && !"".equals(requestedUrl)) {
-                result.put(REQUESTED_URL,
-                        URLEncoder.encode(requestedUrl, "UTF-8"));
-            }
-        }
-
-        String loginError = (String) request.getAttribute(LOGIN_ERROR);
-        if (loginError != null) {
-            if (ERROR_USERNAME_MISSING.equals(loginError)) {
-                result.put(LOGIN_MISSING, "true");
+        String targetUrl = null;
+        if (session != null && !result.containsKey(TARGET_URL_PARAMETER_NAME)) {
+            targetUrl = (String) session.getAttribute(START_PAGE_SAVE_KEY);
+            if (targetUrl != null && !"".equals(targetUrl.trim())) {
+                log.debug("Put the target URL into the URL parameter: "
+                        + request.getRequestURI());
+                result.put(TARGET_URL_PARAMETER_NAME,
+                        URLEncoder.encode(targetUrl, "UTF-8"));
             } else {
-                result.put(LOGIN_FAILED, "true");
+                result.put(TARGET_URL_PARAMETER_NAME, getRequestURIWithParameters());
             }
         }
         return result;
     }
-
-    /**
-     * Create the parameter map with parameter given into the request and add
-     * the initial request into the map into the
-     * {@code ApplicationConstants#TARGET_URL_PARAMETER} key.
-     *
-     */
-    public Map<String, String> getParametersAndAddTargetURL()
-            throws UnsupportedEncodingException {
-        Map<String, String> result = getParameters();
-
-        if (!result.containsKey(TARGET_URL_PARAMETER)) {
-            log.debug("Put the target URL into the URL parameter: " + getUri());
-            result.put(TARGET_URL_PARAMETER, getUri());
-        } else {
-            log.debug("Forward the target URL parameter again into the target URL parameter: " + result.get(TARGET_URL_PARAMETER));
+    
+    public String getTargetURLFromParameter() throws ApplicationDefinitionException {
+        try {
+            return getParameters().get(TARGET_URL_PARAMETER_NAME);
+        } catch (UnsupportedEncodingException e) {
+            throw new ApplicationDefinitionException(e.getMessage(), e);
         }
+    }
+    
+    /**
+     * Return map containing parameters given into the request
+     * 
+     */
+    public Map<String, String> getParameters()
+            throws UnsupportedEncodingException {
+
+        Map<String, String> result = new HashMap<String, String>();
+
+        Enumeration<?> paramNames = request.getParameterNames();
+        while (paramNames.hasMoreElements()) {
+            String name = (String) paramNames.nextElement();
+            String value = request.getParameter(name);
+            result.put(name, value);
+        }
+
         return result;
     }
 
-    /**
-     * Return the initial request if this browser has been redirected by the
-     * application definition service. if not redirected, the value return is
-     * null;
-     */
-    public String getInitialRequest() {
-        try {
-            return getParameters().get(TARGET_URL_PARAMETER);
-        } catch (UnsupportedEncodingException e) {
-            log.error(e, e);
-            return null;
-        }
-    }
-
-    /**
-     * return the uri with the initial URL into parameter of the uri
-     */
-    public static final String generateURIWithTargetURL(String redirectURI,
-            String initialURI) {
-        Map<String, String> param = new HashMap<String, String>();
-        param.put(TARGET_URL_PARAMETER, initialURI);
-        return URIUtils.addParametersToURIQuery(redirectURI, param);
-
-    }
 
 }
