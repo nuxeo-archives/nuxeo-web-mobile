@@ -26,11 +26,12 @@ import javax.ws.rs.core.Context;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.ecm.mobile.filter.RequestAdapter;
 import org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
+
+import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.REQUESTED_URL;
 
 /**
  * The root entry for the WebEngine module.
@@ -85,7 +86,7 @@ public class MyApplication extends ModuleRoot {
         response.addCookie(cookie);
         getService().invalidateSession(request);
 
-        String redirect = new RequestAdapter(request).getInitialRequest();
+        String redirect = request.getParameter(REQUESTED_URL);
         if (redirect != null) {
             log.debug("Logout done: Redirect to default URL: " + redirect);
         } else {
