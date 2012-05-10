@@ -1,0 +1,146 @@
+/* -- Nuxeo Web Mobile default CSS -- */
+
+/* Login */
+.login { background: #d3e5fd url('../img/nuxeo_login.jpg') no-repeat bottom left }
+
+  .login .ui-field-contain { border: none; margin: 0; padding: .2em .4em }
+  .login .logo { background-color: #000; padding: .6em 0 .5em; text-align: center }
+    .login .logo img { max-height: 10em; max-width: 5.7em }
+  .login .authentification { margin: 13% auto 0; width: 70% }
+  .login .authentification form { margin: auto; max-width: 22em }
+
+/* Home */
+.home { background: #dfecff }
+.home .ui-grid-a { padding-top: 2em }
+.home .ui-block-a, .home .ui-block-b { text-align: center }
+.home .menuItem { display: block; margin: .3em 0 .8em; text-decoration: none }
+    .home .menuItem p { color: #4c78a2; margin: 0 0 1em }
+
+/* == Pages == */
+/* View document */
+.documentInfo { padding: 1.1em }
+  .documentInfo div { line-height: 130% }
+    .documentInfo .title { font-weight: bold; font-size: 110% }
+    .documentInfo .title img { margin-right: .3em }
+    .documentInfo .description { color: #888; font-size: 95%; margin-bottom: .5em; padding-left: 1.3em }
+    .documentInfo .modificationDate { color: #aaa; font-size: 85%; margin-bottom: .2em; padding-left: 1.4em }
+
+/* Preview */
+.preview { background: #fff !important; border: medium none; height: 150em; overflow: visible; width: 100% }
+    .preview body { background-color: #fff; overflow: visible }
+    .preview .ui-content p img { max-width: 100% }
+
+/* Comments & Annotations */
+.comments {}
+    .comments ul, .annotations ul { list-style: none;   padding: 0 }
+    .comments li, .annotations li { box-shadow: 0 5px 8px #6e6e6e; padding: .4em .5em; margin: 0 0 .3em }
+    .comments .details, .comments .actions,
+        .annotations .details, .annotations .actions { font-size: 80% }
+    .comments .actions, .annotations .actions { text-align: right }
+    .comments .details span,
+        .annotations .details span, { margin: .2em }
+    .comments .time { color: #aaa }
+    .comments .comment,
+        .annotations .annotation { line-height: 125%; padding: .3em; word-wrap: break-word }
+
+/* Relations */
+.relations .ui-li-divider, .relations .ui-li-static { font-size: 16px }
+.relations .ui-listview .ui-li-icon { margin-top: -4px }
+
+/* Profile */
+.profile .profileDetail{ margin-bottom: -15px;  padding: 1.1em }
+  .profileDetail .avatar { float: left; height: 5em; width: 5em }
+    .profileDetail .avatar img { max-height: 4.5em; max-width: 4.5em }
+  .profileInfo { margin-left: 5.5em }
+    .profileInfo .name { font-weight: bold; font-size: 115%; margin-bottom: .5em }
+    .profileInfo .email { font-size: 90% }
+    .profileInfo .groups { padding-top: .4em }
+  .profileDetail .moreInfo li label { color: #999; margin-right: .4em; width: 7em }
+  .profileDetail .moreInfo li span { font-size: 16px; font-weight: normal; line-height: 1.4 }
+  .profileDetail .moreInfo fieldset.ui-controlgroup { display: inline-block }
+  .profileDetail .moreInfo li label.radioLabel { color: #000; margin-right: .4em; width: auto }
+
+/* Searches & Browse */
+.search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
+.repository h3 { margin: 1.6em 0 0 }
+
+.smallButton .ui-btn-inner { padding: .2em .4em }
+
+/* == Messages == */
+/* Dialog */
+.ui-overlay-a, .ui-mobile [data-role="dialog"] { background: transparent !important}
+.ui-dialog .ui-header { margin: 0; border-radius: 0; max-width: 100%; width: auto }
+.ui-dialog .ui-content { border-radius: 0; margin: 0; max-width: 100%; width: auto }
+.ui-dialog .ui-overlay-shadow { box-shadow: 0 10px 0 #fff }
+
+/* Notifications */
+.quickNotification { background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px #bbb;
+    display: none;
+    font: 13px Arial,sans-serif;
+    left: 0;
+    padding: 0.5em 2em;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 220 }
+
+/* Feedback Messages */
+.feedback { background:             #ffefa8 /*{e-bup-background-color}*/;
+      background-image: -webkit-gradient(linear, left top, left bottom, from( #fff8d7), to( #ffefa8*/));
+      background-image: -webkit-linear-gradient(#fff8d7, #ffefa8);
+      background-image:    -moz-linear-gradient(#fff8d7, #ffefa8);
+      background-image:     -ms-linear-gradient(#fff8d7, #ffefa8);
+      background-image:      -o-linear-gradient(#fff8d7, #ffefa8);
+      background-image:         linear-gradient(#fff8d7, #ffefa8);
+    border: 1px solid #ffde4a;
+    border-radius: 7px;
+    color: #5f5f5f;
+    margin: 0;
+    padding: .5em }
+
+/* Loader */
+.ui-loader { background-color: #fff; background-image: none;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px #bbb;
+    color: #000;
+    opacity: 1;
+    text-shadow: none }
+.ui-icon-loading { background-image: url('../icons/waiter.gif') }
+
+/* ================================ */
+/* Generic classes */
+.white { background-color: #fff }
+.nospace { margin: -15px -15px 0 }
+.noSidespace { margin: 0 -15px }
+.marginBottom { margin-bottom: .4em }
+.shadow { box-shadow: 0 0 8px #6e6e6e }
+
+.ui-body-c .ui-link { color: #00a9e9; text-decoration: none }
+
+.tag { background-color: #8a6d47 ; border-radius: .2em; color: #fff;
+        cursor: default;
+        display: inline-block;
+    font-size: 80%;
+        margin: .15em .1em;
+        padding: .2em .3em;
+        text-shadow: none;
+        white-space: nowrap }
+.tag .ui-link, .tag .ui-link:hover, .tag .ui-link:visited { color: #fff; font-weight: normal; text-decoration: none; text-shadow: none }
+
+.squared, .squared .ui-btn-corner-all { border-radius: 3px !important }
+.squared .ui-btn-inner { padding: .4em .6em .2em }
+
+fieldset .ui-btn-inner { padding: .5em }
+
+.gray { color: #999 }
+
+.floatL { float: left }
+.floatR { float: right }
+.alignC { text-align: center }
+
+.clear:before, .clear:after { content:""; display:table }
+.clear:after { clear:both }
+
