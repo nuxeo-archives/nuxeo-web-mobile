@@ -1,12 +1,26 @@
-alert('toto');
 var isPhoneGapReady = false;
 var db;
-var servers = new Array();
 
+String.prototype.trim=function(){return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');};
 
 function init() {
-  document.addEventListener("deviceready", initServerList, false);
-    
+  document.addEventListener("deviceready", initAndGoToHome, false);
+
+  $("#create_server_profile").bind ("click", function (event) {
+    var formElements = $('#server_profile_form input');
+    var len = formElements.length, i;
+    var values = new Array();
+    for (i = 0; i < len; i++) {
+      values[i] = { name : formElements[i].name, value : formElements[i].value};
+    }
+    var server = new Server(values);
+
+    server.store(function() {
+      var isBackNavigation = true;
+      navigateToServerList(isBackNavigation);
+    });
+  });
+
   // For BB <5.0
 /*
   var intervalID = window.setInterval(function() {
@@ -18,31 +32,31 @@ function init() {
 }
 
 
-function initServerList() {
+function initAndGoToHome() {
 /*   window.clearInterval(intervalID); */
   isPhoneGapReady = true;
-  alert('phone gap ready');
   
-  initDatabase();
-  
+  initDatabase(function() {
+    var isBackNavigation = false;
+    navigateToServerList(isBackNavigation);
+  });
 }
 
-function initDatabase() {
-  db = window.openDatabase("nuxeo", "1.0", "Nuxeo Client DB", 1000000);
-  db.transaction(initDB, errorTransaction1, navigateToServerList);
-}
 
 window.onload = init;
 
 
 //********************* DB MANAGEMENT *********************
 
-function initDB(tx) {
-  tx.executeSql('DROP TABLE IF EXISTS SERVER');
-  tx.executeSql('CREATE TABLE SERVER (name, servername, contextpath, login, password)');
-  tx.executeSql('INSERT INTO SERVER (name, servername, contextpath, login, password) VALUES ("Local", "http://localhost:8080", "/nuxeo", "Administrator", "Administrator")');
-  tx.executeSql('INSERT INTO SERVER (name, servername, contextpath, login, password) VALUES ("Local2", "http://127.0.0.1:8080", "/nuxeo", "Administrator", "Administrator")');
+
+function initDatabase(callback) {
+  db = window.openDatabase("nuxeo", "1.0", "Nuxeo Client DB", 1000000);
+  db.transaction(function(tx) {
+    //tx.executeSql('DROP TABLE SERVER');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS SERVER (name, servername, contextpath, login, password)');
+  }, errorTransaction1, callback);
 }
+
 
 function errorTransaction1(err) {
   alert('ERROR 1 during transaction');
@@ -57,23 +71,106 @@ function errorTransaction2(err) {
 function successTransaction() {
 }
 
+function navigateToServerList(isBackNavigation) {
+  getServers(function (servers) {
+    var len = servers.length, i;
+    var html = "";
+    for (i = 0; i < len; i++) {
+      var server = servers[i];
+      if ((!server.getURL()) || (!server.get('name'))) {
+        alert('a not well formed server has been found');
+      } else {
+        alert('A good one found');
+        html += '<li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">';
+        html += '  <a href="' + server.getURL() + '">' + server.get('name') + '</a>';
+        html += '</li>';
+      }
+    }
+    $('#servers_list').append(html);
+
+    $.mobile.changePage ("#page_servers_list", {
+      transition : "slide",
+      reloadPage: false,
+      reverse: isBackNavigation
+    });
+  });
+}
 
 
-/**
-  navigate to the last page before application close
-*/
-function navigateToServerList() {
+// TODO: Replace this by Backbone after data/layout splitting
+function Server(_values) {
+  if (_values == null) {
+    alert('No element found to create server!!');
+    return;
+  }
+
+  this.values = _values;
+  var len = _values.length, i;
+
+//  for (i = 0; i < len; i++) {
+//    alert('formElements: ' + _values[i].name + "/" + _values[i].value);
+//  }
+
+  this.get = function(name) {
+    var len = this.values.length, i;
+    for (i = 0; i < len; i++) {
+      if (this.values[i].name == name) {
+        if (!this.values[i].value || this.values[i].value.trim() == '') {
+          return null;
+        } else {
+          return this.values[i].value;
+        }
+      }
+    }
+    return null;
+  };
+
+  this.getURL = function() {
+    if ((!this.get('servername')) || (!this.get('contextpath'))) {
+      return null;
+    } else {
+      return this.get('servername') + this.get('contextpath');
+    }
+  }
+
+  this.store = function(callback) {
+    var server = this;
+    // remove profile displayed in the server list
+    $('#servers_list').empty();
+
+    db.transaction( function (tx) {
+      var query = 'INSERT INTO SERVER (name, servername, contextpath, login, password) VALUES (?, ?, ?, ?, ?)'
+      var data = [server.get('name'), server.get('servername'), server.get('contextpath'), server.get('login'), server.get('password')];
+      alert("data: " + data);
+
+      tx.executeSql(query, data, function() {
+        callback();
+      });
+    }, errorTransaction1, successTransaction);
+  }
+}
+
+
+function getServers(callback) {
   db.transaction( function (tx) {
     tx.executeSql('SELECT * FROM SERVER', [], function (tx, results) {
+      var _servers = new Array();
       var len = results.rows.length, i;
       var html = "";
-      for (i = 0; i < len; i++) {
-        var url = results.rows.item(i).servername + results.rows.item(i).contextpath;
-        html += '<li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c"><a href="' + url + '">'+results.rows.item(i).name+'</a></li>';
+      if (len > 0) {
+        for (i = 0; i < len; i++) {
+
+          var formElement = new Array();
+          formElement[0] = { name : 'name', value : results.rows.item(i).name};
+          formElement[1] = { name : 'servername', value : results.rows.item(i).servername};
+          formElement[2] = { name : 'login', value : results.rows.item(i).login};
+          formElement[3] = { name : 'password', value : results.rows.item(i).password};
+          formElement[4] = { name : 'contextpath', value : results.rows.item(i).contextpath};
+
+          _servers[i] = new Server(formElement);
+        }
       }
-      $('#servers_list').append(html);
-      $.mobile.changePage ($("#server_list"));
+      callback(_servers);
     });
   }, errorTransaction2, successTransaction);
 }
-
