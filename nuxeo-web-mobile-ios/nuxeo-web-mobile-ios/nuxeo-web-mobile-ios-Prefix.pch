@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'nuxeo-web-mobile-ios' target in the 'nuxeo-web-mobile-ios' project
-//
-
-#ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-#endif
