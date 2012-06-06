@@ -8,6 +8,7 @@
 	
 
   	<link rel="stylesheet" href="css/jquery.mobile-1.0.min.css"/>
+    <script src="http://localhost:8081/target/target-script-min.js#anonymous"></script>
     <script src="scripts/cordova-1.7.0.js"></script>
     <script src="scripts/jquery-1.7.min.js"></script>
     <script src="scripts/jquery.mobile-1.0.min.js"></script>
@@ -73,6 +74,19 @@
           </fieldset>
         </form>
       </div>
+    </div>
+
+    <div data-role="page" id="dropbox">
+      <div data-role="header">
+        <h1>Local files</h1>
+        <a href="#" data-rel="back">Back</a>
+        <a href="#dropbox_add" data-icon="plus">Import</a>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview" class="ui-listview" id="dropbox_files">
+        </ul>
+      </div>
+    </div>
 
   </body>
 </html>

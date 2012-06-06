@@ -61,5 +61,24 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleDocumentTypes</key>
+    <array>
+	<dict>
+		<key>CFBundleTypeName</key>
+		<string>Nuxeo</string>
+		<key>CFBundleTypeIconFiles</key>
+		<array>
+			<string>icon.png</string>
+		</array>
+		<key>LSItemContentTypes</key>
+		<array>
+			<string>public.data</string>
+		</array>
+		<key>LSHandlerRank</key>
+		<string>Owner</string>
+        <key>CFBundleTypeRole</key>
+        <string>Viewer</string>
+	</dict>
+        </array>
 </dict>
 </plist>

@@ -108,7 +108,7 @@
      if (self.invokeString)
      {
         // this is passed before the deviceready event is fired, so you can access it in js when you receive deviceready
-        NSString* jsString = [NSString stringWithFormat:@"var invokeString = \"%@\";", self.invokeString];
+        NSString* jsString = [NSString stringWithFormat:@"handleOpenURL('%@');", self.invokeString];
         [theWebView stringByEvaluatingJavaScriptFromString:jsString];
      }
      
@@ -118,23 +118,23 @@
 	return [super webViewDidFinishLoad:theWebView];
 }
 
-/* Comment out the block below to over-ride */
-/*
-
 - (void) webViewDidStartLoad:(UIWebView*)theWebView 
 {
+    //NSLog(@"%@", NSStringFromSelector(@selector(webViewDidFinishLoad:)));
 	return [super webViewDidStartLoad:theWebView];
 }
 
 - (void) webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error 
 {
+    //NSLog(@"%@", NSStringFromSelector(@selector(webView:didFailLoadWithError:)));
 	return [super webView:theWebView didFailLoadWithError:error];
 }
 
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    //NSLog(@"%@", NSStringFromSelector(@selector(webView:shouldStartLoadWithRequest:navigationType:)));
+    //NSLog(@"%@", request);
 	return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];
 }
-*/
 
 @end
