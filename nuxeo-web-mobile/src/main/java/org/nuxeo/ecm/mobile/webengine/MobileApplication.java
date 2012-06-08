@@ -17,8 +17,11 @@
 
 package org.nuxeo.ecm.mobile.webengine;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -38,6 +41,7 @@ import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
+import org.nuxeo.ecm.webengine.model.Guard;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
@@ -47,6 +51,7 @@ import static org.nuxeo.ecm.mobile.webengine.document.FolderishAdapter.ONLY_VISI
 
 /**
  * Entry point of the webengine application
+ * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  * 
@@ -64,14 +69,37 @@ public class MobileApplication extends ModuleRoot {
 
     private UserWorkspaceService userWorkspaceService;
 
+    protected static final Pattern CORDOVA_USER_AGENT_REGEXP = Pattern.compile("Cordova/(.+?) \\((.*)\\)");
+
+    @Override
+    protected void initialize(Object... args) {
+        // Check if the Client is using Cordova
+        // XXX Optimize it to prevent from regex all request
+        Map<String, Serializable> context = null;
+
+        String userAgent = getContext().getRequest().getHeader("User-Agent");
+        Matcher matcher = CORDOVA_USER_AGENT_REGEXP.matcher(userAgent);
+        if (matcher.find()) {
+            context = new HashMap<String, Serializable>();
+            
+            context.put("version", matcher.group(1));
+            context.put("device", matcher.group(2));
+            context.put("isIOS", matcher.group(2).matches("iOS"));
+            context.put("isAndroid", matcher.group(2).matches("android"));
+
+            log.info("Cordova User-Agent detected");
+        }
+        getContext().setProperty("Cordova", context);
+    }
+
     /**
      * Try to fetch document in targetURL parameter in URL if not this is the
      * Home binding
      * 
      */
     @GET
-    public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME) String initialURL)
-            throws Exception {
+    public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME)
+    String initialURL) throws Exception {
         if (initialURL != null) {
             DocumentView docView = getCodecManager().getDocumentViewFromUrl(
                     initialURL, true, "");
@@ -127,8 +155,8 @@ public class MobileApplication extends ModuleRoot {
     }
 
     @Path("docPath/@{adapter}")
-    public Object doTraverseRootDocumentByPath(
-            @PathParam("adapter") String adapter) {
+    public Object doTraverseRootDocumentByPath(@PathParam("adapter")
+    String adapter) {
         DocumentRef ref = new PathRef("/");
         if ("search".equals(adapter)) {
             return new MobileDocument(ctx, ref).search();
@@ -137,14 +165,15 @@ public class MobileApplication extends ModuleRoot {
     }
 
     @Path("docPath{docPathValue:(/(?:(?!/@).)*)}")
-    public Object doTraverseDocumentByPath(
-            @PathParam("docPathValue") String docPath) {
+    public Object doTraverseDocumentByPath(@PathParam("docPathValue")
+    String docPath) {
         DocumentRef ref = new PathRef(docPath);
         return new MobileDocument(ctx, ref);
     }
 
     @Path("doc/{docId}")
-    public Object doTraverseDocument(@PathParam("docId") String docId) {
+    public Object doTraverseDocument(@PathParam("docId")
+    String docId) {
         DocumentRef ref = new IdRef(docId);
         return new MobileDocument(ctx, ref);
     }

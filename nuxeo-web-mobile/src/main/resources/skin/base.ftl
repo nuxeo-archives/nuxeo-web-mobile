@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="${skinPath}/css/nuxeo-web-mobile.css" />
     <script src="${skinPath}/script/jquery-1.7.js"></script>
     <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>
-
+    <#if Context.getProperty('Cordova')??>
+    <script src="${skinPath}/script/cordova-1.7.0.js"></script>
+    </#if>
 
     <!-- rewrite the URL after a redirect from JSF to have mobile URL, 
          initial request accessible in the history -->
@@ -32,7 +34,7 @@
         var mobileHomePath = "${Root.path}";
         if ('${mobileURL}' != null) {
           window.history.pushState(null, 'Mobile URL', '${mobileURL}');
-        } 
+        }
     </script>
     <script src="${skinPath}/script/nuxeo-navigation-jquerymobile.js"></script>
 
