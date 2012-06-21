@@ -45,6 +45,12 @@
 		5117D22B157E45F1009979FB /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5117D22A157E45F1009979FB /* Default-Landscape@2x~ipad.png */; };
 		5117D22D157E45FA009979FB /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5117D22C157E45FA009979FB /* Default-Portrait@2x~ipad.png */; };
 		513D2784157E522F00DEE092 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 513D2783157E522F00DEE092 /* www */; };
+		518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657A8159322710066B9DF /* NXMFileBrowserCommand.m */; };
+		518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657AA159322710066B9DF /* NXMFileBrowserViewController.m */; };
+		518657AE159322710066B9DF /* NXMFileBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518657AB159322710066B9DF /* NXMFileBrowserViewController.xib */; };
+		5192A5C91588D5A100D7D6AD /* ChildBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5192A5C41588D5A100D7D6AD /* ChildBrowserCommand.m */; };
+		5192A5CA1588D5A100D7D6AD /* ChildBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5192A5C61588D5A100D7D6AD /* ChildBrowserViewController.m */; };
+		5192A5CB1588D5A100D7D6AD /* ChildBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5192A5C71588D5A100D7D6AD /* ChildBrowserViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +98,16 @@
 		5117D22A157E45F1009979FB /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		5117D22C157E45FA009979FB /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		513D2783157E522F00DEE092 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
+		518657A7159322710066B9DF /* NXMFileBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserCommand.h; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.h; sourceTree = "<group>"; };
+		518657A8159322710066B9DF /* NXMFileBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NXMFileBrowserCommand.m; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.m; sourceTree = "<group>"; };
+		518657A9159322710066B9DF /* NXMFileBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserViewController.h; path = Plugins/NxFileBrowser/NXMFileBrowserViewController.h; sourceTree = "<group>"; };
+		518657AA159322710066B9DF /* NXMFileBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NXMFileBrowserViewController.m; path = Plugins/NxFileBrowser/NXMFileBrowserViewController.m; sourceTree = "<group>"; };
+		518657AB159322710066B9DF /* NXMFileBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NXMFileBrowserViewController.xib; path = Plugins/NxFileBrowser/NXMFileBrowserViewController.xib; sourceTree = "<group>"; };
+		5192A5C31588D5A100D7D6AD /* ChildBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserCommand.h; sourceTree = "<group>"; };
+		5192A5C41588D5A100D7D6AD /* ChildBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserCommand.m; sourceTree = "<group>"; };
+		5192A5C51588D5A100D7D6AD /* ChildBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserViewController.h; sourceTree = "<group>"; };
+		5192A5C61588D5A100D7D6AD /* ChildBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserViewController.m; sourceTree = "<group>"; };
+		5192A5C71588D5A100D7D6AD /* ChildBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildBrowserViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,9 +291,35 @@
 		5117D205157E07B1009979FB /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				518657B01593227C0066B9DF /* NXMFileBrowser */,
+				5192A5CD1588D5C900D7D6AD /* ChildBrowser */,
 				5117D206157E07B1009979FB /* README */,
 			);
 			name = Plugins;
+			sourceTree = "<group>";
+		};
+		518657B01593227C0066B9DF /* NXMFileBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				518657A8159322710066B9DF /* NXMFileBrowserCommand.m */,
+				518657A9159322710066B9DF /* NXMFileBrowserViewController.h */,
+				518657AA159322710066B9DF /* NXMFileBrowserViewController.m */,
+				518657AB159322710066B9DF /* NXMFileBrowserViewController.xib */,
+				518657A7159322710066B9DF /* NXMFileBrowserCommand.h */,
+			);
+			name = NXMFileBrowser;
+			sourceTree = "<group>";
+		};
+		5192A5CD1588D5C900D7D6AD /* ChildBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				5192A5C31588D5A100D7D6AD /* ChildBrowserCommand.h */,
+				5192A5C41588D5A100D7D6AD /* ChildBrowserCommand.m */,
+				5192A5C51588D5A100D7D6AD /* ChildBrowserViewController.h */,
+				5192A5C61588D5A100D7D6AD /* ChildBrowserViewController.m */,
+				5192A5C71588D5A100D7D6AD /* ChildBrowserViewController.xib */,
+			);
+			name = ChildBrowser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +399,8 @@
 				5117D22B157E45F1009979FB /* Default-Landscape@2x~ipad.png in Resources */,
 				5117D22D157E45FA009979FB /* Default-Portrait@2x~ipad.png in Resources */,
 				513D2784157E522F00DEE092 /* www in Resources */,
+				5192A5CB1588D5A100D7D6AD /* ChildBrowserViewController.xib in Resources */,
+				518657AE159322710066B9DF /* NXMFileBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +430,10 @@
 				5117D1D7157E07B0009979FB /* main.m in Sources */,
 				5117D1FF157E07B1009979FB /* AppDelegate.m in Sources */,
 				5117D202157E07B1009979FB /* MainViewController.m in Sources */,
+				5192A5C91588D5A100D7D6AD /* ChildBrowserCommand.m in Sources */,
+				5192A5CA1588D5A100D7D6AD /* ChildBrowserViewController.m in Sources */,
+				518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */,
+				518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

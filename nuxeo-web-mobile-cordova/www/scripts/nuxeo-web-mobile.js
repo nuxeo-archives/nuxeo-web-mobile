@@ -37,65 +37,15 @@ function initAndGoToHome() { /*   window.clearInterval(intervalID); */
     navigateToServerList(isBackNavigation);
   });
 
-  $("body").toggle();
+  //  $("body").toggle();
 }
 
 function handleOpenURL(url) {
   console.log("Try to open file url: " + url);
 
-  copyFileLocally(url, navigateToDropbox)
-}
-
-function navigateToDropbox() {
-  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-    var dropbox = $("#dropbox_files");
-    dropbox.empty();
-
-    console.log("Try to read fileSystem local content");
-
-    refreshFiles();
-    changePage('dropbox');
-
-    function refreshFiles() {
-      dropbox.empty();
-      console.log("Start refreshing files");
-      fileSystem.root.createReader().readEntries(function(entries) {
-        var html = ""
-        for (var i = 0; i < entries.length; i++) {
-          var entry = entries[i];
-          if (!entry.isFile) {
-            continue;
-          }
-
-          // class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c"
-          html += '<li data-url="' + encodeURI(entry.fullPath) + '">';
-          html += entry.name;
-          html += '<a href="#" class="delete">delete</a>'
-          html += '</li>';
-        }
-        dropbox.append(html).find(".delete").click(function() {
-          var li = $(this).parents('li');
-          console.log(dropbox.html());
-          if (!li) {
-            console.error("Unable to find LI parent");
-            return;
-          }
-
-          window.resolveLocalFileSystemURI("file://" + li.data('url'), function(fileEntry) {
-            fileEntry.remove(function() {
-              refreshFiles();
-            }, function(evt) {
-              alert("Unable to remove this file.")
-              handleFileError(evt);
-            });
-          }, handleFileError);
-          console.log("data-url: " + li.data('url'));
-        });
-        dropbox.listview('refresh');
-
-      }, handleFileError);
-    };
-  }, handleFileError);
+  copyFileLocally(url, function() {
+    NXCordova.openFileChooser();
+  })
 }
 
 
@@ -144,49 +94,6 @@ function copyFileLocally(url, callback) {
   }, handleFileError);
 }
 
-function handleFileError(evt) {
-  switch (evt.code) {
-  case FileError.NOT_FOUND_ERR:
-    console.error("File not found");
-    break;
-  case FileError.SECURITY_ERR:
-    console.error("Security error");
-    break;
-  case FileError.ABORT_ERR:
-    console.error("Abort error");
-    break;
-  case FileError.NOT_READABLE_ERR:
-    console.error("Not readable file error");
-    break;
-  case FileError.ENCODING_ERR:
-    console.error("Encoding error");
-    break;
-  case FileError.NO_MODIFICATION_ALLOWED_ERR:
-    console.error("Not allowed to modificate");
-    break;
-  case FileError.INVALID_STATE_ERR:
-    console.error("Invalide state error");
-    break;
-  case FileError.SYNTAX_ERR:
-    console.error("Syntax error");
-    break;
-  case FileError.INVALID_MODIFICATION_ERR:
-    console.error("Invalid modification error");
-    break;
-  case FileError.QUOTA_EXCEEDED_ERR:
-    console.error("Quota exeeded error");
-    break;
-  case FileError.TYPE_MISMATCH_ERR:
-    console.error("Type mismatch error");
-    break;
-  case FileError.PATH_EXISTS_ERR:
-    console.error("Path exists error");
-    break;
-  default:
-    console.log("Unknown error");
-  }
-}
-
 window.onload = init;
 
 
@@ -231,7 +138,6 @@ function navigateToServerList(isBackNavigation) {
     $('#servers_list').append(html);
 
     changePage('page_servers_list', isBackNavigation);
-    handleOpenURL('file://localhost/Users/arnaud/Library/Application%20Support/iPhone%20Simulator/5.1/Applications/42437C8E-F7A6-48F6-A368-751B61FE0E37/Documents/Inbox/PDF%20Document-8.pdf');
   });
 }
 

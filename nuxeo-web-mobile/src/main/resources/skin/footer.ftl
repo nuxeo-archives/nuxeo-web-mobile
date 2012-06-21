@@ -9,9 +9,6 @@
           <li><a data-ajax="false" href="#" onclick="goToStandardNavigation('${Root.nuxeoContextPath}');">
             <img alt="Standard_Navigation" src="${skinPath}/icons/footer_standard_navigation.png" />
           </a></li>
-          <#if Context.getProperty('Cordova')??>
-          <li><a href="javascript:Cordova.openFileChooser();"><img alt="Cordova" src="${skinPath}/icons/footer_search.png" /></a></li>
-          </#if>
         </ul>
       </div>
     </div>

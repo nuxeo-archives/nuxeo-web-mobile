@@ -26,6 +26,10 @@
 	</array>
 	<key>Plugins</key>
 	<dict>
+		<key>NxFileBrowserCommand</key>
+		<string>NXMFileBrowserCommand</string>
+		<key>ChildBrowserCommand</key>
+		<string>ChildBrowserCommand</string>
 		<key>Compass</key>
 		<string>CDVLocation</string>
 		<key>Accelerometer</key>

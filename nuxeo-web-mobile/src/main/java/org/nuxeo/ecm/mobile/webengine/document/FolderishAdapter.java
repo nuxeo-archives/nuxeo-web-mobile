@@ -17,19 +17,29 @@
 package org.nuxeo.ecm.mobile.webengine.document;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
+import org.nuxeo.ecm.automation.AutomationService;
+import org.nuxeo.ecm.automation.OperationContext;
+import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.Filter;
 import org.nuxeo.ecm.core.api.impl.CompoundFilter;
 import org.nuxeo.ecm.core.api.impl.FacetFilter;
 import org.nuxeo.ecm.core.api.impl.LifeCycleFilter;
 import org.nuxeo.ecm.webengine.WebException;
+import org.nuxeo.ecm.webengine.forms.FormData;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
 import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
+import org.nuxeo.runtime.api.Framework;
 
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
@@ -48,16 +58,40 @@ public class FolderishAdapter extends DefaultAdapter {
     public Object doGet() {
         return getView("index");
     }
-
-    public DocumentModelList getChildren() throws ClientException {
+    
+    @POST
+    public Object doUpload() throws Exception {
+        FormData form = ctx.getForm();
+        Blob blob = form.getFirstBlob();
+        if (blob == null) {
+            throw new IllegalArgumentException(
+                    "Could not find any uploaded file");
+        }
+        AutomationService as = Framework.getLocalService(AutomationService.class);
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("overwite", true);
+        
+        OperationContext subctx = new OperationContext(
+                ctx.getCoreSession(), null);
+        subctx.setInput(blob);
+        subctx.put("currentDocument", getCurrentDocument().getPathAsString());
+        
+        as.run(subctx, "FileManager.Import", params);
+        return Response.ok().build();
+    }
+    
+    public DocumentModel getCurrentDocument() {
         Object targetObject = ctx.getTargetObject();
         if (!(targetObject instanceof MobileDocument)) {
             throw new WebException("Target Object must be MobileDocument");
         }
         MobileDocument doc = (MobileDocument) targetObject;
+        return doc.getDocument();
+    }
+    
+    public DocumentModelList getChildren() throws ClientException {
         CoreSession session = ctx.getCoreSession();
-
-        return session.getChildren(doc.getDocument().getRef(), null,
+        return session.getChildren(getCurrentDocument().getRef(), null,
                 ONLY_VISIBLE_CHILDREN, null);
     }
 

@@ -13,6 +13,14 @@
         <input type="hidden" name="max" id="max" value="20" />
       </form>
       <div class="ui-grid-a">
+      <!--
+        <div class="ui-block-a">
+          <a href="javascript:NXCordova.openFileChooser()" class="menuItem">
+            <img src="${skinPath}/icons/profile.png">
+            <p>FileChooser</p>
+          </a>
+        </div>
+        -->
         <div class="ui-block-a">
           <a href="${Root.path}/root" data-add-back-btn="true" class="menuItem">
             <img src="${skinPath}/icons/browse.png">
@@ -37,7 +45,7 @@
             <p class="">${Context.getMessage('label.home.menu.Logout')}</p>
           </a>
         </div>
-        <div class="ui-block-b">
+        <div class="ui-block-a">
           <a data-ajax="false" href="#" onclick="goToStandardNavigation('${Root.nuxeoContextPath}');" class="menuItem">
             <img src="${skinPath}/icons/standard_navigation.png">
             <p class="">${Context.getMessage('label.home.menu.GoToStandardNavigation')}</p>

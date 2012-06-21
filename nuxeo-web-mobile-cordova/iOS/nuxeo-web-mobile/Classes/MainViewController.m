@@ -27,6 +27,10 @@
 
 #import "MainViewController.h"
 
+@interface MainViewController ()
+-(NSString *)fileToBeExecutedWith:(NSString *)name inWebView:(UIWebView*)aWebView;
+@end
+
 @implementation MainViewController
 
 - (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -108,14 +112,32 @@
      if (self.invokeString)
      {
         // this is passed before the deviceready event is fired, so you can access it in js when you receive deviceready
-        NSString* jsString = [NSString stringWithFormat:@"handleOpenURL('%@');", self.invokeString];
+        NSString* jsString = [NSString stringWithFormat:@"NXCordova.handleOpenURL('%@');", self.invokeString];
         [theWebView stringByEvaluatingJavaScriptFromString:jsString];
      }
      
      // Black base color for background matches the native apps
      theWebView.backgroundColor = [UIColor blackColor];
+    
+    // Add custom JS
+    NSURL *baseDirURL = [[NSBundle mainBundle] URLForResource:self.wwwFolderName withExtension:nil];
+    
+    [theWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var cordovaBase = '%@'", baseDirURL.absoluteURL]];
+    
+    [self fileToBeExecutedWith:@"scripts/ChildBrowser.js" inWebView:theWebView];
+    [self fileToBeExecutedWith:@"scripts/NxFileBrowser.js" inWebView:theWebView];
+    [self fileToBeExecutedWith:@"scripts/nuxeo-cordova-wrapper.js" inWebView:theWebView];
 
 	return [super webViewDidFinishLoad:theWebView];
+}
+
+-(NSString *)fileToBeExecutedWith:(NSString *)name inWebView:(UIWebView*)aWebView {
+    NSURL *url = [NSURL fileURLWithPath:[self pathForResource:name]];
+    NSLog(@"file: %@", url.absoluteURL);
+    
+    NSError *error;
+    
+    return [aWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error]];
 }
 
 - (void) webViewDidStartLoad:(UIWebView*)theWebView 
@@ -133,7 +155,7 @@
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
     //NSLog(@"%@", NSStringFromSelector(@selector(webView:shouldStartLoadWithRequest:navigationType:)));
-    //NSLog(@"%@", request);
+//    NSLog(@"Try to open: %@", request.URL.absoluteURL);
 	return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];
 }
 
