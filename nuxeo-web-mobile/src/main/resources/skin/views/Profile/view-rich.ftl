@@ -29,15 +29,6 @@
                 ${Context.getMessage('label.message.NoInfo')}
               </#if>
           </div>
-          <div class="groups">
-              <#if userMainInfo.user.groups?size =0>
-                <span class="tag">${Context.getMessage('label.message.NoInfo')}</span>
-              <#else>
-                <#list userMainInfo.user.groups as group>
-                  <span class="tag">${group}</span>
-                </#list>
-              </#if>
-          </div>
         </div>
         <div class="moreInfo">
           <ul data-inset="true" data-role="listview" data-theme="c" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
