@@ -71,94 +71,11 @@ public class Profile extends DefaultObject {
     @Path("{username}")
     public Template doGetUser(@PathParam("username") String username)
             throws ClientException, Exception {
-        String mode = getMode();
-
         DocumentModel userProfile = getUserProfile(username);
         DocumentModel userMainInfo = getUserManager().getUserModel(username);
 
-        return getView(mode).arg("userProfile", userProfile).arg(
+        return getView("view").arg("userProfile", userProfile).arg(
                 "userMainInfo", userMainInfo);
-    }
-
-    @GET
-    @Path("{username}/password")
-    public Object doGetPassword(@PathParam("username") String username)
-            throws ClientException, Exception {
-        return getView("password");
-    }
-
-    @POST
-    @Path("{username}")
-    public Object doPostUser(@PathParam("username") String username,
-            @QueryParam("isPasswordModification") boolean isPassword)
-            throws ClientException, Exception {
-        String message = null;
-
-        DocumentModel user = getUserManager().getUserModel(username);
-        if (!isPassword) {
-
-            try {
-                user = UserHelper.updateUser(ctx, user);
-            } catch (WebException e) {
-                log.error(e, e);
-                message = "Can't update the profile, please try again. If the trouble persists contact your admin sys.";
-            }
-        } else {
-            String oldPassword = ctx.getRequest().getParameter(
-                    "user:password_old");
-            String newPassword1 = ctx.getRequest().getParameter("user:password");
-            String newPassword2 = ctx.getRequest().getParameter(
-                    "user:password_bis");
-
-            message = checkPassword(username, oldPassword, newPassword1,
-                    newPassword2);
-
-            if (message == null) {
-                try {
-                    user.setPropertyValue("user:password", newPassword1);
-                    userManager.updateUser(user);
-                } catch (ClientException e) {
-                    log.error(e, e);
-                    message = "A problem occured during the password update, please try again. "
-                            + "If the trouble persists contact your admin sys.";
-                }
-            }
-        }
-
-        if (message == null) {
-            message = "Update done";
-        }
-        return redirect(this.getPath() + "/" + username);
-
-    }
-
-    /**
-     * @param oldPassword
-     * @param newPassword1
-     * @param newPassword2
-     * @return
-     */
-    private String checkPassword(String username, String oldPassword,
-            String newPassword1, String newPassword2) {
-        if (!newPassword1.equals(newPassword2)) {
-            return "Two new password typed are differents, please try again.";
-        }
-        try {
-            if (!getUserManager().checkUsernamePassword(username, oldPassword)) {
-                return "Old password typed incorrect, please try again";
-            }
-        } catch (Exception e) {
-            return "A trouble occured during the old password check, please try again. "
-                    + "If the trouble persists contact your admin sys.";
-        }
-        return null;
-    }
-
-    @POST
-    @Path("{username}/password/@put")
-    public Object doPostPassword() throws ClientException, Exception {
-        String userName = ctx.getPrincipal().getName();
-        return doGetUser(userName);
     }
 
     /************** Actions *******************/

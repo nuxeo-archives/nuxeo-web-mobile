@@ -52,14 +52,6 @@
             </li>
             <ul>
         </div>
-      <fieldset class="ui-grid-a">
-        <div class="ui-block-a">
-          <a href="?mode=edit" data-role="button" data-theme="c">${Context.getMessage('label.action.Edit')}</a>
-        </div>
-        <div class="ui-block-b">
-          <a href="?mode=password" data-role="button" data-theme="c">${Context.getMessage('label.action.Password')}</a>
-        </div>
-      </fieldset>
 
       </div>
     </div>
