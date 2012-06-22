@@ -21,7 +21,7 @@
           ${Context.getMessage('label.message.NoSavedSearch')}
         </p>
       <#else>
-        <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+        <ul class="ui-listview" data-role="listview">
           <#list mySearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
               <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@faceted">
@@ -48,7 +48,7 @@
           ${Context.getMessage('label.message.NoSharedSearch')}
         </p>
       <#else>
-        <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+        <ul class="ui-listview" data-role="listview">
           <#list sharedSearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
               <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@faceted">
