@@ -10,9 +10,8 @@
     <div data-role="content">
       TODO creation Mode
     </div>
-
-    <#import "../../footer.ftl" as footer/>
-    <@footer.basic false/>
+    <#import "/footer.ftl" as footer/>
+    <@footer.basic/>
 </div>
 
 </@block>

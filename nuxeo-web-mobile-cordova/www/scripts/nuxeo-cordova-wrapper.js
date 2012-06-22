@@ -7,6 +7,9 @@ var NXCordova = function() {
       basePath: function() {
         return cordovaBase;
       },
+      logout: function() {
+        alert('Logout ...')
+      },
       openFileChooser: function(callback) {
 
         /* WIP 

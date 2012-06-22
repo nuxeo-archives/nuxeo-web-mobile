@@ -27,8 +27,6 @@
 		5117D1E3157E07B0009979FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5117D1E1157E07B0009979FB /* Localizable.strings */; };
 		5117D1E7157E07B0009979FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5117D1E5157E07B0009979FB /* Localizable.strings */; };
 		5117D1EB157E07B0009979FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5117D1E9157E07B0009979FB /* Localizable.strings */; };
-		5117D1F5157E07B0009979FB /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5117D1F4157E07B0009979FB /* Default~iphone.png */; };
-		5117D1F7157E07B0009979FB /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 5117D1F6157E07B0009979FB /* Default@2x~iphone.png */; };
 		5117D1F9157E07B1009979FB /* Capture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5117D1F8157E07B0009979FB /* Capture.bundle */; };
 		5117D1FB157E07B1009979FB /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5117D1FA157E07B1009979FB /* Cordova.plist */; };
 		5117D1FF157E07B1009979FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5117D1FE157E07B1009979FB /* AppDelegate.m */; };
@@ -44,6 +42,8 @@
 		5117D229157E4589009979FB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5117D228157E4588009979FB /* icon.png */; };
 		5117D22B157E45F1009979FB /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5117D22A157E45F1009979FB /* Default-Landscape@2x~ipad.png */; };
 		5117D22D157E45FA009979FB /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5117D22C157E45FA009979FB /* Default-Portrait@2x~ipad.png */; };
+		512EDFCC1594A55300ED57DF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 512EDFCB1594A55300ED57DF /* Default.png */; };
+		512EDFCE1594A55A00ED57DF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 512EDFCD1594A55A00ED57DF /* Default@2x.png */; };
 		513D2784157E522F00DEE092 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 513D2783157E522F00DEE092 /* www */; };
 		518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657A8159322710066B9DF /* NXMFileBrowserCommand.m */; };
 		518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657AA159322710066B9DF /* NXMFileBrowserViewController.m */; };
@@ -77,8 +77,6 @@
 		5117D1E2157E07B0009979FB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5117D1E6157E07B0009979FB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5117D1EA157E07B0009979FB /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = Resources/se.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5117D1F4157E07B0009979FB /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default~iphone.png"; path = "Resources/splash/Default~iphone.png"; sourceTree = "<group>"; };
-		5117D1F6157E07B0009979FB /* Default@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x~iphone.png"; path = "Resources/splash/Default@2x~iphone.png"; sourceTree = "<group>"; };
 		5117D1F8157E07B0009979FB /* Capture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Capture.bundle; path = Resources/Capture.bundle; sourceTree = "<group>"; };
 		5117D1FA157E07B1009979FB /* Cordova.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Cordova.plist; sourceTree = "<group>"; };
 		5117D1FD157E07B1009979FB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
@@ -97,6 +95,8 @@
 		5117D228157E4588009979FB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		5117D22A157E45F1009979FB /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		5117D22C157E45FA009979FB /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		512EDFCB1594A55300ED57DF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		512EDFCD1594A55A00ED57DF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		513D2783157E522F00DEE092 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
 		518657A7159322710066B9DF /* NXMFileBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserCommand.h; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.h; sourceTree = "<group>"; };
 		518657A8159322710066B9DF /* NXMFileBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NXMFileBrowserCommand.m; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.m; sourceTree = "<group>"; };
@@ -145,6 +145,8 @@
 		5117D1A4157E07AF009979FB = {
 			isa = PBXGroup;
 			children = (
+				512EDFCD1594A55A00ED57DF /* Default@2x.png */,
+				512EDFCB1594A55300ED57DF /* Default.png */,
 				513D2783157E522F00DEE092 /* www */,
 				5117D1D0157E07B0009979FB /* nuxeo-web-mobile */,
 				5117D1B5157E07B0009979FB /* Frameworks */,
@@ -271,8 +273,6 @@
 				5117D211157E4393009979FB /* Default-Portrait~ipad.png */,
 				5117D212157E4393009979FB /* Default.png */,
 				5117D213157E4393009979FB /* Default@2x.png */,
-				5117D1F4157E07B0009979FB /* Default~iphone.png */,
-				5117D1F6157E07B0009979FB /* Default@2x~iphone.png */,
 			);
 			name = splash;
 			sourceTree = "<group>";
@@ -383,8 +383,6 @@
 				5117D1E3157E07B0009979FB /* Localizable.strings in Resources */,
 				5117D1E7157E07B0009979FB /* Localizable.strings in Resources */,
 				5117D1EB157E07B0009979FB /* Localizable.strings in Resources */,
-				5117D1F5157E07B0009979FB /* Default~iphone.png in Resources */,
-				5117D1F7157E07B0009979FB /* Default@2x~iphone.png in Resources */,
 				5117D1F9157E07B1009979FB /* Capture.bundle in Resources */,
 				5117D1FB157E07B1009979FB /* Cordova.plist in Resources */,
 				5117D204157E07B1009979FB /* MainViewController.xib in Resources */,
@@ -401,6 +399,8 @@
 				513D2784157E522F00DEE092 /* www in Resources */,
 				5192A5CB1588D5A100D7D6AD /* ChildBrowserViewController.xib in Resources */,
 				518657AE159322710066B9DF /* NXMFileBrowserViewController.xib in Resources */,
+				512EDFCC1594A55300ED57DF /* Default.png in Resources */,
+				512EDFCE1594A55A00ED57DF /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

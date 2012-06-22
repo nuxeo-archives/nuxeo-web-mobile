@@ -53,9 +53,7 @@
         </#if>
         </ul>
     </div>
-    
-
-    <#import "../../footer.ftl" as footer/>
+    <#import "/footer.ftl" as footer/>
     <@footer.basic />
 </div>
 

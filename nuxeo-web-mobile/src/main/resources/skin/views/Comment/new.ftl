@@ -19,6 +19,8 @@
         </fieldset>
       </form>
     </div>
+    <#import "/footer.ftl" as footer/>
+    <@footer.basic />
   </div>
 </@block>
 </@extends>

@@ -42,6 +42,9 @@ import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
+import org.nuxeo.ecm.rating.api.LikeService;
+import org.nuxeo.ecm.rating.api.LikeStatus;
+import org.nuxeo.ecm.rating.api.RatingService;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
@@ -106,6 +109,20 @@ public class MobileDocument extends DocumentObject {
         return Response.ok().build();
     }
 
+    @GET
+    @Path("like")
+    public Object doLike() {
+        LikeService ls = Framework.getLocalService(LikeService.class);
+        String username = ctx.getCoreSession().getPrincipal().getName();
+        if (getHasLiked()) {
+            ls.cancel(username, doc);
+        } else {
+            ls.like(username, doc);
+        }
+        
+        return Response.ok().build();
+    }
+    
     @Override
     public Object doGet() {
         Map<String, Object> args = new HashMap<String, Object>();
@@ -124,12 +141,18 @@ public class MobileDocument extends DocumentObject {
                     ctx.getRoot().getPath(), doc.getId(), mode);
             args.put("mobileURL", mobileURL);
         }
+        args.put("hasLiked", getHasLiked());
 
         // Add the JSON DForm export
         JSonExportAdapter json = (JSonExportAdapter) ctx.newObject("JSONExport");
         args.put("doc", json.doGet(request.getRequestURI(), "post"));
 
         return getView(mode).args(args);
+    }
+
+    protected boolean getHasLiked() {
+        LikeService rs = Framework.getLocalService(LikeService.class);
+        return rs.hasUserLiked(ctx.getCoreSession().getPrincipal().getName(), doc);
     }
 
     public boolean hasPreview() throws PropertyException, ClientException {

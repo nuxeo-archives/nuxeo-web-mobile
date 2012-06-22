@@ -14,13 +14,10 @@
       <#assign messageEmptyDom = Context.getMessage("label.message.NoDocumentInDomain")/>
       <@docListing domain "${messageEmptyDom}"/>
 
-      <h3>${Context.getMessage('label.root.title.UserWorkspace')}</h3>
-      <#assign messageEmptyUW = Context.getMessage("label.message.NoDocumentInWorkspace")/>
-      <@docListing userwokspace "${messageEmptyUW}"/>
-
     </div>
 
-    <@footer.basic false/>
+    <#import "/footer.ftl" as footer/>
+    <@footer.basic />
   </div>
 
 </@block>

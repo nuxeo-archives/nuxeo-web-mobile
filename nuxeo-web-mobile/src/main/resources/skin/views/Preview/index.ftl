@@ -14,7 +14,8 @@
     <div data-role="content">
        ${Adapter.previewContent}
     </div>
-
+    <#import "/footer.ftl" as footer/>
+    <@footer.basic />
 </div>
 
 </@block>

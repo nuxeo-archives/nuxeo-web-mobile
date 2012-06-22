@@ -3,7 +3,7 @@
 <#macro "emailBody" document>
   Hi,%0D
   %0D
-  ${Context.principal.name} found a funny document named '${document.title}' to share it with you. As this document stored
+  ${Context.principal.name} found a document named '${document.title}' to share it with you. As this document stored
   in your Nuxeo, it can't be a spam. So click quickly on this following link and enjoy.%0D
   %0D
   ${This.getJSFURLPath(document)}%0D
@@ -14,9 +14,11 @@
 
 <@extends src="base.ftl">
 <@block name="content">
-<div data-role="page" data-add-back-btn="true">
+
+<div data-role="page">
 
     <div data-role="header">
+        <a href="#" data-rel="back" data-icon="arrow-l">Back</a>
         <h1>${Context.getMessage('label.header.title.View')}</h1>
     </div>
 
@@ -60,7 +62,15 @@
             </#if>
             <li><a href="${Root.path}/doc/${doc.id}/@comment"><img alt="${Context.getMessage('label.header.title.Comments')}" src="${skinPath}/icons/comments.png" /></a></li>
             <li><a href="${Root.path}/doc/${doc.id}/@annotations"><img alt="${Context.getMessage('label.header.title.Annotations')}" src="${skinPath}/icons/annotations.png" /></a></li>
+            <!-- Distabled yet
             <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="${Context.getMessage('label.header.title.Relations')}" src="${skinPath}/icons/relations.png" /></a></li>
+            -->
+            <li>
+              <a href="#" id="like-button">
+                <img src="${skinPath}/icons/like.png" alt="Like" <#if !hasLiked>style="display: none;"</#if>/>
+                <img src="${skinPath}/icons/liked.png" alt="Unlike" <#if hasLiked>style="display: none;"</#if>/>
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -101,10 +111,25 @@
         
       </div>
     </div>
-
-    <#import "../../footer.ftl" as footer/>
-    <@footer.basic false/>
+    
+    <#import "/footer.ftl" as footer/>
+    <@footer.basic />
   </div>
+
+
+  <script type="text/javascript">
+  $(function() {
+    $('#like-button').click(function() {
+        $.ajax({
+          url: '${Root.path}/doc/${This.document.id}/like'
+        }).done(function() {
+            $("#like-button img").toggle();
+        }).fail(function() {
+          alert('Something went wrong while liking your document.')
+        });
+    });
+  });
+  </script>
 
 </@block>
 </@extends>

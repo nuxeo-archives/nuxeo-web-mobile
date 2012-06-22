@@ -42,7 +42,6 @@
     <@block name="stylesheets" />
     <@block name="header_scripts" />
   </head>
-
 <body>
   <@block name="content">
   The Content
