@@ -62,8 +62,8 @@
 
 /* Searches & Browse */
 .search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
-.repository h2 { margin: -15px -15px 0; padding: 15px }
-.repository ul.ui-listview { margin: 0 -15px 15px }
+.repository h2, .homeNavigation h3 { margin: -15px -15px 0; padding: 15px }
+.repository ul.ui-listview, .homeNavigation ul.ui-listview { margin: 0 -15px 15px }
 
 .smallButton .ui-btn-inner { padding: .2em .4em }
 
