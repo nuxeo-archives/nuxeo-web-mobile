@@ -136,8 +136,17 @@ function navigateToServerList(isBackNavigation) {
       }
     }
     $('#servers_list').append(html);
+    // Not sure about this timeout ...
+    setTimeout(function() {
+      $('#servers_list').listview('refresh')
+    }, 50)
+    
 
     changePage('page_servers_list', isBackNavigation);
+    if (len == 0) {
+      // If there is no servers added ... Go to the serverCreationPage
+      changePage('page_server_creation');
+    }
   });
 }
 
@@ -196,7 +205,7 @@ function Server(_values) {
     db.transaction(function(tx) {
       var query = 'INSERT INTO SERVER (name, servername, contextpath, login, password) VALUES (?, ?, ?, ?, ?)'
       var data = [server.get('name'), server.get('servername'), server.get('contextpath'), server.get('login'), server.get('password')];
-      alert("data: " + data);
+      //alert("data: " + data);
 
       tx.executeSql(query, data, function() {
         callback();

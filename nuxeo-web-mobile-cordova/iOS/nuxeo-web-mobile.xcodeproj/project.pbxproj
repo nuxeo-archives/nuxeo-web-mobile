@@ -54,7 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5117D1B2157E07B0009979FB /* nuxeo-web-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nuxeo-web-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5117D1B2157E07B0009979FB /* Nuxeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nuxeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5117D1B6157E07B0009979FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5117D1B8157E07B0009979FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5117D1BA157E07B0009979FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -155,7 +155,7 @@
 		5117D1B3157E07B0009979FB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5117D1B2157E07B0009979FB /* nuxeo-web-mobile.app */,
+				5117D1B2157E07B0009979FB /* Nuxeo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -342,7 +342,7 @@
 			);
 			name = "nuxeo-web-mobile";
 			productName = "nuxeo-web-mobile";
-			productReference = 5117D1B2157E07B0009979FB /* nuxeo-web-mobile.app */;
+			productReference = 5117D1B2157E07B0009979FB /* Nuxeo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -563,7 +563,7 @@
 					"-weak_library",
 					/usr/lib/libSystem.B.dylib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Nuxeo;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -594,7 +594,7 @@
 					"-weak_library",
 					/usr/lib/libSystem.B.dylib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Nuxeo;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

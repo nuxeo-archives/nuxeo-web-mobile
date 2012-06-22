@@ -16,9 +16,7 @@
  */
 package org.nuxeo.ecm.mobile.webengine;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -30,10 +28,8 @@ import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
-import org.nuxeo.ecm.mobile.webengine.user.UserHelper;
 import org.nuxeo.ecm.platform.usermanager.UserManager;
 import org.nuxeo.ecm.user.center.profile.UserProfileService;
-import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.Template;
 import org.nuxeo.ecm.webengine.model.TemplateNotFoundException;
 import org.nuxeo.ecm.webengine.model.View;
@@ -91,6 +87,7 @@ public class Profile extends DefaultObject {
     public String getAvatarURI(String username) {
         // TODO improve to not fetch several times the document and avatar
         String contextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
+        
         DocumentModel userProfile = getUserProfile(username);
         Blob avatar;
         try {
@@ -113,15 +110,6 @@ public class Profile extends DefaultObject {
     }
 
     /************** OTHERS **********************/
-
-    private String getMode() {
-        HttpServletRequest request = ctx.getRequest();
-        String mode = request.getParameter("mode");
-        if (mode == null) {
-            mode = "view";
-        }
-        return mode;
-    }
 
     private DocumentModel getUserProfile(String username) {
         try {

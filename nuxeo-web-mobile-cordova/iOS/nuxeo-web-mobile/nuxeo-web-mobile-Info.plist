@@ -6,6 +6,25 @@
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>icon.png</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Nuxeo</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.data</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -31,7 +50,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.nuxeo.nuxeo_web_mobile</string>
+	<string>org.nuxeo.nuxeo.web.mobile</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -61,24 +80,5 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleDocumentTypes</key>
-    <array>
-	<dict>
-		<key>CFBundleTypeName</key>
-		<string>Nuxeo</string>
-		<key>CFBundleTypeIconFiles</key>
-		<array>
-			<string>icon.png</string>
-		</array>
-		<key>LSItemContentTypes</key>
-		<array>
-			<string>public.data</string>
-		</array>
-		<key>LSHandlerRank</key>
-		<string>Owner</string>
-        <key>CFBundleTypeRole</key>
-        <string>Viewer</string>
-	</dict>
-        </array>
 </dict>
 </plist>

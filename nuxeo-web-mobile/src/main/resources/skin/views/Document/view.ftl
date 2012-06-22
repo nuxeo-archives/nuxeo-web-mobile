@@ -77,6 +77,7 @@
             </a>
           </li>
           </#if>
+          <!-- Disabled ...
           <li class="nxDocumentItem">
             <a href="#" 
                onclick="var jqxhr = $.get('${Root.path}/doc/${doc.id}/mailIt', function() { displayNotification('${Context.getMessage('label.message.RequestSent')}'); })
@@ -84,7 +85,7 @@
                 .error(function() { displayNotification('${Context.getMessage('label.message.ProblemOccured')}'); })">
               ${Context.getMessage('label.action.MailMe')}
             </a>
-          </li>
+          </li>-->
           <!-- Disable until we found a navigation management solution -->
           <!--li class="nxDocumentItem">
             <a href="${Root.path}/doc/${doc.id}?mode=edit">
