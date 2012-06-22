@@ -10,11 +10,11 @@
 
     <div data-role="content" class="repository">
 
-      <h3>${Context.getMessage('label.root.title.Domain')}</h3>
+      <h2>${Context.getMessage('label.root.title.Domain')}</h2>
       <#assign messageEmptyDom = Context.getMessage("label.message.NoDocumentInDomain")/>
       <@docListing domain "${messageEmptyDom}"/>
 
-      <h3>${Context.getMessage('label.root.title.UserWorkspace')}</h3>
+      <h2>${Context.getMessage('label.root.title.UserWorkspace')}</h2>
       <#assign messageEmptyUW = Context.getMessage("label.message.NoDocumentInWorkspace")/>
       <@docListing userwokspace "${messageEmptyUW}"/>
 
@@ -32,7 +32,7 @@
          ${emptyMessage}
         </p>
       <#else>
-        <ul  class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+        <ul class="ui-listview" data-role="listview">
           <#list docs as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
               <#if doc.isFolder>
@@ -42,7 +42,7 @@
               </#if> 
               <a class="ui-link-inherit" data-add-back-btn="true" href="${Root.path}/doc/${doc.id}${targetView}">
                 <#if doc.common.icon != null && doc.common.icon != "">
-                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}${doc.common.icon}" />
+                  <img class="ui-li-icon ui-li-thumb" src="${contextPath}${doc.common.icon}" />
                 <#else>
                   <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
                 </#if>

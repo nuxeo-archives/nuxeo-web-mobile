@@ -1,7 +1,7 @@
 /* -- Nuxeo Web Mobile default CSS -- */
 
 /* Login */
-.login { background: #d3e5fd url('../img/nuxeo_login.jpg') no-repeat bottom left }
+.login { background: #001656 url('../img/nuxeo_login.jpg') no-repeat bottom left }
 
   .login .ui-field-contain { border: none; margin: 0; padding: .2em .4em }
   .login .logo { background-color: #000; padding: .6em 0 .5em; text-align: center }
@@ -32,7 +32,7 @@
 
 /* Comments & Annotations */
 .comments {}
-    .comments ul, .annotations ul { list-style: none;   padding: 0 }
+    .comments ul, .annotations ul { list-style: none; padding: 0 }
     .comments li, .annotations li { box-shadow: 0 5px 8px #6e6e6e; padding: .4em .5em; margin: 0 0 .3em }
     .comments .details, .comments .actions,
         .annotations .details, .annotations .actions { font-size: 80% }
@@ -62,13 +62,14 @@
 
 /* Searches & Browse */
 .search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
-.repository h3 { margin: 1.6em 0 0 }
+.repository h2 { margin: -15px -15px 0; padding: 15px }
+.repository ul.ui-listview { margin: 0 -15px 15px }
 
 .smallButton .ui-btn-inner { padding: .2em .4em }
 
 /* == Messages == */
 /* Dialog */
-.ui-overlay-a, .ui-mobile [data-role="dialog"] { background: transparent !important}
+.ui-overlay-a, .ui-mobile [data-role="dialog"] { background: transparent !important }
 .ui-dialog .ui-header { margin: 0; border-radius: 0; max-width: 100%; width: auto }
 .ui-dialog .ui-content { border-radius: 0; margin: 0; max-width: 100%; width: auto }
 .ui-dialog .ui-overlay-shadow { box-shadow: 0 10px 0 #fff }
