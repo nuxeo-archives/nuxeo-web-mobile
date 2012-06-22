@@ -7,6 +7,7 @@
       <h1>${Context.getMessage('label.header.title.Home')}</h1>
     </div>
     
+    <div class="ui-content" data-role="content">
     <h3>${Context.getMessage('label.root.title.latestRates')}</h3>
     <#assign messageEmptyRates = Context.getMessage("label.message.NoDocumentRated")/>
     <@docListing latestLiked "${messageEmptyRates}"/>
@@ -14,7 +15,7 @@
     <h3>${Context.getMessage('label.root.title.UserWorkspace')}</h3>
     <#assign messageEmptyUW = Context.getMessage("label.message.NoDocumentInWorkspace")/>
     <@docListing userWorkspace "${messageEmptyUW}"/>
-    
+    </div>
     
     <#macro "docListing" docs emptyMessage>
       <#if docs?size == 0>

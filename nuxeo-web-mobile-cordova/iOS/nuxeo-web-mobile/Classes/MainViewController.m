@@ -154,6 +154,13 @@
 
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    // Do not handle nxbigfile in Cordova
+    NSURL *url = request.URL;
+    if ([url.absoluteString rangeOfString:@"nxbigfile"].location != NSNotFound) {
+        [[UIApplication sharedApplication] openURL:url];
+        return NO;
+    }
+    
     //NSLog(@"%@", NSStringFromSelector(@selector(webView:shouldStartLoadWithRequest:navigationType:)));
 //    NSLog(@"Try to open: %@", request.URL.absoluteURL);
 	return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];

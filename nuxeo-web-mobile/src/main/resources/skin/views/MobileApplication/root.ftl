@@ -8,7 +8,7 @@
         <h1>${Context.getMessage('label.home.menu.Browse')}</h1>
     </div>
 
-    <div data-role="content" class="repository">
+    <div data-role="content" class="repository ui-content">
 
       <h2>${Context.getMessage('label.root.title.Domain')}</h2>
       <#assign messageEmptyDom = Context.getMessage("label.message.NoDocumentInDomain")/>
