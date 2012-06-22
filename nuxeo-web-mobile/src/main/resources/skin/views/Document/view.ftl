@@ -67,8 +67,8 @@
             -->
             <li>
               <a href="#" id="like-button">
-                <img src="${skinPath}/icons/like.png" alt="Like" <#if !hasLiked>style="display: none;"</#if>/>
-                <img src="${skinPath}/icons/liked.png" alt="Unlike" <#if hasLiked>style="display: none;"</#if>/>
+                <img src="${skinPath}/icons/liked.png" alt="Like" <#if !hasLiked>style="display: none;"</#if>/>
+                <img src="${skinPath}/icons/like.png" alt="Unlike" <#if hasLiked>style="display: none;"</#if>/>
               </a>
             </li>
           </ul>
@@ -82,7 +82,7 @@
           </li>
           <#if doc.schemas?seq_contains("file")>
           <li class="nxDocumentItem">
-            <a data-ajax="false" href="${This.downloadURL}">
+            <a red="external" target="_blank" data-ajax="false" href="${This.downloadURL}">
               ${Context.getMessage('label.action.Download')}
             </a>
           </li>
@@ -124,6 +124,7 @@
           url: '${Root.path}/doc/${This.document.id}/like'
         }).done(function() {
             $("#like-button img").toggle();
+            $("#like-button").removeClass("ui-btn-active");
         }).fail(function() {
           alert('Something went wrong while liking your document.')
         });

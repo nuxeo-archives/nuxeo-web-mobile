@@ -26,6 +26,7 @@ var NXCordova = function() {
         }*/
       },
       uploadFile: function(filePath) {
+        console.log('start uploading file')
         if (!document.URL.match("@folderish")) {
           alert('You must upload a file into a Folderish document. Operation aborded.')
           return;
@@ -45,7 +46,11 @@ var NXCordova = function() {
           } else {
             window.location.reload()
           }
-        }, nil, options);
+        }, function(error) {
+          alert("An error has occurred: Code = " + error.code);
+          console.log("upload error source " + error.source);
+          console.log("upload error target " + error.target);
+        }, options);
       },
       handleOpenURL: function(filePath) {
         // XXX For now ... Directly upload file
@@ -54,7 +59,7 @@ var NXCordova = function() {
           console.log('Settimeout called.' + filePath)
           NXCordova.uploadFile(filePath);
           console.log('uploadFile should be called.')
-        }, 20);
+        }, 200);
       }
     };
   }();

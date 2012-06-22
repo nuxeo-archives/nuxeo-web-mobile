@@ -14,11 +14,11 @@
           <li>
           <#if Context.getProperty('Cordova')??>
             <a data-ajax="false" href="javascript:NXCordova.logout();" class="menuItem">
-              <img src="${skinPath}/icons/deconnexion.png">
+              <img src="${skinPath}/icons/footer_logout.png">
             </a>
           <#else>
             <a data-ajax="false" href="${Root.path}/auth/logout" class="menuItem">
-              <img src="${skinPath}/icons/deconnexion.png">
+              <img src="${skinPath}/icons/footer_logout.png">
             </a>
           </#if>
           </li>
