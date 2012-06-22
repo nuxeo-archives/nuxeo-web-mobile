@@ -23,7 +23,7 @@
               <a class="ui-link-inherit" href="${Root.path}/doc/${child.id}">
             </#if>
             <#if child.common.icon != null && child.common.icon != "">
-                <img class="ui-li-icon ui-li-thumb" src="${contextPath}${child.common.icon}" />
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}${child.common.icon}" />
             <#else>
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
             </#if>

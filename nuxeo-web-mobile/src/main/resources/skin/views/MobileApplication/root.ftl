@@ -39,7 +39,7 @@
               </#if> 
               <a class="ui-link-inherit" data-add-back-btn="true" href="${Root.path}/doc/${doc.id}${targetView}">
                 <#if doc.common.icon != null && doc.common.icon != "">
-                  <img class="ui-li-icon ui-li-thumb" src="${contextPath}${doc.common.icon}" />
+                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}${doc.common.icon}" />
                 <#else>
                   <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
                 </#if>
