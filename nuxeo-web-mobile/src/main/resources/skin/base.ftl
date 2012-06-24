@@ -22,11 +22,12 @@
 
     <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css" />
     <link rel="stylesheet" href="${skinPath}/css/nuxeo-web-mobile.css" />
-    <script src="${skinPath}/script/jquery-1.7.js"></script>
-    <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>
+    <script src="http://localhost:8081/target/target-script-min.js#anonymous"></script>
     <#if Context.getProperty('Cordova')??>
     <script src="${skinPath}/script/cordova-1.7.0.js"></script>
     </#if>
+    <script src="${skinPath}/script/jquery-1.7.js"></script>
+    <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>
 
     <!-- rewrite the URL after a redirect from JSF to have mobile URL, 
          initial request accessible in the history -->

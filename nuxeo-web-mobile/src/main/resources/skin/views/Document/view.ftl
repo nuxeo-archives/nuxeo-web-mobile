@@ -16,7 +16,21 @@
 <@block name="content">
 
 <div data-role="page">
-
+    <script type="text/javascript">
+    $(function() {
+      $('#like-button').click(function() {
+          $.ajax({
+            url: '${Root.path}/doc/${This.document.id}/like'
+          }).done(function() {
+              $("#like-button img").toggle();
+              $("#like-button").removeClass("ui-btn-active");
+          }).fail(function() {
+            alert('Something went wrong while liking your document.')
+          });
+      });
+    });
+    </script>
+  
     <div data-role="header">
         <a href="#" data-rel="back" data-icon="arrow-l">Back</a>
         <h1>${Context.getMessage('label.header.title.View')}</h1>
@@ -115,22 +129,6 @@
     <#import "/footer.ftl" as footer/>
     <@footer.basic />
   </div>
-
-
-  <script type="text/javascript">
-  $(function() {
-    $('#like-button').click(function() {
-        $.ajax({
-          url: '${Root.path}/doc/${This.document.id}/like'
-        }).done(function() {
-            $("#like-button img").toggle();
-            $("#like-button").removeClass("ui-btn-active");
-        }).fail(function() {
-          alert('Something went wrong while liking your document.')
-        });
-    });
-  });
-  </script>
 
 </@block>
 </@extends>

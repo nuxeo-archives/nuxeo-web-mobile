@@ -1,7 +1,18 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-  <div data-role="page" class="homeNavigation">
+  <div data-role="page" class="homeNavigation" data-cache="never">
+    <script type="text/javascript">
+    $(function() {
+      $('div').bind('pagehide', function(event) {
+        var page = jQuery(event.target);
+
+        if(page.data('cache') == 'never') {
+          page.remove();
+        };
+      });
+    });
+    </script>
 
     <div data-role="header">
       <h1>${Context.getMessage('label.header.title.Home')}</h1>
