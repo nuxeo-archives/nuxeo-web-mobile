@@ -45,6 +45,7 @@
 		512EDFCC1594A55300ED57DF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 512EDFCB1594A55300ED57DF /* Default.png */; };
 		512EDFCE1594A55A00ED57DF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 512EDFCD1594A55A00ED57DF /* Default@2x.png */; };
 		513D2784157E522F00DEE092 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 513D2783157E522F00DEE092 /* www */; };
+		517A6DA8159B5DFD00304E79 /* NXMOpenCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */; };
 		518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657A8159322710066B9DF /* NXMFileBrowserCommand.m */; };
 		518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657AA159322710066B9DF /* NXMFileBrowserViewController.m */; };
 		518657AE159322710066B9DF /* NXMFileBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518657AB159322710066B9DF /* NXMFileBrowserViewController.xib */; };
@@ -98,6 +99,8 @@
 		512EDFCB1594A55300ED57DF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		512EDFCD1594A55A00ED57DF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		513D2783157E522F00DEE092 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
+		517A6DA6159B5DFD00304E79 /* NXMOpenCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NXMOpenCommand.h; sourceTree = "<group>"; };
+		517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NXMOpenCommand.m; sourceTree = "<group>"; };
 		518657A7159322710066B9DF /* NXMFileBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserCommand.h; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.h; sourceTree = "<group>"; };
 		518657A8159322710066B9DF /* NXMFileBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NXMFileBrowserCommand.m; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.m; sourceTree = "<group>"; };
 		518657A9159322710066B9DF /* NXMFileBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserViewController.h; path = Plugins/NxFileBrowser/NXMFileBrowserViewController.h; sourceTree = "<group>"; };
@@ -291,11 +294,21 @@
 		5117D205157E07B1009979FB /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				517A6DA1159B5D7200304E79 /* NXMOpen */,
 				518657B01593227C0066B9DF /* NXMFileBrowser */,
 				5192A5CD1588D5C900D7D6AD /* ChildBrowser */,
 				5117D206157E07B1009979FB /* README */,
 			);
 			name = Plugins;
+			sourceTree = "<group>";
+		};
+		517A6DA1159B5D7200304E79 /* NXMOpen */ = {
+			isa = PBXGroup;
+			children = (
+				517A6DA6159B5DFD00304E79 /* NXMOpenCommand.h */,
+				517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */,
+			);
+			name = NXMOpen;
 			sourceTree = "<group>";
 		};
 		518657B01593227C0066B9DF /* NXMFileBrowser */ = {
@@ -434,6 +447,7 @@
 				5192A5CA1588D5A100D7D6AD /* ChildBrowserViewController.m in Sources */,
 				518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */,
 				518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */,
+				517A6DA8159B5DFD00304E79 /* NXMOpenCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

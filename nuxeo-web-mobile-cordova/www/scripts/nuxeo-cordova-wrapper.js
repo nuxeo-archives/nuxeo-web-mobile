@@ -3,12 +3,20 @@ var NXCordova = function() {
       alert('variable cordovaBase not existing');
     }
 
+    var Nx = {
+      openURL: "NxOpenCommand.openURL"
+    }
+    function callCordova(command, param) {
+      var cordovaRef = window.PhoneGap || window.Cordova || window.cordova;
+      cordovaRef.exec(command, param);
+    }
+
     return {
       basePath: function() {
         return cordovaBase;
       },
       logout: function() {
-        alert('Logout ...')
+        callCordova(Nx.openURL, cordovaBase + "index.html#page_servers_list");
       },
       openFileChooser: function(callback) {
 
