@@ -14,31 +14,19 @@
  * Contributors:
  *     bjalon
  */
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import org.nuxeo.ecm.automation.AutomationService;
 import org.nuxeo.ecm.automation.OperationContext;
 import org.nuxeo.ecm.core.api.Blob;
-import org.nuxeo.ecm.core.api.ClientException;
-import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.DocumentModelList;
-import org.nuxeo.ecm.core.api.Filter;
-import org.nuxeo.ecm.core.api.impl.CompoundFilter;
-import org.nuxeo.ecm.core.api.impl.FacetFilter;
-import org.nuxeo.ecm.core.api.impl.LifeCycleFilter;
-import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.forms.FormData;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
@@ -47,12 +35,7 @@ import org.nuxeo.runtime.api.Framework;
  * 
  */
 @WebAdapter(name = "folderish", type = "Folderish", targetType = "MobileDocument")
-public class FolderishAdapter extends DefaultAdapter {
-
-    public static final Filter ONLY_VISIBLE_CHILDREN = new CompoundFilter(
-            new FacetFilter(null,
-                    Collections.singletonList("HiddenInNavigation")),
-            new LifeCycleFilter(null, Collections.singletonList("deleted")));
+public class FolderishAdapter extends DefaultMobileAdapter {
 
     @GET
     public Object doGet() {
@@ -74,25 +57,9 @@ public class FolderishAdapter extends DefaultAdapter {
         OperationContext subctx = new OperationContext(
                 ctx.getCoreSession(), null);
         subctx.setInput(blob);
-        subctx.put("currentDocument", getCurrentDocument().getPathAsString());
+        subctx.put("currentDocument", getDocumentModel().getPathAsString());
         
         as.run(subctx, "FileManager.Import", params);
         return Response.ok().build();
     }
-    
-    public DocumentModel getCurrentDocument() {
-        Object targetObject = ctx.getTargetObject();
-        if (!(targetObject instanceof MobileDocument)) {
-            throw new WebException("Target Object must be MobileDocument");
-        }
-        MobileDocument doc = (MobileDocument) targetObject;
-        return doc.getDocument();
-    }
-    
-    public DocumentModelList getChildren() throws ClientException {
-        CoreSession session = ctx.getCoreSession();
-        return session.getChildren(getCurrentDocument().getRef(), null,
-                ONLY_VISIBLE_CHILDREN, null);
-    }
-
 }

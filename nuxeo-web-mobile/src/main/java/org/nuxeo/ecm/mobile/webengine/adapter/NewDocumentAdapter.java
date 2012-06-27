@@ -14,7 +14,7 @@
  * Contributors:
  *     bjalon
  */
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,7 +27,6 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
@@ -35,7 +34,7 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
  * 
  */
 @WebAdapter(name="newDocument", type="NewDocument", targetType="MobileDocument")
-public class NewDocumentAdapter extends DefaultAdapter {
+public class NewDocumentAdapter extends DefaultMobileAdapter {
     
     private static final Log log = LogFactory.getLog(NewDocumentAdapter.class);
     

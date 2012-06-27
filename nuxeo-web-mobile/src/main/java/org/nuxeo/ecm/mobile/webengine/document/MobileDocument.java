@@ -37,6 +37,7 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.rest.DocumentObject;
+import org.nuxeo.ecm.mobile.webengine.adapter.JSonExportAdapter;
 import org.nuxeo.ecm.platform.ec.notification.service.NotificationServiceHelper;
 import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
@@ -119,10 +120,10 @@ public class MobileDocument extends DocumentObject {
         } else {
             ls.like(username, doc);
         }
-        
+
         return Response.ok().build();
     }
-    
+
     @Override
     public Object doGet() {
         Map<String, Object> args = new HashMap<String, Object>();
@@ -152,7 +153,8 @@ public class MobileDocument extends DocumentObject {
 
     protected boolean getHasLiked() {
         LikeService rs = Framework.getLocalService(LikeService.class);
-        return rs.hasUserLiked(ctx.getCoreSession().getPrincipal().getName(), doc);
+        return rs.hasUserLiked(ctx.getCoreSession().getPrincipal().getName(),
+                doc);
     }
 
     public boolean hasPreview() throws PropertyException, ClientException {
@@ -180,15 +182,13 @@ public class MobileDocument extends DocumentObject {
                 NotificationServiceHelper.getNotificationService().getServerUrlPrefix());
     }
 
-    public String getDownloadURL()
-            throws Exception {
+    public String getDownloadURL() throws Exception {
         DocumentModel docModel = getDocument();
 
         return getDownloadURL(docModel);
     }
 
-    public String getDownloadURL(DocumentModel docModel)
-            throws Exception {
+    public String getDownloadURL(DocumentModel docModel) throws Exception {
         String filename = (String) doc.getPropertyValue("file:filename");
 
         String downloadURL = getNuxeoContextPath() + "/";
@@ -205,8 +205,7 @@ public class MobileDocument extends DocumentObject {
         return getJSFURLPath(getDocument());
     }
 
-    // *************** TODO REMOVE WHEN PREVIEW WITH NAVIGATION RESOLVED
-    // ************
+    // **** TODO REMOVE WHEN PREVIEW WITH NAVIGATION RESOLVED ****
     private String nuxeoContextPath;
 
     private DocumentViewCodecManager codecManager;

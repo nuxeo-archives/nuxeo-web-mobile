@@ -14,7 +14,7 @@
  * Contributors:
  *     bjalon
  */
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -27,9 +27,7 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
-import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
@@ -38,9 +36,7 @@ import org.nuxeo.runtime.api.Framework;
  * 
  */
 @WebAdapter(name = "faceted", type = "Faceted", targetType = "MobileDocument")
-public class FacetedAdapter extends DefaultAdapter {
-
-    private MobileDocument doc;
+public class FacetedAdapter extends DefaultMobileAdapter {
 
     private PageProviderService service;
 
@@ -82,23 +78,6 @@ public class FacetedAdapter extends DefaultAdapter {
         }
         pageProvider.setCurrentPage(pageIndex);
         return pageProvider;
-    }
-
-    private DocumentModel getDocumentModel() {
-        if (doc == null) {
-            doc = getMobileDocument();
-        }
-        return doc.getDocument();
-    }
-
-    private MobileDocument getMobileDocument() {
-        Object targetObject = ctx.getTargetObject();
-        if (!(targetObject instanceof MobileDocument)) {
-            throw new WebException("Target Object must be MobileDocument");
-        }
-
-        MobileDocument mobileDoc = (MobileDocument) targetObject;
-        return mobileDoc;
     }
 
     public PageProviderService getPageProviderService() throws Exception {

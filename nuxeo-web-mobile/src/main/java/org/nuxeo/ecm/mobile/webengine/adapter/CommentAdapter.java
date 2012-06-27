@@ -14,7 +14,7 @@
  * Contributors:
  *     bjalon
  */
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import java.util.Calendar;
 import java.util.List;
@@ -31,9 +31,7 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.platform.comment.api.CommentableDocument;
-import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
 /**
  * Provide view and action on document comments
@@ -43,9 +41,7 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
  * 
  */
 @WebAdapter(name = "comment", type = "Comment", targetType = "MobileDocument")
-public class CommentAdapter extends DefaultAdapter {
-
-    private MobileDocument doc;
+public class CommentAdapter extends DefaultMobileAdapter {
 
     private CommentableDocument commentableDocument;
 
@@ -127,23 +123,6 @@ public class CommentAdapter extends DefaultAdapter {
                     CommentableDocument.class);
         }
         return commentableDocument;
-    }
-
-    private DocumentModel getDocumentModel() {
-        if (doc == null) {
-            doc = getMobileDocument();
-        }
-        return doc.getDocument();
-    }
-
-    private MobileDocument getMobileDocument() {
-        Object targetObject = ctx.getTargetObject();
-        if (!(targetObject instanceof MobileDocument)) {
-            throw new WebException("Target Object must be MobileDocument");
-        }
-
-        MobileDocument mobileDoc = (MobileDocument) targetObject;
-        return mobileDoc;
     }
 
     public boolean hasAddingCommentRight() throws ClientException {

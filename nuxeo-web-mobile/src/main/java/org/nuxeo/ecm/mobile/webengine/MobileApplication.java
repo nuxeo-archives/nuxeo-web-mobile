@@ -18,7 +18,7 @@
 package org.nuxeo.ecm.mobile.webengine;
 
 import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
-import static org.nuxeo.ecm.mobile.webengine.document.FolderishAdapter.ONLY_VISIBLE_CHILDREN;
+import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_VISIBLE_CHILDREN;
 
 import java.io.Serializable;
 import java.util.HashMap;

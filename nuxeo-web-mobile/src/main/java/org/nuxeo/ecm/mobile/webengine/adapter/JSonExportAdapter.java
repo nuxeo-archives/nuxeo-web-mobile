@@ -14,7 +14,7 @@
  * Contributors:
  *     bjalon
  */
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -23,7 +23,6 @@ import javax.ws.rs.QueryParam;
 
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
 /**
  * Adapter that expose a document according the DForm Jquery Framework structure.
@@ -33,7 +32,7 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
  */
 @WebAdapter(name = "jsonExport", type = "JSONExport", targetType = "MobileDocument")
 @Produces("application/json;charset=UTF-8")
-public class JSonExportAdapter extends DefaultAdapter {
+public class JSonExportAdapter extends DefaultMobileAdapter {
 
     /**
      * Return the JSON export of document for dform layout manager 

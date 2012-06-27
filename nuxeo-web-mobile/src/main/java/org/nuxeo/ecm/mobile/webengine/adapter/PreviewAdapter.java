@@ -14,7 +14,7 @@
  * Contributors:
  *     bjalon
  */
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -31,10 +31,10 @@ import org.nuxeo.ecm.core.api.blobholder.SimpleBlobHolder;
 import org.nuxeo.ecm.core.api.impl.blob.StringBlob;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.convert.api.ConversionService;
+import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
@@ -43,7 +43,7 @@ import org.nuxeo.runtime.api.Framework;
  *
  */
 @WebAdapter(name="preview", type="Preview", targetType="MobileDocument")
-public class PreviewAdapter extends DefaultAdapter {
+public class PreviewAdapter extends DefaultMobileAdapter {
     private static final Log log = LogFactory.getLog(PreviewAdapter.class);
 
     private String nuxeoContextPath;
@@ -75,6 +75,7 @@ public class PreviewAdapter extends DefaultAdapter {
         String mimetype = (String) document.getPropertyValue("note:mime_type");
         return convertToHtml(content, mimetype);
     }
+    
     private String convertToHtml(String text, String mimeType) {
         BlobHolder bh = new SimpleBlobHolder(new StringBlob(text, mimeType,
                 "UTF-8"));
@@ -89,6 +90,7 @@ public class PreviewAdapter extends DefaultAdapter {
         }
         return text;
     }
+    
     private String getNuxeoContextPath() {
         if (nuxeoContextPath == null) {
             nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");

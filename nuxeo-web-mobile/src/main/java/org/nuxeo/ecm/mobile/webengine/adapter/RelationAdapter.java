@@ -14,7 +14,7 @@
  * Contributors:
  *     Thomas Roger <troger@nuxeo.com>
  */
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.directory.Session;
 import org.nuxeo.ecm.directory.api.DirectoryService;
+import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.relations.api.Node;
 import org.nuxeo.ecm.platform.relations.api.QNameResource;
 import org.nuxeo.ecm.platform.relations.api.RelationManager;
@@ -45,7 +46,6 @@ import org.nuxeo.ecm.platform.relations.web.StatementInfoImpl;
 import org.nuxeo.ecm.webengine.WebEngine;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
@@ -60,7 +60,7 @@ import org.nuxeo.runtime.api.Framework;
  * @since 5.5
  */
 @WebAdapter(name = "relation", type = "Relation", targetType = "MobileDocument")
-public class RelationAdapter extends DefaultAdapter {
+public class RelationAdapter extends DefaultMobileAdapter {
 
     public static final String PREDICATES_DIRECTORY = "predicates";
 
@@ -109,16 +109,6 @@ public class RelationAdapter extends DefaultAdapter {
             }
         }
         return false;
-    }
-
-    private DocumentModel getDocumentModel() {
-        Object targetObject = ctx.getTargetObject();
-        if (!(targetObject instanceof MobileDocument)) {
-            throw new WebException("Target Object must be MobileDocument");
-        }
-
-        MobileDocument mobileDoc = (MobileDocument) targetObject;
-        return mobileDoc.getDocument();
     }
 
     private QNameResource getDocumentResource(DocumentModel document)

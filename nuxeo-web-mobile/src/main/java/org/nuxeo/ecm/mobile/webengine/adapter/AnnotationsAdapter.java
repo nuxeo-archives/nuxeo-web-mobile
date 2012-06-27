@@ -15,7 +15,7 @@
  *     Thomas Roger <troger@nuxeo.com>
  */
 
-package org.nuxeo.ecm.mobile.webengine.document;
+package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import java.net.URI;
 import java.util.List;
@@ -23,7 +23,6 @@ import java.util.List;
 import javax.ws.rs.GET;
 
 import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.platform.annotations.api.Annotation;
 import org.nuxeo.ecm.platform.annotations.api.AnnotationsService;
@@ -32,10 +31,8 @@ import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
 import org.nuxeo.ecm.webengine.WebEngine;
-import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
 import org.nuxeo.ecm.webengine.model.WebContext;
-import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
@@ -45,7 +42,7 @@ import org.nuxeo.runtime.api.Framework;
  * @since 5.5
  */
 @WebAdapter(name = "annotations", type = "Annotations", targetType = "MobileDocument")
-public class AnnotationsAdapter extends DefaultAdapter {
+public class AnnotationsAdapter extends DefaultMobileAdapter {
 
     public static String DOCUMENT_PATH_CODED = "docpath";
 
@@ -70,15 +67,4 @@ public class AnnotationsAdapter extends DefaultAdapter {
                 new URI(documentUrl), null,
                 (NuxeoPrincipal) session.getPrincipal());
     }
-
-    private DocumentModel getDocumentModel() {
-        Object targetObject = ctx.getTargetObject();
-        if (!(targetObject instanceof MobileDocument)) {
-            throw new WebException("Target Object must be MobileDocument");
-        }
-
-        MobileDocument mobileDoc = (MobileDocument) targetObject;
-        return mobileDoc.getDocument();
-    }
-
 }
