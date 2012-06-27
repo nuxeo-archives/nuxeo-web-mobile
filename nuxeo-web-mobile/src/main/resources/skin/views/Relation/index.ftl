@@ -36,7 +36,7 @@
 
               <#if node.documentModel>
                 <#if node.documentModel.common.icon != null && node.documentModel.common.icon != "">
-                  <img class="ui-li-icon ui-li-thumb" src="${skinPath}/${node.documentModel.common.icon}" />
+                  <img class="ui-li-icon ui-li-thumb" src="${basePath}/../${node.documentModel.common.icon}" />
                 </#if>
               </#if>
               <#if node.resource && !node.QNameResource>

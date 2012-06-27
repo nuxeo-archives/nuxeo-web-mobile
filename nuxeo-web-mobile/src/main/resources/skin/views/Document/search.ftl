@@ -18,7 +18,7 @@
           <li>
             <a href="${Root.path}/doc/${doc.id}">
               <#if doc.common.icon != null && doc.common.icon != "">
-                <img src="${skinPath}${doc.common.icon}" alt="icon1" class="ui-li-icon"/>
+                <img src="${basePath}/..${doc.common.icon}" alt="icon1" class="ui-li-icon"/>
               </#if>
               <span class="ui-li-count">${doc.title}</span>
             </a>

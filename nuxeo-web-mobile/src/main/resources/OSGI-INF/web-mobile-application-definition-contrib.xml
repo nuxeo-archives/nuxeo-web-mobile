@@ -20,7 +20,7 @@
       disable="false">
       <implementation>org.nuxeo.ecm.mobile.handler.MobileWithCookieRequestHandler</implementation>
       <properties>
-        <property name="urlSkippedPatterns">(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)|(.*)/restAPI/preview/(.*)</property>
+        <property name="urlSkippedPatterns">(.*)/img/(.*)|(.*)/icons/(.*)|(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)|(.*)/restAPI/preview/(.*)</property>
       </properties>
     </requestHandler>
   </extension>

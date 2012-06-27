@@ -26,7 +26,7 @@
       <div id="${doc.id}" title="Details"  class="panel">
         <div class="white nospace shadow documentInfo">
           <div class="title">
-            <img alt="Document icon" src="${skinPath}${doc.common.icon}" />${doc.dublincore.title}
+            <img alt="Document icon" src="${basePath}/..${doc.common.icon}" />${doc.dublincore.title}
           </div>
           <div class="description">${doc.dublincore.description}</div>
           <div class="modificationDate">
