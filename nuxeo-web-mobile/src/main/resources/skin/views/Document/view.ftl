@@ -94,7 +94,7 @@
               ${Context.getMessage('label.action.MailIt')}
             </a>
           </li>
-          <#if doc.schemas?seq_contains("file")>
+          <#if hasBlob>
           <li class="nxDocumentItem">
             <a red="external" target="_blank" data-ajax="false" href="${This.downloadURL}">
               ${Context.getMessage('label.action.Download')}

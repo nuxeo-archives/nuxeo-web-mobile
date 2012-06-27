@@ -35,6 +35,7 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
+import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.rest.DocumentObject;
 import org.nuxeo.ecm.mobile.webengine.adapter.JSonExportAdapter;
@@ -143,6 +144,7 @@ public class MobileDocument extends DocumentObject {
             args.put("mobileURL", mobileURL);
         }
         args.put("hasLiked", getHasLiked());
+        args.put("hasBlob", getHasBlob());
 
         // Add the JSON DForm export
         JSonExportAdapter json = (JSonExportAdapter) ctx.newObject("JSONExport");
@@ -155,6 +157,18 @@ public class MobileDocument extends DocumentObject {
         LikeService rs = Framework.getLocalService(LikeService.class);
         return rs.hasUserLiked(ctx.getCoreSession().getPrincipal().getName(),
                 doc);
+    }
+    
+    protected boolean getHasBlob() {
+        DocumentModel doc = getDocument();
+        BlobHolder bh = doc.getAdapter(BlobHolder.class);
+        
+        try {
+            return bh.getBlob() != null;
+        } catch (ClientException e) {
+            log.debug(e, e);
+            return false;
+        }
     }
 
     public boolean hasPreview() throws PropertyException, ClientException {
