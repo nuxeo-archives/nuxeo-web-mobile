@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;"/>
   	<meta charset="utf-8"/>
 	
-
   	<link rel="stylesheet" href="css/jquery.mobile-1.0.min.css"/>
     <link rel="stylesheet" href="css/nuxeo-web-mobile.css"/>
     <!--<script src="http://localhost:8081/target/target-script-min.js#anonymous"></script> -->
@@ -15,7 +14,6 @@
     <script src="scripts/jquery.mobile-1.1.0.js"></script>
     <script src="scripts/nuxeo-utils.js"></script>
     <script src="scripts/nuxeo-web-mobile.js"></script>
-
   </head>
   <body>
     <div data-role="page">
@@ -25,18 +23,16 @@
       <div data-role="content">
         <img src="img/waiter.gif" alt="waiter" width="28" height="28" />
       </div>
-    </div>
+    </div>  
 
     <div data-role="page" id="page_servers_list">
       <div data-role="header">
         <h1>Server Selection</h1>
-        <a href="#page_server_creation" data-icon="plus">Add</a>
+        <a id="btnEdit" href="#" data-icon="gear">Edit</a>
+        <a id="btnAdd" href="#page_server_creation" data-iconpos="right" data-icon="plus">Add</a>
       </div>
       <div data-role="content">
         <ul data-role="listview" class="ui-listview" id="servers_list">
-            <!--
-            <li><a href="javascript:NXCordova.openFileChooser()">FileBrowser WIP</a></li>
-             -->
         </ul>
       </div>
     </div>

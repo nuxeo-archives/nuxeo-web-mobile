@@ -10,21 +10,17 @@ function init() {
 
   $("#create_server_profile").bind("click", function(event) {
     var formElements = $('#server_profile_form input');
-    var len = formElements.length,
-      i;
-    var values = new Array();
-    for (i = 0; i < len; i++) {
-      values[i] = {
-        name: formElements[i].name,
-        value: formElements[i].value
-      };
-    }
-    var server = new Server(values);
+    var server = new Server(formElements);
 
     server.store(function() {
       var isBackNavigation = true;
       navigateToServerList(isBackNavigation);
     });
+  });
+
+  $('#btnEdit').click(function() {
+    var that = $(this)
+    $('#servers_list .btnDelete').fadeToggle();
   });
 }
 
@@ -98,11 +94,12 @@ window.onload = init;
 
 
 //********************* DB MANAGEMENT *********************
+// XXX Should be moved to localStorage ...
 
 function initDatabase(callback) {
   db = window.openDatabase("nuxeo", "1.0", "Nuxeo Client DB", 1000000);
   db.transaction(function(tx) {
-    //tx.executeSql('DROP TABLE SERVER');
+    tx.executeSql('DROP TABLE SERVER');
     tx.executeSql('CREATE TABLE IF NOT EXISTS SERVER (name, servername, contextpath, login, password)');
   }, errorTransaction1, callback);
 }
@@ -120,27 +117,47 @@ function errorTransaction2(err) {
 
 function successTransaction() {}
 
+function refreshServers(servers) {
+  var len = servers.length;
+
+  var html = "";
+  for (var i = 0; i < len; i++) {
+    var server = servers[i];
+    if ((!server.getURL()) || (!server.get('name'))) {
+      alert('a not well formed server has been found');
+    } else {
+      html += '<li>';
+      html += '  <a class="link" href="' + server.getURL() + '" data-icon="delete">' + server.get('name') + '</a>';
+      html += '  <span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span>'; //Hack to force arrow icon.
+      html += '  <a class="btnDelete" style="display:none;" href="#" data-icon="delete">Delete</a>';
+      html += '</li>';
+    }
+  }
+
+  $('#servers_list').html(html);
+  $('#servers_list .btnDelete').click(function() {
+    var that = $(this);
+    var serverName = that.parents('li').find('a.link').html();
+    var values = [{
+      name: "name",
+      value: serverName
+    }];
+    new Server(values).delete(function() {
+      getServers(function(servers) {
+        refreshServers(servers);
+      });
+    });
+  })
+  // Not sure about this timeout ...
+  setTimeout(function() {
+    $('#servers_list').listview('refresh')
+  }, 50)
+}
+
 function navigateToServerList(isBackNavigation) {
   getServers(function(servers) {
-    var len = servers.length,
-      i;
-    var html = "";
-    for (i = 0; i < len; i++) {
-      var server = servers[i];
-      if ((!server.getURL()) || (!server.get('name'))) {
-        alert('a not well formed server has been found');
-      } else {
-        html += '<li>';
-        html += '  <a href="' + server.getURL() + '">' + server.get('name') + '</a>';
-        html += '</li>';
-      }
-    }
-    $('#servers_list').append(html);
-    // Not sure about this timeout ...
-    setTimeout(function() {
-      $('#servers_list').listview('refresh')
-    }, 50)
-    
+    var len = servers.length;
+    refreshServers(servers);
 
     changePage('page_servers_list', isBackNavigation);
     if (len == 0) {
@@ -206,8 +223,20 @@ function Server(_values) {
       var query = 'INSERT INTO SERVER (name, servername, contextpath, login, password) VALUES (?, ?, ?, ?, ?)'
       var data = [server.get('name'), server.get('servername'), server.get('contextpath'), server.get('login'), server.get('password')];
       //alert("data: " + data);
-
       tx.executeSql(query, data, function() {
+        callback();
+      });
+    }, errorTransaction1, successTransaction);
+  }
+
+  this.delete = function(callback) {
+    var that = this;
+    db.transaction(function(tx) {
+      var query = 'DELETE FROM SERVER WHERE name = ?'
+      var data = [that.get('name')];
+      alert("data: " + data);
+      tx.executeSql(query, data, function() {
+        alert('well done.')
         callback();
       });
     }, errorTransaction1, successTransaction);
@@ -226,6 +255,7 @@ function getServers(callback) {
         for (i = 0; i < len; i++) {
 
           var formElement = new Array();
+          alert(results.rows.item(i).ID)
           formElement[0] = {
             name: 'name',
             value: results.rows.item(i).name
