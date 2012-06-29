@@ -6,15 +6,17 @@ String.prototype.trim = function() {
 };
 
 function init() {
-  document.addEventListener("deviceready", initAndGoToHome, false);
-
   $("#create_server_profile").bind("click", function(event) {
-    var formElements = $('#server_profile_form input');
-    var server = new Server(formElements);
+    var formElementsArray = $('#server_profile_form').serializeArray();
+    var formElements = {}
+    for (var index in formElementsArray) {
+      var elt = formElementsArray[index];
+      formElements[elt.name] = elt.value;
+    }
 
+    var server = ServerUtils(formElements);
     server.store(function() {
-      var isBackNavigation = true;
-      navigateToServerList(isBackNavigation);
+      refreshServers()
     });
   });
 
@@ -22,18 +24,30 @@ function init() {
     var that = $(this)
     $('#servers_list .btnDelete').fadeToggle();
   });
+
+  (function () {
+    // Use deviceReady Cordova event to init the app and fallback
+    // in case that the event is never sent.
+    var deviceIsReady = false;
+    document.addEventListener("deviceready", function() {
+      console.log("Start using Cordova.")
+      deviceIsReady = true;
+      initAndGoToHome();
+    }, false);
+
+    setTimeout(function() {
+      if (!deviceIsReady) {
+        console.log("Start using fallback.")
+        initAndGoToHome();
+      }
+    }, 300)
+  }())
 }
 
 
 function initAndGoToHome() { /*   window.clearInterval(intervalID); */
   isPhoneGapReady = true;
-
-  initDatabase(function() {
-    var isBackNavigation = false;
-    navigateToServerList(isBackNavigation);
-  });
-
-  //  $("body").toggle();
+  navigateToServerList(false);
 }
 
 function handleOpenURL(url) {
@@ -58,7 +72,7 @@ function copyFileLocally(url, callback) {
     // Try to request FS
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
       console.log("Filesystem opened")
-      console.log(console.log(fileSystem.root))
+      console.log(fileSystem.root)
 
       console.log("Check if file already exists")
       // Try to find if file already exists
@@ -96,33 +110,19 @@ window.onload = init;
 //********************* DB MANAGEMENT *********************
 // XXX Should be moved to localStorage ...
 
-function initDatabase(callback) {
-  db = window.openDatabase("nuxeo", "1.0", "Nuxeo Client DB", 1000000);
-  db.transaction(function(tx) {
-    tx.executeSql('DROP TABLE SERVER');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS SERVER (name, servername, contextpath, login, password)');
-  }, errorTransaction1, callback);
-}
-
-
-function errorTransaction1(err) {
-  alert('ERROR 1 during transaction');
-  alert(err.message);
-}
-
-function errorTransaction2(err) {
-  alert('ERROR 2 during transaction');
-  alert(err.message);
-}
-
-function successTransaction() {}
-
 function refreshServers(servers) {
+  if (!servers) {
+    ServerUtils().getAllServer(function(servers) {
+      refreshServers(servers);
+    });
+    return;
+  }
+
   var len = servers.length;
 
   var html = "";
   for (var i = 0; i < len; i++) {
-    var server = servers[i];
+    var server = ServerUtils(servers[i]);
     if ((!server.getURL()) || (!server.get('name'))) {
       alert('a not well formed server has been found');
     } else {
@@ -138,12 +138,10 @@ function refreshServers(servers) {
   $('#servers_list .btnDelete').click(function() {
     var that = $(this);
     var serverName = that.parents('li').find('a.link').html();
-    var values = [{
-      name: "name",
-      value: serverName
-    }];
-    new Server(values).delete(function() {
-      getServers(function(servers) {
+    ServerUtils({
+      name: serverName
+    }).delete(function() {
+      ServerUtils().getAllServer(function(servers) {
         refreshServers(servers);
       });
     });
@@ -155,12 +153,11 @@ function refreshServers(servers) {
 }
 
 function navigateToServerList(isBackNavigation) {
-  getServers(function(servers) {
-    var len = servers.length;
+  ServerUtils().getAllServer(function(servers) {
     refreshServers(servers);
 
     changePage('page_servers_list', isBackNavigation);
-    if (len == 0) {
+    if (servers.length == 0) {
       // If there is no servers added ... Go to the serverCreationPage
       changePage('page_server_creation');
     }
@@ -176,111 +173,84 @@ function changePage(id, isBackNavigation) {
   });
 }
 
-// TODO: Replace this by Backbone after data/layout splitting
+var ServerUtils = function(server) {
+    var _values = $.extend({}, server);
+    var _ls = window.localStorage;
+    //_ls.clear();
+    var Constant = {
+      SERVERS_KEY: "nx_servers"
+    }
 
-function Server(_values) {
-  if (_values == null) {
-    alert('No element found to create server!!');
-    return;
-  }
+    function setServers(servers) {
+      _ls.setItem(Constant.SERVERS_KEY, JSON.stringify(servers));
+    }
 
-  this.values = _values;
-  var len = _values.length,
-    i;
+    function getServers() {
+      return JSON.parse(_ls.getItem(Constant.SERVERS_KEY));
+    }
 
-  //  for (i = 0; i < len; i++) {
-  //    alert('formElements: ' + _values[i].name + "/" + _values[i].value);
-  //  }
-  this.get = function(name) {
-    var len = this.values.length,
-      i;
-    for (i = 0; i < len; i++) {
-      if (this.values[i].name == name) {
-        if (!this.values[i].value || this.values[i].value.trim() == '') {
-          return null;
+    return {
+      get: function(name) {
+        var value = _values[name];
+        return (!value || !value.trim()) ? null : value;
+      },
+      getAllServer: function(callback) {
+        var servers = getServers()
+        if (!servers) {
+          servers = [];
+          setServers(servers)
+        }
+
+        if (callback) callback(servers)
+        else return servers;
+      },
+      getURL: function() {
+        return this.get('servername') + this.get('contextpath');
+      },
+      store: function(callback) {
+        var servers = this.getAllServer();
+
+        var newServer = {
+          name: _values.name ? _values.name.trim() : null,
+          servername: _values.servername ? _values.servername.trim() : null,
+          login: _values.login ? _values.login.trim() : null,
+          password: _values.password ? _values.password.trim() : null,
+          contextpath: _values.contextpath ? _values.contextpath.trim() : null
+        };
+
+        // Check if already exists
+        var replaceIndex = -1;
+        $.each(servers, function(index, server) {
+          if (server.name == newServer.name) {
+            replaceIndex = index;
+            return false;
+          }
+        });
+
+        if (replaceIndex >= 0) {
+          servers[replaceIndex] = newServer;
         } else {
-          return this.values[i].value;
+          servers.push(newServer);
+        }
+        setServers(servers)
+
+        if (callback) callback();
+      },
+      delete: function(callback) {
+        var servers = this.getAllServer();
+        var foundIndex = -1;
+        $.each(servers, function(index, server) {
+          if (server.name == _values.name) {
+            foundIndex = index;
+            return false;
+          }
+        });
+
+        if (foundIndex >= 0) {
+          servers.splice(foundIndex, 1);
+          setServers(servers)
+          callback()
         }
       }
     }
-    return null;
   };
-
-  this.getURL = function() {
-    if ((!this.get('servername')) || (!this.get('contextpath'))) {
-      return null;
-    } else {
-      return this.get('servername') + this.get('contextpath');
-    }
-  }
-
-  this.store = function(callback) {
-    var server = this;
-    // remove profile displayed in the server list
-    $('#servers_list').empty();
-
-    db.transaction(function(tx) {
-      var query = 'INSERT INTO SERVER (name, servername, contextpath, login, password) VALUES (?, ?, ?, ?, ?)'
-      var data = [server.get('name'), server.get('servername'), server.get('contextpath'), server.get('login'), server.get('password')];
-      //alert("data: " + data);
-      tx.executeSql(query, data, function() {
-        callback();
-      });
-    }, errorTransaction1, successTransaction);
-  }
-
-  this.delete = function(callback) {
-    var that = this;
-    db.transaction(function(tx) {
-      var query = 'DELETE FROM SERVER WHERE name = ?'
-      var data = [that.get('name')];
-      alert("data: " + data);
-      tx.executeSql(query, data, function() {
-        alert('well done.')
-        callback();
-      });
-    }, errorTransaction1, successTransaction);
-  }
-}
-
-
-function getServers(callback) {
-  db.transaction(function(tx) {
-    tx.executeSql('SELECT * FROM SERVER', [], function(tx, results) {
-      var _servers = new Array();
-      var len = results.rows.length,
-        i;
-      var html = "";
-      if (len > 0) {
-        for (i = 0; i < len; i++) {
-
-          var formElement = new Array();
-          alert(results.rows.item(i).ID)
-          formElement[0] = {
-            name: 'name',
-            value: results.rows.item(i).name
-          };
-          formElement[1] = {
-            name: 'servername',
-            value: results.rows.item(i).servername
-          };
-          formElement[2] = {
-            name: 'login',
-            value: results.rows.item(i).login
-          };
-          formElement[3] = {
-            name: 'password',
-            value: results.rows.item(i).password
-          };
-          formElement[4] = {
-            name: 'contextpath',
-            value: results.rows.item(i).contextpath
-          };
-
-          _servers[i] = new Server(formElement);
-        }
-      }
-      callback(_servers);
-    });
-  }, errorTransaction2, successTransaction);
-}
