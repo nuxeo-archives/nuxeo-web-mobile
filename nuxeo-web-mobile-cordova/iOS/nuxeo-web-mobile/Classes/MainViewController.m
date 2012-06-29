@@ -127,13 +127,13 @@
     [self fileToBeExecutedWith:@"scripts/ChildBrowser.js" inWebView:theWebView];
     [self fileToBeExecutedWith:@"scripts/NxFileBrowser.js" inWebView:theWebView];
     [self fileToBeExecutedWith:@"scripts/nuxeo-cordova-wrapper.js" inWebView:theWebView];
-
+    //NSLog(@"URL: %@", [theWebView.request.URL absoluteString]);
 	return [super webViewDidFinishLoad:theWebView];
 }
 
 -(NSString *)fileToBeExecutedWith:(NSString *)name inWebView:(UIWebView*)aWebView {
     NSURL *url = [NSURL fileURLWithPath:[self pathForResource:name]];
-    NSLog(@"file: %@", url.absoluteURL);
+    //NSLog(@"file: %@", url.absoluteURL);
     
     NSError *error;
     
@@ -162,7 +162,7 @@
     }
     
     //NSLog(@"%@", NSStringFromSelector(@selector(webView:shouldStartLoadWithRequest:navigationType:)));
-//    NSLog(@"Try to open: %@", request.URL.absoluteURL);
+    //NSLog(@"Try to open: %@", request.URL.absoluteURL);
 	return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];
 }
 

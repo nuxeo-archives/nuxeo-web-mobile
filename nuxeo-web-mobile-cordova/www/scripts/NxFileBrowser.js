@@ -76,7 +76,7 @@ NxFileBrowser.install = function()
 if (cordovaRef && cordovaRef.addConstructor) {
     cordovaRef.addConstructor(NxFileBrowser.install);
 } else {
-    alert("NxFileBrowser Cordova Plugin could not be installed.");
+    console.log("NxFileBrowser Cordova Plugin could not be installed.");
     return null;
 }
 
