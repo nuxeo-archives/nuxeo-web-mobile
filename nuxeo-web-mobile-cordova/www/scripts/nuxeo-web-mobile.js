@@ -140,7 +140,7 @@ function refreshServers(servers) {
     var serverName = that.parents('li').find('a.link').html();
     ServerUtils({
       name: serverName
-    }).delete(function() {
+    }).remove(function() {
       ServerUtils().getAllServer(function(servers) {
         refreshServers(servers);
       });
@@ -236,7 +236,7 @@ var ServerUtils = function(server) {
 
         if (callback) callback();
       },
-      delete: function(callback) {
+      remove: function(callback) {
         var servers = this.getAllServer();
         var foundIndex = -1;
         $.each(servers, function(index, server) {

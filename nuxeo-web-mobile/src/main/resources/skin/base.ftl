@@ -24,7 +24,13 @@
     <link rel="stylesheet" href="${skinPath}/css/nuxeo-web-mobile.css" />
     <script src="http://localhost:8081/target/target-script-min.js#anonymous"></script>
     <#if Context.getProperty('Cordova')??>
-    <script src="${skinPath}/script/cordova-1.7.0.js"></script>
+    <#if Context.getProperty('Cordova').isAndroid>
+    <script src="${skinPath}/script/cordova-1.7.0-android.js"></script>
+    <script>alert('android')</script>
+    </#if>
+    <#if Context.getProperty('Cordova').isIOS>
+    <script src="${skinPath}/script/cordova-1.7.0-iOS.js"></script>
+    </#if>
     </#if>
     <script src="${skinPath}/script/jquery-1.7.js"></script>
     <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>

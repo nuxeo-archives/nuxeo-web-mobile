@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script type="text/javascript">
+      var ua = navigator.userAgent;
+      var scriptEl = document.createElement('script');
+      var scriptName = "";
+      if (ua.match('iPhone|iPad')) {
+          scriptName = "cordova-1.7.0-iOS.js"
+      } else {
+          scriptName = "cordova-1.7.0-android.js"
+      }
+      scriptEl.setAttribute('src', 'scripts/' + scriptName);
+      
+      var head = document.getElementsByTagName("head").item(0);
+      head.replaceChild(scriptEl, head.firstChild)
+    </script>
     <title>Nuxeo Application</title>
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;"/>
@@ -9,7 +23,11 @@
   	<link rel="stylesheet" href="css/jquery.mobile-1.0.min.css"/>
     <link rel="stylesheet" href="css/nuxeo-web-mobile.css"/>
     <!--<script src="http://localhost:8081/target/target-script-min.js#anonymous"></script> -->
+
+    <!-- 
     <script src="scripts/cordova-1.7.0.js"></script>
+    <script src="scripts/cordova-1.7.0.js"></script>
+     -->
     <script src="scripts/jquery-1.7.min.js"></script>
     <script src="scripts/jquery.mobile-1.1.0.js"></script>
     <script src="scripts/nuxeo-utils.js"></script>
