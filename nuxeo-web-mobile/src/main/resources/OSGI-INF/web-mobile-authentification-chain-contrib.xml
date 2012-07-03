@@ -1,0 +1,31 @@
+<component name="org.nuxeo.platform.mobile.authentication.chain.contrib">
+  <extension target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"
+    point="authenticators">
+    <authenticationPlugin name="BASIC_AUTH_STATEFUL" enabled="true"
+      class="org.nuxeo.ecm.platform.ui.web.auth.plugins.BasicAuthenticator">
+      <needStartingURLSaving>true</needStartingURLSaving>
+      <stateful>true</stateful>
+      <parameters>
+        <parameter name="UsernameKey">username</parameter>
+        <parameter name="PasswordKey">password</parameter>
+      </parameters>
+    </authenticationPlugin>
+  </extension>
+    
+  <extension target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"
+      point="specificChains">
+    <specificAuthenticationChain name="mobile-app">
+      <urlPatterns>
+        <url>/.+/site/mobile[./]*</url>
+      </urlPatterns>
+
+      <replacementChain>
+        <plugin>BASIC_AUTH_STATEFUL</plugin>
+        <plugin>FORM_WEBENGINE_APPLICATION_AUTH</plugin>
+        <plugin>FORM_AUTH</plugin>
+        <plugin>ANONYMOUS_AUTH</plugin>
+        <plugin>WEBSERVICES_AUTH</plugin>
+      </replacementChain>
+    </specificAuthenticationChain>
+  </extension>
+</component>
