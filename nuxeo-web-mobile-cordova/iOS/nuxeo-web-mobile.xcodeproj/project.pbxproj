@@ -45,6 +45,7 @@
 		512EDFCC1594A55300ED57DF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 512EDFCB1594A55300ED57DF /* Default.png */; };
 		512EDFCE1594A55A00ED57DF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 512EDFCD1594A55A00ED57DF /* Default@2x.png */; };
 		513D2784157E522F00DEE092 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 513D2783157E522F00DEE092 /* www */; };
+		51633C5B15A1F744009F73B2 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 51633C5A15A1F744009F73B2 /* NSData+Additions.m */; };
 		517A6DA8159B5DFD00304E79 /* NXMOpenCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */; };
 		518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657A8159322710066B9DF /* NXMFileBrowserCommand.m */; };
 		518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657AA159322710066B9DF /* NXMFileBrowserViewController.m */; };
@@ -99,6 +100,8 @@
 		512EDFCB1594A55300ED57DF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		512EDFCD1594A55A00ED57DF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		513D2783157E522F00DEE092 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
+		51633C5915A1F744009F73B2 /* NSData+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Additions.h"; sourceTree = "<group>"; };
+		51633C5A15A1F744009F73B2 /* NSData+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Additions.m"; sourceTree = "<group>"; };
 		517A6DA6159B5DFD00304E79 /* NXMOpenCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NXMOpenCommand.h; sourceTree = "<group>"; };
 		517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NXMOpenCommand.m; sourceTree = "<group>"; };
 		518657A7159322710066B9DF /* NXMFileBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserCommand.h; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.h; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 		5117D1FC157E07B1009979FB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				51633C5915A1F744009F73B2 /* NSData+Additions.h */,
+				51633C5A15A1F744009F73B2 /* NSData+Additions.m */,
 				5117D1FD157E07B1009979FB /* AppDelegate.h */,
 				5117D1FE157E07B1009979FB /* AppDelegate.m */,
 				5117D200157E07B1009979FB /* MainViewController.h */,
@@ -448,6 +453,7 @@
 				518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */,
 				518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */,
 				517A6DA8159B5DFD00304E79 /* NXMOpenCommand.m in Sources */,
+				51633C5B15A1F744009F73B2 /* NSData+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

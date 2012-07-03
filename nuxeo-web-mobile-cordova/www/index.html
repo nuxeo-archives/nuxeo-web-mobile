@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="text/javascript">
-      var ua = navigator.userAgent;
-      var scriptEl = document.createElement('script');
-      var scriptName = "";
-      if (ua.match('iPhone|iPad')) {
-          scriptName = "cordova-1.7.0-iOS.js"
-      } else {
-          scriptName = "cordova-1.7.0-android.js"
-      }
-      scriptEl.setAttribute('src', 'scripts/' + scriptName);
-      
-      var head = document.getElementsByTagName("head").item(0);
-      head.replaceChild(scriptEl, head.firstChild)
-    </script>
     <title>Nuxeo Application</title>
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;"/>
@@ -24,14 +10,12 @@
     <link rel="stylesheet" href="css/nuxeo-web-mobile.css"/>
     <!--<script src="http://localhost:8081/target/target-script-min.js#anonymous"></script> -->
 
-    <!-- 
-    <script src="scripts/cordova-1.7.0.js"></script>
-    <script src="scripts/cordova-1.7.0.js"></script>
-     -->
+    <script src="scripts/cordova-1.7.0-iOS.js"></script>
     <script src="scripts/jquery-1.7.min.js"></script>
     <script src="scripts/jquery.mobile-1.1.0.js"></script>
     <script src="scripts/nuxeo-utils.js"></script>
     <script src="scripts/nuxeo-web-mobile.js"></script>
+    
   </head>
   <body>
     <div data-role="page">
@@ -72,14 +56,12 @@
               <div class="servername">
                 <input type="text" name="servername" placeholder="ex: http://localhost:8080" value="http://localhost:8080">
               </div>
-                <!-- Disabled for now
               <div class="login">
                 <input type="text" name="login" placeholder="" value="Administrator">
               </div>
               <div class="password">
                 <input type="text" name="password" placeholder="" value="Administrator">
               </div>
-                -->
               <div class="contextpath">
                 <input type="text" name="contextpath" placeholder="facultative, default: /nuxeo" value="/nuxeo">
               </div>

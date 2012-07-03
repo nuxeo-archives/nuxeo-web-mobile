@@ -5,13 +5,26 @@ var NXCordova = function() {
 
     var Nx = {
       //Constants
-      openURL: "NxOpenCommand.openURL"
+      openURL: {
+        command: 'NxOpenCommand',
+        method: 'openURL'
+      },
+      openServer: {
+        command: 'NxOpenCommand',
+        method: 'openServer'
+      }
     }
 
     function callCordova(command, param) {
       //Helper method
       var cordovaRef = window.PhoneGap || window.Cordova || window.cordova;
-      cordovaRef.exec(command, param);
+      //cordovaRef.exec(command, param);
+      console.log('try to call.')
+      cordovaRef.exec(function() {
+        console.log('success')
+      }, function() {
+        console.log('error')
+      }, command.command, command.method, param)
     }
 
     // Add a button to body element in case that the URL matches the specified
@@ -68,8 +81,12 @@ var NXCordova = function() {
       basePath: function() {
         return cordovaBase;
       },
+      openServer: function(url, username, password) {
+        var params = [url, username, password];
+        callCordova(Nx.openServer, params);
+      },
       logout: function() {
-        callCordova(Nx.openURL, cordovaBase + "index.html#page_servers_list");
+        callCordova(Nx.openURL, [cordovaBase + "index.html#page_servers_list"]);
       },
       openFileChooser: function(callback) {
 

@@ -127,7 +127,7 @@
     [self fileToBeExecutedWith:@"scripts/ChildBrowser.js" inWebView:theWebView];
     [self fileToBeExecutedWith:@"scripts/NxFileBrowser.js" inWebView:theWebView];
     [self fileToBeExecutedWith:@"scripts/nuxeo-cordova-wrapper.js" inWebView:theWebView];
-    //NSLog(@"URL: %@", [theWebView.request.URL absoluteString]);
+    NSLog(@"URL: %@", [theWebView.request.URL absoluteString]);
 	return [super webViewDidFinishLoad:theWebView];
 }
 

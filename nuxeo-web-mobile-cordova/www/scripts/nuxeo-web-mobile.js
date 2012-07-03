@@ -5,6 +5,10 @@ String.prototype.trim = function() {
   return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 };
 
+String.prototype.trailingSlash = function() {
+  return this.replace(/\/$/, '');
+};
+
 function init() {
   $("#create_server_profile").bind("click", function(event) {
     var formElementsArray = $('#server_profile_form').serializeArray();
@@ -25,7 +29,7 @@ function init() {
     $('#servers_list .btnDelete').fadeToggle();
   });
 
-  (function () {
+  (function() {
     // Use deviceReady Cordova event to init the app and fallback
     // in case that the event is never sent.
     var deviceIsReady = false;
@@ -40,7 +44,7 @@ function init() {
         console.log("Start using fallback.")
         initAndGoToHome();
       }
-    }, 300)
+    }, 500)
   }())
 }
 
@@ -127,7 +131,7 @@ function refreshServers(servers) {
       alert('a not well formed server has been found');
     } else {
       html += '<li>';
-      html += '  <a class="link" href="' + server.getURL() + '" data-icon="delete">' + server.get('name') + '</a>';
+      html += '  <a class="link" href="javascript:NXCordova.openServer(\'' + server.getURL() + '\', \'' + server.get('login') + '\',\'' + server.get('password') + '\')" data-icon="delete">' + server.get('name') + '</a>';
       html += '  <span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span>'; //Hack to force arrow icon.
       html += '  <a class="btnDelete" style="display:none;" href="#" data-icon="delete">Delete</a>';
       html += '</li>';
@@ -215,7 +219,7 @@ var ServerUtils = function(server) {
           servername: _values.servername ? _values.servername.trim() : null,
           login: _values.login ? _values.login.trim() : null,
           password: _values.password ? _values.password.trim() : null,
-          contextpath: _values.contextpath ? _values.contextpath.trim() : null
+          contextpath: _values.contextpath ? _values.contextpath.trim().trailingSlash() : null
         };
 
         // Check if already exists
