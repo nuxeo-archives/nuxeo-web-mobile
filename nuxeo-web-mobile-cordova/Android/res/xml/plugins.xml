@@ -18,6 +18,7 @@
        under the License.
 -->
 <plugins>
+    <plugin name="NxOpenCommand" value="org.nuxeo.ecm.mobile.android.OpenCommandPlugin"/>
     <plugin name="App" value="org.apache.cordova.App"/>
     <plugin name="Geolocation" value="org.apache.cordova.GeoBroker"/>
     <plugin name="Device" value="org.apache.cordova.Device"/>

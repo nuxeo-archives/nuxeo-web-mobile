@@ -26,7 +26,6 @@
     <#if Context.getProperty('Cordova')??>
     <#if Context.getProperty('Cordova').isAndroid>
     <script src="${skinPath}/script/cordova-1.7.0-android.js"></script>
-    <script>alert('android')</script>
     </#if>
     <#if Context.getProperty('Cordova').isIOS>
     <script src="${skinPath}/script/cordova-1.7.0-iOS.js"></script>

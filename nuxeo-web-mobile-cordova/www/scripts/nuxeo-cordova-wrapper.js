@@ -1,7 +1,7 @@
 var NXCordova = function() {
-    if (!cordovaBase) {
-      alert('nuxeo-cordova-wrapper added without cordovaBase.');
-    }
+    //if (!cordovaBase) {
+    //  alert('nuxeo-cordova-wrapper added without cordovaBase.');
+    //}
 
     var Nx = {
       //Constants
