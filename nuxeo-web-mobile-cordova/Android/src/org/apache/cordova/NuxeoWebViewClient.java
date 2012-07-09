@@ -1,4 +1,4 @@
-package org.nuxeo.ecm.mobile.android;
+package org.apache.cordova;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,6 +13,13 @@ import org.apache.cordova.DroidGap;
 import android.util.Log;
 import android.webkit.WebView;
 
+/**
+ * Nuxeo WebViewClient implementation that handle a list of javascript files to
+ * be injected each page loaded. The package is moved to org.apache.cordova to
+ * access WebView control directly.
+ * 
+ * @author arnaud
+ */
 public class NuxeoWebViewClient extends CordovaWebViewClient {
 
     private static final String TAG = "NuxeoWebViewClient";
@@ -40,7 +47,7 @@ public class NuxeoWebViewClient extends CordovaWebViewClient {
 
     protected void injectFiles(String url) {
         if (url.startsWith("javascript")) {
-            Log.i(TAG, "Do not inject javascript files");
+            Log.d(TAG, "Do not try to inject javascript inlined as file.");
             return;
         }
 
@@ -59,7 +66,7 @@ public class NuxeoWebViewClient extends CordovaWebViewClient {
                         ctx.getAssets().open(uri)).useDelimiter("\\A").next());
             }
             String fileContent = filesContentCache.get(uri);
-            ctx.loadUrl("javascript:" + fileContent + ";");
+            ctx.appView.loadUrl("javascript:" + fileContent + ";");
         } catch (IOException e) {
             Log.e(TAG, "Unable to find file: " + e.getMessage());
         }

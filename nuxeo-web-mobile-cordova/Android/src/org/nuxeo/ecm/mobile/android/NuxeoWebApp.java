@@ -2,6 +2,7 @@ package org.nuxeo.ecm.mobile.android;
 
 import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.DroidGap;
+import org.apache.cordova.NuxeoWebViewClient;
 
 import android.os.Bundle;
 import android.util.Log;
