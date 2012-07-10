@@ -12,7 +12,7 @@
 #import "Cordova/CDVPlugin.h"
 #endif
 
-@interface NXMOpenCommand : CDVPlugin
+@interface NXMOpenCommand : CDVPlugin<UIActionSheetDelegate>
 -(void)openURL:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 
 -(void)openServer:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;

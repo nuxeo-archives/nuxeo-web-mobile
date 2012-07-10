@@ -9,7 +9,13 @@
 #import "NXMOpenCommand.h"
 #import "NSData+Additions.h"
 
+#pragma mark -
+
 @implementation NXMOpenCommand
+
+#pragma mark -
+#pragma mark CordovaCommands methods
+
 -(void)openURL:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options; {
     NSString* url = [arguments objectAtIndex:1 withDefault:@"about:blank"];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
@@ -36,4 +42,38 @@
     [self.webView loadRequest:request];
     [request release];    
 }
+
+#pragma mark -
+#pragma mark Internal methods
+
+-(void)askUser:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options {
+    UIActionSheet* sheet = [[[UIActionSheet alloc] initWithTitle:@"What file do you want to upload?" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil] autorelease];
+    [sheet addButtonWithTitle:@"from library"];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        [sheet addButtonWithTitle:@"from camera"];
+    }
+    
+    NSString* fileName = [arguments objectAtIndex:1 withDefault:nil];
+    if (fileName != nil) {
+        [sheet addButtonWithTitle:fileName];
+    }
+    sheet.cancelButtonIndex = [sheet addButtonWithTitle:@"Cancel"];
+    [sheet showInView:self.webView];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //NSLog(@"Button pressed: %d", buttonIndex);
+    [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+    NSString* btnLabel = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if (btnLabel == @"from library") {
+        [self.webView stringByEvaluatingJavaScriptFromString:@"NXCordova.openLibrary();"];
+    }
+    else if (btnLabel == @"from camera") {
+        [self.webView stringByEvaluatingJavaScriptFromString:@"NXCordova.takePicture();"];
+    }
+    else if (buttonIndex != actionSheet.cancelButtonIndex) {
+        [self.webView stringByEvaluatingJavaScriptFromString:@"NXCordova.uploadFile();"];
+    }
+}
+
 @end

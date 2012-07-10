@@ -2,8 +2,11 @@ var NXCordova = function() {
     //if (!cordovaBase) {
     //  alert('nuxeo-cordova-wrapper added without cordovaBase.');
     //}
-
-    var Nx = {
+    var _ls = window.localStorage;
+    var Constants = {
+      fileStorageKey: 'nx_saved_file'
+    }
+    var Plugins = {
       //Constants
       openURL: {
         command: 'NxOpenCommand',
@@ -12,6 +15,10 @@ var NXCordova = function() {
       openServer: {
         command: 'NxOpenCommand',
         method: 'openServer'
+      },
+      uploadFile: {
+        command: 'NxOpenCommand',
+        method: 'askUser'
       }
     }
 
@@ -82,34 +89,64 @@ var NXCordova = function() {
         return cordovaBase;
       },
       openServer: function(url, username, password) {
+        $.mobile.showPageLoadingMsg();
+
         var params = [url, username, password];
-        callCordova(Nx.openServer, params);
+        callCordova(Plugins.openServer, params);
       },
       logout: function() {
-        callCordova(Nx.openURL, [cordovaBase + "index.html#page_servers_list"]);
+        callCordova(Plugins.openURL, [cordovaBase + "index.html#page_servers_list"]);
       },
-      openFileChooser: function(callback) {
+      openUploadChooser: function(callback) {
+        var currentFile = JSON.parse(_ls.getItem(Constants.fileStorageKey));
+        var args = [];
+        if (currentFile) {
+          args.push(currentFile.fileName)
+        }
 
-        /* WIP 
-        var cb = window.plugins.nxFileBrowser;
-        if (cb != null) {
-          cb.onClose = function() {
-            if (callback) {
-              callback();
-            }
-          }
-          cb.showWebPage(cordovaBase + 'file-browser.html');
-        } else {
-          alert("cb null ...")
-        }*/
+        callCordova(Plugins.uploadFile, args)
+      },
+      takePicture: function(onSuccess, onFail) {
+        var _onFail = onFail ||
+        function onFail(message) {
+          alert('Failed because: ' + message);
+        };
+        var _onSuccess = onSuccess || this.uploadFile;
+
+        navigator.camera.getPicture(_onSuccess, _onFail, {
+          quality: 65,
+          allowEdit: true,
+          destinationType: Camera.DestinationType.FILE_URI
+        });
+      },
+      openLibrary: function(onSuccess, onFail) {
+        var _onFail = onFail ||
+        function onFail(message) {
+          alert('Failed because: ' + message);
+        };
+        var _onSuccess = onSuccess || this.uploadFile
+
+        navigator.camera.getPicture(_onSuccess, _onFail, {
+          quality: 65,
+          destinationType: navigator.camera.DestinationType.FILE_URI,
+          sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
+        });
       },
       uploadFile: function(filePath) {
+        // Ensure to be in a Folderish path
         console.log('start uploading file')
         if (!document.URL.match("@folderish")) {
           alert('You must upload a file into a Folderish document. Operation aborded.')
           return;
         }
 
+        // If no filePath, use the one in localStorage
+        if (!filePath) {
+          var currentFile = JSON.parse(_ls.getItem(Constants.fileStorageKey));
+          filePath = currentFile.filePath;
+        }
+
+        // Some upload metadata
         var options = new FileUploadOptions();
         options.fileKey = "file:file";
         options.fileName = decodeURIComponent(filePath.substr(filePath.lastIndexOf('/') + 1));
@@ -117,6 +154,7 @@ var NXCordova = function() {
         var params = new Object();
         options.params = params;
 
+        $.mobile.showPageLoadingMsg();
         var ft = new FileTransfer();
         ft.upload(filePath, document.URL, function(r) {
           if ("500" == r.responseCode) {
@@ -125,18 +163,27 @@ var NXCordova = function() {
             window.location.reload()
           }
         }, function(error) {
+          $.mobile.hidePageLoadingMsg();
           alert("An error has occurred: Code = " + error.code);
           console.log("upload error source " + error.source);
           console.log("upload error target " + error.target);
         }, options);
       },
-      handleOpenURL: function(filePath) {
-        // XXX For now ... Directly upload file
+      handleOpenURL: function(filePath, fileName) {
+        if (document.URL.match('^file:')) {
+          alert('You should be connected to a server before trying to upload file.');
+          return;
+        }
+
         // Timeout it to let the application loading.
         setTimeout(function() {
-          console.log('Settimeout called.' + filePath)
-          NXCordova.uploadFile(filePath);
-          console.log('uploadFile should be called.')
+          //NXCordova.uploadFile(filePath);
+          _ls.setItem(Constants.fileStorageKey, JSON.stringify({
+            'filePath': filePath,
+            'fileName': fileName
+          }));
+          alert('Document ' + fileName + ' is ready to be uploaded.');
+          // XXX need to save it locally ??
         }, 200);
       }
     };

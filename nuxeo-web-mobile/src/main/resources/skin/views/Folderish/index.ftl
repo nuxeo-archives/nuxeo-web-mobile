@@ -4,8 +4,11 @@
 <div data-role="page">
 
     <div data-role="header">
-        <a href="#" data-rel="back" data-icon="arrow-l">Back</a>
-        <h1>${Context.getMessage('label.header.title.Content')}</h1>
+      <a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+      <h1>${Context.getMessage('label.header.title.Content')}</h1>
+      <#if Context.getProperty('Cordova')??>
+        <a href="javascript:NXCordova.openUploadChooser();" data-role="button" data-icon="plus" data-iconpos="right">Import</a>
+      </#if>
     </div>
 
     <div data-role="content" class="browse">

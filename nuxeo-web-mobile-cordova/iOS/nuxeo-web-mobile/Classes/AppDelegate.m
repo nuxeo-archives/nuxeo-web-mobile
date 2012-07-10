@@ -138,13 +138,13 @@
     }
     
 	// calls into javascript global function 'handleOpenURL'
-    NSString* jsString = [NSString stringWithFormat:@"NXCordova.handleOpenURL('%@');", url];
+    NSString* jsString = [NSString stringWithFormat:@"NXCordova.handleOpenURL('%@', '%@');", url, url.lastPathComponent];
     [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsString];
     
     // all plugins will get the notification, and their handlers will be called 
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
     
-    return YES;    
+    return YES;
 }
 
 - (void) dealloc
