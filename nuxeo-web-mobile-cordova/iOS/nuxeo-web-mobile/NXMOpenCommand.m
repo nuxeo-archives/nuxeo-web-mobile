@@ -43,9 +43,6 @@
     [request release];    
 }
 
-#pragma mark -
-#pragma mark Internal methods
-
 -(void)askUser:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options {
     UIActionSheet* sheet = [[[UIActionSheet alloc] initWithTitle:@"What file do you want to upload?" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil] autorelease];
     [sheet addButtonWithTitle:@"from library"];
@@ -59,6 +56,31 @@
     }
     sheet.cancelButtonIndex = [sheet addButtonWithTitle:@"Cancel"];
     [sheet showInView:self.webView];
+}
+
+-(void)presentingDocument:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options {
+    NSString *anUrl = [arguments objectAtIndex:1 withDefault:nil];
+    NSLog(@"passingURL: %@", anUrl);
+    NSURL *url = [NSURL fileURLWithPath:anUrl];
+    
+    UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL: url] retain];
+    interactionController.delegate = self;
+    if (![interactionController presentOptionsMenuFromRect:CGRectZero inView:self.webView animated:YES]) {
+        [self.webView stringByEvaluatingJavaScriptFromString:@"alert('No installed application associated with this kind of document.');"];
+    }
+}
+
+#pragma mark -
+#pragma mark Internal methods
+
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller {
+    NSLog(@"UIDocumentInteractionController correctly released");
+    [controller release];
+}
+
+- (void)documentInteractionController:(UIDocumentInteractionController *)controller didEndSendingToApplication:(NSString *)application {
+    NSLog(@"UIDocumentInteractionController correctly released");
+    [controller release];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

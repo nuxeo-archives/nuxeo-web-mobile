@@ -3,6 +3,7 @@ var NXCordova = function() {
     //  alert('nuxeo-cordova-wrapper added without cordovaBase.');
     //}
     var _ls = window.localStorage;
+
     var Constants = {
       fileStorageKey: 'nx_saved_file'
     }
@@ -19,6 +20,10 @@ var NXCordova = function() {
       uploadFile: {
         command: 'NxOpenCommand',
         method: 'askUser'
+      },
+      presentingDocument: {
+        command: 'NxOpenCommand',
+        method: 'presentingDocument'
       }
     }
 
@@ -32,6 +37,24 @@ var NXCordova = function() {
       }, function() {
         console.log('error')
       }, command.command, command.method, param)
+    }
+
+    function addBaseURLIfNeeded(url) {
+      url = encodeURI(url);
+      if (url.match("^http:")) {
+        return url;
+      }
+
+      var baseUrl = document.location.protocol + '//' + document.location.hostname;
+      if (document.location.port) {
+        baseUrl += ":" + document.location.port;
+      }
+
+      if (url.match("^/")) {
+        return baseUrl + url;
+      } else {
+        return baseUrl + "/" + url;
+      }
     }
 
     // Add a button to body element in case that the URL matches the specified
@@ -97,6 +120,49 @@ var NXCordova = function() {
       logout: function() {
         callCordova(Plugins.openURL, [cordovaBase + "index.html#page_servers_list"]);
       },
+      downloadFromURL: function(url) {
+        console.log('Try to download: ' + url);
+        function failFS() {
+          alert('Unable to get the localfilesystem ...')
+        }
+
+        function downloadIntoFile(folder) {
+          var filename = url.substring(url.lastIndexOf('/') + 1, url.length).replace(/\s+/g, '_');
+
+          folder.getFile(filename, {
+            create: true,
+            exclusive: false
+          }, function(entry) {
+            //alert('pdf created.')
+            $.mobile.showPageLoadingMsg();
+
+            var ft = new FileTransfer();
+            var _url = addBaseURLIfNeeded(url);
+            ft.download(_url, entry.fullPath, function(entry) {
+              $.mobile.hidePageLoadingMsg();
+              console.log("download complete: " + entry.fullPath);
+
+              //Presenting downloaded document
+              callCordova(Plugins.presentingDocument, [encodeURI(entry.fullPath)]);
+            }, function(error) {
+              $.mobile.hidePageLoadingMsg();
+              alert('An error occured while trying to download file.')
+              console.log("download error source " + error.source);
+              console.log("download error target " + error.target);
+              console.log("upload error code" + error.code);
+            });
+          }, failFS);
+        }
+
+        // Get an arbitrary downloads folder to store dowloaded file temporaly
+        window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, function(fileSystem) {
+          //alert('tmp created.')
+          fileSystem.root.getDirectory("downloads", {
+            create: true,
+            exclusive: false
+          }, downloadIntoFile, failFS);
+        }, failFS);
+      },
       openUploadChooser: function(callback) {
         var currentFile = JSON.parse(_ls.getItem(Constants.fileStorageKey));
         var args = [];
@@ -133,6 +199,7 @@ var NXCordova = function() {
         });
       },
       uploadFile: function(filePath) {
+        console.log("Asset: " + filePath);
         // Ensure to be in a Folderish path
         console.log('start uploading file')
         if (!document.URL.match("@folderish")) {

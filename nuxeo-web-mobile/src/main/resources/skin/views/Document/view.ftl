@@ -96,7 +96,11 @@
           </li>
           <#if hasBlob>
           <li class="nxDocumentItem">
+            <#if Context.getProperty('Cordova')??>
+            <a red="external" target="_blank" data-ajax="false" href="javascript:NXCordova.downloadFromURL('${This.downloadURL}');">
+            <#else>
             <a red="external" target="_blank" data-ajax="false" href="${This.downloadURL}">
+            </#if>
               ${Context.getMessage('label.action.Download')}
             </a>
           </li>
