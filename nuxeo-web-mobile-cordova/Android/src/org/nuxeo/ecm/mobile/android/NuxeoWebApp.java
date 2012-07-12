@@ -20,7 +20,7 @@ public class NuxeoWebApp extends DroidGap {
     public void init() {
         nxWebView = new NuxeoWebViewClient(this);
         nxWebView.addFileToLoad("www/scripts/nuxeo-cordova-wrapper.js");
-
+        
         this.init(new WebView(this), nxWebView, new CordovaChromeClient(this));
     }
 

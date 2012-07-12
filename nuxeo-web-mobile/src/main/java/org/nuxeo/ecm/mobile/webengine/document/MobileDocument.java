@@ -204,6 +204,7 @@ public class MobileDocument extends DocumentObject {
 
     public String getDownloadURL(DocumentModel docModel) throws Exception {
         String filename = (String) doc.getPropertyValue("file:filename");
+        String mimetype = (String) doc.getPropertyValue("file:content/mime-type");
 
         String downloadURL = getNuxeoContextPath() + "/";
         downloadURL += "nxbigfile" + "/";
@@ -211,6 +212,7 @@ public class MobileDocument extends DocumentObject {
         downloadURL += doc.getRef().toString() + "/";
         downloadURL += "blobholder:0" + "/";
         downloadURL += filename;
+        downloadURL += "?mimetype=" + mimetype;
 
         return downloadURL;
     }

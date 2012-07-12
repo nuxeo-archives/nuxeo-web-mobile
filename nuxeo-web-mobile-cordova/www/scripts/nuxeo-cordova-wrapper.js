@@ -127,7 +127,13 @@ var NXCordova = function() {
         }
 
         function downloadIntoFile(folder) {
-          var filename = url.substring(url.lastIndexOf('/') + 1, url.length).replace(/\s+/g, '_');
+          var urlLength = url.length;
+          var baseUrl = url;
+          if (url.lastIndexOf("?") > -1) {
+            urlLength = url.lastIndexOf("?");
+            baseUrl = url.substring(0, urlLength);
+          }
+          var filename = baseUrl.substring(baseUrl.lastIndexOf('/') + 1, urlLength).replace(/\s+/g, '_');
 
           folder.getFile(filename, {
             create: true,
@@ -142,8 +148,15 @@ var NXCordova = function() {
               $.mobile.hidePageLoadingMsg();
               console.log("download complete: " + entry.fullPath);
 
+              // Read mimetype from parameter
+              var mimetype = "";
+              var matches = _url.match(/mimetype=([a-z\./]+)/i);
+              if (matches) {
+                mimetype = matches[1];
+                console.log('Mimetype found: ' + mimetype);
+              }
               //Presenting downloaded document
-              callCordova(Plugins.presentingDocument, [encodeURI(entry.fullPath)]);
+              callCordova(Plugins.presentingDocument, [encodeURI(entry.fullPath), mimetype]);
             }, function(error) {
               $.mobile.hidePageLoadingMsg();
               alert('An error occured while trying to download file.')
@@ -164,7 +177,8 @@ var NXCordova = function() {
         }, failFS);
       },
       openUploadChooser: function(callback) {
-        var currentFile = JSON.parse(_ls.getItem(Constants.fileStorageKey));
+        var file = _ls.getItem(Constants.fileStorageKey);
+        var currentFile = file ? JSON.parse(file) : null;
         var args = [];
         if (currentFile) {
           args.push(currentFile.fileName)

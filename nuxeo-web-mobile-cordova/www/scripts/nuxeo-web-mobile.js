@@ -32,6 +32,7 @@ function init() {
   (function() {
     // Use deviceReady Cordova event to init the app and fallback
     // in case that the event is never sent.
+    console.log("Try to start Cordova.")
     var deviceIsReady = false;
     document.addEventListener("deviceready", function() {
       console.log("Start using Cordova.")
@@ -159,7 +160,6 @@ function refreshServers(servers) {
 function navigateToServerList(isBackNavigation) {
   ServerUtils().getAllServer(function(servers) {
     refreshServers(servers);
-
     changePage('page_servers_list', isBackNavigation);
     if (servers.length == 0) {
       // If there is no servers added ... Go to the serverCreationPage
@@ -190,7 +190,8 @@ var ServerUtils = function(server) {
     }
 
     function getServers() {
-      return JSON.parse(_ls.getItem(Constant.SERVERS_KEY));
+      var servers = _ls.getItem(Constant.SERVERS_KEY);
+      return servers ? JSON.parse(servers) : [];
     }
 
     return {
