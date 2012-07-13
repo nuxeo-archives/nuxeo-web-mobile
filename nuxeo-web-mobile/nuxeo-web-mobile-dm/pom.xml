@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.nuxeo.ecm.mobile</groupId>
+    <artifactId>nuxeo-web-mobile</artifactId>
+    <version>5.6-SNAPSHOT</version>
+  </parent>
+  <artifactId>nuxeo-web-mobile-dm</artifactId>
+  <name>nuxeo-web-mobile-dm</name>
+  <description>WebEngine application using JQuery Mobile to provide a dedicated
+    UI for Mobile browsers for Nuxeo DM.</description>
+  <dependencies>
+
+    <!-- SC -->
+    <dependency>
+      <groupId>org.nuxeo.ecm.social</groupId>
+      <artifactId>nuxeo-user-activity-stream</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.activity</groupId>
+      <artifactId>nuxeo-activity</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.platform</groupId>
+      <artifactId>nuxeo-user-profile</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.rating</groupId>
+      <artifactId>nuxeo-rating-api</artifactId>
+    </dependency>
+
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-resource</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>add-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>src/main/resources</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/seam</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -5,11 +5,11 @@ Bundle-Vendor: Nuxeo
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0-SNAPSHOT
-Bundle-Name: nuxeo-web-mobile
+Bundle-Name: nuxeo-web-mobile-dm
 Nuxeo-Component: OSGI-INF/web-mobile-application-definition-contrib.xml,
  OSGI-INF/web-mobile-pageproviders-contrib.xml,
  OSGI-INF/web-mobile-operation-chains-contrib.xml,
  OSGI-INF/web-mobile-authentification-chain-contrib.xml
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: nuxeo-web-mobile
+Bundle-SymbolicName: nuxeo-web-mobile-dm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
