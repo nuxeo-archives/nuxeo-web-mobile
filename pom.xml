@@ -14,37 +14,11 @@
   <packaging>pom</packaging>
   <description>WebApp exposing Nuxeo with dedicated views for Mobile browsers</description>
 
-  <!-- TODO: move into addons/pom.xml when aligning on 5.6-SNAPSHOT -->
-  <properties>
-    <nuxeo.web.mobile.version>5.6-SNAPSHOT</nuxeo.web.mobile.version>
-  </properties>
-
   <modules>
     <module>nuxeo-application-definition</module>
     <module>nuxeo-web-mobile</module>
     <module>nuxeo-application-definition-sample</module>
   </modules>
-
-  <!-- TODO: move into addons/pom.xml when aligning on 5.6-SNAPSHOT -->
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.nuxeo.ecm.mobile</groupId>
-        <artifactId>nuxeo-application-definition</artifactId>
-        <version>${nuxeo.web.mobile.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.mobile</groupId>
-        <artifactId>nuxeo-web-mobile</artifactId>
-        <version>${nuxeo.web.mobile.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.mobile.sample</groupId>
-        <artifactId>nuxeo-application-definition-sample</artifactId>
-        <version>${nuxeo.web.mobile.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <repositories>
     <repository>
