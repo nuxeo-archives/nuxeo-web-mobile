@@ -19,6 +19,13 @@
     </div>
     
     <div class="ui-content" data-role="content">
+    <h1>Hello world</h1>
+    <#if latestLiked?exists>
+    <h3>${Context.getMessage('label.root.title.latestRates')}</h3>
+    <#assign messageEmptyRates = Context.getMessage("label.message.NoDocumentRated")/>
+    <@docListing latestLiked "${messageEmptyRates}"/>
+    </#if>
+    
     <h3>${Context.getMessage('label.root.title.UserWorkspace')}</h3>
     <#assign messageEmptyUW = Context.getMessage("label.message.NoDocumentInWorkspace")/>
     <@docListing userWorkspace "${messageEmptyUW}"/>

@@ -47,6 +47,7 @@ public class UserHelper {
      */
     public static DocumentModel updateUser(WebContext ctx, DocumentModel user) {
         try {
+            /* XXX disable yet.
             FormData form = ctx.getForm();
             String password = ctx.getRequest().getParameter("user:password");
             if (password != null) {
@@ -63,6 +64,7 @@ public class UserHelper {
             }
 
             getUserManager().updateUser(user);
+            */
             return user;
         } catch (Exception e) {
             throw WebException.wrap("Failed to update document", e);

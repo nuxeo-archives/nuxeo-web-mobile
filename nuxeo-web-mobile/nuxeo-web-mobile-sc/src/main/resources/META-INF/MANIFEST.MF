@@ -1,12 +1,10 @@
 Manifest-Version: 1.0
-Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=nuxe
- o;extends=base;package=org/nuxeo/ecm/mobile/webengine
 Bundle-Vendor: Nuxeo
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0-SNAPSHOT
-Bundle-Name: nuxeo-web-mobile-sc
-Nuxeo-Component: 
+Bundle-Name: nuxeo-web-mobile-sc 
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: nuxeo-web-mobile-sc
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Fragment-Host: nuxeo-web-mobile-dm

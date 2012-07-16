@@ -18,7 +18,7 @@
               <#assign index = index + 1>
               <a class="ui-link-inherit" href="${Root.path}/doc/${doc["ecm:uuid"]}">
               <#if doc["common:icon"] != null && doc["common:icon"] != "">
-                <img class="ui-li-icon ui-li-thumb" src="${skinPath}${doc["common:icon"]}" />
+                <img class="ui-li-icon ui-li-thumb" src="${basePath}/..${doc["common:icon"]}" />
               <#else>
                 <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
               </#if>

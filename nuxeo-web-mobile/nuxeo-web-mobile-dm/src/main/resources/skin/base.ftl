@@ -22,7 +22,6 @@
 
     <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css" />
     <link rel="stylesheet" href="${skinPath}/css/nuxeo-web-mobile.css" />
-    <script src="http://localhost:8081/target/target-script-min.js#anonymous"></script>
     <#if Context.getProperty('Cordova')??>
     <#if Context.getProperty('Cordova').isAndroid>
     <script src="${skinPath}/script/cordova-1.7.0-android.js"></script>

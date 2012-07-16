@@ -19,6 +19,8 @@
 
 package org.nuxeo.ecm.mobile.webengine.document;
 
+import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,15 +46,10 @@ import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
-import org.nuxeo.ecm.rating.api.LikeService;
-import org.nuxeo.ecm.rating.api.LikeStatus;
-import org.nuxeo.ecm.rating.api.RatingService;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
 import org.nuxeo.runtime.api.Framework;
-
-import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
 
 /**
  * This Class resolve a DocumentModel and expose differents restitutions
@@ -111,18 +108,24 @@ public class MobileDocument extends DocumentObject {
         return Response.ok().build();
     }
 
-    @GET
     @Path("like")
     public Object doLike() {
-        LikeService ls = Framework.getLocalService(LikeService.class);
-        String username = ctx.getCoreSession().getPrincipal().getName();
-        if (getHasLiked()) {
-            ls.cancel(username, doc);
-        } else {
-            ls.like(username, doc);
+        try {
+            return ctx.newObject("Like", getDocument());
+        } catch (Exception e) {
+            log.debug(e, e);
+            return ctx.newObject("Empty");
         }
-
-        return Response.ok().build();
+    }
+    
+    @Path("hasLiked")
+    public Object doHasLiked() {
+        try {
+            return ctx.newObject("hasLiked", getDocument());
+        } catch (Exception e) {
+            log.debug(e, e);
+            return ctx.newObject("Empty");
+        }
     }
 
     @Override
@@ -143,7 +146,6 @@ public class MobileDocument extends DocumentObject {
                     ctx.getRoot().getPath(), doc.getId(), mode);
             args.put("mobileURL", mobileURL);
         }
-        args.put("hasLiked", getHasLiked());
         args.put("hasBlob", getHasBlob());
 
         // Add the JSON DForm export
@@ -153,16 +155,10 @@ public class MobileDocument extends DocumentObject {
         return getView(mode).args(args);
     }
 
-    protected boolean getHasLiked() {
-        LikeService rs = Framework.getLocalService(LikeService.class);
-        return rs.hasUserLiked(ctx.getCoreSession().getPrincipal().getName(),
-                doc);
-    }
-    
     protected boolean getHasBlob() {
         DocumentModel doc = getDocument();
         BlobHolder bh = doc.getAdapter(BlobHolder.class);
-        
+
         try {
             return bh.getBlob() != null;
         } catch (ClientException e) {

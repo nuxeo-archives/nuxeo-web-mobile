@@ -34,9 +34,6 @@ import javax.ws.rs.QueryParam;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.ecm.activity.ActivitiesList;
-import org.nuxeo.ecm.activity.Activity;
-import org.nuxeo.ecm.activity.ActivityHelper;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -44,13 +41,10 @@ import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.PathRef;
-import org.nuxeo.ecm.core.api.impl.DocumentModelListImpl;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
-import org.nuxeo.ecm.rating.api.Constants;
-import org.nuxeo.ecm.rating.api.RatingService;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
@@ -118,10 +112,15 @@ public class MobileApplication extends ModuleRoot {
                 return docResolved.doGet();
             }
         }
+        
+        // If SC mobile fragment is enable, redirect to the new homepage
+        if (getSocialObject() != null) {
+            return redirect(ctx.getBaseURL() + ctx.getBasePath() + "/mobile/social");
+        }
+        
         Map<String, Object> args = new HashMap<String, Object>();
-        args.put("latestLiked", getLatestRatedDocs());
         args.put("userWorkspace", getUserWorkspacesDocs());
-
+        
         return getView("index").args(args);
     }
 
@@ -183,20 +182,26 @@ public class MobileApplication extends ModuleRoot {
         DocumentRef ref = new IdRef(docId);
         return new MobileDocument(ctx, ref);
     }
-
+    
     @Path("search")
     public Object doTraverseSearch() {
         return ctx.newObject("Search");
     }
 
     @Path("task")
+    @Deprecated // Since 5.6 with content routing.
     public Object doTraverseTask() {
-        return ctx.newObject("Workflow");
+        return null;
     }
 
     @Path("activity")
     public Object doTraverseActivity() {
         return ctx.newObject("Activity");
+    }
+    
+    @Path("social")
+    public Object doSocial() {
+        return ctx.newObject("Social");
     }
 
     public String getNuxeoContextPath() {
@@ -214,30 +219,15 @@ public class MobileApplication extends ModuleRoot {
                 ONLY_VISIBLE_CHILDREN, null);
     }
 
-    protected DocumentModelList getLatestRatedDocs() {
-        ActivitiesList latestAct = getRatingService().getLastestRatedDocByUser(
-                ctx.getPrincipal().getName(), Constants.LIKE_ASPECT, 10);
-        latestAct.filterActivities(ctx.getCoreSession());
-
-        DocumentModelList ret = new DocumentModelListImpl();
-        for (Activity activity : latestAct) {
-            try {
-                DocumentRef ref = new IdRef(
-                        ActivityHelper.getDocumentId(activity.getTarget()));
-                ret.add(ctx.getCoreSession().getDocument(ref));
-            } catch (ClientException e) {
-                log.info(e.getMessage());
-                log.debug(e, e);
-            }
+    protected Object getSocialObject() {
+        try {
+            return ctx.newObject("Social");
+        } catch (Exception e) {
+            log.debug(e, e);
+            return null;
         }
-
-        return ret;
     }
-
-    protected RatingService getRatingService() {
-        return Framework.getLocalService(RatingService.class);
-    }
-
+    
     protected DocumentViewCodecManager getCodecManager() throws Exception {
         if (codecManager == null) {
             codecManager = Framework.getService(DocumentViewCodecManager.class);

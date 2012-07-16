@@ -18,6 +18,18 @@
 <div data-role="page">
     <script type="text/javascript">
     $(function() {
+      $.ajax({
+        url: '${Root.path}/doc/${This.document.id}/hasLiked',
+        success: function(data) {
+          $("#like-button").removeClass('ui-disabled');
+          if(JSON.parse(data).hasLiked) {
+            setTimeout(function() {
+              $("#like-button img").toggle();
+            }, 50); //Delay toggle ...
+          }
+        }
+      })
+
       $('#like-button').click(function() {
           $.ajax({
             url: '${Root.path}/doc/${This.document.id}/like'
@@ -80,9 +92,9 @@
             <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="${Context.getMessage('label.header.title.Relations')}" src="${skinPath}/icons/relations.png" /></a></li>
             -->
             <li>
-              <a href="#" id="like-button">
-                <img src="${skinPath}/icons/liked.png" alt="Like" <#if !hasLiked>style="display: none;"</#if>/>
-                <img src="${skinPath}/icons/like.png" alt="Unlike" <#if hasLiked>style="display: none;"</#if>/>
+              <a href="#" id="like-button" class="ui-disabled">
+                <img src="${skinPath}/icons/liked.png" style="display: none;" alt="Like"/>
+                <img src="${skinPath}/icons/like.png" alt="Unlike" />
               </a>
             </li>
           </ul>
