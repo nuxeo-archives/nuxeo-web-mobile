@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,6 +28,7 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultObject;
 import org.nuxeo.runtime.api.Framework;
 
 @WebObject(type = "Social")
+@Produces("text/html;charset=UTF-8")
 public class SocialObject extends DefaultObject {
     private static final Log log = LogFactory.getLog(SocialObject.class);
 

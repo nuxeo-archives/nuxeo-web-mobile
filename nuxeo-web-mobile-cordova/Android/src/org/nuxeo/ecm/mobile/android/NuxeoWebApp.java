@@ -39,8 +39,7 @@ public class NuxeoWebApp extends DroidGap {
     @Override
     public void loadUrl(String url) {
         super.loadUrl(url);
-        super.loadUrl(String.format("javascript:var cordovaBase = '%s'",
-                "file://" + BASE_PATH));
+        super.loadUrl(String.format("javascript:var cordovaBase = '%s'", "file://" + BASE_PATH));
         Log.i(TAG, "LoadURL method called.");
     }
 

@@ -3,7 +3,7 @@
 <head>
   <title>
      <@block name="title">
-       Nuxeo
+       Nuxeo title
      </@block>
   </title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
@@ -35,9 +35,9 @@
 
     <!-- rewrite the URL after a redirect from JSF to have mobile URL, 
          initial request accessible in the history -->
-    <script>
+    <script type="text/javascript">
         var mobileHomePath = "${Root.path}";
-        if ('${mobileURL}' != null) {
+        if ('${mobileURL}') {
           window.history.pushState(null, 'Mobile URL', '${mobileURL}');
         }
     </script>

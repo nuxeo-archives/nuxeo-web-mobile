@@ -158,9 +158,9 @@ public class MobileDocument extends DocumentObject {
     protected boolean getHasBlob() {
         DocumentModel doc = getDocument();
         BlobHolder bh = doc.getAdapter(BlobHolder.class);
-
+        
         try {
-            return bh.getBlob() != null;
+            return bh != null && bh.getBlob() != null;
         } catch (ClientException e) {
             log.debug(e, e);
             return false;

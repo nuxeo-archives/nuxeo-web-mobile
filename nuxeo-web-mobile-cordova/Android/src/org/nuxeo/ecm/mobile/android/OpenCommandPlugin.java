@@ -1,39 +1,39 @@
 package org.nuxeo.ecm.mobile.android;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cordova.DirectoryManager;
 import org.apache.cordova.api.Plugin;
 import org.apache.cordova.api.PluginResult;
 import org.apache.cordova.api.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.hardware.Camera;
 import android.net.Uri;
-import android.sax.StartElementListener;
 import android.util.Base64;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
 
 public class OpenCommandPlugin extends Plugin {
 
     private static final String TAG = "OpenCommandPlugin";
 
     protected enum Actions {
-        openUrl, openServer, presentingDocument
+        openUrl, openServer, presentingDocument, askUser
     };
 
     @Override
     public PluginResult execute(String action, JSONArray data, String callbackId) {
         Status status = Status.NO_RESULT;
+        Log.i(TAG, "Action called: " + action);
         try {
             if (Actions.openUrl.toString().equals(action)) {
                 String url = data.getString(0);
@@ -49,12 +49,50 @@ public class OpenCommandPlugin extends Plugin {
                 String documentUrl = data.getString(0);
                 String mimetype = data.getString(1);
                 status = presentingDocument(documentUrl, mimetype);
+            } else if (Actions.askUser.toString().equals(action)) {
+                String documentUrl = null;
+                if (data.length() > 0) {
+                    documentUrl = data.getString(0);
+                }
+                showUploadDialog(documentUrl);
             }
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
             status = Status.JSON_EXCEPTION;
         }
         return new PluginResult(status);
+    }
+
+    /**
+     * @param documentUrl
+     * 
+     */
+    protected void showUploadDialog(String documentUrl) {
+        final List<String> sources = new ArrayList<String>(3);
+        sources.add("from library");
+        if (hasCamera()) sources.add("from camera");
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        webView.getContext());
+                builder.setTitle(R.string.upload_select_source);
+                builder.setItems(sources.toArray(new String[] {}),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                String btnLabel = sources.get(item);
+                                if (btnLabel.equals("from library")) {
+                                    openUrl("javascript:NXCordova.openLibrary();");
+                                } else if (btnLabel.equals("from camera")) {
+                                    openUrl("javascript:NXCordova.takePicture();");
+                                }
+                            }
+                        });
+                builder.create().show();
+            }
+        };
+        this.ctx.runOnUiThread(runnable);
     }
 
     /**
@@ -94,7 +132,8 @@ public class OpenCommandPlugin extends Plugin {
      * @param downloadUrl
      */
     protected Status presentingDocument(String documentUrl, String mimetype) {
-        Log.i(TAG, "Try to presenting url: " + documentUrl + " with mimetype: " + mimetype);
+        Log.i(TAG, "Try to presenting url: " + documentUrl + " with mimetype: "
+                + mimetype);
 
         // Create a file object to ensure file is downloaded.
         File document = new File(documentUrl.substring(7, documentUrl.length()));
@@ -122,6 +161,17 @@ public class OpenCommandPlugin extends Plugin {
             Log.d(TAG, "No application associated with this intent.");
             webView.loadUrl("javascript:alert('No application associated with this kind of document.');");
             return Status.NO_RESULT;
+        }
+    }
+    
+    private boolean hasCamera() {
+        Camera cam = null;
+        try {
+            cam = Camera.open();
+            cam.release();
+            return true;
+        } catch(Exception e) {
+            return false;
         }
     }
 
