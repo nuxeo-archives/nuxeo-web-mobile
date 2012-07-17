@@ -19,7 +19,6 @@
     </div>
     
     <div class="ui-content" data-role="content">
-    <h1>Hello world</h1>
     <#if latestLiked?exists>
     <h3>${Context.getMessage('label.root.title.latestRates')}</h3>
     <#assign messageEmptyRates = Context.getMessage("label.message.NoDocumentRated")/>
