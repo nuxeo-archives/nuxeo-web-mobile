@@ -13,6 +13,7 @@ import org.apache.cordova.api.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -65,14 +66,17 @@ public class OpenCommandPlugin extends Plugin {
     }
 
     /**
-     * @param documentUrl
+     * @param filename
      * 
      */
-    protected void showUploadDialog(String documentUrl) {
+    protected void showUploadDialog(String filename) {
         final List<String> sources = new ArrayList<String>(3);
         sources.add("from library");
         if (hasCamera())
             sources.add("from camera");
+        if (filename != null) {
+            sources.add("from file " + filename);
+        }
         if (hasFileBrowsing())
             sources.add("from other application");
 
@@ -96,6 +100,8 @@ public class OpenCommandPlugin extends Plugin {
                                             Intent.createChooser(
                                                     buildAllFileIntent(),
                                                     "Select an application"), 0);
+                                } else {
+                                    openUrl("javascript:NXCordova.uploadFile();");
                                 }
                             }
                         });
@@ -124,7 +130,7 @@ public class OpenCommandPlugin extends Plugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (intent != null && intent.getDataString() != null) {
+        if (resultCode == Activity.RESULT_OK && intent.getDataString() != null) {
             openUrl(String.format("javascript:NXCordova.uploadFile('%s');",
                     intent.getDataString()));
         }

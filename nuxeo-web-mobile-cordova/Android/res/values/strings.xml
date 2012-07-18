@@ -9,5 +9,6 @@
     <string name="upload_select_source">Select upload source</string>
     <string name="upload_from_library">from library</string>
     <string name="upload_from_camera">from camera</string>
+    <string name="title_activity_intent_receiver">Nuxeo</string>
 
 </resources>

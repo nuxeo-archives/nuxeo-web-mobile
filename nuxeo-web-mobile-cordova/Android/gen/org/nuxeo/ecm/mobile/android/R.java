@@ -34,6 +34,7 @@ public final class R {
         public static final int from_library=0x7f060005;
         public static final int hello_world=0x7f060001;
         public static final int menu_settings=0x7f060002;
+        public static final int title_activity_intent_receiver=0x7f060009;
         public static final int title_activity_nuxeo_web_app=0x7f060003;
         public static final int upload_from_camera=0x7f060008;
         public static final int upload_from_library=0x7f060007;
