@@ -66,10 +66,14 @@ public class NuxeoWebViewClient extends CordovaWebViewClient {
                         ctx.getAssets().open(uri)).useDelimiter("\\A").next());
             }
             String fileContent = filesContentCache.get(uri);
-            ctx.appView.loadUrl("javascript:" + fileContent + ";");
+            loadJavascript(fileContent);
         } catch (IOException e) {
             Log.e(TAG, "Unable to find file: " + e.getMessage());
         }
+    }
+    
+    public void loadJavascript(String js) {
+        ctx.appView.loadUrl("javascript:" + js + ";");
     }
 
 }

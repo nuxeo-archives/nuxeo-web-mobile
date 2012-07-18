@@ -37,11 +37,21 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".NuxeoWebApp"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_nuxeo_web_app" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+                
+                <data android:mimeType="*/*" />
+                
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
