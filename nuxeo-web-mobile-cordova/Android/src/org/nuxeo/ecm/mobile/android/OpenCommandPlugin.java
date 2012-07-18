@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.cordova.api.IPlugin;
 import org.apache.cordova.api.Plugin;
 import org.apache.cordova.api.PluginResult;
 import org.apache.cordova.api.PluginResult.Status;
@@ -70,8 +71,12 @@ public class OpenCommandPlugin extends Plugin {
     protected void showUploadDialog(String documentUrl) {
         final List<String> sources = new ArrayList<String>(3);
         sources.add("from library");
-        if (hasCamera()) sources.add("from camera");
+        if (hasCamera())
+            sources.add("from camera");
+        if (hasFileBrowsing())
+            sources.add("from other application");
 
+        final IPlugin plugin = this;
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -86,6 +91,11 @@ public class OpenCommandPlugin extends Plugin {
                                     openUrl("javascript:NXCordova.openLibrary();");
                                 } else if (btnLabel.equals("from camera")) {
                                     openUrl("javascript:NXCordova.takePicture();");
+                                } else if (btnLabel.equals("from other application")) {
+                                    ctx.startActivityForResult(plugin,
+                                            Intent.createChooser(
+                                                    buildAllFileIntent(),
+                                                    "Select an application"), 0);
                                 }
                             }
                         });
@@ -93,6 +103,31 @@ public class OpenCommandPlugin extends Plugin {
             }
         };
         this.ctx.runOnUiThread(runnable);
+    }
+
+    protected Intent buildAllFileIntent() {
+        Intent intent = new Intent();
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        return intent;
+    }
+
+    protected boolean hasFileBrowsing() {
+        Intent intent = buildAllFileIntent();
+
+        PackageManager packageManager = ctx.getApplicationContext().getPackageManager();
+        return packageManager.queryIntentActivities(intent, 0).size() > 0;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (intent != null && intent.getDataString() != null) {
+            openUrl(String.format("javascript:NXCordova.uploadFile('%s');",
+                    intent.getDataString()));
+        }
     }
 
     /**
@@ -163,14 +198,14 @@ public class OpenCommandPlugin extends Plugin {
             return Status.NO_RESULT;
         }
     }
-    
+
     private boolean hasCamera() {
         Camera cam = null;
         try {
             cam = Camera.open();
             cam.release();
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
