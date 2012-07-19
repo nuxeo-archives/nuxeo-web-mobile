@@ -10,6 +10,11 @@ String.prototype.trailingSlash = function() {
 };
 
 function init() {
+  $('#server_profile_form').submit(function(evt) {
+    evt.preventDefault();
+    return false;
+  })
+
   $("#create_server_profile").bind("click", function(event) {
     var formElementsArray = $('#server_profile_form').serializeArray();
     var formElements = {}
