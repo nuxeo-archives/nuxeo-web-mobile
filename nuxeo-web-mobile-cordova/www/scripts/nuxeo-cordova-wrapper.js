@@ -93,7 +93,7 @@ var NXCordova = function() {
       backAnchor.style.color = '#eee'
       backAnchor.style.fontWeight = 'bold'
       backAnchor.style.fontFamily = 'Helvetica, Arial, sans-serif'
-      backAnchor.setAttribute('href', 'javascript:history.back()');
+      backAnchor.setAttribute('href', 'javascript:history.back();');
 
       backAnchor.appendChild(document.createTextNode('Back'));
       backBtn.appendChild(backAnchor);

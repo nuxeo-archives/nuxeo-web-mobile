@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.cordova.CordovaWebViewClient;
 import org.apache.cordova.DroidGap;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.WebView;
 
@@ -74,6 +75,11 @@ public class NuxeoWebViewClient extends CordovaWebViewClient {
     
     public void loadJavascript(String js) {
         ctx.appView.loadUrl("javascript:" + js + ";");
+    }
+    
+    @Override
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        // Override Cordova default behavior, to not clear history.
     }
 
 }
