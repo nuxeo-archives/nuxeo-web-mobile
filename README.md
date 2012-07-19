@@ -41,8 +41,9 @@ Here is the list of Web Mobile bundles you can find inside this addon:
 * Nuxeo Application Definition: service where you describe an application (Base URL, Login relative Path URL, Request Handler) filters will automatically will do the redirection to your application.
 * Nuxeo Application Sample: simple example of how to use the Nuxeo Application Definition.
 * Nuxeo Web Mobile: This is the WebEngine application that uses JQuery Mobile to provide a dedicate UI for Mobile Browser.
+* Nuxeo Web Mobile Cordova: This is the iOS / Android native project that embedded a Nuxeo server management and enhance your nuxeo-web-mobile experience with some natives behaviors. Send file store into your server to other application, file / camera / gallery direct upload, ...
 
-## How to build
+## How to build nuxeo-web-mobile bundle
 
 You can build Nuxeo Web Mobile application with:
 
