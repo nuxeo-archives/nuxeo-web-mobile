@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 
 public class NuxeoWebApp extends DroidGap {
@@ -41,13 +42,13 @@ public class NuxeoWebApp extends DroidGap {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        Log.e(TAG, "New intent: " + intent.getAction());
-        Log.e(TAG, "Data: " + intent.getDataString());
+        Log.i(TAG, "New intent received: " + intent.getAction());
+        Log.d(TAG, "Data: " + intent.getDataString());
         Uri uri = intent.getData(); // Get data as default.
         // But EXTRA_STREAM should override it.
         if (intent.getExtras() != null) {
             uri = (Uri) intent.getExtras().get(Intent.EXTRA_STREAM);
-            Log.e(TAG, "Stream: " + uri);
+            Log.d(TAG, "Stream: " + uri);
         }
 
         if (uri != null) {
@@ -65,5 +66,4 @@ public class NuxeoWebApp extends DroidGap {
                 "file://" + BASE_PATH));
         Log.i(TAG, "LoadURL method called.");
     }
-
 }

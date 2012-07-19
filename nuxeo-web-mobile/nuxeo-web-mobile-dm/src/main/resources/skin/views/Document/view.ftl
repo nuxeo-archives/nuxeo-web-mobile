@@ -25,7 +25,7 @@
           if(JSON.parse(data).hasLiked) {
             setTimeout(function() {
               $("#like-button img").toggle();
-            }, 50); //Delay toggle ...
+            }, 100); //Delay toggle ...
           }
         }
       })
