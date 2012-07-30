@@ -139,6 +139,39 @@
           </li-->
         </ul>
         
+                <div data-role="collapsible-set" data-content-theme="d">
+            <h2>Metadata</h2>
+            <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
+              <h3>Dublincore</h3>
+              <ul data-inset="true" data-role="listview" data-theme="d">
+                <li data-role="fieldcontain">
+                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.created')}</label>
+                  <span>${doc.dublincore.created.time?date}</span>
+                </li>
+                <li data-role="fieldcontain">
+                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.modified')}</label>
+                  <span>${doc.dublincore.modified.time?date}</span>
+                </li>
+                <li data-role="fieldcontain">
+                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.lastContributor')}</label>
+                  <span>${doc.dublincore.lastContributor}</span>
+                </li>
+                <li data-role="fieldcontain">
+                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.creator')}</label>
+                  <span>${doc.dublincore.creator}</span>
+                </li>
+                <li data-role="fieldcontain">
+                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.contributors')}</label>
+                  <span>
+                  <#list doc.dublincore.contributors as contributor>
+                  ${contributor}<#if x_has_next>, </#if>
+                  </#list>
+                  </span>
+                </li>
+              <ul>
+            </div>
+         </div>
+        
       </div>
     </div>
     
