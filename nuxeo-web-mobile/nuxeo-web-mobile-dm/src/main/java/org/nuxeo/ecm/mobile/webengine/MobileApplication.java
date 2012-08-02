@@ -32,6 +32,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.ClientException;
@@ -78,6 +79,11 @@ public class MobileApplication extends ModuleRoot {
         Map<String, Serializable> context = null;
 
         String userAgent = getContext().getRequest().getHeader("User-Agent");
+        if (StringUtils.isEmpty(userAgent)) {
+            log.debug("User-Agent empty: assuming not on a mobile device.");
+            return;
+        }
+        
         Matcher matcher = CORDOVA_USER_AGENT_REGEXP.matcher(userAgent);
         if (matcher.find()) {
             context = new HashMap<String, Serializable>();
