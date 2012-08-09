@@ -16,8 +16,16 @@
     <module>nuxeo-application-definition</module>
     <module>nuxeo-web-mobile</module>
     <module>nuxeo-application-definition-sample</module>
-    <module>nuxeo-web-mobile-cordova/Android</module>
   </modules>
+
+  <profiles>
+    <profile>
+      <id>packaging-android</id>
+      <modules>
+        <module>nuxeo-web-mobile-cordova/Android</module>
+      </modules>
+    </profile>
+  </profiles>
 
   <dependencyManagement>
     <dependencies>
