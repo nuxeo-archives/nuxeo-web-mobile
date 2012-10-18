@@ -196,7 +196,17 @@ var ServerUtils = function(server) {
 
     function getServers() {
       var servers = _ls.getItem(Constant.SERVERS_KEY);
-      return servers ? JSON.parse(servers) : [];
+      return servers ? JSON.parse(servers) : null;
+    }
+    
+    function buildDefaultServerList() {
+        return [{
+          name: "demo.nuxeo.com",
+          servername: "http://demo.nuxeo.com",
+          login: "Administrator",
+          password: "Administrator",
+          contextPath: "/nuxeo"
+        }]
     }
 
     return {
@@ -207,7 +217,7 @@ var ServerUtils = function(server) {
       getAllServer: function(callback) {
         var servers = getServers()
         if (!servers) {
-          servers = [];
+          servers = buildDefaultServerList();
           setServers(servers)
         }
 
