@@ -47,12 +47,6 @@
 		513D2784157E522F00DEE092 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 513D2783157E522F00DEE092 /* www */; };
 		51633C5B15A1F744009F73B2 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 51633C5A15A1F744009F73B2 /* NSData+Additions.m */; };
 		517A6DA8159B5DFD00304E79 /* NXMOpenCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */; };
-		518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657A8159322710066B9DF /* NXMFileBrowserCommand.m */; };
-		518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 518657AA159322710066B9DF /* NXMFileBrowserViewController.m */; };
-		518657AE159322710066B9DF /* NXMFileBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518657AB159322710066B9DF /* NXMFileBrowserViewController.xib */; };
-		5192A5C91588D5A100D7D6AD /* ChildBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5192A5C41588D5A100D7D6AD /* ChildBrowserCommand.m */; };
-		5192A5CA1588D5A100D7D6AD /* ChildBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5192A5C61588D5A100D7D6AD /* ChildBrowserViewController.m */; };
-		5192A5CB1588D5A100D7D6AD /* ChildBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5192A5C71588D5A100D7D6AD /* ChildBrowserViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,16 +98,6 @@
 		51633C5A15A1F744009F73B2 /* NSData+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Additions.m"; sourceTree = "<group>"; };
 		517A6DA6159B5DFD00304E79 /* NXMOpenCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NXMOpenCommand.h; sourceTree = "<group>"; };
 		517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NXMOpenCommand.m; sourceTree = "<group>"; };
-		518657A7159322710066B9DF /* NXMFileBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserCommand.h; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.h; sourceTree = "<group>"; };
-		518657A8159322710066B9DF /* NXMFileBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NXMFileBrowserCommand.m; path = Plugins/NxFileBrowser/NXMFileBrowserCommand.m; sourceTree = "<group>"; };
-		518657A9159322710066B9DF /* NXMFileBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NXMFileBrowserViewController.h; path = Plugins/NxFileBrowser/NXMFileBrowserViewController.h; sourceTree = "<group>"; };
-		518657AA159322710066B9DF /* NXMFileBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NXMFileBrowserViewController.m; path = Plugins/NxFileBrowser/NXMFileBrowserViewController.m; sourceTree = "<group>"; };
-		518657AB159322710066B9DF /* NXMFileBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NXMFileBrowserViewController.xib; path = Plugins/NxFileBrowser/NXMFileBrowserViewController.xib; sourceTree = "<group>"; };
-		5192A5C31588D5A100D7D6AD /* ChildBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserCommand.h; sourceTree = "<group>"; };
-		5192A5C41588D5A100D7D6AD /* ChildBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserCommand.m; sourceTree = "<group>"; };
-		5192A5C51588D5A100D7D6AD /* ChildBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserViewController.h; sourceTree = "<group>"; };
-		5192A5C61588D5A100D7D6AD /* ChildBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserViewController.m; sourceTree = "<group>"; };
-		5192A5C71588D5A100D7D6AD /* ChildBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildBrowserViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,8 +284,6 @@
 			isa = PBXGroup;
 			children = (
 				517A6DA1159B5D7200304E79 /* NXMOpen */,
-				518657B01593227C0066B9DF /* NXMFileBrowser */,
-				5192A5CD1588D5C900D7D6AD /* ChildBrowser */,
 				5117D206157E07B1009979FB /* README */,
 			);
 			name = Plugins;
@@ -314,30 +296,6 @@
 				517A6DA7159B5DFD00304E79 /* NXMOpenCommand.m */,
 			);
 			name = NXMOpen;
-			sourceTree = "<group>";
-		};
-		518657B01593227C0066B9DF /* NXMFileBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				518657A8159322710066B9DF /* NXMFileBrowserCommand.m */,
-				518657A9159322710066B9DF /* NXMFileBrowserViewController.h */,
-				518657AA159322710066B9DF /* NXMFileBrowserViewController.m */,
-				518657AB159322710066B9DF /* NXMFileBrowserViewController.xib */,
-				518657A7159322710066B9DF /* NXMFileBrowserCommand.h */,
-			);
-			name = NXMFileBrowser;
-			sourceTree = "<group>";
-		};
-		5192A5CD1588D5C900D7D6AD /* ChildBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				5192A5C31588D5A100D7D6AD /* ChildBrowserCommand.h */,
-				5192A5C41588D5A100D7D6AD /* ChildBrowserCommand.m */,
-				5192A5C51588D5A100D7D6AD /* ChildBrowserViewController.h */,
-				5192A5C61588D5A100D7D6AD /* ChildBrowserViewController.m */,
-				5192A5C71588D5A100D7D6AD /* ChildBrowserViewController.xib */,
-			);
-			name = ChildBrowser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,7 +327,7 @@
 		5117D1A6157E07AF009979FB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 5117D1A9157E07AF009979FB /* Build configuration list for PBXProject "nuxeo-web-mobile" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -415,8 +373,6 @@
 				5117D22B157E45F1009979FB /* Default-Landscape@2x~ipad.png in Resources */,
 				5117D22D157E45FA009979FB /* Default-Portrait@2x~ipad.png in Resources */,
 				513D2784157E522F00DEE092 /* www in Resources */,
-				5192A5CB1588D5A100D7D6AD /* ChildBrowserViewController.xib in Resources */,
-				518657AE159322710066B9DF /* NXMFileBrowserViewController.xib in Resources */,
 				512EDFCC1594A55300ED57DF /* Default.png in Resources */,
 				512EDFCE1594A55A00ED57DF /* Default@2x.png in Resources */,
 			);
@@ -448,10 +404,6 @@
 				5117D1D7157E07B0009979FB /* main.m in Sources */,
 				5117D1FF157E07B1009979FB /* AppDelegate.m in Sources */,
 				5117D202157E07B1009979FB /* MainViewController.m in Sources */,
-				5192A5C91588D5A100D7D6AD /* ChildBrowserCommand.m in Sources */,
-				5192A5CA1588D5A100D7D6AD /* ChildBrowserViewController.m in Sources */,
-				518657AC159322710066B9DF /* NXMFileBrowserCommand.m in Sources */,
-				518657AD159322710066B9DF /* NXMFileBrowserViewController.m in Sources */,
 				517A6DA8159B5DFD00304E79 /* NXMOpenCommand.m in Sources */,
 				51633C5B15A1F744009F73B2 /* NSData+Additions.m in Sources */,
 			);
@@ -528,6 +480,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -548,6 +501,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -571,6 +525,7 @@
 					"DEBUG=1,",
 					"CORDOVA_FRAMEWORK=1",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "nuxeo-web-mobile/nuxeo-web-mobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
@@ -602,6 +557,7 @@
 					"NDEBUG=1,",
 					"CORDOVA_FRAMEWORK=1",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "nuxeo-web-mobile/nuxeo-web-mobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
