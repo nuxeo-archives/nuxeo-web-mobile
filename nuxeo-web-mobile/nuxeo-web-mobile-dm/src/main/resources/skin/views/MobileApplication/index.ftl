@@ -16,6 +16,10 @@
 
     <div data-role="header">
       <h1>${Context.getMessage('label.header.title.Home')}</h1>
+      <a class="ui-btn-right" data-ajax="false" href="#" onclick="goToStandardNavigation('${Root.nuxeoContextPath}');"
+        data-iconpos="right" data-icon="home">
+          ${Context.getMessage("command.mobile.backDM")}
+      </a>
     </div>
     
     <div class="ui-content" data-role="content">

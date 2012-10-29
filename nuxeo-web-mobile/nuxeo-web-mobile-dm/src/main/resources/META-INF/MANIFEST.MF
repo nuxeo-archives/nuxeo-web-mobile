@@ -10,7 +10,6 @@ Bundle-ManifestVersion: 2
 Nuxeo-Component: OSGI-INF/web-mobile-application-definition-contrib.xm
  l,OSGI-INF/web-mobile-pageproviders-contrib.xml,OSGI-INF/web-mobile-o
  peration-chains-contrib.xml,OSGI-INF/web-mobile-authentification-chai
- n-contrib.xml
+ n-contrib.xml,OSGI-INF/actions-contrib.xml
 Bundle-SymbolicName: nuxeo-web-mobile-dm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-
