@@ -7,4 +7,5 @@ Bundle-Name: nuxeo-web-mobile-sc
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: nuxeo-web-mobile-sc
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Nuxeo-AllowOverride: true
 Fragment-Host: nuxeo-web-mobile-dm
