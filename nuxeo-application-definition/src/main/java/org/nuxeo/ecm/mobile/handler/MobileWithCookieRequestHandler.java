@@ -36,7 +36,7 @@ public class MobileWithCookieRequestHandler extends MobileRequestHandler {
     @Override
     public boolean isRequestRedirectedToApplication(HttpServletRequest request) {
         Boolean skipMobileRedirection = getCookieValue(request);
-        if (skipMobileRedirection) {
+        if (skipMobileRedirection != null && skipMobileRedirection) {
             return !skipMobileRedirection;
         }
 
@@ -47,7 +47,7 @@ public class MobileWithCookieRequestHandler extends MobileRequestHandler {
     public boolean isRequestRedirectedToApplicationLoginForm(
             HttpServletRequest request) {
         Boolean checkCookie = getCookieValue(request);
-        if (checkCookie) {
+        if (checkCookie != null && checkCookie) {
             return checkCookie;
         }
 
