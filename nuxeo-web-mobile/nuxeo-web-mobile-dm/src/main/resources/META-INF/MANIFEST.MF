@@ -7,6 +7,7 @@ Bundle-ClassPath: .
 Bundle-Version: 1.0-SNAPSHOT
 Bundle-Name: nuxeo-web-mobile-dm
 Bundle-ManifestVersion: 2
+Nuxeo-AllowOverride: true
 Nuxeo-Component: OSGI-INF/web-mobile-application-definition-contrib.xm
  l,OSGI-INF/web-mobile-pageproviders-contrib.xml,OSGI-INF/web-mobile-o
  peration-chains-contrib.xml,OSGI-INF/web-mobile-authentification-chai
