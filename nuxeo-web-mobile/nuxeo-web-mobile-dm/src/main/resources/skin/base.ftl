@@ -27,7 +27,7 @@
     <script src="${skinPath}/script/cordova-1.7.0-android.js"></script>
     </#if>
     <#if Context.getProperty('Cordova').isIOS>
-    <script src="${skinPath}/script/cordova-1.7.0-iOS.js"></script>
+    <script src="${skinPath}/script/cordova-${Context.getProperty('Cordova').version}.0-iOS.js"></script>
     </#if>
     </#if>
     <script src="${skinPath}/script/jquery-1.7.js"></script>

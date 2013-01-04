@@ -13,7 +13,5 @@
 #endif
 
 @interface NXMOpenCommand : CDVPlugin<UIActionSheetDelegate, UIDocumentInteractionControllerDelegate>
--(void)openURL:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 
--(void)openServer:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 @end

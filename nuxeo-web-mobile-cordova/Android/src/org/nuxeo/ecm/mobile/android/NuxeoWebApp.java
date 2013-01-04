@@ -35,7 +35,7 @@ public class NuxeoWebApp extends DroidGap {
         // Change UA
         String currentUA = appView.getSettings().getUserAgentString();
         appView.getSettings().setUserAgentString(
-                currentUA + " Cordova/1.7 (android)");
+                currentUA + " Cordova/2.2 (android)");
     }
 
     @Override

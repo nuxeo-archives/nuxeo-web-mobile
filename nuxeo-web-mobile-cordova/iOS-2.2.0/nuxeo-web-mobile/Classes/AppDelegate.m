@@ -44,7 +44,19 @@
     [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
 
     self = [super init];
+    [AppDelegate initUserAgent];
     return self;
+}
+
++ (void)initUserAgent {
+    UIWebView *webView = [[[UIWebView alloc]init] autorelease];
+    NSString *ua = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    
+    NSString *newUa = [NSString stringWithFormat:@"%@ Cordova/%@ (iOS)", ua, @"2.2"];
+    
+    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newUa, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    [dictionnary release];
 }
 
 #pragma UIApplicationDelegate implementation

@@ -125,14 +125,27 @@
     if (self.invokeString) {
         // this is passed before the deviceready event is fired, so you can access it in js when you receive deviceready
         NSLog(@"DEPRECATED: window.invokeString - use the window.handleOpenURL(url) function instead, which is always called when the app is launched through a custom scheme url.");
-        NSString* jsString = [NSString stringWithFormat:@"var invokeString = \"%@\";", self.invokeString];
+        NSString* jsString = [NSString stringWithFormat:@"NXCordova.handleOpenURL('%@');", self.invokeString];
         [theWebView stringByEvaluatingJavaScriptFromString:jsString];
     }
 
     // Black base color for background matches the native apps
     theWebView.backgroundColor = [UIColor blackColor];
+    
+    // Add custom JS
+    NSURL *baseDirURL = [[NSBundle mainBundle] URLForResource:self.wwwFolderName withExtension:nil];
+    [theWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var cordovaBase = '%@'", baseDirURL.absoluteURL]];
+    
+    [self fileToBeExecutedWith:@"scripts/nuxeo-cordova-wrapper.js" inWebView:theWebView];
+    NSLog(@"URL: %@", [theWebView.request.URL absoluteString]);
 
     return [super webViewDidFinishLoad:theWebView];
+}
+
+-(NSString *)fileToBeExecutedWith:(NSString *)name inWebView:(UIWebView*)aWebView {
+    NSURL *url = [NSURL fileURLWithPath:[self.commandDelegate pathForResource:name]];
+    NSError *error;
+    return [aWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error]];
 }
 
 /* Comment out the block below to over-ride */
