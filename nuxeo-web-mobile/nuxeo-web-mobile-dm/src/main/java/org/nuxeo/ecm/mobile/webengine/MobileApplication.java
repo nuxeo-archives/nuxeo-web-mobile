@@ -90,8 +90,6 @@ public class MobileApplication extends ModuleRoot {
 
             context.put("version", matcher.group(1));
             context.put("device", matcher.group(2));
-            context.put("isIOS", matcher.group(2).matches("iOS"));
-            context.put("isAndroid", matcher.group(2).matches("android"));
 
             log.info("Cordova User-Agent detected");
         }

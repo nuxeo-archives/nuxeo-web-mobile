@@ -23,12 +23,7 @@
     <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css" />
     <link rel="stylesheet" href="${skinPath}/css/nuxeo-web-mobile.css" />
     <#if Context.getProperty('Cordova')??>
-    <#if Context.getProperty('Cordova').isAndroid>
-    <script src="${skinPath}/script/cordova-1.7.0-android.js"></script>
-    </#if>
-    <#if Context.getProperty('Cordova').isIOS>
-    <script src="${skinPath}/script/cordova-${Context.getProperty('Cordova').version}.0-iOS.js"></script>
-    </#if>
+    <script src="${skinPath}/script/cordova-${Context.getProperty('Cordova').version}.0-${Context.getProperty('Cordova').device}.js"></script>
     </#if>
     <script src="${skinPath}/script/jquery-1.7.js"></script>
     <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>
