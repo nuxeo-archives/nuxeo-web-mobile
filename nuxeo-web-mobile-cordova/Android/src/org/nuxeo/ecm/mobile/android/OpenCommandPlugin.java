@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cordova.api.IPlugin;
-import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 import org.apache.cordova.api.PluginResult;
 import org.apache.cordova.api.PluginResult.Status;
 import org.json.JSONArray;
@@ -24,20 +24,20 @@ import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 
-public class OpenCommandPlugin extends Plugin {
+public class OpenCommandPlugin extends CordovaPlugin {
 
     private static final String TAG = "OpenCommandPlugin";
 
     protected enum Actions {
-        openUrl, openServer, presentingDocument, askUser
+        openURL, openServer, presentingDocument, askUser
     };
 
     @Override
-    public PluginResult execute(String action, JSONArray data, String callbackId) {
+    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
         Status status = Status.NO_RESULT;
         Log.i(TAG, "Action called: " + action);
         try {
-            if (Actions.openUrl.toString().equals(action)) {
+            if (Actions.openURL.toString().equals(action)) {
                 String url = data.getString(0);
 
                 status = openUrl(url);
@@ -62,7 +62,7 @@ public class OpenCommandPlugin extends Plugin {
             Log.e(TAG, e.getMessage());
             status = Status.JSON_EXCEPTION;
         }
-        return new PluginResult(status);
+        return status == Status.OK;
     }
 
     /**
@@ -80,7 +80,7 @@ public class OpenCommandPlugin extends Plugin {
         if (hasFileBrowsing())
             sources.add("from other application");
 
-        final IPlugin plugin = this;
+        final CordovaPlugin plugin = this;
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -96,7 +96,7 @@ public class OpenCommandPlugin extends Plugin {
                                 } else if (btnLabel.equals("from camera")) {
                                     openUrl("javascript:NXCordova.takePicture();");
                                 } else if (btnLabel.equals("from other application")) {
-                                    ctx.startActivityForResult(plugin,
+                                    cordova.startActivityForResult(plugin,
                                             Intent.createChooser(
                                                     buildAllFileIntent(),
                                                     "Select an application"), 0);
@@ -108,7 +108,7 @@ public class OpenCommandPlugin extends Plugin {
                 builder.create().show();
             }
         };
-        this.ctx.runOnUiThread(runnable);
+        cordova.getActivity().runOnUiThread(runnable);
     }
 
     protected Intent buildAllFileIntent() {
@@ -122,7 +122,7 @@ public class OpenCommandPlugin extends Plugin {
     protected boolean hasFileBrowsing() {
         Intent intent = buildAllFileIntent();
 
-        PackageManager packageManager = ctx.getApplicationContext().getPackageManager();
+        PackageManager packageManager = cordova.getActivity().getApplicationContext().getPackageManager();
         return packageManager.queryIntentActivities(intent, 0).size() > 0;
     }
 
@@ -192,11 +192,11 @@ public class OpenCommandPlugin extends Plugin {
         }
 
         // Open Package Manager
-        PackageManager packageManager = ctx.getApplicationContext().getPackageManager();
+        PackageManager packageManager = cordova.getActivity().getApplicationContext().getPackageManager();
         List<ResolveInfo> activities = packageManager.queryIntentActivities(
                 intent, 0);
         if (activities.size() > 0) {
-            ctx.startActivity(intent);
+            cordova.getActivity().startActivity(intent);
             return Status.OK;
         } else {
             Log.d(TAG, "No application associated with this intent.");

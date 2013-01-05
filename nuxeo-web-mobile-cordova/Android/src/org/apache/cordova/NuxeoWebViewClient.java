@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.cordova.CordovaWebViewClient;
 import org.apache.cordova.DroidGap;
+import org.nuxeo.ecm.mobile.android.NuxeoWebApp;
 
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -40,6 +41,8 @@ public class NuxeoWebViewClient extends CordovaWebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         injectFiles(url);
+        loadJavascript(String.format("var cordovaBase = '%s'", "file://"
+                + NuxeoWebApp.BASE_PATH));
     }
 
     public void addFileToLoad(String file) {
@@ -72,11 +75,11 @@ public class NuxeoWebViewClient extends CordovaWebViewClient {
             Log.e(TAG, "Unable to find file: " + e.getMessage());
         }
     }
-    
+
     public void loadJavascript(String js) {
         ctx.appView.loadUrl("javascript:" + js + ";");
     }
-    
+
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         // Override Cordova default behavior, to not clear history.
