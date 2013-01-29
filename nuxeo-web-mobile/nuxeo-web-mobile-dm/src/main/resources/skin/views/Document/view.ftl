@@ -1,15 +1,19 @@
-<#macro "emailSubject">New%20Document%20will%20send</#macro>
+<#macro "emailSubject">[Nuxeo] ${This.getDisplayPrincipalName()} shared the document ${Document.title}</#macro>
 
 <#macro "emailBody" document>
   Hi,%0D
   %0D
-  ${Context.principal.name} found a document named '${document.title}' to share it with you. As this document stored
-  in your Nuxeo, it can't be a spam. So click quickly on this following link and enjoy.%0D
+  ${This.getDisplayPrincipalName()} thought you%27d like ${document.title}: ${This.getJSFURLPath(document)
+}.%0D
   %0D
-  ${This.getJSFURLPath(document)}%0D
   %0D
-  regards,%0D
-  Your sincerely Nuxeo Server.
+  Updated: ${document.dublincore.modified.time?datetime}%0D
+  Created: ${document.dublincore.created?datetime}%0D
+  Author: ${This.getDisplayPrincipalName(document.dublincore.creator)}%0D
+  %0D
+  Location: ${document.path}%0D
+  State: ${document.lifeCycleState}%0D
+  Version: ${document.versionLabel}%0D
 </#macro>
 
 <@extends src="base.ftl">
@@ -66,7 +70,7 @@
             <#list doc.dublincore.contributors as contributor>
               <#if contributor != "system">
                 <span class="tag">
-                  <a href="${Root.path}/profile/${contributor}">${contributor}</a>
+                  <a href="${Root.path}/profile/${contributor}">${This.getDisplayPrincipalName(contributor)}</a>
                 </span>
               </#if>
             </#list>
@@ -154,17 +158,17 @@
                 </li>
                 <li data-role="fieldcontain">
                   <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.lastContributor')}</label>
-                  <span>${doc.dublincore.lastContributor}</span>
+                  <span>${This.getDisplayPrincipalName(doc.dublincore.lastContributor)}</span>
                 </li>
                 <li data-role="fieldcontain">
                   <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.creator')}</label>
-                  <span>${doc.dublincore.creator}</span>
+                  <span>${This.getDisplayPrincipalName(doc.dublincore.creator)}</span>
                 </li>
                 <li data-role="fieldcontain">
                   <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.contributors')}</label>
                   <span>
                   <#list doc.dublincore.contributors as contributor>
-                  ${contributor}<#if x_has_next>, </#if>
+                  ${This.getDisplayPrincipalName(contributor)}<#if x_has_next>, </#if>
                   </#list>
                   </span>
                 </li>

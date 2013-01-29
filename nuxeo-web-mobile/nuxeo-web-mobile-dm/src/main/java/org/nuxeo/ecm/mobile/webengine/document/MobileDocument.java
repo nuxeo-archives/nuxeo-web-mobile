@@ -19,16 +19,7 @@
 
 package org.nuxeo.ecm.mobile.webengine.document;
 
-import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.automation.AutomationService;
@@ -38,7 +29,6 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
-import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.rest.DocumentObject;
 import org.nuxeo.ecm.mobile.webengine.adapter.JSonExportAdapter;
 import org.nuxeo.ecm.platform.ec.notification.service.NotificationServiceHelper;
@@ -46,10 +36,20 @@ import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
+import org.nuxeo.ecm.platform.usermanager.UserManager;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
 import org.nuxeo.runtime.api.Framework;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
 
 /**
  * This Class resolve a DocumentModel and expose differents restitutions
@@ -95,7 +95,7 @@ public class MobileDocument extends DocumentObject {
 
     @GET
     @Path("mailIt")
-    public Object doMailIt() {
+    public Object emailToCurrentPrincipal() {
         try {
             OperationContext subctx = new OperationContext(
                     ctx.getCoreSession(), null);
@@ -117,7 +117,7 @@ public class MobileDocument extends DocumentObject {
             return ctx.newObject("Empty");
         }
     }
-    
+
     @Path("hasLiked")
     public Object doHasLiked() {
         try {
@@ -158,7 +158,7 @@ public class MobileDocument extends DocumentObject {
     protected boolean getHasBlob() {
         DocumentModel doc = getDocument();
         BlobHolder bh = doc.getAdapter(BlobHolder.class);
-        
+
         try {
             return bh != null && bh.getBlob() != null;
         } catch (ClientException e) {
@@ -167,7 +167,7 @@ public class MobileDocument extends DocumentObject {
         }
     }
 
-    public boolean hasPreview() throws PropertyException, ClientException {
+    public boolean hasPreview() throws ClientException {
         if (doc.hasSchema("file")
                 && doc.getPropertyValue("file:content") != null) {
             return PreviewHelper.typeSupportsPreview(doc);
@@ -252,6 +252,27 @@ public class MobileDocument extends DocumentObject {
             codecManager = Framework.getService(DocumentViewCodecManager.class);
         }
         return codecManager;
+    }
+
+    public String getDisplayPrincipalName(String name) {
+        try {
+            NuxeoPrincipal principal = Framework.getLocalService(
+                    UserManager.class).getPrincipal(name);
+            return getDisplayPrincipal(principal);
+        } catch (ClientException e) {
+            log.debug(e, e);
+            return name;
+        }
+    }
+
+    public String getDisplayPrincipalName() {
+        return getDisplayPrincipal(getPrincipal());
+    }
+
+    protected String getDisplayPrincipal(NuxeoPrincipal principal) {
+        String display = (principal.getFirstName() + " " + principal.getLastName()).trim();
+
+        return StringUtils.isBlank(display) ? principal.getName() : display;
     }
 
 }
