@@ -29,6 +29,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.URIUtils;
@@ -80,7 +81,7 @@ public class ApplicationRedirectionFilter implements Filter {
             return;
         }
 
-        String targetApplicationBaseURL = service.getApplicationBaseURL(req);
+        String targetApplicationBaseURL = service.getApplicationBaseURI(req);
 
         if (targetApplicationBaseURL == null) {
             log.debug("No application match this request context "
@@ -143,7 +144,12 @@ public class ApplicationRedirectionFilter implements Filter {
             HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put(INITIAL_TARGET_URL_PARAM_NAME, NuxeoAuthenticationFilter.getRequestedPage(request));
+
+        String requestedPage = NuxeoAuthenticationFilter.getRequestedPage(request);
+        if (!StringUtils.isBlank(requestedPage)) {
+            parameters.put(INITIAL_TARGET_URL_PARAM_NAME, requestedPage);
+        }
+
         String redirectURI = URIUtils.addParametersToURIQuery(
                 service.getApplicationBaseURL(request),
                 parameters);
@@ -151,7 +157,6 @@ public class ApplicationRedirectionFilter implements Filter {
                 + "=> Application redirected: target URL: " + redirectURI);
 
         response.sendRedirect(redirectURI);
-        return;
     }
 
     /**
@@ -175,7 +180,7 @@ public class ApplicationRedirectionFilter implements Filter {
             log.debug("Request uri is the root of the application");
             return true;
         }
-        char character = uri.charAt((targetApplicationBaseURL).length());
+        char character = uri.charAt(targetApplicationBaseURL.length());
         if (character != '/' && character != '?' && character != '#'
                 && character != '@') {
             log.debug("Request uri is not a child of application base url");

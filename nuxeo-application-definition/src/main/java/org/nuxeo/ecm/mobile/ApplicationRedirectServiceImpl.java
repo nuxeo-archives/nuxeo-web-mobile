@@ -58,6 +58,16 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         applicationDefinition, requestHandlers
     }
 
+    protected String buildRedirectUrl(HttpServletRequest request,
+            String... uris) {
+        Path path = new Path("");
+        for (String uri : uris) {
+            path = path.append(uri);
+        }
+
+        return VirtualHostHelper.getBaseURL(request) + path.toString();
+    }
+
     protected Path getNuxeoRelativeContextPath() {
         if (nuxeoRelativeContextPath == null) {
             nuxeoRelativeContextPath = new Path(
@@ -228,6 +238,18 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     + " no Application base url found"));
             return null;
         }
+        return buildRedirectUrl(request, app.getApplicationRelativePath());
+    }
+
+    @Override
+    public String getApplicationBaseURI(HttpServletRequest request) {
+        ApplicationDefinitionDescriptor app = getTargetApplication(request);
+        if (app == null) {
+            log.debug(String.format("No application matched for this request,"
+                    + " no Application base uri found"));
+            return null;
+        }
+
         return getNuxeoRelativeContextPath().append(
                 app.getApplicationRelativePath()).toString();
     }
@@ -240,8 +262,9 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     + " no Login page found"));
             return null;
         }
-        return getNuxeoRelativeContextPath().append(
-                app.getApplicationRelativePath()).append(app.getLoginPage()).toString();
+
+        return buildRedirectUrl(request, app.getApplicationRelativePath(),
+                app.getLoginPage());
     }
 
     @Override
@@ -252,8 +275,8 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
                     + ", no Logout page found"));
             return null;
         }
-        return getNuxeoRelativeContextPath().append(
-                app.getApplicationRelativePath()).append(app.getLogoutPage()).toString();
+        return buildRedirectUrl(request, app.getApplicationRelativePath(),
+                app.getLogoutPage());
     }
 
     /**
@@ -298,7 +321,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
             resourcesUriChanged.add(resourceUri);
             app.resourcesBaseUrl = resourcesUriChanged;
         }
-        
+
         if (app.getLoginPage() == null) {
             String messageTemplate = "Application name %s given in '%s' component as "
                     + "an empty login URL, can't register it";

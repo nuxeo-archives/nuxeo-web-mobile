@@ -119,7 +119,7 @@ public class MobileApplication extends ModuleRoot {
         
         // If SC mobile fragment is enable, redirect to the new homepage
         if (getSocialObject() != null) {
-            return redirect(ctx.getBaseURL() + ctx.getBasePath() + "/mobile/social");
+            return redirect(ctx.getServerURL() + ctx.getModulePath() + "/social");
         }
         
         Map<String, Object> args = new HashMap<String, Object>();
