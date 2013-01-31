@@ -1,10 +1,13 @@
 package org.nuxeo.ecm.mobile.webengine.adapter;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.DocumentModelComparator;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.Filter;
 import org.nuxeo.ecm.core.api.impl.CompoundFilter;
@@ -53,7 +56,12 @@ public abstract class DefaultMobileAdapter extends DefaultAdapter {
     
     public DocumentModelList getChildren() throws ClientException {
         CoreSession session = ctx.getCoreSession();
+        Map<String, String> order = new HashMap<String, String>();
+        order.put("title", "asc");
+
+        DocumentModelComparator dmc = new DocumentModelComparator("dublincore", order);
+
         return session.getChildren(getDocumentModel().getRef(), null,
-                ONLY_VISIBLE_CHILDREN, null);
+                ONLY_VISIBLE_CHILDREN, dmc);
     }
 }
