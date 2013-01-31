@@ -208,13 +208,6 @@ public class MobileApplication extends ModuleRoot {
         return ctx.newObject("Social");
     }
 
-    public String getNuxeoContextPath() {
-        if (nuxeoContextPath == null) {
-            nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
-        }
-        return nuxeoContextPath;
-    }
-
     protected DocumentModelList getUserWorkspacesDocs() throws ClientException {
         CoreSession session = ctx.getCoreSession();
         DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(
