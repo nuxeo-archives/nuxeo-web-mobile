@@ -11,7 +11,7 @@
 
 /* Footer */
 .icon-footer {
-  background: url("/nuxeo/site/skin/nuxeo/icons/footer_home_off.png") no-repeat scroll 50% center / 32px auto transparent;
+  background: url('../icons/footer_home_off.png') no-repeat scroll 50% center / 32px auto transparent;
   display: inline-block;
   height: 32px;
   width: 32px }
