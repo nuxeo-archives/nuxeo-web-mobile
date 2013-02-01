@@ -25,21 +25,24 @@
       $.ajax({
         url: '${Root.path}/doc/${This.document.id}/hasLiked',
         success: function(data) {
-          $("#like-button").removeClass('ui-disabled');
-          if(JSON.parse(data).hasLiked) {
-            setTimeout(function() {
-              $("#like-button img").toggle();
-            }, 100); //Delay toggle ...
-          }
+          setTimeout(function() {
+            if(JSON.parse(data).hasLiked) {
+              setTimeout(function() {
+                $(".like-button .icon-docview").toggle();
+              }, 200); //Delay toggle ...
+            }
+
+            $(".like-button").removeClass('ui-disabled');
+          }, 200);
         }
       })
 
-      $('#like-button').click(function() {
+      $('.like-button').click(function() {
           $.ajax({
             url: '${Root.path}/doc/${This.document.id}/like'
           }).done(function() {
-              $("#like-button img").toggle();
-              $("#like-button").removeClass("ui-btn-active");
+              $(".like-button .icon-docview").toggle();
+              $(".like-button").removeClass("ui-btn-active");
           }).fail(function() {
             alert('Something went wrong while liking your document.')
           });
@@ -82,41 +85,41 @@
             <#if This.hasPreview()>
               <li>
                 <a data-ajax="false" href="${This.previewURL}">
-                  <img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" />
+                  <span class="icon-docview icons-docview-preview">&nbsp;</span>
                 </a>
               </li>
             </#if>
             <#if doc.schemas?seq_contains("note")>
               <li>
                 <a href="${Root.path}/doc/${doc.id}/@preview">
-                  <img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" />
+                  <span class="icon-docview icons-docview-preview">&nbsp;</span>
                 </a>
               </li>
             </#if>
             <#if doc.isFolder>
               <li>
                 <a href="${Root.path}/doc/${doc.id}/@folderish">
-                  <img alt="${Context.getMessage('label.header.title.Content')}" src="${skinPath}/icons/preview.png" />
+                  <span class="icon-docview icons-docview-preview">&nbsp;</span>
                 </a>
               </li>
             </#if>
             <li>
               <a href="${Root.path}/doc/${doc.id}/@comment">
-                <img alt="${Context.getMessage('label.header.title.Comments')}" src="${skinPath}/icons/comments.png" />
+                <span class="icon-docview icons-docview-comments">&nbsp;</span>
               </a>
             </li>
             <li>
               <a href="${Root.path}/doc/${doc.id}/@annotations">
-                <img alt="${Context.getMessage('label.header.title.Annotations')}" src="${skinPath}/icons/annotations.png" />
+                <span class="icon-docview icons-docview-annotations">&nbsp;</span>
               </a>
             </li>
             <!-- Distabled yet
             <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="${Context.getMessage('label.header.title.Relations')}" src="${skinPath}/icons/relations.png" /></a></li>
             -->
             <li>
-              <a href="#" id="like-button" class="ui-disabled">
-                <img src="${skinPath}/icons/liked.png" style="display: none;" alt="Like"/>
-                <img src="${skinPath}/icons/like.png" alt="Unlike" />
+              <a href="#" class="ui-disabled like-button">
+                <span class="icon-docview icons-docview-like">&nbsp;</span>
+                <span class="icon-docview icons-docview-liked" style="display: none;" >&nbsp;</span>
               </a>
             </li>
           </ul>
