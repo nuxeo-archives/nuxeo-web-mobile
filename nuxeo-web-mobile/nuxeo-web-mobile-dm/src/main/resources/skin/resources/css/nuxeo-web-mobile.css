@@ -9,6 +9,26 @@
   .login .authentification { margin: 13% auto 0; width: 70% }
   .login .authentification form { margin: auto; max-width: 22em }
 
+/* Footer */
+.icon-footer {
+  background: url("/nuxeo/site/skin/nuxeo/icons/footer_home_off.png") no-repeat scroll 50% center / 32px auto transparent;
+  display: inline-block;
+  height: 32px;
+  width: 32px }
+
+.icons-footer-browse { background-image: url('../icons/footer_browse_off.png') }
+.icons-footer-home { background-image: url('../icons/footer_home_off.png') }
+.icons-footer-logout { background-image: url('../icons/footer_logout_off.png') }
+.icons-footer-profile { background-image: url('../icons/footer_profile_off.png') }
+.icons-footer-search { background-image: url('../icons/footer_search_off.png') }
+
+@media screen and (device-pixel-ratio: 2) {
+    .icons-footer-browse { background-image: url('../icons/footer_browse_off@2x.png') }
+    .icons-footer-home { background-image: url('../icons/footer_home_off@2x.png') }
+    .icons-footer-logout { background-image: url('../icons/footer_logout_off@2x.png') }
+    .icons-footer-profile { background-image: url('../icons/footer_profile_off@2x.png') }
+    .icons-footer-search { background-image: url('../icons/footer_search_off@2x.png') } }
+
 /* Home */
 .home { background: #dfecff }
 .home .ui-grid-a { padding-top: 2em }
