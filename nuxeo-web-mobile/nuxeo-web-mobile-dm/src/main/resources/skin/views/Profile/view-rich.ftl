@@ -1,14 +1,14 @@
 <@extends src="base.ftl">
 
 <@block name="content">
-<div data-role="page" data-theme="d" data-add-back-btn="true">
+<div data-role="page" data-add-back-btn="true">
     <#assign username = userMainInfo.user.username>
     <div data-role="header">
         <h1>${Context.getMessage('label.header.title.Profile')}</h1>
     </div>
 
     <div data-role="content" class="profile">
-      <div class="white nospace profileDetail">
+      <div class="nospace profileDetail">
         <div class="avatar">
           <img src="${This.getAvatarURI(username)}" alt="Avatar">
         </div>

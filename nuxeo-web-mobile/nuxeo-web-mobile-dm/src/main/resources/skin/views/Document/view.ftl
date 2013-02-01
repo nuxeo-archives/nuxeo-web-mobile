@@ -143,38 +143,38 @@
           </li-->
         </ul>
         
-                <div data-role="collapsible-set" data-content-theme="d">
-            <h2>${Context.getMessage('label.summary.metadata')}</h2>
-            <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
-              <h3>Dublincore</h3>
-              <ul data-inset="true" data-role="listview" data-theme="d">
-                <li data-role="fieldcontain">
-                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.created')}</label>
-                  <span><#if doc.dublincore.created != "">${doc.dublincore.created}</#if></span>
-                </li>
-                <li data-role="fieldcontain">
-                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.modified')}</label>
-                  <span><#if doc.dublincore.modified != "">${doc.dublincore.modified.time?datetime}</#if></span>
-                </li>
-                <li data-role="fieldcontain">
-                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.lastContributor')}</label>
-                  <span>${This.getDisplayPrincipalName(doc.dublincore.lastContributor)}</span>
-                </li>
-                <li data-role="fieldcontain">
-                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.creator')}</label>
-                  <span>${This.getDisplayPrincipalName(doc.dublincore.creator)}</span>
-                </li>
-                <li data-role="fieldcontain">
-                  <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.contributors')}</label>
-                  <span>
-                  <#list doc.dublincore.contributors as contributor>
-                  ${This.getDisplayPrincipalName(contributor)}<#if x_has_next>, </#if>
-                  </#list>
-                  </span>
-                </li>
-              <ul>
-            </div>
-         </div>
+        <div data-role="collapsible-set" data-content-theme="d">
+          <h2>${Context.getMessage('action.view.metadata.common')}</h2>
+          <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
+            <h3>Dublincore</h3>
+            <ul data-inset="true" data-role="listview" data-theme="d">
+              <li data-role="fieldcontain">
+                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.created')}</label>
+                <span><#if doc.dublincore.created != "">${doc.dublincore.created}</#if></span>
+              </li>
+              <li data-role="fieldcontain">
+                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.modified')}</label>
+                <span><#if doc.dublincore.modified != "">${doc.dublincore.modified.time?datetime}</#if></span>
+              </li>
+              <li data-role="fieldcontain">
+                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.lastContributor')}</label>
+                <span>${This.getDisplayPrincipalName(doc.dublincore.lastContributor)}</span>
+              </li>
+              <li data-role="fieldcontain">
+                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.creator')}</label>
+                <span>${This.getDisplayPrincipalName(doc.dublincore.creator)}</span>
+              </li>
+              <li data-role="fieldcontain">
+                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.contributors')}</label>
+                <span>
+                <#list doc.dublincore.contributors as contributor>
+                ${This.getDisplayPrincipalName(contributor)}<#if x_has_next>, </#if>
+                </#list>
+                </span>
+              </li>
+            <ul>
+          </div>
+        </div>
         
       </div>
     </div>

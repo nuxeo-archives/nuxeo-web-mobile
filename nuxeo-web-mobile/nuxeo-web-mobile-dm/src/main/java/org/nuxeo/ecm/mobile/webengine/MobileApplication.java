@@ -17,9 +17,6 @@
 
 package org.nuxeo.ecm.mobile.webengine;
 
-import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
-import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_VISIBLE_CHILDREN;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +47,9 @@ import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
 
+import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
+import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_VISIBLE_CHILDREN;
+
 /**
  * Entry point of the webengine application
  * 
@@ -72,6 +72,10 @@ public class MobileApplication extends ModuleRoot {
 
     protected static final Pattern CORDOVA_USER_AGENT_REGEXP = Pattern.compile("Cordova/(.+?) \\((.*)\\)");
 
+    protected enum ToolbarPage {
+        HOME, BROWSE, PROFILE, SEARCH
+    }
+
     @Override
     protected void initialize(Object... args) {
         // Check if the Client is using Cordova
@@ -83,7 +87,7 @@ public class MobileApplication extends ModuleRoot {
             log.debug("User-Agent empty: assuming not on a mobile device.");
             return;
         }
-        
+
         Matcher matcher = CORDOVA_USER_AGENT_REGEXP.matcher(userAgent);
         if (matcher.find()) {
             context = new HashMap<String, Serializable>();
@@ -113,18 +117,21 @@ public class MobileApplication extends ModuleRoot {
                         + initialURL);
                 MobileDocument docResolved = new MobileDocument(ctx,
                         docView.getDocumentLocation().getDocRef());
+                setCurrentPage(ToolbarPage.BROWSE);
                 return docResolved.doGet();
             }
         }
-        
+
         // If SC mobile fragment is enable, redirect to the new homepage
         if (getSocialObject() != null) {
-            return redirect(ctx.getServerURL() + ctx.getModulePath() + "/social");
+            return redirect(ctx.getServerURL() + ctx.getModulePath()
+                    + "/social");
         }
-        
+
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("userWorkspace", getUserWorkspacesDocs());
-        
+
+        setCurrentPage(ToolbarPage.HOME);
         return getView("index").args(args);
     }
 
@@ -135,6 +142,7 @@ public class MobileApplication extends ModuleRoot {
 
     @Path("profile")
     public Object doTraverseProfile() {
+        setCurrentPage(ToolbarPage.PROFILE);
         return ctx.newObject("Profile");
     }
 
@@ -160,6 +168,7 @@ public class MobileApplication extends ModuleRoot {
         } while (children.size() == 1);
         args.put("domain", children);
 
+        setCurrentPage(ToolbarPage.BROWSE);
         return getView("root").args(args);
     }
 
@@ -167,6 +176,7 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseRootDocumentByPath(@PathParam("adapter")
     String adapter) {
         DocumentRef ref = new PathRef("/");
+        setCurrentPage(ToolbarPage.BROWSE);
         if ("search".equals(adapter)) {
             return new MobileDocument(ctx, ref).search();
         }
@@ -177,6 +187,7 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseDocumentByPath(@PathParam("docPathValue")
     String docPath) {
         DocumentRef ref = new PathRef(docPath);
+        setCurrentPage(ToolbarPage.BROWSE);
         return new MobileDocument(ctx, ref);
     }
 
@@ -184,16 +195,19 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseDocument(@PathParam("docId")
     String docId) {
         DocumentRef ref = new IdRef(docId);
+        setCurrentPage(ToolbarPage.BROWSE);
         return new MobileDocument(ctx, ref);
     }
-    
+
     @Path("search")
     public Object doTraverseSearch() {
+        setCurrentPage(ToolbarPage.SEARCH);
         return ctx.newObject("Search");
     }
 
     @Path("task")
-    @Deprecated // Since 5.6 with content routing.
+    @Deprecated
+    // Since 5.6 with content routing.
     public Object doTraverseTask() {
         return null;
     }
@@ -202,10 +216,15 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseActivity() {
         return ctx.newObject("Activity");
     }
-    
+
     @Path("social")
     public Object doSocial() {
+        setCurrentPage(ToolbarPage.HOME);
         return ctx.newObject("Social");
+    }
+
+    protected void setCurrentPage(ToolbarPage page) {
+        getContext().setProperty("currentPage", page.name());
     }
 
     protected DocumentModelList getUserWorkspacesDocs() throws ClientException {
@@ -224,7 +243,7 @@ public class MobileApplication extends ModuleRoot {
             return null;
         }
     }
-    
+
     protected DocumentViewCodecManager getCodecManager() throws Exception {
         if (codecManager == null) {
             codecManager = Framework.getService(DocumentViewCodecManager.class);
