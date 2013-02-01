@@ -22,7 +22,14 @@
 .icons-footer-profile { background-image: url('../icons/footer_profile_off.png') }
 .icons-footer-search { background-image: url('../icons/footer_search_off.png') }
 
-@media screen and (device-pixel-ratio: 2) {
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 320px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (                min-resolution: 192dpi) and (min-width: 320px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 320px)
+{
     .icons-footer-browse { background-image: url('../icons/footer_browse_off@2x.png') }
     .icons-footer-home { background-image: url('../icons/footer_home_off@2x.png') }
     .icons-footer-logout { background-image: url('../icons/footer_logout_off@2x.png') }

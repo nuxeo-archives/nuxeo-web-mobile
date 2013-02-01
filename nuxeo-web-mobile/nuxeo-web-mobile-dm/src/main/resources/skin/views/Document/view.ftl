@@ -144,7 +144,7 @@
         </ul>
         
                 <div data-role="collapsible-set" data-content-theme="d">
-            <h2>Metadata</h2>
+            <h2>${Context.getMessage('label.summary.metadata')}</h2>
             <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
               <h3>Dublincore</h3>
               <ul data-inset="true" data-role="listview" data-theme="d">
