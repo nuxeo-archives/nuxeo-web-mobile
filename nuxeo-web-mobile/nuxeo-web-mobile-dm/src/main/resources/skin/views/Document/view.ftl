@@ -80,18 +80,36 @@
         <div data-role="navbar" class="noSidespace">
           <ul>
             <#if This.hasPreview()>
-              <li><a data-ajax="false" href="${This.previewURL}"><img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" /></a></li>
+              <li>
+                <a data-ajax="false" href="${This.previewURL}">
+                  <img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" />
+                </a>
+              </li>
             </#if>
             <#if doc.schemas?seq_contains("note")>
-              <li><a href="${Root.path}/doc/${doc.id}/@preview"><img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" /></a></li>
+              <li>
+                <a href="${Root.path}/doc/${doc.id}/@preview">
+                  <img alt="${Context.getMessage('label.header.title.Preview')}" src="${skinPath}/icons/preview.png" />
+                </a>
+              </li>
             </#if>
             <#if doc.isFolder>
               <li>
-                <a href="${Root.path}/doc/${doc.id}/@folderish"><img alt="${Context.getMessage('label.header.title.Content')}" src="${skinPath}/icons/preview.png" /></a>
+                <a href="${Root.path}/doc/${doc.id}/@folderish">
+                  <img alt="${Context.getMessage('label.header.title.Content')}" src="${skinPath}/icons/preview.png" />
+                </a>
               </li>
             </#if>
-            <li><a href="${Root.path}/doc/${doc.id}/@comment"><img alt="${Context.getMessage('label.header.title.Comments')}" src="${skinPath}/icons/comments.png" /></a></li>
-            <li><a href="${Root.path}/doc/${doc.id}/@annotations"><img alt="${Context.getMessage('label.header.title.Annotations')}" src="${skinPath}/icons/annotations.png" /></a></li>
+            <li>
+              <a href="${Root.path}/doc/${doc.id}/@comment">
+                <img alt="${Context.getMessage('label.header.title.Comments')}" src="${skinPath}/icons/comments.png" />
+              </a>
+            </li>
+            <li>
+              <a href="${Root.path}/doc/${doc.id}/@annotations">
+                <img alt="${Context.getMessage('label.header.title.Annotations')}" src="${skinPath}/icons/annotations.png" />
+              </a>
+            </li>
             <!-- Distabled yet
             <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="${Context.getMessage('label.header.title.Relations')}" src="${skinPath}/icons/relations.png" /></a></li>
             -->
