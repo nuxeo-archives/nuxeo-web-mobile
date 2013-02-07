@@ -7,8 +7,8 @@
 }.%0D
   %0D
   %0D
-  Updated: ${document.modified?datetime}%0D
-  Created: ${document.created?datetime}%0D
+  <#if doc.modified>Updated: ${document.modified?datetime}%0D</#if>
+  <#if doc.created>Created: ${document.created?datetime}%0D</#if>
   Author: ${This.getDisplayPrincipalName(document.dublincore.creator)}%0D
   %0D
   Location: ${document.path}%0D
@@ -53,6 +53,8 @@
     <div data-role="header">
         <a href="#" data-rel="back" data-icon="arrow-l">Back</a>
         <h1>${Context.getMessage('label.header.title.View')}</h1>
+      <a href="javascript:goToStandardNavigation('${This.JSFURLPath}');" data-role="button" data-icon="arrow-r"
+         data-iconpos="right">${Context.getMessage('label.home.menu.GoToStandardNavigation')}</a>
     </div>
 
     <div data-role="content" class="documentView" id="main">
@@ -165,17 +167,17 @@
         </ul>
         
         <div data-role="collapsible-set" data-content-theme="d">
-          <h2>${Context.getMessage('action.view.metadata.common')}</h2>
+          <h2>${Context.getMessage('label.metadata.common')}</h2>
           <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
             <h3>Dublincore</h3>
             <ul data-inset="true" data-role="listview" data-theme="d">
               <li data-role="fieldcontain">
                 <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.created')}</label>
-                <span>${doc.created?datetime}</span>
+                <span><#if doc.created>${doc.created?datetime}</#if></span>
               </li>
               <li data-role="fieldcontain">
                 <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.modified')}</label>
-                <span>${doc.modified?datetime}</span>
+                <span><#if doc.modified>${doc.modified?datetime}</#if></span>
               </li>
               <li data-role="fieldcontain">
                 <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.lastContributor')}</label>

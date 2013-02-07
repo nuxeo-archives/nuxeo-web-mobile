@@ -40,9 +40,11 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
+import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
+import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
@@ -107,14 +109,14 @@ public class MobileApplication extends ModuleRoot {
      */
     @GET
     public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME)
-    String initialURL) throws Exception {
-        if (initialURL != null) {
+    String targetURL) throws Exception {
+        if (targetURL != null) {
             DocumentView docView = getCodecManager().getDocumentViewFromUrl(
-                    initialURL, true, "");
-            if (docView != null) {
+                    targetURL, true, "");
+            if (docView != null && !docView.getDocumentLocation().getPathRef().equals(new PathRef("/"))) {
                 log.debug("Request from home: Target URL given into url parameter detected as a "
                         + "document request from url codec service: "
-                        + initialURL);
+                        + targetURL);
                 MobileDocument docResolved = new MobileDocument(ctx,
                         docView.getDocumentLocation().getDocRef());
                 setCurrentPage(ToolbarPage.BROWSE);
@@ -244,9 +246,9 @@ public class MobileApplication extends ModuleRoot {
         }
     }
 
-    protected DocumentViewCodecManager getCodecManager() throws Exception {
+    protected DocumentViewCodecManager getCodecManager() {
         if (codecManager == null) {
-            codecManager = Framework.getService(DocumentViewCodecManager.class);
+            codecManager = Framework.getLocalService(DocumentViewCodecManager.class);
         }
         return codecManager;
     }
@@ -256,6 +258,10 @@ public class MobileApplication extends ModuleRoot {
             userWorkspaceService = Framework.getLocalService(UserWorkspaceService.class);
         }
         return userWorkspaceService;
+    }
+
+    public String getNuxeoContextPath() {
+        return VirtualHostHelper.getBaseURL(request);
     }
 
 }

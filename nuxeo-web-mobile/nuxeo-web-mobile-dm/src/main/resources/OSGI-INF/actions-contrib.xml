@@ -3,17 +3,23 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
              point="actions">
 
-    <action id="back_to_mobile"
+    <action id="back_to_mobile_document" type="link"
             link="#{mobileApplicationActions.cleanCookie}"
-            label="command.mobile.go" order="50">
-      <category>USER_MENU_ACTIONS</category>
-      <filter id="isMobileBrowser">
-        <rule grant="true">
-          <condition>#{mobileApplicationActions.mobileBrowser}</condition>
-        </rule>
-      </filter>
+            label="command.mobile.go" order="10"
+            icon="/icons/mobile.png">
+      <category>DOCUMENT_UPPER_ACTION</category>
+      <filter-id>isMobileBrowser</filter-id>
     </action>
 
+  </extension>
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+             point="filters">
+    <filter id="isMobileBrowser">
+      <rule grant="true">
+        <condition>#{mobileApplicationActions.mobileBrowser}</condition>
+      </rule>
+    </filter>
   </extension>
 
 </component>

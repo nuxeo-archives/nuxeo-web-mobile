@@ -19,6 +19,14 @@
 
 package org.nuxeo.ecm.mobile.webengine.document;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,17 +45,11 @@ import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.usermanager.UserManager;
+import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
 import org.nuxeo.runtime.api.Framework;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
 
@@ -189,7 +191,7 @@ public class MobileDocument extends DocumentObject {
         return getCodecManager().getUrlFromDocumentView(
                 view,
                 true,
-                NotificationServiceHelper.getNotificationService().getServerUrlPrefix());
+                VirtualHostHelper.getBaseURL(ctx.getRequest()));
     }
 
     public String getDownloadURL() throws Exception {
@@ -258,21 +260,33 @@ public class MobileDocument extends DocumentObject {
         try {
             NuxeoPrincipal principal = Framework.getLocalService(
                     UserManager.class).getPrincipal(name);
-            return getDisplayPrincipal(principal);
+            if (principal != null) {
+                return getDisplayPrincipalName(principal);
+            }
         } catch (ClientException e) {
             log.debug(e, e);
-            return name;
         }
+        return name;
+    }
+
+    /**
+     * Return the display name of an expected principal. It passes as an Object
+     * to prevent Freemarker to thrown an exception when creator is null.
+     * 
+     * @param object must be of type org.nuxeo.ecm.core.api.NuxeoPrincipal
+     * @return the display name will be empty if not a NuxeoPrincipal
+     */
+    public String getDisplayPrincipalName(Object object) {
+        if (object instanceof NuxeoPrincipal) {
+            NuxeoPrincipal principal = (NuxeoPrincipal) object;
+            String display = (principal.getFirstName() + " " + principal.getLastName()).trim();
+            return StringUtils.isBlank(display) ? principal.getName() : display;
+        }
+        return "";
     }
 
     public String getDisplayPrincipalName() {
-        return getDisplayPrincipal(getPrincipal());
-    }
-
-    protected String getDisplayPrincipal(NuxeoPrincipal principal) {
-        String display = (principal.getFirstName() + " " + principal.getLastName()).trim();
-
-        return StringUtils.isBlank(display) ? principal.getName() : display;
+        return getDisplayPrincipalName(getPrincipal());
     }
 
 }
