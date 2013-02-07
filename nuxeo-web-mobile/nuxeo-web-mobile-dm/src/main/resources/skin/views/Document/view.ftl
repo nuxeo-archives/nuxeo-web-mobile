@@ -7,8 +7,8 @@
 }.%0D
   %0D
   %0D
-  Updated: ${document.dublincore.modified.time?datetime}%0D
-  Created: ${document.dublincore.created?datetime}%0D
+  Updated: ${document.modified?datetime}%0D
+  Created: ${document.created?datetime}%0D
   Author: ${This.getDisplayPrincipalName(document.dublincore.creator)}%0D
   %0D
   Location: ${document.path}%0D
@@ -171,11 +171,11 @@
             <ul data-inset="true" data-role="listview" data-theme="d">
               <li data-role="fieldcontain">
                 <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.created')}</label>
-                <span><#if doc.dublincore.created != "">${doc.dublincore.created}</#if></span>
+                <span>${doc.created?datetime}</span>
               </li>
               <li data-role="fieldcontain">
                 <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.modified')}</label>
-                <span><#if doc.dublincore.modified != "">${doc.dublincore.modified.time?datetime}</#if></span>
+                <span>${doc.modified?datetime}</span>
               </li>
               <li data-role="fieldcontain">
                 <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.lastContributor')}</label>
