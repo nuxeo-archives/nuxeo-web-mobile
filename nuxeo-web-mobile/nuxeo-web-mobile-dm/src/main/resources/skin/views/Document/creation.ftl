@@ -1,10 +1,10 @@
 <@extends src="base.ftl">
 
-<@block name="content">
-<div data-role="page">
+  <@block name="content">
+  <div data-role="page">
 
     <div data-role="header">
-        <h1>${Context.getMessage('label.header.title.Creation')}</h1>
+      <h1>${Context.getMessage('label.header.title.Creation')}</h1>
     </div>
 
     <div data-role="content">
@@ -12,7 +12,7 @@
     </div>
     <#import "/footer.ftl" as footer/>
     <@footer.basic/>
-</div>
+  </div>
 
-</@block>
+  </@block>
 </@extends>
