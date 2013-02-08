@@ -1,19 +1,19 @@
 <#macro "emailSubject">[Nuxeo] ${This.getDisplayPrincipalName()} shared the document ${Document.title}</#macro>
 
 <#macro "emailBody" document>
-  Hi,%0D
-  %0D
+  %02Hi,%0A
+  %0A
   ${This.getDisplayPrincipalName()} thought you%27d like ${document.title}: ${This.getJSFURLPath(document)
-}.%0D
-  %0D
-  %0D
-  <#if doc.modified>Updated: ${document.modified?datetime}%0D</#if>
-  <#if doc.created>Created: ${document.created?datetime}%0D</#if>
-  Author: ${This.getDisplayPrincipalName(document.dublincore.creator)}%0D
-  %0D
-  Location: ${document.path}%0D
-  State: ${document.lifeCycleState}%0D
-  Version: ${document.versionLabel}%0D
+}.%0A
+  %0A
+  %0A
+  <#if doc.modified>Updated: ${document.modified?datetime}%0A</#if>
+  <#if doc.created>Created: ${document.created?datetime}%0A</#if>
+  Author: ${This.getDisplayPrincipalName(document.dublincore.creator)}%0A
+  %0A
+  Location: ${document.path}%0A
+  State: ${document.lifeCycleState}%0A
+  Version: ${document.versionLabel}%03
 </#macro>
 
 <@extends src="base.ftl">

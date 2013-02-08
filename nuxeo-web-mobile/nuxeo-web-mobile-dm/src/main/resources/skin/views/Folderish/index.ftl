@@ -20,18 +20,14 @@
       <#list Adapter.children as child>
         <ul data-role="listview" class="ui-listview">
           <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
-            <#if child.isFolder>
-              <a class="ui-link-inherit" href="${Root.path}/doc/${child.id}/@folderish">
-            <#else>
-              <a class="ui-link-inherit" href="${Root.path}/doc/${child.id}">
-            </#if>
-            <#if child.common.icon != null && child.common.icon != "">
+            <a class="ui-link-inherit" href="${Root.getDocumentMobileUrl(child)}">
+            <#if child.common.icon??>
                 <img class="ui-li-icon ui-li-thumb" src="${basePath}/..${child.common.icon}" />
             <#else>
-                <img class="ui-li-icon ui-li-thumb" src="${skinPath}icons/file.gif" />
+                <img class="ui-li-icon ui-li-thumb" src="${skinPath}/icons/file.gif" />
             </#if>
                 <h3>${child.title}</h3>
-                <#if child.dublincore.description == null || child.dublincore.description == "" >
+                <#if child.dublincore.description?? >
                   <p class="ui-li-desc">&nbsp;</p>
                 <#else>
                   <p class="ui-li-desc">${child.dublincore.description}</p>

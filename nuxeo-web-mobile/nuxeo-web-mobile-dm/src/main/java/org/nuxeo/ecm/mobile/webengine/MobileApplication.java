@@ -264,4 +264,11 @@ public class MobileApplication extends ModuleRoot {
         return VirtualHostHelper.getBaseURL(request);
     }
 
+    public String getDocumentMobileUrl(DocumentModel doc) {
+        String baseUrl = String.format("%s/doc/%s", getPath(), doc.getId());
+        if (doc.isFolder()) {
+            baseUrl = String.format("%s/@folderish", baseUrl);
+        }
+        return baseUrl;
+    }
 }

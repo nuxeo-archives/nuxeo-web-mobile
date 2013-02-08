@@ -23,11 +23,6 @@
               <span class="icon-footer icons-footer-search<#if currentPage == 'SEARCH'> selected</#if>">&nbsp;</span>
             </a>
           </li>
-          <!-- Disabled for now ...
-          <li><a data-ajax="false" href="#" onclick="goToStandardNavigation('${Root.nuxeoContextPath}');">
-            <img alt="Standard_Navigation" src="${skinPath}/icons/footer_standard_navigation.png" />
-          </a></li>
-          -->
           <li>
           <#if Context.getProperty('Cordova')??>
             <a data-ajax="false" href="javascript:NXCordova.logout();">
