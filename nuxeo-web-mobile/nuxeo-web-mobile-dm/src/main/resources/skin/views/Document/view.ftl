@@ -103,7 +103,7 @@ Version: ${document.versionLabel}%03
             <#if doc.isFolder>
               <li>
                 <a href="${Root.path}/doc/${doc.id}/@folderish">
-                  <span class="icon-docview icons-docview-preview">&nbsp;</span>
+                  <span class="icon-docview icons-docview-foldercontent">&nbsp;</span>
                 </a>
               </li>
             </#if>

@@ -12,7 +12,7 @@
 /* Footer */
 .icon-footer {
   background-size: 32px;
-  background: transparent no-repeat center;
+  /*background: transparent no-repeat center;*/
   display: inline-block;
   height: 32px;
   width: 32px }
@@ -30,12 +30,10 @@
 .selected.icons-footer-search { background-image: url('../icons/footer_search_on.png') }
 
 @media
-only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 320px),
-only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 320px),
-only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 320px),
-only screen and (        min-device-pixel-ratio: 2)      and (min-width: 320px),
-only screen and (                min-resolution: 192dpi) and (min-width: 320px),
-only screen and (                min-resolution: 2dppx)  and (min-width: 320px) {
+only screen and (-Webkit-min-device-pixel-ratio: 1.5),
+only screen and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5) {
     .icons-footer-browse { background-image: url('../icons/footer_browse_off@2x.png') }
     .icons-footer-home { background-image: url('../icons/footer_home_off@2x.png') }
     .icons-footer-logout { background-image: url('../icons/footer_logout_off@2x.png') }
@@ -66,7 +64,7 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 320px) 
 
 .icon-docview {
   background-size: 32px;
-  background: transparent no-repeat center;
+  /*background: transparent no-repeat center;*/
 
   display: inline-block;
   height: 32px;
@@ -77,8 +75,10 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 320px) 
 .icons-docview-annotations { background-image: url('../icons/annotations.png') }
 .icons-docview-like { background-image: url('../icons/like.png') }
 .icons-docview-liked { background-image: url('../icons/liked.png') }
+.icons-docview-foldercontent { background-image: url('../icons/folder_content.png') }
 
-@media only screen and (-Webkit-min-device-pixel-ratio: 1.5),
+@media
+only screen and (-Webkit-min-device-pixel-ratio: 1.5),
 only screen and (-moz-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min-device-pixel-ratio: 1.5) {
@@ -86,8 +86,8 @@ only screen and (min-device-pixel-ratio: 1.5) {
     .icons-docview-comments { background-image: url('../icons/comments@2x.png') }
     .icons-docview-annotations { background-image: url('../icons/annotations@2x.png') }
     .icons-docview-like { background-image: url('../icons/like@2x.png') }
-    .icons-docview-liked { background-image: url('../icons/liked@2x.png') }
-}
+    .icons-docview-foldercontent { background-image: url('../icons/folder_content@2x.png') }
+    .icons-docview-liked { background-image: url('../icons/liked@2x.png') } }
 
 /* Preview */
 .preview { background: #fff !important; border: medium none; height: 150em; overflow: visible; width: 100% }
