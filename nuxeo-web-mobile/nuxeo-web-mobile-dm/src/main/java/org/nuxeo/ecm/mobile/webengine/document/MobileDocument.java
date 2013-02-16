@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ * (C) Copyright 2006-2013 Nuxeo SAS (http://nuxeo.com/) and contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser General Public License
@@ -38,11 +38,9 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
 import org.nuxeo.ecm.core.rest.DocumentObject;
+import org.nuxeo.ecm.mobile.webengine.RedirectHelper;
 import org.nuxeo.ecm.mobile.webengine.adapter.JSonExportAdapter;
-import org.nuxeo.ecm.platform.ec.notification.service.NotificationServiceHelper;
 import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
-import org.nuxeo.ecm.platform.url.DocumentViewImpl;
-import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.usermanager.UserManager;
 import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
@@ -187,10 +185,7 @@ public class MobileDocument extends DocumentObject {
     }
 
     public String getJSFURLPath(DocumentModel docModel) throws Exception {
-        DocumentView view = new DocumentViewImpl(docModel);
-        return getCodecManager().getUrlFromDocumentView(
-                view,
-                true,
+        return RedirectHelper.getJSFDocumentPath(docModel,
                 VirtualHostHelper.getBaseURL(ctx.getRequest()));
     }
 
@@ -247,13 +242,6 @@ public class MobileDocument extends DocumentObject {
             automationService = Framework.getService(AutomationService.class);
         }
         return automationService;
-    }
-
-    private DocumentViewCodecManager getCodecManager() throws Exception {
-        if (codecManager == null) {
-            codecManager = Framework.getService(DocumentViewCodecManager.class);
-        }
-        return codecManager;
     }
 
     public String getDisplayPrincipalName(String name) {

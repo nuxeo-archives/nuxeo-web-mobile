@@ -40,9 +40,6 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
-import org.nuxeo.ecm.platform.url.DocumentViewImpl;
-import org.nuxeo.ecm.platform.url.api.DocumentView;
-import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
 import org.nuxeo.ecm.webengine.model.WebObject;
@@ -65,10 +62,6 @@ import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_V
 public class MobileApplication extends ModuleRoot {
 
     private static final Log log = LogFactory.getLog(MobileApplication.class);
-
-    private String nuxeoContextPath;
-
-    private DocumentViewCodecManager codecManager;
 
     private UserWorkspaceService userWorkspaceService;
 
@@ -110,18 +103,13 @@ public class MobileApplication extends ModuleRoot {
     @GET
     public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME)
     String targetURL) throws Exception {
-        if (targetURL != null) {
-            DocumentView docView = getCodecManager().getDocumentViewFromUrl(
-                    targetURL, true, "");
-            if (docView != null && !docView.getDocumentLocation().getPathRef().equals(new PathRef("/"))) {
-                log.debug("Request from home: Target URL given into url parameter detected as a "
-                        + "document request from url codec service: "
-                        + targetURL);
-                MobileDocument docResolved = new MobileDocument(ctx,
-                        docView.getDocumentLocation().getDocRef());
-                setCurrentPage(ToolbarPage.BROWSE);
-                return docResolved.doGet();
-            }
+
+        DocumentRef targetRef = RedirectHelper.findDocumentRef(targetURL);
+        if (targetRef != null) {
+            setCurrentPage(ToolbarPage.BROWSE);
+
+            MobileDocument targetDoc = new MobileDocument(ctx, targetRef);
+            return targetDoc.doGet();
         }
 
         // If SC mobile fragment is enable, redirect to the new homepage
@@ -244,13 +232,6 @@ public class MobileApplication extends ModuleRoot {
             log.debug(e, e);
             return null;
         }
-    }
-
-    protected DocumentViewCodecManager getCodecManager() {
-        if (codecManager == null) {
-            codecManager = Framework.getLocalService(DocumentViewCodecManager.class);
-        }
-        return codecManager;
     }
 
     protected UserWorkspaceService getUserWorkspaceService() {
