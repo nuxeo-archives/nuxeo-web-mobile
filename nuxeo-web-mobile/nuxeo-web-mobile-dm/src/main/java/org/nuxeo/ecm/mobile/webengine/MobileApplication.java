@@ -17,9 +17,6 @@
 
 package org.nuxeo.ecm.mobile.webengine;
 
-import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
-import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_VISIBLE_CHILDREN;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,12 +40,14 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
-import org.nuxeo.ecm.platform.url.api.DocumentView;
-import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
+import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
+
+import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
+import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_VISIBLE_CHILDREN;
 
 /**
  * Entry point of the webengine application
@@ -64,13 +63,13 @@ public class MobileApplication extends ModuleRoot {
 
     private static final Log log = LogFactory.getLog(MobileApplication.class);
 
-    private String nuxeoContextPath;
-
-    private DocumentViewCodecManager codecManager;
-
     private UserWorkspaceService userWorkspaceService;
 
     protected static final Pattern CORDOVA_USER_AGENT_REGEXP = Pattern.compile("Cordova/(.+?) \\((.*)\\)");
+
+    protected enum ToolbarPage {
+        HOME, BROWSE, PROFILE, SEARCH
+    }
 
     @Override
     protected void initialize(Object... args) {
@@ -83,15 +82,13 @@ public class MobileApplication extends ModuleRoot {
             log.debug("User-Agent empty: assuming not on a mobile device.");
             return;
         }
-        
+
         Matcher matcher = CORDOVA_USER_AGENT_REGEXP.matcher(userAgent);
         if (matcher.find()) {
             context = new HashMap<String, Serializable>();
 
             context.put("version", matcher.group(1));
             context.put("device", matcher.group(2));
-            context.put("isIOS", matcher.group(2).matches("iOS"));
-            context.put("isAndroid", matcher.group(2).matches("android"));
 
             log.info("Cordova User-Agent detected");
         }
@@ -105,28 +102,26 @@ public class MobileApplication extends ModuleRoot {
      */
     @GET
     public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME)
-    String initialURL) throws Exception {
-        if (initialURL != null) {
-            DocumentView docView = getCodecManager().getDocumentViewFromUrl(
-                    initialURL, true, "");
-            if (docView != null) {
-                log.debug("Request from home: Target URL given into url parameter detected as a "
-                        + "document request from url codec service: "
-                        + initialURL);
-                MobileDocument docResolved = new MobileDocument(ctx,
-                        docView.getDocumentLocation().getDocRef());
-                return docResolved.doGet();
-            }
+    String targetURL) throws Exception {
+
+        DocumentRef targetRef = RedirectHelper.findDocumentRef(targetURL);
+        if (targetRef != null) {
+            setCurrentPage(ToolbarPage.BROWSE);
+
+            MobileDocument targetDoc = new MobileDocument(ctx, targetRef);
+            return targetDoc.doGet();
         }
-        
+
         // If SC mobile fragment is enable, redirect to the new homepage
         if (getSocialObject() != null) {
-            return redirect(ctx.getBaseURL() + ctx.getBasePath() + "/mobile/social");
+            return redirect(ctx.getServerURL() + ctx.getModulePath()
+                    + "/social");
         }
-        
+
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("userWorkspace", getUserWorkspacesDocs());
-        
+
+        setCurrentPage(ToolbarPage.HOME);
         return getView("index").args(args);
     }
 
@@ -137,6 +132,7 @@ public class MobileApplication extends ModuleRoot {
 
     @Path("profile")
     public Object doTraverseProfile() {
+        setCurrentPage(ToolbarPage.PROFILE);
         return ctx.newObject("Profile");
     }
 
@@ -162,6 +158,7 @@ public class MobileApplication extends ModuleRoot {
         } while (children.size() == 1);
         args.put("domain", children);
 
+        setCurrentPage(ToolbarPage.BROWSE);
         return getView("root").args(args);
     }
 
@@ -169,6 +166,7 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseRootDocumentByPath(@PathParam("adapter")
     String adapter) {
         DocumentRef ref = new PathRef("/");
+        setCurrentPage(ToolbarPage.BROWSE);
         if ("search".equals(adapter)) {
             return new MobileDocument(ctx, ref).search();
         }
@@ -179,6 +177,7 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseDocumentByPath(@PathParam("docPathValue")
     String docPath) {
         DocumentRef ref = new PathRef(docPath);
+        setCurrentPage(ToolbarPage.BROWSE);
         return new MobileDocument(ctx, ref);
     }
 
@@ -186,16 +185,19 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseDocument(@PathParam("docId")
     String docId) {
         DocumentRef ref = new IdRef(docId);
+        setCurrentPage(ToolbarPage.BROWSE);
         return new MobileDocument(ctx, ref);
     }
-    
+
     @Path("search")
     public Object doTraverseSearch() {
+        setCurrentPage(ToolbarPage.SEARCH);
         return ctx.newObject("Search");
     }
 
     @Path("task")
-    @Deprecated // Since 5.6 with content routing.
+    @Deprecated
+    // Since 5.6 with content routing.
     public Object doTraverseTask() {
         return null;
     }
@@ -204,17 +206,15 @@ public class MobileApplication extends ModuleRoot {
     public Object doTraverseActivity() {
         return ctx.newObject("Activity");
     }
-    
+
     @Path("social")
     public Object doSocial() {
+        setCurrentPage(ToolbarPage.HOME);
         return ctx.newObject("Social");
     }
 
-    public String getNuxeoContextPath() {
-        if (nuxeoContextPath == null) {
-            nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
-        }
-        return nuxeoContextPath;
+    protected void setCurrentPage(ToolbarPage page) {
+        getContext().setProperty("currentPage", page.name());
     }
 
     protected DocumentModelList getUserWorkspacesDocs() throws ClientException {
@@ -233,13 +233,6 @@ public class MobileApplication extends ModuleRoot {
             return null;
         }
     }
-    
-    protected DocumentViewCodecManager getCodecManager() throws Exception {
-        if (codecManager == null) {
-            codecManager = Framework.getService(DocumentViewCodecManager.class);
-        }
-        return codecManager;
-    }
 
     protected UserWorkspaceService getUserWorkspaceService() {
         if (userWorkspaceService == null) {
@@ -248,4 +241,15 @@ public class MobileApplication extends ModuleRoot {
         return userWorkspaceService;
     }
 
+    public String getNuxeoContextPath() {
+        return VirtualHostHelper.getBaseURL(request);
+    }
+
+    public String getDocumentMobileUrl(DocumentModel doc) {
+        String baseUrl = String.format("%s/doc/%s", getPath(), doc.getId());
+        if (doc.isFolder()) {
+            baseUrl = String.format("%s/@folderish", baseUrl);
+        }
+        return baseUrl;
+    }
 }

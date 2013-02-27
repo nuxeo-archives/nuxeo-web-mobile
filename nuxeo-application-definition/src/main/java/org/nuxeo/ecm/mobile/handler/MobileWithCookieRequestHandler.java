@@ -35,9 +35,9 @@ public class MobileWithCookieRequestHandler extends MobileRequestHandler {
 
     @Override
     public boolean isRequestRedirectedToApplication(HttpServletRequest request) {
-        Boolean checkCookie = checkCookie(request);
-        if (checkCookie != null) {
-            return checkCookie;
+        Boolean skipMobileRedirection = getCookieValue(request);
+        if (skipMobileRedirection != null && skipMobileRedirection) {
+            return !skipMobileRedirection;
         }
 
         return super.isRequestRedirectedToApplication(request);
@@ -46,19 +46,19 @@ public class MobileWithCookieRequestHandler extends MobileRequestHandler {
     @Override
     public boolean isRequestRedirectedToApplicationLoginForm(
             HttpServletRequest request) {
-        Boolean checkCookie = checkCookie(request);
-        if (checkCookie != null) {
+        Boolean checkCookie = getCookieValue(request);
+        if (checkCookie != null && checkCookie) {
             return checkCookie;
         }
 
         return super.isRequestRedirectedToApplicationLoginForm(request);
     }
 
-    private Boolean checkCookie(HttpServletRequest request) {
+    private Boolean getCookieValue(HttpServletRequest request) {
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 if (COOKIE_NAME.equals(cookie.getName())) {
-                    return Boolean.FALSE;
+                    return Boolean.parseBoolean(cookie.getValue());
                 }
             }
         }

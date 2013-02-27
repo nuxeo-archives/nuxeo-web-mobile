@@ -20,7 +20,9 @@ package org.nuxeo.ecm.mobile.seam;
 import java.io.Serializable;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -45,7 +47,14 @@ public class MobileApplicationActionsBean implements Serializable {
         RequestHandler handler = new MobileRequestHandler();
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         return handler.isRequestRedirectedToApplication(request);
+    }
 
+    public String cleanCookie() {
+        Cookie cookie = new Cookie("skipMobileRedirection", "false");
+        cookie.setPath("/");
+
+        ((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
+        return null;
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ * (C) Copyright 2006-2013 Nuxeo SAS (http://nuxeo.com/) and contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser General Public License
@@ -19,8 +19,6 @@
 
 package org.nuxeo.ecm.mobile.webengine.document;
 
-import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +27,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.automation.AutomationService;
@@ -38,18 +37,19 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
-import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.rest.DocumentObject;
+import org.nuxeo.ecm.mobile.webengine.RedirectHelper;
 import org.nuxeo.ecm.mobile.webengine.adapter.JSonExportAdapter;
-import org.nuxeo.ecm.platform.ec.notification.service.NotificationServiceHelper;
 import org.nuxeo.ecm.platform.preview.helper.PreviewHelper;
-import org.nuxeo.ecm.platform.url.DocumentViewImpl;
-import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
+import org.nuxeo.ecm.platform.usermanager.UserManager;
+import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.ResourceType;
 import org.nuxeo.ecm.webengine.model.WebContext;
 import org.nuxeo.runtime.api.Framework;
+
+import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
 
 /**
  * This Class resolve a DocumentModel and expose differents restitutions
@@ -95,7 +95,7 @@ public class MobileDocument extends DocumentObject {
 
     @GET
     @Path("mailIt")
-    public Object doMailIt() {
+    public Object emailToCurrentPrincipal() {
         try {
             OperationContext subctx = new OperationContext(
                     ctx.getCoreSession(), null);
@@ -117,7 +117,7 @@ public class MobileDocument extends DocumentObject {
             return ctx.newObject("Empty");
         }
     }
-    
+
     @Path("hasLiked")
     public Object doHasLiked() {
         try {
@@ -167,7 +167,7 @@ public class MobileDocument extends DocumentObject {
         }
     }
 
-    public boolean hasPreview() throws PropertyException, ClientException {
+    public boolean hasPreview() throws ClientException {
         if (doc.hasSchema("file")
                 && doc.getPropertyValue("file:content") != null) {
             return PreviewHelper.typeSupportsPreview(doc);
@@ -185,11 +185,8 @@ public class MobileDocument extends DocumentObject {
     }
 
     public String getJSFURLPath(DocumentModel docModel) throws Exception {
-        DocumentView view = new DocumentViewImpl(docModel);
-        return getCodecManager().getUrlFromDocumentView(
-                view,
-                true,
-                NotificationServiceHelper.getNotificationService().getServerUrlPrefix());
+        return RedirectHelper.getJSFDocumentPath(docModel,
+                VirtualHostHelper.getBaseURL(ctx.getRequest()));
     }
 
     public String getDownloadURL() throws Exception {
@@ -199,8 +196,9 @@ public class MobileDocument extends DocumentObject {
     }
 
     public String getDownloadURL(DocumentModel docModel) throws Exception {
-        String filename = (String) doc.getPropertyValue("file:filename");
-        String mimetype = (String) doc.getPropertyValue("file:content/mime-type");
+        BlobHolder bh = doc.getAdapter(BlobHolder.class);
+        String filename = bh.getBlob().getFilename();
+        String mimetype = bh.getBlob().getMimeType();
 
         String downloadURL = getNuxeoContextPath() + "/";
         downloadURL += "nxbigfile" + "/";
@@ -246,11 +244,37 @@ public class MobileDocument extends DocumentObject {
         return automationService;
     }
 
-    private DocumentViewCodecManager getCodecManager() throws Exception {
-        if (codecManager == null) {
-            codecManager = Framework.getService(DocumentViewCodecManager.class);
+    public String getDisplayPrincipalName(String name) {
+        try {
+            NuxeoPrincipal principal = Framework.getLocalService(
+                    UserManager.class).getPrincipal(name);
+            if (principal != null) {
+                return getDisplayPrincipalName(principal);
+            }
+        } catch (ClientException e) {
+            log.debug(e, e);
         }
-        return codecManager;
+        return name;
+    }
+
+    /**
+     * Return the display name of an expected principal. It passes as an Object
+     * to prevent Freemarker to thrown an exception when creator is null.
+     * 
+     * @param object must be of type org.nuxeo.ecm.core.api.NuxeoPrincipal
+     * @return the display name will be empty if not a NuxeoPrincipal
+     */
+    public String getDisplayPrincipalName(Object object) {
+        if (object instanceof NuxeoPrincipal) {
+            NuxeoPrincipal principal = (NuxeoPrincipal) object;
+            String display = (principal.getFirstName() + " " + principal.getLastName()).trim();
+            return StringUtils.isBlank(display) ? principal.getName() : display;
+        }
+        return "";
+    }
+
+    public String getDisplayPrincipalName() {
+        return getDisplayPrincipalName(getPrincipal());
     }
 
 }

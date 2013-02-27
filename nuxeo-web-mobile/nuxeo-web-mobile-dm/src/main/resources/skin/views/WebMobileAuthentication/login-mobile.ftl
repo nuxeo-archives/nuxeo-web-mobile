@@ -1,51 +1,54 @@
 <@extends src="base.ftl">
 
-<@block name="content" >
+  <@block name="content" >
   <script type="application/x-javascript">
-    <#noparse>
+      <#noparse>
       function validateForm() {
-        if($('#username').val() != '') {
+        if ($('#username').val() != '') {
           $('input[type="submit"]').removeAttr('disabled');
         } else {
-          $('input[type="submit"]').attr('disabled','disabled');
+          $('input[type="submit"]').attr('disabled', 'disabled');
         }
       }
 
-    $(document).ready(function(){
-      if ($('#username').val() == '') {
-        $('input[type="submit"]').attr('disabled','disabled');
-      }
-      
-      $('#username').keyup(validateForm);
-      
-      self.setInterval(validateForm,200);
-    });
-    </#noparse>
+      $(document).ready(function () {
+        if ($('#username').val() == '') {
+          $('input[type="submit"]').attr('disabled', 'disabled');
+        }
+
+        $('#username').keyup(validateForm);
+
+        self.setInterval(validateForm, 200);
+      });
+      </#noparse>
   </script>
 
   <div data-role="page" class="login">
     <div data-role="content">
 
       <div class="logo nospace">
-        <img src="${skinPath}/img/nuxeo_logo.png" alt="Nuxeo" />
+        <img src="${skinPath}/img/nuxeo_logo.png" alt="Nuxeo"/>
       </div>
 
       <div class="authentification">
         <form method="post" data-ajax="false" action="../../..//nxstatup.faces">
           <div data-role="fieldcontain" class="ui-hide-label">
             <label for="username">${Context.getMessage('label.login.auth.Username')}</label>
-            <input type="text" name="user_name" id="username" value="" placeholder="${Context.getMessage('label.login.auth.Username')}" data-theme="d"/>
+            <input type="text" name="user_name" id="username" value=""
+                   placeholder="${Context.getMessage('label.login.auth.Username')}" data-theme="d"/>
           </div>
           <div data-role="fieldcontain" class="ui-hide-label">
             <label for="password">${Context.getMessage('label.login.auth.Password')}</label>
-            <input type="password" name="user_password" id="password" value="" placeholder="${Context.getMessage('label.login.auth.Password')}" data-theme="d"/>
+            <input type="password" name="user_password" id="password" value=""
+                   placeholder="${Context.getMessage('label.login.auth.Password')}" data-theme="d"/>
           </div>
-          <input class="login_button" type="submit" name="Submit" value="${Context.getMessage('label.login.auth.LogIn')}"/>
+          <input class="login_button" type="submit" name="Submit"
+                 value="${Context.getMessage('label.login.auth.LogIn')}"/>
         </form>
       </div>
 
     </div>
   </div>
 
-</@block>
+  </@block>
 </@extends>

@@ -41,6 +41,8 @@ public interface ApplicationDefinitionService {
      */
     public String getApplicationBaseURL(HttpServletRequest request);
 
+    public String getApplicationBaseURI(HttpServletRequest request);
+
     /**
      * Return the login url according request context. This is the absolute URL
      * with the protocole, the servername, ...

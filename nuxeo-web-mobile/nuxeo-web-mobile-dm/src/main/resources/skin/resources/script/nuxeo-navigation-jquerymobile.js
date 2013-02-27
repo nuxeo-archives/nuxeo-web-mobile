@@ -47,12 +47,18 @@ function setCookie(name, value, expDays, path, domain, secure) {
   // Set cookie with name, value etc provided
   // in function call and date from above
   // Number of days the cookie should persist NB expDays='' or undef. => non-persistent
-  if (expDays != null ) {
-    var expires = new Date();
-    expires.setTime(expires.getTime() + (expDays*24*60*60*1000));
+    var expires = null;
+    if (expDays != null) {
+      if (expDays > 0) {
+          expires = new Date();
+          expires.setTime(expires.getTime() + (expDays*24*60*60*1000));
+          expired.toGMTString()
+      } else {
+          expired = expDays;
+      }
   }
   var curCookie = name + "=" + escape(value) +
-    ((expires) ? "; expires=" + expires.toGMTString() : "") +
+    ((expires) ? "; expires=" + expires : "") +
     ((path) ? "; path=" + path : "") +
     ((domain) ? "; domain=" + domain : "") +
     ((secure) ? "; secure" : "");
@@ -60,6 +66,6 @@ function setCookie(name, value, expDays, path, domain, secure) {
 }
 
 function goToStandardNavigation(targetURL) {
-  setCookie('skipMobileRedirection', 'true', 1, '/');
+  setCookie('skipMobileRedirection', 'true', -1, '/');
   window.location.href = targetURL;
 }

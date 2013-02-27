@@ -9,6 +9,43 @@
   .login .authentification { margin: 13% auto 0; width: 70% }
   .login .authentification form { margin: auto; max-width: 22em }
 
+/* Footer */
+.icon-footer {
+  background-size: 32px;
+  /*background: transparent no-repeat center;*/
+  display: inline-block;
+  height: 32px;
+  width: 32px }
+
+.icons-footer-browse { background-image: url('../icons/footer_browse_off.png') }
+.icons-footer-home { background-image: url('../icons/footer_home_off.png') }
+.icons-footer-logout { background-image: url('../icons/footer_logout_off.png') }
+.icons-footer-profile { background-image: url('../icons/footer_profile_off.png') }
+.icons-footer-search { background-image: url('../icons/footer_search_off.png') }
+
+.selected.icons-footer-browse { background-image: url('../icons/footer_browse_on.png') }
+.selected.icons-footer-home { background-image: url('../icons/footer_home_on.png') }
+.selected.icons-footer-logout { background-image: url('../icons/footer_logout_on.png') }
+.selected.icons-footer-profile { background-image: url('../icons/footer_profile_on.png') }
+.selected.icons-footer-search { background-image: url('../icons/footer_search_on.png') }
+
+@media
+only screen and (-Webkit-min-device-pixel-ratio: 1.5),
+only screen and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5) {
+    .icons-footer-browse { background-image: url('../icons/footer_browse_off@2x.png') }
+    .icons-footer-home { background-image: url('../icons/footer_home_off@2x.png') }
+    .icons-footer-logout { background-image: url('../icons/footer_logout_off@2x.png') }
+    .icons-footer-profile { background-image: url('../icons/footer_profile_off@2x.png') }
+    .icons-footer-search { background-image: url('../icons/footer_search_off@2x.png') }
+
+    .selected.icons-footer-browse { background-image: url('../icons/footer_browse_on@2x.png') }
+    .selected.icons-footer-home { background-image: url('../icons/footer_home_on@2x.png') }
+    .selected.icons-footer-logout { background-image: url('../icons/footer_logout_on@2x.png') }
+    .selected.icons-footer-profile { background-image: url('../icons/footer_profile_on@2x.png') }
+    .selected.icons-footer-search { background-image: url('../icons/footer_search_on@2x.png') } }
+
 /* Home */
 .home { background: #dfecff }
 .home .ui-grid-a { padding-top: 2em }
@@ -24,6 +61,33 @@
     .documentInfo .title img { margin-right: .3em }
     .documentInfo .description { color: #888; font-size: 95%; margin-bottom: .5em; padding-left: 1.3em }
     .documentInfo .modificationDate { color: #aaa; font-size: 85%; margin-bottom: .2em; padding-left: 1.4em }
+
+.icon-docview {
+  background-size: 32px;
+  /*background: transparent no-repeat center;*/
+
+  display: inline-block;
+  height: 32px;
+  width: 32px }
+
+.icons-docview-preview { background-image: url('../icons/preview.png') }
+.icons-docview-comments { background-image: url('../icons/comments.png') }
+.icons-docview-annotations { background-image: url('../icons/annotations.png') }
+.icons-docview-like { background-image: url('../icons/like.png') }
+.icons-docview-liked { background-image: url('../icons/liked.png') }
+.icons-docview-foldercontent { background-image: url('../icons/folder_content.png') }
+
+@media
+only screen and (-Webkit-min-device-pixel-ratio: 1.5),
+only screen and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5) {
+    .icons-docview-preview { background-image: url('../icons/preview@2x.png') }
+    .icons-docview-comments { background-image: url('../icons/comments@2x.png') }
+    .icons-docview-annotations { background-image: url('../icons/annotations@2x.png') }
+    .icons-docview-like { background-image: url('../icons/like@2x.png') }
+    .icons-docview-foldercontent { background-image: url('../icons/folder_content@2x.png') }
+    .icons-docview-liked { background-image: url('../icons/liked@2x.png') } }
 
 /* Preview */
 .preview { background: #fff !important; border: medium none; height: 150em; overflow: visible; width: 100% }

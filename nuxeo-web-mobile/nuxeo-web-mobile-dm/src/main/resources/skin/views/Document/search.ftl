@@ -1,17 +1,17 @@
 <@extends src="base.ftl">
 
-<@block name="content">
-<div data-role="page" data-add-back-btn="true">
+  <@block name="content">
+  <div data-role="page" data-add-back-btn="true">
 
     <div data-role="header">
-        <h1>${Context.getMessage('label.header.title.Search')}</h1>
+      <h1>${Context.getMessage('label.header.title.Search')}</h1>
     </div>
 
     <div data-role="content">
-        <ul data-role="listview" data-inset="true">
+      <ul data-role="listview" data-inset="true">
         <#if result?size == 0>
           <p class="feedback">
-            ${Context.getMessage('label.message.NoDocumentMatches')}
+          ${Context.getMessage('label.message.NoDocumentMatches')}
           </p>
         </#if>
         <#list result as doc>
@@ -24,11 +24,11 @@
             </a>
           </li>
         </#list>
-        </ul>
+      </ul>
     </div>
     <#import "/footer.ftl" as footer/>
     <@footer.basic />
-</div>
+  </div>
 
-</@block>
+  </@block>
 </@extends>

@@ -1,3 +1,4 @@
+
 # Maven
 target/
 
@@ -18,7 +19,8 @@ build.properties
 *.orig
 
 # Xcode
-build/*
+.DS_Store
+*/build/*
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -32,3 +34,6 @@ build/*
 xcuserdata
 profile
 *.moved-aside
+DerivedData
+.idea/
+*.hmap
