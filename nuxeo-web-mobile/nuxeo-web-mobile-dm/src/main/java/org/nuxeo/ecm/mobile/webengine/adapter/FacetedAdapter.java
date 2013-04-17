@@ -62,7 +62,7 @@ public class FacetedAdapter extends DefaultMobileAdapter {
         prop.put("coreSession", (Serializable) ctx.getCoreSession());
 
         PageProvider<?> pageProvider = getPageProviderService().getPageProvider(
-                "faceted_search_core_default", null, 9L, null, prop);
+                "faceted_search_core_default", null, 9L, null, prop, null);
 
         DocumentModel searchCriteria = getDocumentModel();
         pageProvider.setSearchDocumentModel(searchCriteria);
