@@ -33,7 +33,6 @@ import org.nuxeo.runtime.api.Framework;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 @WebAdapter(name = "faceted", type = "Faceted", targetType = "MobileDocument")
 public class FacetedAdapter extends DefaultMobileAdapter {
@@ -41,13 +40,13 @@ public class FacetedAdapter extends DefaultMobileAdapter {
     private PageProviderService service;
 
     @GET
-    public Object doGet(@QueryParam("pageIndex") long pageIndex)
-            throws Exception {
+    public Object doGet(@QueryParam("pageIndex")
+    long pageIndex) throws Exception {
 
         PageProvider<?> pageProvider = getPageProvider(pageIndex);
-        
+
         pageIndex = pageProvider.getCurrentPageIndex();
-        
+
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("page", pageProvider.getCurrentPage());
         args.put("pageNumber", pageProvider.getNumberOfPages());
@@ -62,7 +61,7 @@ public class FacetedAdapter extends DefaultMobileAdapter {
         prop.put("coreSession", (Serializable) ctx.getCoreSession());
 
         PageProvider<?> pageProvider = getPageProviderService().getPageProvider(
-                "faceted_search_core_default", null, 9L, null, prop, null);
+                "faceted_search_core_default", null, 9L, null, prop);
 
         DocumentModel searchCriteria = getDocumentModel();
         pageProvider.setSearchDocumentModel(searchCriteria);
