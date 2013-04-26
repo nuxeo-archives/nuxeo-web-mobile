@@ -115,12 +115,12 @@ public class ApplicationRedirectionFilter implements Filter {
         doApplicationRedirection((HttpServletRequest) request,
                 (HttpServletResponse) response, chain);
     }
-    
+
     /**
      * Return principal stored into session
      */
     private boolean isAuthenticated(HttpServletRequest req) {
-        if (req.getSession() == null) {
+        if (req.getSession(false) == null) {
             return false;
         }
 
