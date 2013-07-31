@@ -55,11 +55,16 @@ public class ApplicationRedirectionFilter implements Filter {
 
     private ApplicationDefinitionService service;
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    protected ApplicationDefinitionService getService() {
         if (service == null) {
             service = Framework.getLocalService(ApplicationDefinitionService.class);
         }
+        return service;
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Nothing to do
     }
 
     @Override
@@ -81,7 +86,7 @@ public class ApplicationRedirectionFilter implements Filter {
             return;
         }
 
-        String targetApplicationBaseURL = service.getApplicationBaseURI(req);
+        String targetApplicationBaseURL = getService().getApplicationBaseURI(req);
 
         if (targetApplicationBaseURL == null) {
             log.debug("No application match this request context "
@@ -97,7 +102,7 @@ public class ApplicationRedirectionFilter implements Filter {
             return;
         }
 
-        if (service.isResourceURL(req)) {
+        if (getService().isResourceURL(req)) {
             log.debug("Request URI is a resource of the target application so no redirect:"
                     + " final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
@@ -151,7 +156,7 @@ public class ApplicationRedirectionFilter implements Filter {
         }
 
         String redirectURI = URIUtils.addParametersToURIQuery(
-                service.getApplicationBaseURL(request),
+                getService().getApplicationBaseURL(request),
                 parameters);
         log.debug("Handler match/Non target application URI "
                 + "=> Application redirected: target URL: " + redirectURI);
