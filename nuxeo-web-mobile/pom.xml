@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.nuxeo.ecm.mobile</groupId>
     <artifactId>nuxeo-web-mobile-parent</artifactId>
-    <version>5.6.0-HF29-SNAPSHOT</version>
+    <version>5.6.0-HF29</version>
   </parent>
   <artifactId>nuxeo-web-mobile</artifactId>
   <name>nuxeo-web-mobile</name>
