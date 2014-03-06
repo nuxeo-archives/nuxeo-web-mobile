@@ -16,8 +16,8 @@
  */
 package org.nuxeo.ecm.mobile.webengine.adapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,10 +146,9 @@ public class RelationAdapter extends DefaultMobileAdapter {
     private DocumentModel getDocumentModel(Node node) throws ClientException {
         if (node.isQNameResource()) {
             QNameResource resource = (QNameResource) node;
-            Map<String, Serializable> context = new HashMap<String, Serializable>();
             CoreSession session = WebEngine.getActiveContext().getCoreSession();
-            context.put(ResourceAdapter.CORE_SESSION_ID_CONTEXT_KEY,
-                    session.getSessionId());
+            Map<String, Object> context = Collections.<String, Object> singletonMap(
+                    ResourceAdapter.CORE_SESSION_CONTEXT_KEY, session);
             Object o = Framework.getLocalService(RelationManager.class).getResourceRepresentation(
                     resource.getNamespace(), resource, context);
             if (o instanceof DocumentModel) {
