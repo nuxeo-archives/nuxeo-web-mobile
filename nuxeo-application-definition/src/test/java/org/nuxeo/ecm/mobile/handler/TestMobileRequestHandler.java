@@ -31,9 +31,9 @@ import static org.mockito.Mockito.when;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
+ *
  */
-public class MobileRequestHandlerTestCase {
+public class TestMobileRequestHandler {
 
     private static final String SAFARI_USER_AGENT = "Mozilla/5.0 "
             + "(Macintosh; U; Intel Mac OS X 10_6_6; en-us) "
@@ -78,7 +78,7 @@ public class MobileRequestHandlerTestCase {
         RequestHandler handler = new MobileRequestHandler();
         Map<String, String> properties = new HashMap<String, String>();
         properties.put(MobileRequestHandler.URL_SKIPPED_PATTERNS_PROP,
-                "(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)");
+                "(.*)/nxfile/(.*)|(.*)/nxbigfile/(.*)|.*\\.jsp.*");
         handler.init(properties);
 
         HttpServletRequest request = initRequest(SAFARI_MOBILE_USER_AGENT,
@@ -93,6 +93,11 @@ public class MobileRequestHandlerTestCase {
 
         request = initRequest(SAFARI_MOBILE_USER_AGENT,
                 "http://localhost:8080/nuxeo/nxbigfile/etc");
+        assertFalse(handler.isRequestRedirectedToApplication(request));
+        assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
+
+        request = initRequest(SAFARI_MOBILE_USER_AGENT,
+                "http://localhost:8080/nuxeo/oauth2grant.jsp");
         assertFalse(handler.isRequestRedirectedToApplication(request));
         assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
     }

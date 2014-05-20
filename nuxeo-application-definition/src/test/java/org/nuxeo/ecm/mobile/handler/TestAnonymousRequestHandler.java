@@ -37,7 +37,7 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.USERIDENT_KEY;
  * @since 5.5
  *
  */
-public class AnonymousRequestHandlerTestCase {
+public class TestAnonymousRequestHandler {
 
     private AnonymousRequestHandler handler;
 
