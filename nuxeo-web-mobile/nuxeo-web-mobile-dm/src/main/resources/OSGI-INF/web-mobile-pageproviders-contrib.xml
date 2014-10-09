@@ -3,35 +3,35 @@
   <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
     point="providers">
 
-      <coreQueryPageProvider name="faceted_search_core_default">
+      <coreQueryPageProvider name="search_core_default">
         <property name="coreSession">#{documentManager}</property>
-        <whereClause docType="FacetedSearchDefault">
+        <whereClause docType="DefaultSearch">
           <fixedPart>
-            ecm:mixinType != 'HiddenInNavigation' AND ecm:isCheckedInVersion = 0
-            AND ecm:currentLifeCycleState != 'deleted'
+            ecm:mixinType != 'HiddenInNavigation' AND ecm:isProxy = 0
+            AND ecm:isCheckedInVersion = 0 AND ecm:currentLifeCycleState != 'deleted'
+            AND SORTED_COLUMN IS NOT NULL
           </fixedPart>
           <predicate parameter="ecm:fulltext" operator="FULLTEXT">
-            <field schema="faceted_search_default" name="ecm_fulltext" />
-          </predicate>
-          <predicate parameter="dc:created" operator="BETWEEN">
-            <field schema="faceted_search_default" name="dc_created_min" />
-            <field schema="faceted_search_default" name="dc_created_max" />
-          </predicate>
-          <predicate parameter="dc:modified" operator="BETWEEN">
-            <field schema="faceted_search_default" name="dc_modified_min" />
-            <field schema="faceted_search_default" name="dc_modified_max" />
+            <field schema="default_search" name="ecm_fulltext" />
           </predicate>
           <predicate parameter="dc:creator" operator="IN">
-            <field schema="faceted_search_default" name="dc_creator" />
+            <field schema="default_search" name="dc_creator" />
           </predicate>
-          <predicate parameter="dc:coverage" operator="STARTSWITH">
-            <field schema="faceted_search_default" name="dc_coverage" />
+          <predicate parameter="dc:created" operator="BETWEEN">
+            <field schema="default_search" name="dc_created_min" />
+            <field schema="default_search" name="dc_created_max" />
           </predicate>
           <predicate parameter="dc:subjects" operator="STARTSWITH">
-            <field schema="faceted_search_default" name="dc_subjects" />
+            <field schema="default_search" name="dc_subjects" />
+          </predicate>
+          <predicate parameter="dc:coverage" operator="STARTSWITH">
+            <field schema="default_search" name="dc_coverage" />
           </predicate>
           <predicate parameter="ecm:path" operator="STARTSWITH">
-            <field schema="faceted_search_default" name="ecm_path" />
+            <field schema="default_search" name="ecm_path" />
+          </predicate>
+          <predicate parameter="collectionMember:collectionIds" operator="IN">
+            <field schema="default_search" name="ecm_collections" />
           </predicate>
         </whereClause>
         <sort column="dc:title" ascending="true" />

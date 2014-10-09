@@ -31,19 +31,19 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IterableQueryResult;
-import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.Template;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.DefaultObject;
 import org.nuxeo.runtime.api.Framework;
+import org.nuxeo.search.ui.SearchUIService;
 
 /**
  * Manage authentication form and logout action
- * 
+ *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
+ *
  */
 @WebObject(type = "Search")
 @Produces("text/html;charset=UTF-8")
@@ -58,8 +58,6 @@ public class Search extends DefaultObject {
             + "AND (ecm:currentLifeCycleState != 'deleted') %s";
 
     private static final String ORDER_PATTERN = "ORDER BY %s";
-
-    private FacetedSearchService facetedSearchService;
 
     @GET
     public Template doGet(@QueryParam("q") String fulltext,
@@ -104,33 +102,18 @@ public class Search extends DefaultObject {
 
     private List<DocumentModel> mySearch() throws ClientException {
         CoreSession session = ctx.getCoreSession();
-        List<DocumentModel> searches = getFacetedSearchService().getCurrentUserSavedSearches(
+        return getSearchService().getCurrentUserSavedSearches(
                 session);
-        return searches;
     }
 
     private Object sharedSearches() throws ClientException {
         CoreSession session = ctx.getCoreSession();
-        List<DocumentModel> searches = getFacetedSearchService().getOtherUsersSavedSearches(
+        return getSearchService().getSharedSavedSearches(
                 session);
-        return searches;
     }
 
-    private FacetedSearchService getFacetedSearchService()
+    private SearchUIService getSearchService()
             throws ClientException {
-        if (facetedSearchService == null) {
-            try {
-                facetedSearchService = Framework.getService(FacetedSearchService.class);
-            } catch (Exception e) {
-                final String errMsg = "Error connecting to FacetedSearchService. "
-                        + e.getMessage();
-                throw new ClientException(errMsg, e);
-            }
-            if (facetedSearchService == null) {
-                throw new ClientException(
-                        "FacetedSearchService service not bound");
-            }
-        }
-        return facetedSearchService;
+        return Framework.getLocalService(SearchUIService.class);
     }
 }
