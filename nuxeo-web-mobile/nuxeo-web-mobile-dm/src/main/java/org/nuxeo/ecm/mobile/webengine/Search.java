@@ -97,7 +97,7 @@ public class Search extends DefaultObject {
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("mySearches", mySearch());
         args.put("sharedSearches", sharedSearches());
-        return getView("faceted-searches").args(args);
+        return getView("saved-searches").args(args);
     }
 
     private List<DocumentModel> mySearch() throws ClientException {
