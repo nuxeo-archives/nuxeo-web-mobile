@@ -20,36 +20,6 @@ Version: ${document.versionLabel}%03
   <@block name="content">
 
   <div data-role="page">
-    <script type="text/javascript">
-      $(function () {
-        $.ajax({
-          url: '${Root.path}/doc/${This.document.id}/hasLiked',
-          success: function (data) {
-            setTimeout(function () {
-              if (JSON.parse(data).hasLiked) {
-                setTimeout(function () {
-                  $(".like-button .icon-docview").toggle();
-                }, 200); //Delay toggle ...
-              }
-
-              $(".like-button").removeClass('ui-disabled');
-            }, 200);
-          }
-        })
-
-        $('.like-button').click(function () {
-          $.ajax({
-            url: '${Root.path}/doc/${This.document.id}/like'
-          }).done(function () {
-                $(".like-button .icon-docview").toggle();
-                $(".like-button").removeClass("ui-btn-active");
-              }).fail(function () {
-                alert('Something went wrong while liking your document.')
-              });
-        });
-      });
-    </script>
-
     <div data-role="header">
       <a href="#" data-rel="back" data-icon="arrow-l">Back</a>
 
@@ -120,12 +90,6 @@ Version: ${document.versionLabel}%03
             <!-- Distabled yet
             <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="${Context.getMessage('label.header.title.Relations')}" src="${skinPath}/icons/relations.png" /></a></li>
             -->
-            <li>
-              <a href="#" class="ui-disabled like-button">
-                <span class="icon-docview icons-docview-like">&nbsp;</span>
-                <span class="icon-docview icons-docview-liked" style="display: none;">&nbsp;</span>
-              </a>
-            </li>
           </ul>
         </div>
 
@@ -149,7 +113,7 @@ Version: ${document.versionLabel}%03
           </#if>
           <!-- Disabled ...
           <li class="nxDocumentItem">
-            <a href="#" 
+            <a href="#"
                onclick="var jqxhr = $.get('${Root.path}/doc/${doc.id}/mailIt', function() { displayNotification('${Context.getMessage('label.message.RequestSent')}'); })
                 .success(function() { displayNotification('${Context.getMessage('label.message.MailSent')}'); })
                 .error(function() { displayNotification('${Context.getMessage('label.message.ProblemOccured')}'); })">
@@ -174,33 +138,32 @@ Version: ${document.versionLabel}%03
 
           <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
             <h3>Dublincore</h3>
-            <ul data-inset="true" data-role="listview" data-theme="d">
+            <ul data-inset="true" data-role="listview" data-theme="d" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
               <li data-role="fieldcontain">
-                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.created')}</label>
+                <label for="name">${Context.getMessage('label.dublincore.created')}</label>
                 <span><#if doc.created>${doc.created?datetime}</#if></span>
               </li>
               <li data-role="fieldcontain">
-                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.modified')}</label>
+                <label for="name">${Context.getMessage('label.dublincore.modified')}</label>
                 <span><#if doc.modified>${doc.modified?datetime}</#if></span>
               </li>
               <li data-role="fieldcontain">
-                <label for="name"
-                       class="ui-input-text">${Context.getMessage('label.dublincore.lastContributor')}</label>
+                <label for="name">${Context.getMessage('label.dublincore.lastContributor')}</label>
                 <span>${This.getDisplayPrincipalName(doc.dublincore.lastContributor)}</span>
               </li>
               <li data-role="fieldcontain">
-                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.creator')}</label>
+                <label for="name">${Context.getMessage('label.dublincore.creator')}</label>
                 <span>${This.getDisplayPrincipalName(doc.dublincore.creator)}</span>
               </li>
               <li data-role="fieldcontain">
-                <label for="name" class="ui-input-text">${Context.getMessage('label.dublincore.contributors')}</label>
+                <label for="name">${Context.getMessage('label.dublincore.contributors')}</label>
                 <span>
                   <#list doc.dublincore.contributors as contributor>
                   ${This.getDisplayPrincipalName(contributor)}<#if x_has_next>, </#if>
                   </#list>
                 </span>
               </li>
-              <ul>
+            </ul>
           </div>
         </div>
 

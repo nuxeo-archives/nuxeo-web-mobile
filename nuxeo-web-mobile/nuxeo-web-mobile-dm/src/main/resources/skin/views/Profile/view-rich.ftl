@@ -35,27 +35,27 @@
               class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
             <li data-role="fieldcontain"
                 class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Phone')}</label>
+              <label for="name">${Context.getMessage('label.form.Phone')}</label>
               <span><a
                   href="tel:${userProfile.userprofile.phonenumber}">${userProfile.userprofile.phonenumber}</a></span>
             </li>
             <li data-role="fieldcontain"
                 class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Birth')}</label>
+              <label for="name">${Context.getMessage('label.form.Birth')}</label>
               <#if userProfile.userprofile.birthdate != "">
                 <span>${userProfile.userprofile.birthdate?date}</span>
               </#if>
             </li>
             <li data-role="fieldcontain"
                 class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-body-c ui-corner-top ui-btn-up-c">
-              <label for="name" class="ui-input-text">${Context.getMessage('label.form.Gender')}</label>
+              <label for="name">${Context.getMessage('label.form.Gender')}</label>
               <#if userProfile.userprofile.gender>
                 <span>${Context.getMessage('label.form.GenderFemale')}</span>
               <#else>
                 <span>${Context.getMessage('label.form.GenderMale')}</span>
               </#if>
             </li>
-            <ul>
+          </ul>
         </div>
 
       </div>

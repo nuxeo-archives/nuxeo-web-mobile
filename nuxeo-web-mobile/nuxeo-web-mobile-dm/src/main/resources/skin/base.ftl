@@ -23,14 +23,14 @@
   <link rel="apple-touch-startup-image" href="${skinPath}/img/splash_screen_320_460.jpg"
         media="screen and (max-device-width: 480px)"/>
 
-  <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.0.css"/>
+  <link rel="stylesheet" href="${skinPath}/css/jquery.mobile-1.4.4.min.css"/>
   <link rel="stylesheet" href="${skinPath}/css/nuxeo-web-mobile.css"/>
 <#if Context.getProperty('Cordova')??>
   <script
       src="${skinPath}/script/cordova-${Context.getProperty('Cordova').version}.0-${Context.getProperty('Cordova').device}.js"></script>
 </#if>
-  <script src="${skinPath}/script/jquery-1.7.js"></script>
-  <script src="${skinPath}/script/jquery.mobile-1.0.js"></script>
+  <script src="${skinPath}/script/jquery-1.11.1.min.js"></script>
+  <script src="${skinPath}/script/jquery.mobile-1.4.4.min.js"></script>
 
   <!-- rewrite the URL after a redirect from JSF to have mobile URL,
        initial request accessible in the history -->
