@@ -1,21 +1,25 @@
 /* -- Nuxeo Web Mobile default CSS -- */
 
 /* Login */
-.login { background: #001656 url('../img/nuxeo_login.jpg') no-repeat bottom left }
+.login { background: #00adff url('../img/nuxeo_login.jpg') no-repeat bottom right }
+.ui-mobile .login.ui-page-active { background-color: #00adff }
 
-  .login .ui-field-contain { border: none; margin: 0; padding: .2em .4em }
-  .login .logo { background-color: #000; padding: .6em 0 .5em; text-align: center }
+  .login .ui-field-contain { border: none; margin: 0; padding: .2em 0 }
+  .login .ui-input-text, .login .ui-input-search { background-color: #fff; border-color: transparent; color: #213f7f }
+  .login .logo { background-color: #fff; box-shadow: 1px 0 4px rgba(0,0,0,0.4); padding: .8em .6em .5em }
     .login .logo img { max-height: 10em; max-width: 5.7em }
   .login .authentification { margin: 13% auto 0; width: 70% }
   .login .authentification form { margin: auto; max-width: 22em }
+  .login .authentification .ui-btn { background-color: #213f7f; border: none; color: #fff; text-shadow: none }
 
 /* Footer */
 .icon-footer {
   background-size: 32px;
-  /*background: transparent no-repeat center;*/
   display: inline-block;
   height: 32px;
   width: 32px }
+
+.ui-footer .ui-link.ui-btn { background-color: #fff }
 
 .icons-footer-browse { background-image: url('../icons/footer_browse_off.png') }
 .icons-footer-home { background-image: url('../icons/footer_home_off.png') }
@@ -61,6 +65,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
     .documentInfo .title img { margin-right: .3em }
     .documentInfo .description { color: #888; font-size: 95%; margin-bottom: .5em; padding-left: 1.3em }
     .documentInfo .modificationDate { color: #aaa; font-size: 85%; margin-bottom: .2em; padding-left: 1.4em }
+    .documentInfo .participants { padding-left: 1.2em }
+
+.documentView h2 { color: #203f7d }
 
 .icon-docview {
   background-size: 32px;
@@ -126,8 +133,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
 
 /* Searches & Browse */
 .search h3.ui-li-heading, .browse h3.ui-li-heading, .repository h3.ui-li-heading { margin: .3em 0 .6em }
-.repository h2, .homeNavigation h3 { margin: -15px -15px 0; padding: 15px }
+.repository h2, .homeNavigation h3 { color: #203f7d; margin: -15px -15px 0; padding: 15px }
 .repository ul.ui-listview, .homeNavigation ul.ui-listview { margin: 0 -15px 15px }
+.repository .ui-li-has-arrow, .browse .ui-li-has-arrow { border: none }
 
 .smallButton .ui-btn-inner { padding: .2em .4em }
 
@@ -153,18 +161,12 @@ only screen and (min-device-pixel-ratio: 1.5) {
     z-index: 220 }
 
 /* Feedback Messages */
-.feedback { background:             #ffefa8 /*{e-bup-background-color}*/;
-      background-image: -webkit-gradient(linear, left top, left bottom, from( #fff8d7), to( #ffefa8*/));
-      background-image: -webkit-linear-gradient(#fff8d7, #ffefa8);
-      background-image:    -moz-linear-gradient(#fff8d7, #ffefa8);
-      background-image:     -ms-linear-gradient(#fff8d7, #ffefa8);
-      background-image:      -o-linear-gradient(#fff8d7, #ffefa8);
-      background-image:         linear-gradient(#fff8d7, #ffefa8);
-    border: 1px solid #ffde4a;
+.feedback { background: #ffefa8;
+    border: none;
     border-radius: 7px;
     color: #5f5f5f;
     margin: 0;
-    padding: .5em }
+    padding: 1em }
 
 /* Loader */
 .ui-loader { background-color: #fff; background-image: none;
@@ -178,14 +180,14 @@ only screen and (min-device-pixel-ratio: 1.5) {
 /* ================================ */
 /* Generic classes */
 .white { background-color: #fff }
-.nospace { margin: -15px -15px 0 }
+.nospace { margin: -16px -16px 0 }
 .noSidespace { margin: 0 -15px }
 .marginBottom { margin-bottom: .4em }
 .shadow { box-shadow: 0 0 8px #6e6e6e }
 
 .ui-body-c .ui-link { color: #00a9e9; text-decoration: none }
 
-.tag { background-color: #8a6d47 ; border-radius: .2em; color: #fff;
+.tag { background-color: #00adff ; border-radius: .2em; color: #fff;
         cursor: default;
         display: inline-block;
     font-size: 80%;
@@ -209,3 +211,14 @@ fieldset .ui-btn-inner { padding: .5em }
 .clear:before, .clear:after { content:""; display:table }
 .clear:after { clear:both }
 
+/* Jquery skin override*/
+.ui-bar-a, .ui-page-theme-a .ui-bar-inherit,
+html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit,
+html body .ui-group-theme-a .ui-bar-inherit { background-color: #fff; color: #00adff; text-shadow: none }
+
+.ui-mobile .ui-page-active { background-color: #f1f4f8 }
+
+.ui-collapsible-themed-content .ui-collapsible-content { background-color: #fff; border-color: #ddd }
+
+.ui-page-theme-a a, html .ui-bar-a a,
+html .ui-body-a a, html body .ui-group-theme-a a { color: #00adff; text-decoration: none }
