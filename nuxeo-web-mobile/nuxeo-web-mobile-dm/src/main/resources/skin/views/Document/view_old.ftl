@@ -69,11 +69,6 @@ Your sincerely Nuxeo Server.
             ${Context.getMessage('label.header.title.Comments')}
             </a>
           </li>
-          <li class="nxDocumentItem">
-            <a href="${Root.path}/doc/${doc.id}/@annotations">
-            ${Context.getMessage('label.header.title.Annotations')}
-            </a>
-          </li>
         </ul>
       </div>
       <!-- Panel detail -->

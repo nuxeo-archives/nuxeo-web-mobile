@@ -82,11 +82,6 @@ Version: ${document.versionLabel}%03
                 <span class="icon-docview icons-docview-comments">&nbsp;</span>
               </a>
             </li>
-            <li>
-              <a href="${Root.path}/doc/${doc.id}/@annotations">
-                <span class="icon-docview icons-docview-annotations">&nbsp;</span>
-              </a>
-            </li>
             <!-- Distabled yet
             <li><a href="${Root.path}/doc/${doc.id}/@relation"><img alt="${Context.getMessage('label.header.title.Relations')}" src="${skinPath}/icons/relations.png" /></a></li>
             -->
