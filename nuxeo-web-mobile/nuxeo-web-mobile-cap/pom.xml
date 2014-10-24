@@ -5,10 +5,10 @@
     <artifactId>nuxeo-web-mobile</artifactId>
     <version>5.9.6-SNAPSHOT</version>
   </parent>
-  <artifactId>nuxeo-web-mobile-dm</artifactId>
-  <name>nuxeo-web-mobile-dm</name>
+  <artifactId>nuxeo-web-mobile-cap</artifactId>
+  <name>nuxeo-web-mobile-cap</name>
   <description>WebEngine application using JQuery Mobile to provide a dedicated
-    UI for Mobile browsers for Nuxeo DM.</description>
+    UI for Mobile browsers for Nuxeo CAP.</description>
   <dependencies>
     <dependency>
       <groupId>commons-lang</groupId>

@@ -12,7 +12,7 @@
     UI for Mobile browsers.</description>
 
   <modules>
-    <module>nuxeo-web-mobile-dm</module>
+    <module>nuxeo-web-mobile-cap</module>
     <module>nuxeo-web-mobile-sc</module>
   </modules>
 
