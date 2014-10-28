@@ -21,7 +21,7 @@ Version: ${document.versionLabel}%03
 
   <div data-role="page">
     <div data-role="header">
-      <a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+      <a href="#" data-rel="back" data-icon="arrow-l">${Context.getMessage("command.mobile.back")}</a>
 
       <h1>${Context.getMessage('label.header.title.View')}</h1>
       <a href="javascript:goToStandardNavigation('${This.JSFURLPath}');" data-role="button" data-icon="arrow-r"
@@ -38,7 +38,7 @@ Version: ${document.versionLabel}%03
           <div class="description">${doc.dublincore.description}</div>
           <div class="modificationDate">
             <#if doc.dublincore.modified != null>
-              <span>modified</span>
+              <span>${Context.getMessage('label.dublincore.modified')}</span>
               <span>${doc.dublincore.modified.time?datetime}</span>
             </#if>
           </div>
