@@ -24,7 +24,7 @@
         <ul class="ui-listview" data-role="listview">
           <#list mySearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
-              <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@faceted">
+              <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@mobileSearch">
                 <#if doc.common.icon != null && doc.common.icon != "">
                   <img class="ui-li-icon ui-li-thumb" src="${basePath}/..${doc.common.icon}"/>
                 <#else>
@@ -51,7 +51,7 @@
         <ul class="ui-listview" data-role="listview">
           <#list sharedSearches as doc>
             <li class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-count ui-li-has-icon ui-btn-up-c">
-              <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@faceted">
+              <a class="ui-link-inherit" href="${Root.path}/doc/${doc.id}/@mobileSearch">
                 <#if doc.common.icon != null && doc.common.icon != "">
                   <img class="ui-li-icon ui-li-thumb" src="${basePath}/..${doc.common.icon}"/>
                 <#else>

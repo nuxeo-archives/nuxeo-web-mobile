@@ -19,7 +19,7 @@
         </a>
       </li>
       <li>
-        <a href="${Root.path}/search/faceted">
+        <a href="${Root.path}/search/list">
           <span class="icon-footer icons-footer-search<#if currentPage == 'SEARCH'> selected</#if>">&nbsp;</span>
         </a>
       </li>

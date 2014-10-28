@@ -34,7 +34,7 @@ import org.nuxeo.runtime.api.Framework;
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  */
-@WebAdapter(name = "defaultSearch", type = "DefaultSearch", targetType = "MobileDocument")
+@WebAdapter(name = "mobileSearch", type = "DefaultSearch", targetType = "MobileDocument")
 public class SearchAdapter extends DefaultMobileAdapter {
 
     private PageProviderService service;

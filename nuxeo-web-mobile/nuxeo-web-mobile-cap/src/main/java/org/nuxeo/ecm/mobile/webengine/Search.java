@@ -92,7 +92,7 @@ public class Search extends DefaultObject {
     }
 
     @GET
-    @Path("faceted")
+    @Path("list")
     public Object doGetFacetedSearches() throws ClientException {
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("mySearches", mySearch());
