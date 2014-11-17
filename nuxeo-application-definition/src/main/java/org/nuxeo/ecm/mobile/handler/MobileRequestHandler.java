@@ -28,7 +28,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
+ *
  */
 public class MobileRequestHandler implements RequestHandler {
 
@@ -55,8 +55,11 @@ public class MobileRequestHandler implements RequestHandler {
         if (urlPatterns != null) {
             for (String urlPattern : urlPatterns) {
                 if (urlRequest.matches(urlPattern)) {
-                    String msg = "Mobile Handler: URL redirection (%s) is skipped by configuration: %s";
-                    log.info(String.format(msg, urlRequest, urlPattern));
+                    if (log.isDebugEnabled()) {
+                        log.debug(String.format(
+                                "Mobile Handler: URL redirection (%s) is skipped by configuration: %s",
+                                urlRequest, urlPattern));
+                    }
                     return false;
                 }
             }
