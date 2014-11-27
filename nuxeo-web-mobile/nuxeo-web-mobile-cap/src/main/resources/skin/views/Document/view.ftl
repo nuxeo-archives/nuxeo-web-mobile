@@ -31,7 +31,7 @@ Version: ${document.versionLabel}%03
     <div data-role="content" class="documentView" id="main">
       <#assign doc = This.document>
       <div id="${doc.id}" title="Details" class="panel">
-        <div class="white nospace shadow documentInfo">
+        <div class="white nospace documentInfo">
           <div class="title">
             <img alt="Document icon" src="${basePath}/..${doc.common.icon}"/>${doc.dublincore.title}
           </div>
@@ -133,7 +133,7 @@ Version: ${document.versionLabel}%03
 
           <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
             <h3>Dublincore</h3>
-            <ul data-inset="true" data-role="listview" data-theme="d" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+            <ul data-inset="true" data-role="listview" data-theme="d" class="ui-listview ui-listview-inset">
               <li data-role="fieldcontain">
                 <label for="name">${Context.getMessage('label.dublincore.created')}</label>
                 <span><#if doc.created>${doc.created?datetime}</#if></span>

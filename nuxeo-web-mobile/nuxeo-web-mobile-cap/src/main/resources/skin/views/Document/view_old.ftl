@@ -24,7 +24,7 @@ Your sincerely Nuxeo Server.
 
       <#assign doc = This.document>
       <div id="${doc.id}" title="Details" class="panel">
-        <div class="white nospace shadow documentInfo">
+        <div class="white nospace documentInfo">
           <div class="title">
             <img alt="Document icon" src="${basePath}/..${doc.common.icon}"/>${doc.dublincore.title}
           </div>
