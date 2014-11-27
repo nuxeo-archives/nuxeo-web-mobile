@@ -37,7 +37,7 @@ import org.nuxeo.runtime.model.DefaultComponent;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
+ *
  */
 public class ApplicationRedirectServiceImpl extends DefaultComponent implements
         ApplicationDefinitionService {
@@ -78,8 +78,7 @@ public class ApplicationRedirectServiceImpl extends DefaultComponent implements
 
     @Override
     public void registerContribution(Object contribution,
-            String extensionPoint, ComponentInstance contributor)
-            throws Exception {
+            String extensionPoint, ComponentInstance contributor) {
         ExtensionPoint ep = Enum.valueOf(ExtensionPoint.class, extensionPoint);
         switch (ep) {
         case applicationDefinition:
