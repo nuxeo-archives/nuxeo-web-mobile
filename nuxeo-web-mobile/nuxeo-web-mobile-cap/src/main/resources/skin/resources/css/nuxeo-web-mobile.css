@@ -1,5 +1,6 @@
 /* -- Nuxeo Web Mobile default CSS --
  * =Login
+ * =Header
  * =Footer
  * =Home
  * == Pages ==
@@ -59,15 +60,26 @@
   color: #fff;
   text-shadow: none }
 
+/* =Header */
+.ui-page .ui-header .ui-btn {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  font-weight: 200;
+  text-shadow: none;
+  color: #fff }
+
 /* =Footer */
 .icon-footer {
-  background-size: 32px;
+  background-size: 28px;
   display: inline-block;
-  height: 32px;
-  width: 32px }
+  height: 28px;
+  width: 28px }
 
 .ui-footer .ui-link.ui-btn {
-  background-color: #fff }
+  background-color: #404040;
+  border: none }
 
 .icons-footer-browse {
   background-image: url('../icons/footer_browse_off.png') }
@@ -142,25 +154,42 @@ only screen and (min-device-pixel-ratio: 1.5) {
   font-size: 110% }
 
 .documentInfo .title img {
-  margin-right: .3em }
+  margin: 0 .3em -.1em 0 }
 
 .documentInfo .description {
   color: #888;
   font-size: 95%;
-  margin-bottom: .5em;
-  padding-left: 1.3em }
+  margin-bottom: .2em;
+  padding: .2em 1.4em 0 }
 
 .documentInfo .modificationDate {
   color: #aaa;
   font-size: 85%;
   margin-bottom: .2em;
-  padding-left: 1.4em }
+  padding-left: 1.55em }
 
 .documentInfo .participants {
   padding-left: 1.2em }
 
 .documentView h2 {
-  color: #203f7d }
+  color: #203f7d;
+  font-size: 1.1em }
+
+.documentView .ui-collapsible-content>.ui-listview-inset {
+  margin: -.5em -1em;
+  border: none }
+
+.documentView .ui-listview-inset {
+  box-shadow: none;
+  border-radius: 0 }
+
+.documentView .ui-listview>.ui-li-static {
+  border: none;
+  border-bottom: 1px solid #eee }
+
+.documentView .ui-field-contain>label {
+  color: #aaa;
+  margin: 0 .2em 0 0 }
 
 .icon-docview {
   background-size: 32px;
@@ -216,7 +245,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 
 .comments li,
 .annotations li {
-  box-shadow: 0 5px 8px #6e6e6e;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
   padding: .4em .5em;
   margin: 0 0 .3em }
 
@@ -226,6 +255,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 
 .comments .actions,
 .annotations .actions {
+  color: #fff;
   text-align: right }
 
 .comments .details span,
@@ -301,28 +331,84 @@ only screen and (min-device-pixel-ratio: 1.5) {
 .repository h3.ui-li-heading {
   margin: .3em 0 .6em }
 
+.browse.ui-content,
+.search.ui-content,
+.homeNavigation .ui-content,
+.repository.ui-content {
+  padding: 0 }
+
 .repository h2,
-.homeNavigation h3 {
-  color: #203f7d;
-  margin: -15px -15px 0;
-  padding: 15px }
+.homeNavigation h3,
+.search h2  {
+  background-color: #213f7d;
+  color: #fff;
+  font-size: .9em;
+  font-weight: 200;
+  margin: 0;
+  padding: 5px 15px }
 
 .repository ul.ui-listview,
-.homeNavigation ul.ui-listview {
-  margin: 0 -15px 15px }
+.search ul.ui-listview,
+.homeNavigation ul.ui-listview,
+.browse.ui-content .ui-listview {
+  margin: 0 }
+
+.homeNavigation .ui-listview li,
+.search .ui-listview li,
+.browse .ui-listview li,
+.repository .ui-listview li {
+  border: none;
+  background-color: #fff }
+
+.homeNavigation .ui-listview li a.ui-btn,
+.search .ui-listview li a.ui-btn,
+.repository .ui-listview li a.ui-btn,
+.browse .ui-listview li a.ui-btn {
+  border: none;
+  border-bottom: 1px solid #d6e8f0;
+  background-color: transparent }
+
+.repository ul.ui-listview h3,
+.search .ui-listview h3,
+.homeNavigation .ui-listview h3,
+.browse .ui-listview h3 {
+  background-color: transparent;
+  color: #000;
+  margin: .2em 0;
+  padding: 0 }
+
+.homeNavigation .ui-listview a.ui-btn p,
+.search .ui-listview a.ui-btn p,
+.repository .ui-listview a.ui-btn p,
+.browse .ui-listview a.ui-btn p {
+  color: #888;
+  margin: 0 }
 
 .browse .ui-li-has-arrow,
+.homeNavigation .ui-li-has-arrow,
 .repository .ui-li-has-arrow {
   border: none }
 
+.browse .ui-listview .ui-btn-icon-notext:after,
+.browse .ui-listview .ui-btn-icon-left:after,
+.browse .ui-listview .ui-btn-icon-right:after {
+  top: 40%;
+  opacity: 1 }
+
 .smallButton .ui-btn-inner {
   padding: .2em .4em }
+
+.search .ui-input-search {
+  margin: 0;
+  border-radius: 0;
+  color: #00adff;
+  font-size: 1.1em }
 
 /* == Messages == */
 /* =Dialog */
 .ui-overlay-a,
 .ui-mobile [data-role="dialog"] {
-  background: transparent !important }
+  background: rgba(0,0,0,0.1) }
 
 .ui-dialog .ui-header {
   margin: 0;
@@ -331,13 +417,11 @@ only screen and (min-device-pixel-ratio: 1.5) {
   width: auto }
 
 .ui-dialog .ui-content {
+  background-color: #fff;
   border-radius: 0;
   margin: 0;
   max-width: 100%;
   width: auto }
-
-.ui-dialog .ui-overlay-shadow {
-  box-shadow: 0 10px 0 #fff }
 
 /* =Notifications */
 .quickNotification { background-color: #fff;
@@ -354,20 +438,19 @@ only screen and (min-device-pixel-ratio: 1.5) {
   z-index: 220 }
 
 /* =Feedback Messages */
-.feedback { background: #ffefa8;
-  border: none;
-  border-radius: 7px;
-  color: #5f5f5f;
-  margin: 0;
-  padding: 1em }
+.feedback {
+  color: #00adff;
+  text-align: center;
+  margin: 1em; }
 
 /* =Loader */
-.ui-loader { background-color: #fff; background-image: none;
+.ui-loader {
+  background-color: #fff;
+  background-image: none;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px #bbb;
   color: #000;
-  opacity: 1;
-  text-shadow: none }
+  opacity: 1 }
 
 .ui-icon-loading {
   background-image: url('../icons/waiter.gif') }
@@ -381,7 +464,8 @@ only screen and (min-device-pixel-ratio: 1.5) {
   margin: -16px -16px 0 }
 
 .noSidespace {
-  margin: 0 -15px }
+  margin: 0 -17px;
+  max-width: 110%; }
 
 .marginBottom {
   margin-bottom: .4em }
@@ -399,9 +483,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
   cursor: default;
   display: inline-block;
   font-size: 80%;
+  line-height: initial;
   margin: .15em .1em;
   padding: .2em .3em;
-  text-shadow: none;
   white-space: nowrap }
 
 .tag .ui-link,
@@ -409,8 +493,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 .tag .ui-link:visited {
   color: #fff;
   font-weight: normal;
-  text-decoration: none;
-  text-shadow: none }
+  text-decoration: none }
 
 .squared,
 .squared .ui-btn-corner-all {
@@ -443,17 +526,27 @@ fieldset .ui-btn-inner {
   clear:both }
 
 /* =Jquery skin override */
+
+* {
+  border-radius: 0;
+  font-weight: 200;
+  text-shadow: none }
+
 .ui-bar-a,
 .ui-page-theme-a .ui-bar-inherit,
 html .ui-bar-a .ui-bar-inherit,
 html .ui-body-a .ui-bar-inherit,
 html body .ui-group-theme-a .ui-bar-inherit {
-  background-color: #fff;
-  color: #00adff;
-  text-shadow: none }
+  background-color: #00adff;
+  border: none;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  color: #fff }
+
+.ui-page-theme-a .ui-btn {
+  background-color: #fff }
 
 .ui-mobile .ui-page-active {
-  background-color: #f1f4f8 }
+  background-color: #ecf9ff }
 
 .ui-collapsible-themed-content .ui-collapsible-content {
   background-color: #fff;
@@ -465,3 +558,7 @@ html .ui-body-a a,
 html body .ui-group-theme-a a {
   color: #00adff;
   text-decoration: none }
+
+.ui-btn-icon-left:after, .ui-btn-icon-right:after,
+.ui-btn-icon-top:after, .ui-btn-icon-bottom:after, .ui-btn-icon-notext:after {
+  background-color: rgba(0,173,255,.7) }
