@@ -20,12 +20,8 @@
 package org.nuxeo.ecm.mobile.webengine.user;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.versioning.VersioningService;
 import org.nuxeo.ecm.platform.usermanager.UserManager;
 import org.nuxeo.ecm.webengine.WebException;
-import org.nuxeo.ecm.webengine.forms.FormData;
-import org.nuxeo.ecm.webengine.model.Module;
-import org.nuxeo.ecm.webengine.model.Validator;
 import org.nuxeo.ecm.webengine.model.WebContext;
 import org.nuxeo.runtime.api.Framework;
 
@@ -43,7 +39,7 @@ public class UserHelper {
 
     /**
      * TODO merge org.nuxeo.ecm.core.rest.DocumentHelper and UserHelper
-     * 
+     *
      */
     public static DocumentModel updateUser(WebContext ctx, DocumentModel user) {
         try {
