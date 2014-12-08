@@ -37,14 +37,12 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.FORM_SUBMITTED_
 import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.LOGIN_ERROR;
 
 /**
- * Authenticator that redirects user to dedicated application authentication
- * form if user has selected this application or if this application matched the
- * request context. Can't extends Form Authentication as login form is static
- * and here is dynamic.
+ * Authenticator that redirects user to dedicated application authentication form if user has selected this application
+ * or if this application matched the request context. Can't extends Form Authentication as login form is static and
+ * here is dynamic.
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 public class ApplicationFormAuthenticator implements NuxeoAuthenticationPlugin {
 
@@ -83,10 +81,8 @@ public class ApplicationFormAuthenticator implements NuxeoAuthenticationPlugin {
     }
 
     @Override
-    public Boolean handleLoginPrompt(HttpServletRequest httpRequest,
-            HttpServletResponse httpResponse, String baseURL) {
-        log.debug("Login Prompt - URL :" + httpRequest.getRequestURL() + "?"
-                + httpRequest.getQueryString());
+    public Boolean handleLoginPrompt(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String baseURL) {
+        log.debug("Login Prompt - URL :" + httpRequest.getRequestURL() + "?" + httpRequest.getQueryString());
 
         String loginPage = getService().getLoginURL(httpRequest);
         if (loginPage == null) {
@@ -107,8 +103,7 @@ public class ApplicationFormAuthenticator implements NuxeoAuthenticationPlugin {
             log.error(e, e);
             return Boolean.FALSE;
         }
-        String redirectUrl = URIUtils.addParametersToURIQuery(loginPage,
-                parameters);
+        String redirectUrl = URIUtils.addParametersToURIQuery(loginPage, parameters);
         try {
             httpResponse.sendRedirect(redirectUrl);
             return Boolean.TRUE;
@@ -126,12 +121,11 @@ public class ApplicationFormAuthenticator implements NuxeoAuthenticationPlugin {
     }
 
     @Override
-    public UserIdentificationInfo handleRetrieveIdentity(
-            HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+    public UserIdentificationInfo handleRetrieveIdentity(HttpServletRequest httpRequest,
+            HttpServletResponse httpResponse) {
 
         if (getService().getApplicationBaseURL(httpRequest) == null) {
-            log.debug("No Application match this request, use next Authenticator "
-                    + "in chain to retrieve identity");
+            log.debug("No Application match this request, use next Authenticator " + "in chain to retrieve identity");
             return null;
         }
 
@@ -148,8 +142,7 @@ public class ApplicationFormAuthenticator implements NuxeoAuthenticationPlugin {
         String userName = parameters.get(usernameKey);
         String password = parameters.get(passwordKey);
 
-        if (parameters.get(FORM_SUBMITTED_MARKER) != null
-                && (userName == null || userName.length() == 0)) {
+        if (parameters.get(FORM_SUBMITTED_MARKER) != null && (userName == null || userName.length() == 0)) {
             parameters.put(LOGIN_ERROR, ERROR_USERNAME_MISSING);
         }
         if (userName == null || userName.length() == 0) {

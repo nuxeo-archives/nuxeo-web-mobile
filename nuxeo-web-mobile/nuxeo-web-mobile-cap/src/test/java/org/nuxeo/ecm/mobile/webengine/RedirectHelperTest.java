@@ -22,13 +22,12 @@ import org.nuxeo.runtime.test.runner.FeaturesRunner;
 @RunWith(FeaturesRunner.class)
 @Features(PlatformFeature.class)
 @RepositoryConfig(init = DefaultRepositoryInit.class, cleanup = Granularity.METHOD)
-@Deploy({"org.nuxeo.ecm.platform.url.api", "org.nuxeo.ecm.platform.url.core"})
+@Deploy({ "org.nuxeo.ecm.platform.url.api", "org.nuxeo.ecm.platform.url.core" })
 public class RedirectHelperTest {
 
     public static final String CODEC_NXDOC = "nxdoc/default/7d43f95a-9d25-4dcb-ad9c-bfce22eaa6ae/view_documents";
 
-    public static final String CODEC_NXPATH =
-            "nxpath/default/default-domain/workspaces/myDoc%20Cool@view_documents?tabIds=%3A";
+    public static final String CODEC_NXPATH = "nxpath/default/default-domain/workspaces/myDoc%20Cool@view_documents?tabIds=%3A";
 
     @Test
     public void testRedirectHelper() {
@@ -36,7 +35,6 @@ public class RedirectHelperTest {
         Assert.assertEquals("7d43f95a-9d25-4dcb-ad9c-bfce22eaa6ae", documentRef.toString());
 
         documentRef = RedirectHelper.findDocumentRef(CODEC_NXPATH);
-        Assert.assertEquals("/default-domain/workspaces/myDoc Cool",
-                documentRef.toString());
+        Assert.assertEquals("/default-domain/workspaces/myDoc Cool", documentRef.toString());
     }
 }

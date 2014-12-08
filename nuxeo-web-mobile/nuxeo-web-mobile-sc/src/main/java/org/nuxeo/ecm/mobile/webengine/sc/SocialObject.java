@@ -51,10 +51,8 @@ public class SocialObject extends DefaultObject {
 
     protected DocumentModelList getUserWorkspacesDocs() throws ClientException {
         CoreSession session = ctx.getCoreSession();
-        DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(
-                session, null);
-        return session.getChildren(userWorkspace.getRef(), null,
-                ONLY_VISIBLE_CHILDREN, null);
+        DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(session, null);
+        return session.getChildren(userWorkspace.getRef(), null, ONLY_VISIBLE_CHILDREN, null);
     }
 
     protected UserWorkspaceService getUserWorkspaceService() {
@@ -65,15 +63,14 @@ public class SocialObject extends DefaultObject {
     }
 
     protected DocumentModelList getLatestRatedDocs() {
-        ActivitiesList latestAct = getRatingService().getLastestRatedDocByUser(
-                ctx.getPrincipal().getName(), Constants.LIKE_ASPECT, 10);
+        ActivitiesList latestAct = getRatingService().getLastestRatedDocByUser(ctx.getPrincipal().getName(),
+                Constants.LIKE_ASPECT, 10);
         latestAct.filterActivities(ctx.getCoreSession());
 
         DocumentModelList ret = new DocumentModelListImpl();
         for (Activity activity : latestAct) {
             try {
-                DocumentRef ref = new IdRef(
-                        ActivityHelper.getDocumentId(activity.getTarget()));
+                DocumentRef ref = new IdRef(ActivityHelper.getDocumentId(activity.getTarget()));
                 ret.add(ctx.getCoreSession().getDocument(ref));
             } catch (ClientException e) {
                 log.info(e.getMessage());

@@ -54,7 +54,6 @@ import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_V
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 @Path("mobile")
 @Produces("text/html;charset=UTF-8")
@@ -96,13 +95,10 @@ public class MobileApplication extends ModuleRoot {
     }
 
     /**
-     * Try to fetch document in targetURL parameter in URL if not this is the
-     * Home binding
-     * 
+     * Try to fetch document in targetURL parameter in URL if not this is the Home binding
      */
     @GET
-    public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME)
-    String targetURL) throws Exception {
+    public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME) String targetURL) throws Exception {
 
         DocumentRef targetRef = RedirectHelper.findDocumentRef(targetURL);
         if (targetRef != null) {
@@ -114,8 +110,7 @@ public class MobileApplication extends ModuleRoot {
 
         // If SC mobile fragment is enable, redirect to the new homepage
         if (getSocialObject() != null) {
-            return redirect(ctx.getServerURL() + ctx.getModulePath()
-                    + "/social");
+            return redirect(ctx.getServerURL() + ctx.getModulePath() + "/social");
         }
 
         Map<String, Object> args = new HashMap<String, Object>();
@@ -137,8 +132,7 @@ public class MobileApplication extends ModuleRoot {
     }
 
     /**
-     * Generate the root view of the repository. First root descendant and user
-     * workspace are rendered
+     * Generate the root view of the repository. First root descendant and user workspace are rendered
      */
     @GET
     @Path("root")
@@ -150,8 +144,7 @@ public class MobileApplication extends ModuleRoot {
         DocumentModel doc = session.getRootDocument();
         DocumentModelList children;
         do {
-            children = session.getChildren(doc.getRef(), null,
-                    ONLY_VISIBLE_CHILDREN, null);
+            children = session.getChildren(doc.getRef(), null, ONLY_VISIBLE_CHILDREN, null);
             if (children.size() == 1) {
                 doc = children.get(0);
             }
@@ -163,8 +156,7 @@ public class MobileApplication extends ModuleRoot {
     }
 
     @Path("docPath/@{adapter}")
-    public Object doTraverseRootDocumentByPath(@PathParam("adapter")
-    String adapter) {
+    public Object doTraverseRootDocumentByPath(@PathParam("adapter") String adapter) {
         DocumentRef ref = new PathRef("/");
         setCurrentPage(ToolbarPage.BROWSE);
         if ("search".equals(adapter)) {
@@ -174,16 +166,14 @@ public class MobileApplication extends ModuleRoot {
     }
 
     @Path("docPath{docPathValue:(/(?:(?!/@).)*)}")
-    public Object doTraverseDocumentByPath(@PathParam("docPathValue")
-    String docPath) {
+    public Object doTraverseDocumentByPath(@PathParam("docPathValue") String docPath) {
         DocumentRef ref = new PathRef(docPath);
         setCurrentPage(ToolbarPage.BROWSE);
         return new MobileDocument(ctx, ref);
     }
 
     @Path("doc/{docId}")
-    public Object doTraverseDocument(@PathParam("docId")
-    String docId) {
+    public Object doTraverseDocument(@PathParam("docId") String docId) {
         DocumentRef ref = new IdRef(docId);
         setCurrentPage(ToolbarPage.BROWSE);
         return new MobileDocument(ctx, ref);
@@ -219,10 +209,8 @@ public class MobileApplication extends ModuleRoot {
 
     protected DocumentModelList getUserWorkspacesDocs() throws ClientException {
         CoreSession session = ctx.getCoreSession();
-        DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(
-                session, null);
-        return session.getChildren(userWorkspace.getRef(), null,
-                ONLY_VISIBLE_CHILDREN, null);
+        DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(session, null);
+        return session.getChildren(userWorkspace.getRef(), null, ONLY_VISIBLE_CHILDREN, null);
     }
 
     protected Object getSocialObject() {

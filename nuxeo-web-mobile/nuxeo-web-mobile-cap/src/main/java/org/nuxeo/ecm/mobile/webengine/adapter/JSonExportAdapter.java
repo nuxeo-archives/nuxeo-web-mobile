@@ -26,39 +26,39 @@ import org.nuxeo.ecm.webengine.model.WebAdapter;
 
 /**
  * Adapter that expose a document according the DForm Jquery Framework structure.
+ * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 @WebAdapter(name = "jsonExport", type = "JSONExport", targetType = "MobileDocument")
 @Produces("application/json;charset=UTF-8")
 public class JSonExportAdapter extends DefaultMobileAdapter {
 
     /**
-     * Return the JSON export of document for dform layout manager 
+     * Return the JSON export of document for dform layout manager
+     * 
      * @param action
      * @param actionType
      * @return
      */
     @GET
     @Path("dform")
-    public Object doGet(@QueryParam("action") String action,
-            @QueryParam("actionType") String actionType) {
+    public Object doGet(@QueryParam("action") String action, @QueryParam("actionType") String actionType) {
 
         if (action == null && ctx == null) {
             throw new WebException("No action given into parameters and no "
                     + "context found, can't generate json document export");
         }
-        
+
         if (action == null) {
             action = ctx.getRequest().getRequestURI();
         }
-        
+
         if (actionType == null) {
             actionType = "post";
         }
-            
+
         return getView("index").render();
     }
-    
+
 }

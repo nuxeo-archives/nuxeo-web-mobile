@@ -20,10 +20,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 public class MobileWithCookieRequestHandler extends MobileRequestHandler {
 
@@ -44,8 +42,7 @@ public class MobileWithCookieRequestHandler extends MobileRequestHandler {
     }
 
     @Override
-    public boolean isRequestRedirectedToApplicationLoginForm(
-            HttpServletRequest request) {
+    public boolean isRequestRedirectedToApplicationLoginForm(HttpServletRequest request) {
         Boolean checkCookie = getCookieValue(request);
         if (checkCookie != null && checkCookie) {
             return checkCookie;

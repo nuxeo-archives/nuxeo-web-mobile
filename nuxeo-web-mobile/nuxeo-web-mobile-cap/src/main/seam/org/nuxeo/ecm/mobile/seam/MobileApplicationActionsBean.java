@@ -35,7 +35,6 @@ import org.nuxeo.ecm.mobile.handler.RequestHandler;
  *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
 @Name("mobileApplicationActions")
 @Scope(ScopeType.EVENT)
@@ -53,7 +52,7 @@ public class MobileApplicationActionsBean implements Serializable {
         Cookie cookie = new Cookie("skipMobileRedirection", "false");
         cookie.setPath("/");
 
-        ((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
+        ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
         return null;
     }
 

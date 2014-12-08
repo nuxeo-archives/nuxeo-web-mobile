@@ -31,12 +31,10 @@ import static org.mockito.Mockito.when;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
 public class TestMobileRequestHandler {
 
-    private static final String SAFARI_USER_AGENT = "Mozilla/5.0 "
-            + "(Macintosh; U; Intel Mac OS X 10_6_6; en-us) "
+    private static final String SAFARI_USER_AGENT = "Mozilla/5.0 " + "(Macintosh; U; Intel Mac OS X 10_6_6; en-us) "
             + "AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27";
 
     private static final String SAFARI_MOBILE_USER_AGENT = "Mozilla/5.0 "
@@ -59,8 +57,7 @@ public class TestMobileRequestHandler {
     public void SafariUserAgentShouldNotBeSelected() {
         RequestHandler handler = new MobileRequestHandler();
 
-        HttpServletRequest request = initRequest(SAFARI_USER_AGENT,
-                "http://localhost:8080/nuxeo/nxstartup.faces");
+        HttpServletRequest request = initRequest(SAFARI_USER_AGENT, "http://localhost:8080/nuxeo/nxstartup.faces");
         assertFalse(handler.isRequestRedirectedToApplication(request));
     }
 
@@ -86,18 +83,15 @@ public class TestMobileRequestHandler {
         assertTrue(handler.isRequestRedirectedToApplication(request));
         assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
 
-        request = initRequest(SAFARI_MOBILE_USER_AGENT,
-                "http://localhost:8080/nuxeo/nxfile/etc");
+        request = initRequest(SAFARI_MOBILE_USER_AGENT, "http://localhost:8080/nuxeo/nxfile/etc");
         assertFalse(handler.isRequestRedirectedToApplication(request));
         assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
 
-        request = initRequest(SAFARI_MOBILE_USER_AGENT,
-                "http://localhost:8080/nuxeo/nxbigfile/etc");
+        request = initRequest(SAFARI_MOBILE_USER_AGENT, "http://localhost:8080/nuxeo/nxbigfile/etc");
         assertFalse(handler.isRequestRedirectedToApplication(request));
         assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
 
-        request = initRequest(SAFARI_MOBILE_USER_AGENT,
-                "http://localhost:8080/nuxeo/oauth2grant.jsp");
+        request = initRequest(SAFARI_MOBILE_USER_AGENT, "http://localhost:8080/nuxeo/oauth2grant.jsp");
         assertFalse(handler.isRequestRedirectedToApplication(request));
         assertTrue(handler.isRequestRedirectedToApplicationLoginForm(request));
     }

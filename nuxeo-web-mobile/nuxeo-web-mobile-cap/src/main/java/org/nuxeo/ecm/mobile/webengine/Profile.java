@@ -42,7 +42,6 @@ import org.nuxeo.runtime.api.Framework;
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 @WebObject(type = "Profile")
 @Produces("text/html;charset=UTF-8")
@@ -56,8 +55,7 @@ public class Profile extends DefaultObject {
 
     @GET
     @Path("search")
-    public Object doGetUsers(@QueryParam("q") String query)
-            throws ClientException, Exception {
+    public Object doGetUsers(@QueryParam("q") String query) throws ClientException, Exception {
         DocumentModelList users = getUserManager().searchUsers(query);
 
         return getView("users").arg("users", users);
@@ -65,13 +63,11 @@ public class Profile extends DefaultObject {
 
     @GET
     @Path("{username}")
-    public Template doGetUser(@PathParam("username") String username)
-            throws ClientException, Exception {
+    public Template doGetUser(@PathParam("username") String username) throws ClientException, Exception {
         DocumentModel userProfile = getUserProfile(username);
         DocumentModel userMainInfo = getUserManager().getUserModel(username);
 
-        return getView("view").arg("userProfile", userProfile).arg(
-                "userMainInfo", userMainInfo);
+        return getView("view").arg("userProfile", userProfile).arg("userMainInfo", userMainInfo);
     }
 
     /************** Actions *******************/
@@ -87,7 +83,7 @@ public class Profile extends DefaultObject {
     public String getAvatarURI(String username) {
         // TODO improve to not fetch several times the document and avatar
         String contextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
-        
+
         DocumentModel userProfile = getUserProfile(username);
         Blob avatar;
         try {
@@ -101,8 +97,7 @@ public class Profile extends DefaultObject {
             // TODO : Use a relative path (be careful of proxy stuff)
             String uriPattern = "%s/nxfile/%s/%s/userprofile:avatar/";
             String repositoryName = ctx.getCoreSession().getRepositoryName();
-            return String.format(uriPattern, contextPath, repositoryName,
-                    getUserProfile(username).getId());
+            return String.format(uriPattern, contextPath, repositoryName, getUserProfile(username).getId());
         } else {
             // TODO : Use a relative path (be careful of proxy stuff)
             return contextPath + "/site/skin/nuxeo/icons/default_avatar.png";
@@ -113,8 +108,7 @@ public class Profile extends DefaultObject {
 
     private DocumentModel getUserProfile(String username) {
         try {
-            return getUserProfileService().getUserProfileDocument(username,
-                    ctx.getCoreSession());
+            return getUserProfileService().getUserProfileDocument(username, ctx.getCoreSession());
         } catch (Exception e) {
             log.debug("Can't get Rich Profile");
             return null;
@@ -130,8 +124,8 @@ public class Profile extends DefaultObject {
     }
 
     /**
-     * Try to return the dedicated view for standard or rich profile (with
-     * suffix) if not exists return the view without suffix.
+     * Try to return the dedicated view for standard or rich profile (with suffix) if not exists return the view without
+     * suffix.
      */
     @Override
     public Template getView(final String viewId) {

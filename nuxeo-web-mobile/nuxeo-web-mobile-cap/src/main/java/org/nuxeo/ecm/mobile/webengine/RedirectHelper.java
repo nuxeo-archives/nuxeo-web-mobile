@@ -32,8 +32,7 @@ public class RedirectHelper {
             return null;
         }
 
-        DocumentView docView = getCodecManager().getDocumentViewFromUrl(
-                targetURL, true, "");
+        DocumentView docView = getCodecManager().getDocumentViewFromUrl(targetURL, true, "");
         if (docView == null) {
             log.info("Unable to resolve docView for targetURL: " + targetURL);
             return null;

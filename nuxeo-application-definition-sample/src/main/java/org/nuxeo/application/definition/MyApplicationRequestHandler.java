@@ -22,11 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.nuxeo.ecm.mobile.handler.RequestHandler;
 
-
-
 /**
  * @author bjalon
- *
  */
 public class MyApplicationRequestHandler implements RequestHandler {
 
@@ -41,8 +38,7 @@ public class MyApplicationRequestHandler implements RequestHandler {
     }
 
     @Override
-    public boolean isRequestRedirectedToApplicationLoginForm(
-            HttpServletRequest arg0) {
+    public boolean isRequestRedirectedToApplicationLoginForm(HttpServletRequest arg0) {
         return true;
     }
 

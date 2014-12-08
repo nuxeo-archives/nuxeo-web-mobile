@@ -24,13 +24,11 @@ import org.nuxeo.common.xmap.annotation.XNodeList;
 import org.nuxeo.common.xmap.annotation.XObject;
 
 /**
- * Descriptor that represent a definition of an application and a handler that
- * will detect request context that will make the user redirect to this
- * application.
+ * Descriptor that represent a definition of an application and a handler that will detect request context that will
+ * make the user redirect to this application.
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 @XObject("application")
 public class ApplicationDefinitionDescriptor {
@@ -74,17 +72,15 @@ public class ApplicationDefinitionDescriptor {
     }
 
     /**
-     * Return the name of the handler that implements the logic of redirection
-     * to the application described into this descriptor. Definition of the
-     * handler is defined into the handler extension point.
+     * Return the name of the handler that implements the logic of redirection to the application described into this
+     * descriptor. Definition of the handler is defined into the handler extension point.
      */
     public String getRequestHandlerName() {
         return requestHandlerName;
     }
 
     /**
-     * Order is used to sort {@code RequestHandler} executed to find the target
-     * application given a request.
+     * Order is used to sort {@code RequestHandler} executed to find the target application given a request.
      */
     public Integer getOrder() {
         return order;
@@ -114,8 +110,8 @@ public class ApplicationDefinitionDescriptor {
     private boolean isResourcesBaseUrlChecked = false;
 
     /**
-     * Resource Base URL of the resources needed by the application described
-     * (without the Nuxeo Context Path) add a slash at the end of the base url.
+     * Resource Base URL of the resources needed by the application described (without the Nuxeo Context Path) add a
+     * slash at the end of the base url.
      */
     public List<String> getResourcesBaseUrl() {
         if (!isResourcesBaseUrlChecked) {

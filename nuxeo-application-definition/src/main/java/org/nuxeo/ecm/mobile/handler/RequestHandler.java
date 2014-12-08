@@ -21,35 +21,29 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * A mobile application redirection service provide a way to expose easily a new
- * dedicated UI for a specific type of environment (essentially user agent
- * browser). Pointer of the implementation of this interface is given into the
- * Application descriptor. Here is implemented the logic to tell if the request
- * is candidate for the application described.
+ * A mobile application redirection service provide a way to expose easily a new dedicated UI for a specific type of
+ * environment (essentially user agent browser). Pointer of the implementation of this interface is given into the
+ * Application descriptor. Here is implemented the logic to tell if the request is candidate for the application
+ * described.
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 public interface RequestHandler {
 
     /**
-     * Used for initialize request handler with properties given in descriptor
-     * definition.
+     * Used for initialize request handler with properties given in descriptor definition.
      */
     public RequestHandler init(Map<String, String> properties);
 
     /**
-     * return true if the request is a candidate for the Application described
-     * into the {@code ApplicationDescriptor}.
+     * return true if the request is a candidate for the Application described into the {@code ApplicationDescriptor}.
      */
     public boolean isRequestRedirectedToApplication(HttpServletRequest request);
 
     /**
-     * return true if the request is a candidate for the specific login form
-     * described by application
+     * return true if the request is a candidate for the specific login form described by application
      */
-    public boolean isRequestRedirectedToApplicationLoginForm(
-            HttpServletRequest request);
+    public boolean isRequestRedirectedToApplicationLoginForm(HttpServletRequest request);
 
 }

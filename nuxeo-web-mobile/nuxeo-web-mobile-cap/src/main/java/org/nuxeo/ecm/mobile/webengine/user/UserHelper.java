@@ -39,28 +39,17 @@ public class UserHelper {
 
     /**
      * TODO merge org.nuxeo.ecm.core.rest.DocumentHelper and UserHelper
-     *
      */
     public static DocumentModel updateUser(WebContext ctx, DocumentModel user) {
         try {
-            /* XXX disable yet.
-            FormData form = ctx.getForm();
-            String password = ctx.getRequest().getParameter("user:password");
-            if (password != null) {
-                throw new WebException(
-                        "You can inject password modification, please use the dedicated action");
-            }
-            form.fillDocument(user);
-            user.putContextData(VersioningService.VERSIONING_OPTION,
-                    form.getVersioningOption());
-            Module module = ctx.getModule();
-            Validator v = module.getValidator(user.getType());
-            if (v != null) {
-                user = v.validate(user);
-            }
-
-            getUserManager().updateUser(user);
-            */
+            /*
+             * XXX disable yet. FormData form = ctx.getForm(); String password =
+             * ctx.getRequest().getParameter("user:password"); if (password != null) { throw new WebException(
+             * "You can inject password modification, please use the dedicated action"); } form.fillDocument(user);
+             * user.putContextData(VersioningService.VERSIONING_OPTION, form.getVersioningOption()); Module module =
+             * ctx.getModule(); Validator v = module.getValidator(user.getType()); if (v != null) { user =
+             * v.validate(user); } getUserManager().updateUser(user);
+             */
             return user;
         } catch (Exception e) {
             throw WebException.wrap("Failed to update document", e);

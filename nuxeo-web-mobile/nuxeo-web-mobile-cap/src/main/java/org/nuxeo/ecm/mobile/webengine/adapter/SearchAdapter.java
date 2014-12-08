@@ -40,8 +40,7 @@ public class SearchAdapter extends DefaultMobileAdapter {
     private PageProviderService service;
 
     @GET
-    public Object doGet(@QueryParam("pageIndex")
-    long pageIndex) throws Exception {
+    public Object doGet(@QueryParam("pageIndex") long pageIndex) throws Exception {
 
         PageProvider<?> pageProvider = getPageProvider(pageIndex);
 
@@ -55,13 +54,12 @@ public class SearchAdapter extends DefaultMobileAdapter {
         return getView("index").args(args);
     }
 
-    private PageProvider<?> getPageProvider(long pageIndex)
-            throws ClientException, Exception {
+    private PageProvider<?> getPageProvider(long pageIndex) throws ClientException, Exception {
         Map<String, Serializable> prop = new HashMap<String, Serializable>();
         prop.put("coreSession", (Serializable) ctx.getCoreSession());
 
-        PageProvider<?> pageProvider = getPageProviderService().getPageProvider(
-                "search_core_default", null, 9L, null, prop);
+        PageProvider<?> pageProvider = getPageProviderService().getPageProvider("search_core_default", null, 9L, null,
+                prop);
 
         DocumentModel searchCriteria = getDocumentModel();
         pageProvider.setSearchDocumentModel(searchCriteria);

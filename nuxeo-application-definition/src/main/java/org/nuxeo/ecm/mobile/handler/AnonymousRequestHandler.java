@@ -31,7 +31,6 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.USERIDENT_KEY;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
 public class AnonymousRequestHandler implements RequestHandler {
 
@@ -40,8 +39,7 @@ public class AnonymousRequestHandler implements RequestHandler {
     private UserManager um;
 
     @Override
-    public boolean isRequestRedirectedToApplicationLoginForm(
-            HttpServletRequest request) {
+    public boolean isRequestRedirectedToApplicationLoginForm(HttpServletRequest request) {
         // same logic
         return this.isRequestRedirectedToApplication(request);
     }

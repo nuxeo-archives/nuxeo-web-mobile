@@ -19,17 +19,17 @@ import org.nuxeo.ecm.webengine.model.impl.DefaultAdapter;
 
 /**
  * Default mobile adapter that exposes some usefull methods to other adapters.
+ * 
  * @author <a href="mailto:akervern@nuxeo.com">Arnaud Kervern</a>
- *
  */
 public abstract class DefaultMobileAdapter extends DefaultAdapter {
-    public static final Filter ONLY_VISIBLE_CHILDREN = new CompoundFilter(
-            new FacetFilter(null,
-                    Collections.singletonList("HiddenInNavigation")),
-            new LifeCycleFilter(null, Collections.singletonList("deleted")));
-    
+    public static final Filter ONLY_VISIBLE_CHILDREN = new CompoundFilter(new FacetFilter(null,
+            Collections.singletonList("HiddenInNavigation")), new LifeCycleFilter(null,
+            Collections.singletonList("deleted")));
+
     /**
      * Get the current DocumentModel
+     * 
      * @return
      */
     protected DocumentModel getDocumentModel() {
@@ -42,6 +42,7 @@ public abstract class DefaultMobileAdapter extends DefaultAdapter {
 
     /**
      * Get the current MobileDocument
+     * 
      * @return
      */
     protected MobileDocument getMobileDocument() {
@@ -53,7 +54,7 @@ public abstract class DefaultMobileAdapter extends DefaultAdapter {
         MobileDocument mobileDoc = (MobileDocument) targetObject;
         return mobileDoc;
     }
-    
+
     public DocumentModelList getChildren() throws ClientException {
         CoreSession session = ctx.getCoreSession();
         Map<String, String> order = new HashMap<String, String>();
@@ -61,7 +62,6 @@ public abstract class DefaultMobileAdapter extends DefaultAdapter {
 
         DocumentModelComparator dmc = new DocumentModelComparator("dublincore", order);
 
-        return session.getChildren(getDocumentModel().getRef(), null,
-                ONLY_VISIBLE_CHILDREN, dmc);
+        return session.getChildren(getDocumentModel().getRef(), null, ONLY_VISIBLE_CHILDREN, dmc);
     }
 }

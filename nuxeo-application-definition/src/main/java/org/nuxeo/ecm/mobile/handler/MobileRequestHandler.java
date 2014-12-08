@@ -28,7 +28,6 @@ import org.apache.commons.logging.LogFactory;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
 public class MobileRequestHandler implements RequestHandler {
 
@@ -36,9 +35,8 @@ public class MobileRequestHandler implements RequestHandler {
 
     private static final Log log = LogFactory.getLog(MobileRequestHandler.class);
 
-    private static List<String> MOBILE_USER_AGENT_REGEXP = Arrays.asList(
-            "(.*)Mobile(.*)Safari(.*)", "(.*)AppleWebKit(.*)Mobile(.*)",
-            "(.*)Android(.*)");
+    private static List<String> MOBILE_USER_AGENT_REGEXP = Arrays.asList("(.*)Mobile(.*)Safari(.*)",
+            "(.*)AppleWebKit(.*)Mobile(.*)", "(.*)Android(.*)");
 
     private String[] urlPatterns;
 
@@ -47,8 +45,7 @@ public class MobileRequestHandler implements RequestHandler {
 
         // Some resources are skipped (nxfile pattern for instance, ...) but we
         // want login page displayed for mobile
-        String queryString = request.getQueryString() != null ? "?"
-                + request.getQueryString() : "";
+        String queryString = request.getQueryString() != null ? "?" + request.getQueryString() : "";
 
         String urlRequest = request.getRequestURL() + queryString;
 
@@ -56,8 +53,7 @@ public class MobileRequestHandler implements RequestHandler {
             for (String urlPattern : urlPatterns) {
                 if (urlRequest.matches(urlPattern)) {
                     if (log.isDebugEnabled()) {
-                        log.debug(String.format(
-                                "Mobile Handler: URL redirection (%s) is skipped by configuration: %s",
+                        log.debug(String.format("Mobile Handler: URL redirection (%s) is skipped by configuration: %s",
                                 urlRequest, urlPattern));
                     }
                     return false;
@@ -70,8 +66,7 @@ public class MobileRequestHandler implements RequestHandler {
     }
 
     @Override
-    public boolean isRequestRedirectedToApplicationLoginForm(
-            HttpServletRequest request) {
+    public boolean isRequestRedirectedToApplicationLoginForm(HttpServletRequest request) {
         String userAgent = request.getHeader("User-Agent");
 
         if (userAgent == null) {

@@ -31,17 +31,16 @@ import org.nuxeo.ecm.webengine.model.WebAdapter;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
-@WebAdapter(name="newDocument", type="NewDocument", targetType="MobileDocument")
+@WebAdapter(name = "newDocument", type = "NewDocument", targetType = "MobileDocument")
 public class NewDocumentAdapter extends DefaultMobileAdapter {
-    
+
     private static final Log log = LogFactory.getLog(NewDocumentAdapter.class);
-    
+
     @GET
     public Object doGet(@QueryParam("type") String docType) {
         CoreSession session = ctx.getCoreSession();
-        
+
         DocumentModel doc;
         try {
             doc = session.createDocumentModel(docType);

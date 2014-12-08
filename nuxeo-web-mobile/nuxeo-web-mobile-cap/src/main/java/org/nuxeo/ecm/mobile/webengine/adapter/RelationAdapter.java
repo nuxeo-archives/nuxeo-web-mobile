@@ -51,9 +51,7 @@ import org.nuxeo.runtime.api.Framework;
 /**
  * Adapter to retrieve annotations for the current {@code MobileDocument}.
  * <p>
- * Most of the code comes from the
- * {@link org.nuxeo.ecm.platform.relations.web.listener.ejb.RelationActionsBean}
- * class.
+ * Most of the code comes from the {@link org.nuxeo.ecm.platform.relations.web.listener.ejb.RelationActionsBean} class.
  *
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
@@ -69,8 +67,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
         return getView("index");
     }
 
-    public Map<String, List<StatementInfo>> getRelations()
-            throws ClientException {
+    public Map<String, List<StatementInfo>> getRelations() throws ClientException {
         DocumentModel doc = getDocumentModel();
         RelationManager relationManager = Framework.getLocalService(RelationManager.class);
         Resource docResource = getDocumentResource(doc);
@@ -78,13 +75,11 @@ public class RelationAdapter extends DefaultMobileAdapter {
         List<StatementInfo> allStatements = new ArrayList<StatementInfo>();
         if (docResource != null) {
             Statement pattern = new StatementImpl(docResource, null, null);
-            List<Statement> outgoingStatements = relationManager.getStatements(
-                    RelationConstants.GRAPH_NAME, pattern);
+            List<Statement> outgoingStatements = relationManager.getStatements(RelationConstants.GRAPH_NAME, pattern);
             allStatements.addAll(getStatementsInfo(outgoingStatements));
 
             pattern = new StatementImpl(null, null, docResource);
-            List<Statement> incomingStatements = relationManager.getStatements(
-                    RelationConstants.GRAPH_NAME, pattern);
+            List<Statement> incomingStatements = relationManager.getStatements(RelationConstants.GRAPH_NAME, pattern);
             allStatements.addAll(getStatementsInfo(incomingStatements));
         }
 
@@ -111,33 +106,27 @@ public class RelationAdapter extends DefaultMobileAdapter {
         return false;
     }
 
-    private QNameResource getDocumentResource(DocumentModel document)
-            throws ClientException {
+    private QNameResource getDocumentResource(DocumentModel document) throws ClientException {
         QNameResource documentResource = null;
         if (document != null) {
-            documentResource = (QNameResource) Framework.getLocalService(
-                    RelationManager.class).getResource(
+            documentResource = (QNameResource) Framework.getLocalService(RelationManager.class).getResource(
                     RelationConstants.DOCUMENT_NAMESPACE, document, null);
         }
         return documentResource;
     }
 
-    private List<StatementInfo> getStatementsInfo(List<Statement> statements)
-            throws ClientException {
+    private List<StatementInfo> getStatementsInfo(List<Statement> statements) throws ClientException {
         if (statements == null) {
             return null;
         }
         List<StatementInfo> infoList = new ArrayList<StatementInfo>();
         for (Statement statement : statements) {
             Subject subject = statement.getSubject();
-            NodeInfo subjectInfo = new NodeInfoImpl(subject,
-                    getDocumentModel(subject), true);
+            NodeInfo subjectInfo = new NodeInfoImpl(subject, getDocumentModel(subject), true);
             Resource predicate = statement.getPredicate();
             Node object = statement.getObject();
-            NodeInfo objectInfo = new NodeInfoImpl(object,
-                    getDocumentModel(object), true);
-            StatementInfo info = new StatementInfoImpl(statement, subjectInfo,
-                    new NodeInfoImpl(predicate), objectInfo);
+            NodeInfo objectInfo = new NodeInfoImpl(object, getDocumentModel(object), true);
+            StatementInfo info = new StatementInfoImpl(statement, subjectInfo, new NodeInfoImpl(predicate), objectInfo);
             infoList.add(info);
         }
         return infoList;
@@ -161,8 +150,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
     /**
      * Returns the predicate's label for a given {@code Statement}.
      */
-    private String getPredicateLabel(String directoryName,
-            StatementInfo statementInfo) throws ClientException {
+    private String getPredicateLabel(String directoryName, StatementInfo statementInfo) throws ClientException {
         DirectoryService directoryService = Framework.getLocalService(DirectoryService.class);
         Session session = directoryService.open(directoryName);
 

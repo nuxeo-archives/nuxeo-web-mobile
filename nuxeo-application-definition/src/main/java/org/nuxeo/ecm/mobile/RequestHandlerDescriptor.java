@@ -27,37 +27,33 @@ import org.nuxeo.ecm.mobile.handler.RequestHandler;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
 @XObject("requestHandler")
 public class RequestHandlerDescriptor {
 
     @XNode("implementation")
     public Class<?> klass;
-    
+
     @XNode("@name")
     public String requestHandlerName;
 
     @XNode("@disabled")
     public boolean disabled;
-    
+
     @XNodeMap(value = "properties/property", key = "@name", type = HashMap.class, componentType = String.class)
     protected Map<String, String> properties = new HashMap<String, String>();
 
-
     /**
-     * Application definition service provide a way to expose easily a new
-     * dedicated UI for a specific type of environment (for instance for user
-     * agent browser selection). Implementation given here the logic
-     * to tell if request must be redirected to this application or not.
+     * Application definition service provide a way to expose easily a new dedicated UI for a specific type of
+     * environment (for instance for user agent browser selection). Implementation given here the logic to tell if
+     * request must be redirected to this application or not.
      */
     public RequestHandler getRequestHandlerInstance() {
         Object obj;
         try {
             obj = klass.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(
-                    "Problem during the Given class instanciation please check your contribution", e);
+            throw new RuntimeException("Problem during the Given class instanciation please check your contribution", e);
         }
         if (obj instanceof RequestHandler) {
             RequestHandler rh = (RequestHandler) obj;
@@ -65,10 +61,9 @@ public class RequestHandlerDescriptor {
             return rh;
         }
 
-        throw new RuntimeException("Given class is not a "
-                + RequestHandler.class + " implementation");
+        throw new RuntimeException("Given class is not a " + RequestHandler.class + " implementation");
     }
-    
+
     public String getRequestHandlerName() {
         return requestHandlerName;
     }

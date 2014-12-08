@@ -36,7 +36,6 @@ import org.nuxeo.runtime.api.Framework;
  *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
 @WebObject(type = "WebMobileAuthentication")
 @Produces("text/html;charset=UTF-8")
@@ -56,9 +55,7 @@ public class WebMobileAuthentication extends DefaultObject {
 
     @GET
     @Path("logout")
-    public Object doLogout(@Context HttpServletResponse response,
-            @Context HttpServletRequest request)
-            throws Exception {
+    public Object doLogout(@Context HttpServletResponse response, @Context HttpServletRequest request) throws Exception {
 
         Cookie cookie = new Cookie("JSESSIONID", null);
         cookie.setMaxAge(0);
@@ -84,10 +81,8 @@ public class WebMobileAuthentication extends DefaultObject {
             // init preFilters
             service.initPreFilters();
             if (service == null) {
-                log.error("Unable to get Service "
-                        + PluggableAuthenticationService.NAME);
-                throw new Exception(
-                        "Can't initialize Nuxeo Pluggable Authentication Service");
+                log.error("Unable to get Service " + PluggableAuthenticationService.NAME);
+                throw new Exception("Can't initialize Nuxeo Pluggable Authentication Service");
             }
         }
         return service;

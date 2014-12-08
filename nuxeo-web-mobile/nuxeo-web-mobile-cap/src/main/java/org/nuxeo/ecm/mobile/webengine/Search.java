@@ -43,7 +43,6 @@ import org.nuxeo.search.ui.SearchUIService;
  *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
 @WebObject(type = "Search")
 @Produces("text/html;charset=UTF-8")
@@ -52,19 +51,16 @@ public class Search extends DefaultObject {
     private static final Log log = LogFactory.getLog(Search.class);
 
     private static final String QUERY_PATTERN = "SELECT ecm:uuid, dc:title, dc:description, common:icon "
-            + "FROM Document WHERE ecm:fulltext = '%s' "
-            + "AND (ecm:isCheckedInVersion = 0) "
-            + "AND (ecm:mixinType != 'HiddenInNavigation') "
-            + "AND (ecm:currentLifeCycleState != 'deleted') %s";
+            + "FROM Document WHERE ecm:fulltext = '%s' " + "AND (ecm:isCheckedInVersion = 0) "
+            + "AND (ecm:mixinType != 'HiddenInNavigation') " + "AND (ecm:currentLifeCycleState != 'deleted') %s";
 
     private static final String ORDER_PATTERN = "ORDER BY %s";
 
     @GET
-    public Template doGet(@QueryParam("q") String fulltext,
-            @QueryParam("order") String orderParam,
+    public Template doGet(@QueryParam("q") String fulltext, @QueryParam("order") String orderParam,
             @QueryParam("max") Integer max) {
-        String order = (orderParam != null && !"".equals(orderParam.trim())) ? String.format(
-                ORDER_PATTERN, orderParam) : "";
+        String order = (orderParam != null && !"".equals(orderParam.trim())) ? String.format(ORDER_PATTERN, orderParam)
+                : "";
         String query = String.format(QUERY_PATTERN, fulltext, order);
 
         return doGetNXQL(query, max).arg("fulltext", fulltext);
@@ -72,8 +68,7 @@ public class Search extends DefaultObject {
 
     @GET
     @Path("nxql")
-    public Template doGetNXQL(@QueryParam("q") String queryString,
-            @QueryParam("max") Integer max) {
+    public Template doGetNXQL(@QueryParam("q") String queryString, @QueryParam("max") Integer max) {
         CoreSession session = ctx.getCoreSession();
         IterableQueryResult docs;
 
@@ -87,8 +82,8 @@ public class Search extends DefaultObject {
             log.error(e, e);
             throw new WebException(e.getMessage());
         }
-        return getView("index").arg("docs", docs.iterator()).arg("size",
-                docs.size()).arg("max", max).arg("q", queryString);
+        return getView("index").arg("docs", docs.iterator()).arg("size", docs.size()).arg("max", max).arg("q",
+                queryString);
     }
 
     @GET
@@ -102,18 +97,15 @@ public class Search extends DefaultObject {
 
     private List<DocumentModel> mySearch() throws ClientException {
         CoreSession session = ctx.getCoreSession();
-        return getSearchService().getCurrentUserSavedSearches(
-                session);
+        return getSearchService().getCurrentUserSavedSearches(session);
     }
 
     private Object sharedSearches() throws ClientException {
         CoreSession session = ctx.getCoreSession();
-        return getSearchService().getSharedSavedSearches(
-                session);
+        return getSearchService().getSharedSavedSearches(session);
     }
 
-    private SearchUIService getSearchService()
-            throws ClientException {
+    private SearchUIService getSearchService() throws ClientException {
         return Framework.getLocalService(SearchUIService.class);
     }
 }

@@ -40,9 +40,8 @@ import org.nuxeo.runtime.api.Framework;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- *
  */
-@WebAdapter(name="preview", type="Preview", targetType="MobileDocument")
+@WebAdapter(name = "preview", type = "Preview", targetType = "MobileDocument")
 public class PreviewAdapter extends DefaultMobileAdapter {
     private static final Log log = LogFactory.getLog(PreviewAdapter.class);
 
@@ -50,16 +49,15 @@ public class PreviewAdapter extends DefaultMobileAdapter {
 
     @GET
     public Object doGet() {
-      return getView("index");
+        return getView("index");
     }
-    
+
     public String getPreviewURL() {
         Object targetObject = ctx.getTargetObject();
         if (!(targetObject instanceof MobileDocument)) {
             throw new WebException("Target Object must be MobileDocument");
         }
-        return getNuxeoContextPath() + "/"
-                + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
+        return getNuxeoContextPath() + "/" + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
     }
 
     public String getPreviewContent() throws PropertyException, ClientException {
@@ -75,28 +73,25 @@ public class PreviewAdapter extends DefaultMobileAdapter {
         String mimetype = (String) document.getPropertyValue("note:mime_type");
         return convertToHtml(content, mimetype);
     }
-    
+
     private String convertToHtml(String text, String mimeType) {
-        BlobHolder bh = new SimpleBlobHolder(new StringBlob(text, mimeType,
-                "UTF-8"));
+        BlobHolder bh = new SimpleBlobHolder(new StringBlob(text, mimeType, "UTF-8"));
         Map<String, Serializable> parameters = new HashMap<String, Serializable>();
         parameters.put("bodyContentOnly", Boolean.TRUE);
         try {
-            bh = Framework.getLocalService(ConversionService.class).convertToMimeType(
-                    "text/html", bh, parameters);
+            bh = Framework.getLocalService(ConversionService.class).convertToMimeType("text/html", bh, parameters);
             text = bh.getBlob().getString();
         } catch (Exception e) {
             log.error("Failed to convert to HTML.", e);
         }
         return text;
     }
-    
+
     private String getNuxeoContextPath() {
         if (nuxeoContextPath == null) {
             nuxeoContextPath = Framework.getProperty("org.nuxeo.ecm.contextPath");
         }
         return nuxeoContextPath;
     }
-
 
 }

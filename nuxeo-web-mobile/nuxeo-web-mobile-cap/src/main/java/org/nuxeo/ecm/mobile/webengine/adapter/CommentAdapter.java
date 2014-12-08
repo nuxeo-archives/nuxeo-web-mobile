@@ -38,7 +38,6 @@ import org.nuxeo.ecm.webengine.model.WebAdapter;
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 @WebAdapter(name = "comment", type = "Comment", targetType = "MobileDocument")
 public class CommentAdapter extends DefaultMobileAdapter {
@@ -51,8 +50,7 @@ public class CommentAdapter extends DefaultMobileAdapter {
     }
 
     @POST
-    public Object doPost(@FormParam("newComment") String newTextComment)
-            throws PropertyException, ClientException {
+    public Object doPost(@FormParam("newComment") String newTextComment) throws PropertyException, ClientException {
         DocumentModel comment = initializeEmptyComment();
         comment.setPropertyValue("comment:text", newTextComment);
         getCommentableDocument().addComment(comment);
@@ -62,14 +60,11 @@ public class CommentAdapter extends DefaultMobileAdapter {
 
     @POST
     @Path("{commentIdParent}")
-    public Object doPostReplyForm(
-            @FormParam("newComment") String newTextComment,
-            @PathParam("commentIdParent") String commentIdParent)
-            throws PropertyException, ClientException {
+    public Object doPostReplyForm(@FormParam("newComment") String newTextComment,
+            @PathParam("commentIdParent") String commentIdParent) throws PropertyException, ClientException {
         DocumentModel commentParent = null;
         if (commentIdParent != null && !"null".equals(commentIdParent)) {
-            commentParent = ctx.getCoreSession().getDocument(
-                    new IdRef(commentIdParent));
+            commentParent = ctx.getCoreSession().getDocument(new IdRef(commentIdParent));
         }
         DocumentModel comment = initializeEmptyComment();
         comment.setPropertyValue("comment:text", newTextComment);
@@ -84,16 +79,14 @@ public class CommentAdapter extends DefaultMobileAdapter {
 
     @GET
     @Path("{commentIdParent}")
-    public Object doGetReplyForm(
-            @PathParam("commentIdParent") String commentIdParent)
-            throws PropertyException, ClientException {
+    public Object doGetReplyForm(@PathParam("commentIdParent") String commentIdParent) throws PropertyException,
+            ClientException {
         return getView("new").arg("parentId", commentIdParent);
     }
 
     @GET
     @Path("{commentId}/@delete")
-    public Object doDeleteComment(@PathParam("commentId") String commentId)
-            throws PropertyException, ClientException {
+    public Object doDeleteComment(@PathParam("commentId") String commentId) throws PropertyException, ClientException {
         ctx.getCoreSession().removeDocument(new IdRef(commentId));
         return Response.ok().build();
     }
@@ -104,35 +97,29 @@ public class CommentAdapter extends DefaultMobileAdapter {
 
     }
 
-    public List<DocumentModel> getComments(DocumentModel commentParent)
-            throws ClientException {
-        List<DocumentModel> comments = getCommentableDocument().getComments(
-                commentParent);
+    public List<DocumentModel> getComments(DocumentModel commentParent) throws ClientException {
+        List<DocumentModel> comments = getCommentableDocument().getComments(commentParent);
         return comments;
 
     }
 
-    public boolean hasWriteRightOnComment(DocumentModel comment)
-            throws ClientException {
+    public boolean hasWriteRightOnComment(DocumentModel comment) throws ClientException {
         return ctx.getCoreSession().hasPermission(comment.getRef(), "Write");
     }
 
     private CommentableDocument getCommentableDocument() {
         if (commentableDocument == null) {
-            commentableDocument = getDocumentModel().getAdapter(
-                    CommentableDocument.class);
+            commentableDocument = getDocumentModel().getAdapter(CommentableDocument.class);
         }
         return commentableDocument;
     }
 
     public boolean hasAddingCommentRight() throws ClientException {
-        return ctx.getCoreSession().hasPermission(getDocumentModel().getRef(),
-                "Write");
+        return ctx.getCoreSession().hasPermission(getDocumentModel().getRef(), "Write");
     }
 
     protected DocumentModel initializeEmptyComment() throws ClientException {
-        DocumentModel comment = ctx.getCoreSession().createDocumentModel(
-                "Comment");
+        DocumentModel comment = ctx.getCoreSession().createDocumentModel("Comment");
 
         String[] contributors = new String[1];
         contributors[0] = ctx.getPrincipal().getName();

@@ -13,7 +13,7 @@ import org.nuxeo.runtime.api.Framework;
 
 @WebObject(type = "Like")
 public class LikeObject extends AbstractLikeObject {
-    
+
     private static final Log log = LogFactory.getLog(LikeObject.class);
 
     @GET

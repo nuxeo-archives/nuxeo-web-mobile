@@ -19,15 +19,12 @@ package org.nuxeo.ecm.mobile;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.WrappedException;
 
-
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
- *
  */
 public class ApplicationDefinitionException extends Exception {
 
     private static final long serialVersionUID = 1L;
-
 
     public ApplicationDefinitionException() {
     }
@@ -56,17 +53,15 @@ public class ApplicationDefinitionException extends Exception {
         ApplicationDefinitionException appDefException;
 
         if (null == exception) {
-            appDefException = new ApplicationDefinitionException(
-                    "Root exception was null. Please check your code.");
+            appDefException = new ApplicationDefinitionException("Root exception was null. Please check your code.");
         } else {
             if (exception instanceof ClientException) {
                 appDefException = (ApplicationDefinitionException) exception;
             } else {
-                appDefException = new ApplicationDefinitionException(
-                        exception.getLocalizedMessage(), exception);
+                appDefException = new ApplicationDefinitionException(exception.getLocalizedMessage(), exception);
             }
         }
         return appDefException;
     }
-    
+
 }

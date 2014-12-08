@@ -52,14 +52,12 @@ import org.nuxeo.runtime.api.Framework;
 import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_TARGET_URL_PARAM_NAME;
 
 /**
- * This Class resolve a DocumentModel and expose differents restitutions
- * according Adapter defined (PreviewAdapter, CommentAdapter) in uri and "mode"
- * parameter given as parameter into the url. Default mode if given doesn't
- * exist or not set is view mode.
+ * This Class resolve a DocumentModel and expose differents restitutions according Adapter defined (PreviewAdapter,
+ * CommentAdapter) in uri and "mode" parameter given as parameter into the url. Default mode if given doesn't exist or
+ * not set is view mode.
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 public class MobileDocument extends DocumentObject {
 
@@ -79,9 +77,7 @@ public class MobileDocument extends DocumentObject {
     }
 
     /**
-     * Needed to not break the navigation after a false PUT see NXP-8778 as I'm
-     * redirected to this /@put URL
-     * 
+     * Needed to not break the navigation after a false PUT see NXP-8778 as I'm redirected to this /@put URL
      */
     @GET
     @Path("@put")
@@ -97,8 +93,7 @@ public class MobileDocument extends DocumentObject {
     @Path("mailIt")
     public Object emailToCurrentPrincipal() {
         try {
-            OperationContext subctx = new OperationContext(
-                    ctx.getCoreSession(), null);
+            OperationContext subctx = new OperationContext(ctx.getCoreSession(), null);
             subctx.setInput(getDocument());
             getAutomationService().run(subctx, "sendEmailToMe");
         } catch (Exception e) {
@@ -142,8 +137,7 @@ public class MobileDocument extends DocumentObject {
 
         // if url from JSF => ask to push mobile URL into browser history
         if (request.getParameter(INITIAL_TARGET_URL_PARAM_NAME) != null) {
-            String mobileURL = String.format("%s/doc/%s?mode=%s",
-                    ctx.getRoot().getPath(), doc.getId(), mode);
+            String mobileURL = String.format("%s/doc/%s?mode=%s", ctx.getRoot().getPath(), doc.getId(), mode);
             args.put("mobileURL", mobileURL);
         }
         args.put("hasBlob", getHasBlob());
@@ -168,8 +162,7 @@ public class MobileDocument extends DocumentObject {
     }
 
     public boolean hasPreview() throws ClientException {
-        if (doc.hasSchema("file")
-                && doc.getPropertyValue("file:content") != null) {
+        if (doc.hasSchema("file") && doc.getPropertyValue("file:content") != null) {
             return PreviewHelper.typeSupportsPreview(doc);
         }
         return false;
@@ -180,13 +173,11 @@ public class MobileDocument extends DocumentObject {
             return (NuxeoPrincipal) ctx.getPrincipal();
         }
 
-        throw new WebException(
-                "Principal found is not a NuxeoPrincipal can't generate it!");
+        throw new WebException("Principal found is not a NuxeoPrincipal can't generate it!");
     }
 
     public String getJSFURLPath(DocumentModel docModel) throws Exception {
-        return RedirectHelper.getJSFDocumentPath(docModel,
-                VirtualHostHelper.getBaseURL(ctx.getRequest()));
+        return RedirectHelper.getJSFDocumentPath(docModel, VirtualHostHelper.getBaseURL(ctx.getRequest()));
     }
 
     public String getDownloadURL() throws Exception {
@@ -225,9 +216,7 @@ public class MobileDocument extends DocumentObject {
         if (!(targetObject instanceof MobileDocument)) {
             throw new WebException("Target Object must be MobileDocument");
         }
-        return getNuxeoContextPath()
-                + "/"
-                + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
+        return getNuxeoContextPath() + "/" + PreviewHelper.getPreviewURL(((MobileDocument) targetObject).getDocument());
     }
 
     private String getNuxeoContextPath() {
@@ -246,8 +235,7 @@ public class MobileDocument extends DocumentObject {
 
     public String getDisplayPrincipalName(String name) {
         try {
-            NuxeoPrincipal principal = Framework.getLocalService(
-                    UserManager.class).getPrincipal(name);
+            NuxeoPrincipal principal = Framework.getLocalService(UserManager.class).getPrincipal(name);
             if (principal != null) {
                 return getDisplayPrincipalName(principal);
             }
@@ -258,8 +246,8 @@ public class MobileDocument extends DocumentObject {
     }
 
     /**
-     * Return the display name of an expected principal. It passes as an Object
-     * to prevent Freemarker to thrown an exception when creator is null.
+     * Return the display name of an expected principal. It passes as an Object to prevent Freemarker to thrown an
+     * exception when creator is null.
      * 
      * @param object must be of type org.nuxeo.ecm.core.api.NuxeoPrincipal
      * @return the display name will be empty if not a NuxeoPrincipal

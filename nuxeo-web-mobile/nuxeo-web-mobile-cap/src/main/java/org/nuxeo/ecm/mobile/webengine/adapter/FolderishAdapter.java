@@ -32,7 +32,6 @@ import org.nuxeo.runtime.api.Framework;
 /**
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 @WebAdapter(name = "folderish", type = "Folderish", targetType = "MobileDocument")
 public class FolderishAdapter extends DefaultMobileAdapter {
@@ -41,24 +40,22 @@ public class FolderishAdapter extends DefaultMobileAdapter {
     public Object doGet() {
         return getView("index");
     }
-    
+
     @POST
     public Object doUpload() throws Exception {
         FormData form = ctx.getForm();
         Blob blob = form.getFirstBlob();
         if (blob == null) {
-            throw new IllegalArgumentException(
-                    "Could not find any uploaded file");
+            throw new IllegalArgumentException("Could not find any uploaded file");
         }
         AutomationService as = Framework.getLocalService(AutomationService.class);
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("overwite", true);
-        
-        OperationContext subctx = new OperationContext(
-                ctx.getCoreSession(), null);
+
+        OperationContext subctx = new OperationContext(ctx.getCoreSession(), null);
         subctx.setInput(blob);
         subctx.put("currentDocument", getDocumentModel().getPathAsString());
-        
+
         as.run(subctx, "FileManager.Import", params);
         return Response.ok().build();
     }

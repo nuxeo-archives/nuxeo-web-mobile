@@ -42,10 +42,9 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 public class RequestAdapter {
-    
+
     public static final String TARGET_URL_PARAMETER_NAME = "targetURL";
 
     private static final Log log = LogFactory.getLog(RequestAdapter.class);
@@ -61,8 +60,7 @@ public class RequestAdapter {
     }
 
     /**
-     * return true if the PluggableAuthenticationService is configured to let
-     * this following request URI open.
+     * return true if the PluggableAuthenticationService is configured to let this following request URI open.
      */
     public boolean isOpenURL() {
         if (getAuthenticationService() != null) {
@@ -70,8 +68,7 @@ public class RequestAdapter {
             for (OpenUrlDescriptor openUrl : openUrls) {
                 if (openUrl.allowByPassAuth(request)) {
                     log.debug("Open URL (defined into the PluggableAuthenticationService) detected: "
-                            + "no redirect: final URL: "
-                            + request.getRequestURI());
+                            + "no redirect: final URL: " + request.getRequestURI());
                     return true;
                 }
             }
@@ -97,7 +94,7 @@ public class RequestAdapter {
 
         return requestURI.substring(context.length());
     }
-    
+
     private String getRequestURIWithParameters() throws UnsupportedEncodingException {
         String queryString = request.getQueryString() != null ? "?" + URIUtils.getURIQuery(getParameters()) : "";
         return request.getRequestURI() + queryString;
@@ -108,21 +105,17 @@ public class RequestAdapter {
             authenticationService = (PluggableAuthenticationService) Framework.getRuntime().getComponent(
                     PluggableAuthenticationService.NAME);
             if (authenticationService == null) {
-                throw new RuntimeException("Unable to get Service "
-                        + PluggableAuthenticationService.NAME);
+                throw new RuntimeException("Unable to get Service " + PluggableAuthenticationService.NAME);
             }
         }
         return authenticationService;
     }
 
     /**
-     * Create the parameter map with parameter given into the request and add
-     * the initial request into the map into the
+     * Create the parameter map with parameter given into the request and add the initial request into the map into the
      * {@code NXAuthConstants#REQUESTED_URL} key.
-     * 
      */
-    public Map<String, String> getParametersAndAddTargetURLIfNotSet()
-            throws UnsupportedEncodingException {
+    public Map<String, String> getParametersAndAddTargetURLIfNotSet() throws UnsupportedEncodingException {
 
         Map<String, String> result = new HashMap<String, String>();
 
@@ -138,17 +131,15 @@ public class RequestAdapter {
         if (session != null && !result.containsKey(TARGET_URL_PARAMETER_NAME)) {
             targetUrl = (String) session.getAttribute(START_PAGE_SAVE_KEY);
             if (targetUrl != null && !"".equals(targetUrl.trim())) {
-                log.debug("Put the target URL into the URL parameter: "
-                        + request.getRequestURI());
-                result.put(TARGET_URL_PARAMETER_NAME,
-                        URLEncoder.encode(targetUrl, "UTF-8"));
+                log.debug("Put the target URL into the URL parameter: " + request.getRequestURI());
+                result.put(TARGET_URL_PARAMETER_NAME, URLEncoder.encode(targetUrl, "UTF-8"));
             } else {
                 result.put(TARGET_URL_PARAMETER_NAME, getRequestURIWithParameters());
             }
         }
         return result;
     }
-    
+
     public String getTargetURLFromParameter() throws ApplicationDefinitionException {
         try {
             return getParameters().get(TARGET_URL_PARAMETER_NAME);
@@ -156,13 +147,11 @@ public class RequestAdapter {
             throw new ApplicationDefinitionException(e.getMessage(), e);
         }
     }
-    
+
     /**
      * Return map containing parameters given into the request
-     * 
      */
-    public Map<String, String> getParameters()
-            throws UnsupportedEncodingException {
+    public Map<String, String> getParameters() throws UnsupportedEncodingException {
 
         Map<String, String> result = new HashMap<String, String>();
 
@@ -175,6 +164,5 @@ public class RequestAdapter {
 
         return result;
     }
-
 
 }

@@ -16,7 +16,6 @@ public abstract class AbstractLikeObject extends DefaultObject {
 
     protected boolean getHasLiked() {
         LikeService rs = Framework.getLocalService(LikeService.class);
-        return rs.hasUserLiked(ctx.getCoreSession().getPrincipal().getName(),
-                doc);
+        return rs.hasUserLiked(ctx.getCoreSession().getPrincipal().getName(), doc);
     }
 }

@@ -21,37 +21,31 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * This service will store all the information needed to redirect the user to
- * the right url according his navigation choice or the request context. This is
- * needed for instance when we want to redirect the user to a dedicated
- * application according the user-agent browser or logic implemented into your
- * RequestHandler.
+ * This service will store all the information needed to redirect the user to the right url according his navigation
+ * choice or the request context. This is needed for instance when we want to redirect the user to a dedicated
+ * application according the user-agent browser or logic implemented into your RequestHandler.
  * 
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
- * 
  */
 public interface ApplicationDefinitionService {
 
     /**
-     * Return the root path of the web application where the request must be
-     * redirected according request context. If there is no application that
-     * match this request context, null is returned. Absolute URL is retuned
-     * with the protocole, the servername, ...
+     * Return the root path of the web application where the request must be redirected according request context. If
+     * there is no application that match this request context, null is returned. Absolute URL is retuned with the
+     * protocole, the servername, ...
      */
     public String getApplicationBaseURL(HttpServletRequest request);
 
     public String getApplicationBaseURI(HttpServletRequest request);
 
     /**
-     * Return the login url according request context. This is the absolute URL
-     * with the protocole, the servername, ...
+     * Return the login url according request context. This is the absolute URL with the protocole, the servername, ...
      */
     public String getLoginURL(HttpServletRequest request);
 
     /**
-     * Return the logout url according request context.This is the absolute URL
-     * with the protocole, the servername, ...
+     * Return the logout url according request context.This is the absolute URL with the protocole, the servername, ...
      */
     public String getLogoutURL(HttpServletRequest request);
 
@@ -66,10 +60,8 @@ public interface ApplicationDefinitionService {
     public List<String> getUnAuthenticatedURLPrefix(HttpServletRequest request);
 
     /**
-     * Return true if the given request is a resource for the application this
-     * request match
+     * Return true if the given request is a resource for the application this request match
      */
     public boolean isResourceURL(HttpServletRequest request);
-
 
 }

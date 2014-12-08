@@ -68,8 +68,8 @@ public class ApplicationRedirectionFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
         if (!(request instanceof HttpServletRequest)) {
             log.debug("Not an Http request, no redirection");
             doNoRedirect(request, response, chain);
@@ -77,8 +77,7 @@ public class ApplicationRedirectionFilter implements Filter {
         }
 
         HttpServletRequest req = (HttpServletRequest) request;
-        log.debug("do filter - URL :" + req.getRequestURL() + "?"
-                + req.getQueryString());
+        log.debug("do filter - URL :" + req.getRequestURL() + "?" + req.getQueryString());
 
         if (!isAuthenticated(req)) {
             log.debug("User not authenticated so no application redirection");
@@ -89,36 +88,34 @@ public class ApplicationRedirectionFilter implements Filter {
         String targetApplicationBaseURL = getService().getApplicationBaseURI(req);
 
         if (targetApplicationBaseURL == null) {
-            log.debug("No application match this request context "
-                    + "=> no redirect: final URL: " + req.getRequestURI());
+            log.debug("No application match this request context " + "=> no redirect: final URL: "
+                    + req.getRequestURI());
             doNoRedirect(request, response, chain);
             return;
         }
 
         if (isRequestIntoApplication(req, targetApplicationBaseURL)) {
-            log.debug("Request URI is a child of target application so no redirect:"
-                    + " final URL: " + req.getRequestURI());
+            log.debug("Request URI is a child of target application so no redirect:" + " final URL: "
+                    + req.getRequestURI());
             doNoRedirect(request, response, chain);
             return;
         }
 
         if (getService().isResourceURL(req)) {
-            log.debug("Request URI is a resource of the target application so no redirect:"
-                    + " final URL: " + req.getRequestURI());
+            log.debug("Request URI is a resource of the target application so no redirect:" + " final URL: "
+                    + req.getRequestURI());
             doNoRedirect(request, response, chain);
             return;
         }
 
         RequestAdapter requestAdapter = new RequestAdapter(req);
         if (requestAdapter.isOpenURL()) {
-            log.debug("Request URI is opened so no redirect:" + " final URL: "
-                    + req.getRequestURI());
+            log.debug("Request URI is opened so no redirect:" + " final URL: " + req.getRequestURI());
             doNoRedirect(request, response, chain);
             return;
         }
 
-        doApplicationRedirection((HttpServletRequest) request,
-                (HttpServletResponse) response, chain);
+        doApplicationRedirection((HttpServletRequest) request, (HttpServletResponse) response, chain);
     }
 
     /**
@@ -140,13 +137,10 @@ public class ApplicationRedirectionFilter implements Filter {
     }
 
     /**
-     * Redirect the browser to the target application with the initial URL as
-     * parameter into the {@value WebMobileConstants#TARGET_URL_PARAMETER} url
-     * parameter.
-     *
+     * Redirect the browser to the target application with the initial URL as parameter into the
+     * {@value WebMobileConstants#TARGET_URL_PARAMETER} url parameter.
      */
-    private void doApplicationRedirection(HttpServletRequest request,
-            HttpServletResponse response, FilterChain chain)
+    private void doApplicationRedirection(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         Map<String, String> parameters = new HashMap<String, String>();
 
@@ -155,11 +149,8 @@ public class ApplicationRedirectionFilter implements Filter {
             parameters.put(INITIAL_TARGET_URL_PARAM_NAME, requestedPage);
         }
 
-        String redirectURI = URIUtils.addParametersToURIQuery(
-                getService().getApplicationBaseURL(request),
-                parameters);
-        log.debug("Handler match/Non target application URI "
-                + "=> Application redirected: target URL: " + redirectURI);
+        String redirectURI = URIUtils.addParametersToURIQuery(getService().getApplicationBaseURL(request), parameters);
+        log.debug("Handler match/Non target application URI " + "=> Application redirected: target URL: " + redirectURI);
 
         response.sendRedirect(redirectURI);
     }
@@ -167,13 +158,12 @@ public class ApplicationRedirectionFilter implements Filter {
     /**
      * Do no redirection and let filters application to be done.
      */
-    private void doNoRedirect(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    private void doNoRedirect(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
         chain.doFilter(request, response);
     }
 
-    private boolean isRequestIntoApplication(HttpServletRequest req,
-            String targetApplicationBaseURL) {
+    private boolean isRequestIntoApplication(HttpServletRequest req, String targetApplicationBaseURL) {
         String uri = req.getRequestURI();
 
         log.debug("Request url: " + uri + " and targetApplicationURI: ");
@@ -186,8 +176,7 @@ public class ApplicationRedirectionFilter implements Filter {
             return true;
         }
         char character = uri.charAt(targetApplicationBaseURL.length());
-        if (character != '/' && character != '?' && character != '#'
-                && character != '@') {
+        if (character != '/' && character != '?' && character != '#' && character != '@') {
             log.debug("Request uri is not a child of application base url");
             return false;
         }
