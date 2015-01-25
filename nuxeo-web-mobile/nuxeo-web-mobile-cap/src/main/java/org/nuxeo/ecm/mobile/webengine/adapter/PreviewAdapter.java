@@ -24,11 +24,11 @@ import javax.ws.rs.GET;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.ecm.core.api.Blobs;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
 import org.nuxeo.ecm.core.api.blobholder.SimpleBlobHolder;
-import org.nuxeo.ecm.core.api.impl.blob.StringBlob;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.convert.api.ConversionService;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
@@ -75,7 +75,7 @@ public class PreviewAdapter extends DefaultMobileAdapter {
     }
 
     private String convertToHtml(String text, String mimeType) {
-        BlobHolder bh = new SimpleBlobHolder(new StringBlob(text, mimeType, "UTF-8"));
+        BlobHolder bh = new SimpleBlobHolder(Blobs.createBlob(text, mimeType, "UTF-8"));
         Map<String, Serializable> parameters = new HashMap<String, Serializable>();
         parameters.put("bodyContentOnly", Boolean.TRUE);
         try {
