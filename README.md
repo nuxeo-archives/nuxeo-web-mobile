@@ -47,9 +47,16 @@ Here is the list of Web Mobile bundles you can find inside this addon:
 
 You can build Nuxeo Web Mobile application with:
 
-    $ mvn install
+    $ mvn clean install
 
-If you want to test it, copy the jars built (in nuxeo-web-mobile/target and nuxeo-application-definition/target directories) into your Nuxeo server: in $NUXEO\_HOME/nxserver/bundles (Tomcat) or in $NUXEO\_HOME/server/default/deploy/nuxeo.ear/bundles (JBoss).
+## Deploying
+
+Install [the Nuxeo Web Mobile Marketplace Package](https://connect.nuxeo.com/nuxeo/site/marketplace/package/nuxeo-web-mobile).
+Or manually copy the built artifacts (in nuxeo-web-mobile/target and nuxeo-application-definition/target directories) into `$NUXEO_HOME/templates/custom/bundles/` and activate the "custom" template.
+
+## QA results
+
+[![Build Status](https://qa.nuxeo.org/jenkins/buildStatus/icon?job=addons_nuxeo-web-mobile-master)](https://qa.nuxeo.org/jenkins/job/addons_nuxeo-web-mobile-master/)
 
 ## About Nuxeo
 
