@@ -13,7 +13,6 @@
 
   <modules>
     <module>nuxeo-web-mobile-cap</module>
-    <module>nuxeo-web-mobile-sc</module>
   </modules>
 
 </project>
