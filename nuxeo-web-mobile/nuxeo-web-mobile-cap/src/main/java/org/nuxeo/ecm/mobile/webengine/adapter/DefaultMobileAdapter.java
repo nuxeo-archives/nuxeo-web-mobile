@@ -55,7 +55,7 @@ public abstract class DefaultMobileAdapter extends DefaultAdapter {
         return mobileDoc;
     }
 
-    public DocumentModelList getChildren() throws ClientException {
+    public DocumentModelList getChildren() {
         CoreSession session = ctx.getCoreSession();
         Map<String, String> order = new HashMap<String, String>();
         order.put("title", "asc");

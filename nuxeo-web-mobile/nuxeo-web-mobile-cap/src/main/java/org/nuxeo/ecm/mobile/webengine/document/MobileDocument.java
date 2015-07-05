@@ -161,7 +161,7 @@ public class MobileDocument extends DocumentObject {
         }
     }
 
-    public boolean hasPreview() throws ClientException {
+    public boolean hasPreview() {
         if (doc.hasSchema("file") && doc.getPropertyValue("file:content") != null) {
             return PreviewHelper.typeSupportsPreview(doc);
         }
