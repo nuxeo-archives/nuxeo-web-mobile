@@ -207,7 +207,7 @@ public class MobileApplication extends ModuleRoot {
         getContext().setProperty("currentPage", page.name());
     }
 
-    protected DocumentModelList getUserWorkspacesDocs() throws ClientException {
+    protected DocumentModelList getUserWorkspacesDocs() {
         CoreSession session = ctx.getCoreSession();
         DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(session, null);
         return session.getChildren(userWorkspace.getRef(), null, ONLY_VISIBLE_CHILDREN, null);

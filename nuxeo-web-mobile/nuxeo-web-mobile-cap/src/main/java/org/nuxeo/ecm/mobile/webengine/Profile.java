@@ -55,7 +55,7 @@ public class Profile extends DefaultObject {
 
     @GET
     @Path("search")
-    public Object doGetUsers(@QueryParam("q") String query) throws ClientException, Exception {
+    public Object doGetUsers(@QueryParam("q") String query) throws Exception {
         DocumentModelList users = getUserManager().searchUsers(query);
 
         return getView("users").arg("users", users);
@@ -63,7 +63,7 @@ public class Profile extends DefaultObject {
 
     @GET
     @Path("{username}")
-    public Template doGetUser(@PathParam("username") String username) throws ClientException, Exception {
+    public Template doGetUser(@PathParam("username") String username) throws Exception {
         DocumentModel userProfile = getUserProfile(username);
         DocumentModel userMainInfo = getUserManager().getUserModel(username);
 

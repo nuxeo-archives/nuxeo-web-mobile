@@ -88,24 +88,24 @@ public class Search extends DefaultObject {
 
     @GET
     @Path("list")
-    public Object doGetFacetedSearches() throws ClientException {
+    public Object doGetFacetedSearches() {
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("mySearches", mySearch());
         args.put("sharedSearches", sharedSearches());
         return getView("saved-searches").args(args);
     }
 
-    private List<DocumentModel> mySearch() throws ClientException {
+    private List<DocumentModel> mySearch() {
         CoreSession session = ctx.getCoreSession();
         return getSearchService().getCurrentUserSavedSearches(session);
     }
 
-    private Object sharedSearches() throws ClientException {
+    private Object sharedSearches() {
         CoreSession session = ctx.getCoreSession();
         return getSearchService().getSharedSavedSearches(session);
     }
 
-    private SearchUIService getSearchService() throws ClientException {
+    private SearchUIService getSearchService() {
         return Framework.getLocalService(SearchUIService.class);
     }
 }

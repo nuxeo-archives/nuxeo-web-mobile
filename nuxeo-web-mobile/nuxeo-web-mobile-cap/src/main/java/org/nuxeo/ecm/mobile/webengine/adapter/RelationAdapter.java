@@ -67,7 +67,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
         return getView("index");
     }
 
-    public Map<String, List<StatementInfo>> getRelations() throws ClientException {
+    public Map<String, List<StatementInfo>> getRelations() {
         DocumentModel doc = getDocumentModel();
         RelationManager relationManager = Framework.getLocalService(RelationManager.class);
         Resource docResource = getDocumentResource(doc);
@@ -96,7 +96,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
         return relations;
     }
 
-    public boolean hasRelation() throws ClientException {
+    public boolean hasRelation() {
         Map<String, List<StatementInfo>> relation = getRelations();
         for (String key : relation.keySet()) {
             if (relation.get(key).size() > 0) {
@@ -106,7 +106,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
         return false;
     }
 
-    private QNameResource getDocumentResource(DocumentModel document) throws ClientException {
+    private QNameResource getDocumentResource(DocumentModel document) {
         QNameResource documentResource = null;
         if (document != null) {
             documentResource = (QNameResource) Framework.getLocalService(RelationManager.class).getResource(
@@ -115,7 +115,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
         return documentResource;
     }
 
-    private List<StatementInfo> getStatementsInfo(List<Statement> statements) throws ClientException {
+    private List<StatementInfo> getStatementsInfo(List<Statement> statements) {
         if (statements == null) {
             return null;
         }
@@ -132,7 +132,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
         return infoList;
     }
 
-    private DocumentModel getDocumentModel(Node node) throws ClientException {
+    private DocumentModel getDocumentModel(Node node) {
         if (node.isQNameResource()) {
             QNameResource resource = (QNameResource) node;
             CoreSession session = WebEngine.getActiveContext().getCoreSession();
@@ -150,7 +150,7 @@ public class RelationAdapter extends DefaultMobileAdapter {
     /**
      * Returns the predicate's label for a given {@code Statement}.
      */
-    private String getPredicateLabel(String directoryName, StatementInfo statementInfo) throws ClientException {
+    private String getPredicateLabel(String directoryName, StatementInfo statementInfo) {
         DirectoryService directoryService = Framework.getLocalService(DirectoryService.class);
         Session session = directoryService.open(directoryName);
 

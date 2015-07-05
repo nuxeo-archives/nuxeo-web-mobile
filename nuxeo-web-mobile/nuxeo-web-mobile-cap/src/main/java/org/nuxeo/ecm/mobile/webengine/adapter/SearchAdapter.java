@@ -54,7 +54,7 @@ public class SearchAdapter extends DefaultMobileAdapter {
         return getView("index").args(args);
     }
 
-    private PageProvider<?> getPageProvider(long pageIndex) throws ClientException, Exception {
+    private PageProvider<?> getPageProvider(long pageIndex) throws Exception {
         Map<String, Serializable> prop = new HashMap<String, Serializable>();
         prop.put("coreSession", (Serializable) ctx.getCoreSession());
 
