@@ -51,16 +51,12 @@ public class MyApplication extends ModuleRoot {
         return getView("index");
     }
 
-    private PluggableAuthenticationService getService() throws Exception {
+    private PluggableAuthenticationService getService() {
         if (service == null && Framework.getRuntime() != null) {
             service = (PluggableAuthenticationService) Framework.getRuntime().getComponent(
                     PluggableAuthenticationService.NAME);
             // init preFilters
             service.initPreFilters();
-            if (service == null) {
-                log.error("Unable to get Service " + PluggableAuthenticationService.NAME);
-                throw new Exception("Can't initialize Nuxeo Pluggable Authentication Service");
-            }
         }
         return service;
 
@@ -74,7 +70,7 @@ public class MyApplication extends ModuleRoot {
 
     @GET
     @Path("logout")
-    public Object doLogout(@Context HttpServletResponse response) throws Exception {
+    public Object doLogout(@Context HttpServletResponse response) {
 
         Cookie cookie = new Cookie("JSESSIONID", null);
         cookie.setMaxAge(0);

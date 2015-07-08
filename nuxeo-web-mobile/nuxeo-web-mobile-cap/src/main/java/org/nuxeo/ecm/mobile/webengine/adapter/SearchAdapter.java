@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.ws.rs.GET;
 import javax.ws.rs.QueryParam;
 
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
@@ -40,7 +39,7 @@ public class SearchAdapter extends DefaultMobileAdapter {
     private PageProviderService service;
 
     @GET
-    public Object doGet(@QueryParam("pageIndex") long pageIndex) throws Exception {
+    public Object doGet(@QueryParam("pageIndex") long pageIndex) {
 
         PageProvider<?> pageProvider = getPageProvider(pageIndex);
 
@@ -54,7 +53,7 @@ public class SearchAdapter extends DefaultMobileAdapter {
         return getView("index").args(args);
     }
 
-    private PageProvider<?> getPageProvider(long pageIndex) throws Exception {
+    private PageProvider<?> getPageProvider(long pageIndex) {
         Map<String, Serializable> prop = new HashMap<String, Serializable>();
         prop.put("coreSession", (Serializable) ctx.getCoreSession());
 
@@ -77,7 +76,7 @@ public class SearchAdapter extends DefaultMobileAdapter {
         return pageProvider;
     }
 
-    public PageProviderService getPageProviderService() throws Exception {
+    public PageProviderService getPageProviderService() {
         if (service == null) {
             service = Framework.getService(PageProviderService.class);
         }

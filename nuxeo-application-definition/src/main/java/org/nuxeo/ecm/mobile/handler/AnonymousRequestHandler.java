@@ -36,8 +36,6 @@ public class AnonymousRequestHandler implements RequestHandler {
 
     private static final Log log = LogFactory.getLog(AnonymousRequestHandler.class);
 
-    private UserManager um;
-
     @Override
     public boolean isRequestRedirectedToApplicationLoginForm(HttpServletRequest request) {
         // same logic
@@ -55,13 +53,7 @@ public class AnonymousRequestHandler implements RequestHandler {
             return false;
         }
 
-        String anonymousUsername;
-        try {
-            anonymousUsername = getAnonymousUsername();
-        } catch (Exception e) {
-            log.error("Can't fetch anonymous username", e);
-            return false;
-        }
+        String anonymousUsername = getAnonymousUsername();
 
         if (anonymousUsername.equals(username)) {
             return true;
@@ -91,11 +83,8 @@ public class AnonymousRequestHandler implements RequestHandler {
 
     }
 
-    protected String getAnonymousUsername() throws Exception {
-        if (um == null) {
-            um = Framework.getService(UserManager.class);
-        }
-        return um.getAnonymousUserId();
+    protected String getAnonymousUsername() {
+        return Framework.getService(UserManager.class).getAnonymousUserId();
     }
 
     @Override

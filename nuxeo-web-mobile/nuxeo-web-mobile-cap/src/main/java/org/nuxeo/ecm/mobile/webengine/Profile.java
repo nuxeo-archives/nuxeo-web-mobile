@@ -25,9 +25,9 @@ import javax.ws.rs.QueryParam;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.Blob;
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
+import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.platform.usermanager.UserManager;
 import org.nuxeo.ecm.user.center.profile.UserProfileService;
 import org.nuxeo.ecm.webengine.model.Template;
@@ -39,7 +39,7 @@ import org.nuxeo.runtime.api.Framework;
 
 /**
  * Manage Profile view
- * 
+ *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  */
@@ -55,7 +55,7 @@ public class Profile extends DefaultObject {
 
     @GET
     @Path("search")
-    public Object doGetUsers(@QueryParam("q") String query) throws Exception {
+    public Object doGetUsers(@QueryParam("q") String query) {
         DocumentModelList users = getUserManager().searchUsers(query);
 
         return getView("users").arg("users", users);
@@ -63,7 +63,7 @@ public class Profile extends DefaultObject {
 
     @GET
     @Path("{username}")
-    public Template doGetUser(@PathParam("username") String username) throws Exception {
+    public Template doGetUser(@PathParam("username") String username) {
         DocumentModel userProfile = getUserProfile(username);
         DocumentModel userMainInfo = getUserManager().getUserModel(username);
 
@@ -73,11 +73,7 @@ public class Profile extends DefaultObject {
     /************** Actions *******************/
 
     public boolean isRichProfileDeployed() {
-        try {
-            return getUserProfileService() != null;
-        } catch (Exception e) {
-            return false;
-        }
+        return getUserProfileService() != null;
     }
 
     public String getAvatarURI(String username) {
@@ -88,7 +84,7 @@ public class Profile extends DefaultObject {
         Blob avatar;
         try {
             avatar = (Blob) userProfile.getPropertyValue("userprofile:avatar");
-        } catch (ClientException e) {
+        } catch (PropertyException e) {
             log.debug("No avatar found");
             avatar = null;
         }
@@ -107,12 +103,7 @@ public class Profile extends DefaultObject {
     /************** OTHERS **********************/
 
     private DocumentModel getUserProfile(String username) {
-        try {
-            return getUserProfileService().getUserProfileDocument(username, ctx.getCoreSession());
-        } catch (Exception e) {
-            log.debug("Can't get Rich Profile");
-            return null;
-        }
+        return getUserProfileService().getUserProfileDocument(username, ctx.getCoreSession());
     }
 
     private String getViewSuffix() {
@@ -143,16 +134,14 @@ public class Profile extends DefaultObject {
 
     /**** fetch service *****/
 
-    private UserManager userManager;
-
     private UserProfileService userProfileService;
 
-    private UserProfileService getUserProfileService() throws Exception {
+    private UserProfileService getUserProfileService() {
         if (!hasBeenFetched) {
             hasBeenFetched = false;
             try {
                 Class.forName("org.nuxeo.ecm.user.center.profile.UserProfileService");
-            } catch (ClassNotFoundException e) {
+            } catch (ReflectiveOperationException e) {
                 log.info("UserProfileService not deployed, use the UserManager");
                 return null;
             }
@@ -162,11 +151,8 @@ public class Profile extends DefaultObject {
         return userProfileService;
     }
 
-    private UserManager getUserManager() throws Exception {
-        if (userManager == null) {
-            userManager = Framework.getService(UserManager.class);
-        }
-        return userManager;
+    private UserManager getUserManager() {
+        return Framework.getService(UserManager.class);
     }
 
 }

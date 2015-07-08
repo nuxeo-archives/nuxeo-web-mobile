@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 
 import org.nuxeo.ecm.automation.AutomationService;
 import org.nuxeo.ecm.automation.OperationContext;
+import org.nuxeo.ecm.automation.OperationException;
 import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.webengine.forms.FormData;
 import org.nuxeo.ecm.webengine.model.WebAdapter;
@@ -42,7 +43,7 @@ public class FolderishAdapter extends DefaultMobileAdapter {
     }
 
     @POST
-    public Object doUpload() throws Exception {
+    public Object doUpload() throws OperationException {
         FormData form = ctx.getForm();
         Blob blob = form.getFirstBlob();
         if (blob == null) {

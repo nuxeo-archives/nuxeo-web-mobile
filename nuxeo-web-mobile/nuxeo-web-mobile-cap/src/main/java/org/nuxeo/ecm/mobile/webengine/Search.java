@@ -27,10 +27,10 @@ import javax.ws.rs.QueryParam;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IterableQueryResult;
+import org.nuxeo.ecm.core.query.QueryParseException;
 import org.nuxeo.ecm.webengine.WebException;
 import org.nuxeo.ecm.webengine.model.Template;
 import org.nuxeo.ecm.webengine.model.WebObject;
@@ -78,7 +78,7 @@ public class Search extends DefaultObject {
 
         try {
             docs = session.queryAndFetch(queryString, "NXQL");
-        } catch (ClientException e) {
+        } catch (QueryParseException e) {
             log.error(e, e);
             throw new WebException(e.getMessage());
         }

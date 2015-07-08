@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.URIUtils;
-import org.nuxeo.ecm.mobile.ApplicationDefinitionException;
+import org.nuxeo.ecm.core.api.NuxeoException;
 import org.nuxeo.ecm.mobile.ApplicationDefinitionService;
 import org.nuxeo.ecm.platform.ui.web.auth.service.OpenUrlDescriptor;
 import org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService;
@@ -39,7 +39,7 @@ import static org.nuxeo.ecm.platform.ui.web.auth.NXAuthConstants.START_PAGE_SAVE
 
 /**
  * Request Wrapper with some needed method.
- * 
+ *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  */
@@ -140,11 +140,11 @@ public class RequestAdapter {
         return result;
     }
 
-    public String getTargetURLFromParameter() throws ApplicationDefinitionException {
+    public String getTargetURLFromParameter() {
         try {
             return getParameters().get(TARGET_URL_PARAMETER_NAME);
         } catch (UnsupportedEncodingException e) {
-            throw new ApplicationDefinitionException(e.getMessage(), e);
+            throw new NuxeoException(e.getMessage(), e);
         }
     }
 

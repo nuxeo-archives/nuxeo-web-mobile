@@ -52,7 +52,7 @@ public class RequestHandlerDescriptor {
         Object obj;
         try {
             obj = klass.newInstance();
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Problem during the Given class instanciation please check your contribution", e);
         }
         if (obj instanceof RequestHandler) {

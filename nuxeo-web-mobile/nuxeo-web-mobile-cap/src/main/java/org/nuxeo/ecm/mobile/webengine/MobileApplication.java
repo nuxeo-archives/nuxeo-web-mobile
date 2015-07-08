@@ -32,12 +32,12 @@ import javax.ws.rs.QueryParam;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
+import org.nuxeo.ecm.core.api.NuxeoException;
 import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
@@ -51,7 +51,7 @@ import static org.nuxeo.ecm.mobile.webengine.adapter.DefaultMobileAdapter.ONLY_V
 
 /**
  * Entry point of the webengine application
- * 
+ *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  */
@@ -98,7 +98,7 @@ public class MobileApplication extends ModuleRoot {
      * Try to fetch document in targetURL parameter in URL if not this is the Home binding
      */
     @GET
-    public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME) String targetURL) throws Exception {
+    public Object doGet(@QueryParam(INITIAL_TARGET_URL_PARAM_NAME) String targetURL) {
 
         DocumentRef targetRef = RedirectHelper.findDocumentRef(targetURL);
         if (targetRef != null) {
@@ -136,7 +136,7 @@ public class MobileApplication extends ModuleRoot {
      */
     @GET
     @Path("root")
-    public Object getRootRepositoryView() throws Exception {
+    public Object getRootRepositoryView() {
         Map<String, Object> args = new HashMap<String, Object>();
 
         CoreSession session = ctx.getCoreSession();
@@ -216,7 +216,7 @@ public class MobileApplication extends ModuleRoot {
     protected Object getSocialObject() {
         try {
             return ctx.newObject("Social");
-        } catch (Exception e) {
+        } catch (NuxeoException e) {
             log.debug(e, e);
             return null;
         }

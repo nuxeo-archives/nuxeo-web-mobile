@@ -44,7 +44,7 @@ public class TestAnonymousRequestHandler {
     public void init() {
         handler = new AnonymousRequestHandler() {
             @Override
-            protected String getAnonymousUsername() throws Exception {
+            protected String getAnonymousUsername() {
                 return "Anonymous";
             }
         };

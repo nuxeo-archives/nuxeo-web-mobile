@@ -32,9 +32,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.automation.AutomationService;
 import org.nuxeo.ecm.automation.OperationContext;
-import org.nuxeo.ecm.core.api.ClientException;
+import org.nuxeo.ecm.automation.OperationException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.NuxeoException;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
 import org.nuxeo.ecm.core.rest.DocumentObject;
@@ -55,7 +56,7 @@ import static org.nuxeo.ecm.mobile.filter.ApplicationRedirectionFilter.INITIAL_T
  * This Class resolve a DocumentModel and expose differents restitutions according Adapter defined (PreviewAdapter,
  * CommentAdapter) in uri and "mode" parameter given as parameter into the url. Default mode if given doesn't exist or
  * not set is view mode.
- * 
+ *
  * @author <a href="mailto:bjalon@nuxeo.com">Benjamin JALON</a>
  * @since 5.5
  */
@@ -63,15 +64,13 @@ public class MobileDocument extends DocumentObject {
 
     private static final Log log = LogFactory.getLog(MobileDocument.class);
 
-    private AutomationService automationService;
-
     public MobileDocument(WebContext ctx, DocumentRef docRef) {
         try {
             ResourceType resType = ctx.getModule().getType("Document");
             DocumentModel docModel = ctx.getCoreSession().getDocument(docRef);
             initialize(ctx, resType, docModel);
             ctx.push(this);
-        } catch (Exception e) {
+        } catch (NuxeoException e) {
             throw WebException.wrap(e);
         }
     }
@@ -96,7 +95,7 @@ public class MobileDocument extends DocumentObject {
             OperationContext subctx = new OperationContext(ctx.getCoreSession(), null);
             subctx.setInput(getDocument());
             getAutomationService().run(subctx, "sendEmailToMe");
-        } catch (Exception e) {
+        } catch (NuxeoException | OperationException e) {
             log.error(e, e);
             return Response.status(400).build();
         }
@@ -107,7 +106,7 @@ public class MobileDocument extends DocumentObject {
     public Object doLike() {
         try {
             return ctx.newObject("Like", getDocument());
-        } catch (Exception e) {
+        } catch (NuxeoException e) {
             log.debug(e, e);
             return ctx.newObject("Empty");
         }
@@ -117,7 +116,7 @@ public class MobileDocument extends DocumentObject {
     public Object doHasLiked() {
         try {
             return ctx.newObject("hasLiked", getDocument());
-        } catch (Exception e) {
+        } catch (NuxeoException e) {
             log.debug(e, e);
             return ctx.newObject("Empty");
         }
@@ -152,13 +151,7 @@ public class MobileDocument extends DocumentObject {
     protected boolean getHasBlob() {
         DocumentModel doc = getDocument();
         BlobHolder bh = doc.getAdapter(BlobHolder.class);
-
-        try {
-            return bh != null && bh.getBlob() != null;
-        } catch (ClientException e) {
-            log.debug(e, e);
-            return false;
-        }
+        return bh != null && bh.getBlob() != null;
     }
 
     public boolean hasPreview() {
@@ -176,17 +169,17 @@ public class MobileDocument extends DocumentObject {
         throw new WebException("Principal found is not a NuxeoPrincipal can't generate it!");
     }
 
-    public String getJSFURLPath(DocumentModel docModel) throws Exception {
+    public String getJSFURLPath(DocumentModel docModel) {
         return RedirectHelper.getJSFDocumentPath(docModel, VirtualHostHelper.getBaseURL(ctx.getRequest()));
     }
 
-    public String getDownloadURL() throws Exception {
+    public String getDownloadURL() {
         DocumentModel docModel = getDocument();
 
         return getDownloadURL(docModel);
     }
 
-    public String getDownloadURL(DocumentModel docModel) throws Exception {
+    public String getDownloadURL(DocumentModel docModel) {
         BlobHolder bh = doc.getAdapter(BlobHolder.class);
         String filename = bh.getBlob().getFilename();
         String mimetype = bh.getBlob().getMimeType();
@@ -202,7 +195,7 @@ public class MobileDocument extends DocumentObject {
         return downloadURL;
     }
 
-    public String getJSFURLPath() throws Exception {
+    public String getJSFURLPath() {
         return getJSFURLPath(getDocument());
     }
 
@@ -226,21 +219,14 @@ public class MobileDocument extends DocumentObject {
         return nuxeoContextPath;
     }
 
-    private AutomationService getAutomationService() throws Exception {
-        if (automationService == null) {
-            automationService = Framework.getService(AutomationService.class);
-        }
-        return automationService;
+    private AutomationService getAutomationService() {
+        return Framework.getService(AutomationService.class);
     }
 
     public String getDisplayPrincipalName(String name) {
-        try {
-            NuxeoPrincipal principal = Framework.getLocalService(UserManager.class).getPrincipal(name);
-            if (principal != null) {
-                return getDisplayPrincipalName(principal);
-            }
-        } catch (ClientException e) {
-            log.debug(e, e);
+        NuxeoPrincipal principal = Framework.getService(UserManager.class).getPrincipal(name);
+        if (principal != null) {
+            return getDisplayPrincipalName(principal);
         }
         return name;
     }
@@ -248,7 +234,7 @@ public class MobileDocument extends DocumentObject {
     /**
      * Return the display name of an expected principal. It passes as an Object to prevent Freemarker to thrown an
      * exception when creator is null.
-     * 
+     *
      * @param object must be of type org.nuxeo.ecm.core.api.NuxeoPrincipal
      * @return the display name will be empty if not a NuxeoPrincipal
      */
