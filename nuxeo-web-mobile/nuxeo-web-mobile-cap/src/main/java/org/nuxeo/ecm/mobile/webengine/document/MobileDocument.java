@@ -33,11 +33,13 @@ import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.automation.AutomationService;
 import org.nuxeo.ecm.automation.OperationContext;
 import org.nuxeo.ecm.automation.OperationException;
+import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.NuxeoException;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.blobholder.BlobHolder;
+import org.nuxeo.ecm.core.io.download.DownloadService;
 import org.nuxeo.ecm.core.rest.DocumentObject;
 import org.nuxeo.ecm.mobile.webengine.RedirectHelper;
 import org.nuxeo.ecm.mobile.webengine.adapter.JSonExportAdapter;
@@ -180,19 +182,12 @@ public class MobileDocument extends DocumentObject {
     }
 
     public String getDownloadURL(DocumentModel docModel) {
-        BlobHolder bh = doc.getAdapter(BlobHolder.class);
-        String filename = bh.getBlob().getFilename();
-        String mimetype = bh.getBlob().getMimeType();
-
-        String downloadURL = getNuxeoContextPath() + "/";
-        downloadURL += "nxbigfile" + "/";
-        downloadURL += doc.getRepositoryName() + "/";
-        downloadURL += doc.getRef().toString() + "/";
-        downloadURL += "blobholder:0" + "/";
-        downloadURL += filename;
-        downloadURL += "?mimetype=" + mimetype;
-
-        return downloadURL;
+        Blob blob = doc.getAdapter(BlobHolder.class).getBlob();
+        DownloadService downloadService = Framework.getService(DownloadService.class);
+        String xpath = DownloadService.BLOBHOLDER_0;
+        String filename = blob.getFilename();
+        return getNuxeoContextPath() + "/" + downloadService.getDownloadUrl(doc, xpath, filename) + "?mimetype="
+                + blob.getMimeType();
     }
 
     public String getJSFURLPath() {

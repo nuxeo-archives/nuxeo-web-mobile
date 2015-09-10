@@ -16,6 +16,8 @@
  */
 package org.nuxeo.ecm.mobile.webengine;
 
+import static org.nuxeo.ecm.user.center.profile.UserProfileConstants.USER_PROFILE_AVATAR_FIELD;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,6 +30,7 @@ import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.PropertyException;
+import org.nuxeo.ecm.core.io.download.DownloadService;
 import org.nuxeo.ecm.platform.usermanager.UserManager;
 import org.nuxeo.ecm.user.center.profile.UserProfileService;
 import org.nuxeo.ecm.webengine.model.Template;
@@ -83,17 +86,15 @@ public class Profile extends DefaultObject {
         DocumentModel userProfile = getUserProfile(username);
         Blob avatar;
         try {
-            avatar = (Blob) userProfile.getPropertyValue("userprofile:avatar");
+            avatar = (Blob) userProfile.getPropertyValue(USER_PROFILE_AVATAR_FIELD);
         } catch (PropertyException e) {
             log.debug("No avatar found");
             avatar = null;
         }
 
         if (userProfile != null && avatar != null) {
-            // TODO : Use a relative path (be careful of proxy stuff)
-            String uriPattern = "%s/nxfile/%s/%s/userprofile:avatar/";
-            String repositoryName = ctx.getCoreSession().getRepositoryName();
-            return String.format(uriPattern, contextPath, repositoryName, getUserProfile(username).getId());
+            DownloadService downloadService = Framework.getService(DownloadService.class);
+            return contextPath + "/" + downloadService.getDownloadUrl(userProfile, USER_PROFILE_AVATAR_FIELD, "");
         } else {
             // TODO : Use a relative path (be careful of proxy stuff)
             return contextPath + "/site/skin/nuxeo/icons/default_avatar.png";
