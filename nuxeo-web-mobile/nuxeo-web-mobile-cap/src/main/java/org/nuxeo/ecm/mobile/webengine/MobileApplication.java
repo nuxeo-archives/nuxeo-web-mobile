@@ -42,6 +42,7 @@ import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.mobile.webengine.document.MobileDocument;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.ecm.platform.web.common.vh.VirtualHostHelper;
+import org.nuxeo.ecm.webengine.model.TypeNotFoundException;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
@@ -216,7 +217,7 @@ public class MobileApplication extends ModuleRoot {
     protected Object getSocialObject() {
         try {
             return ctx.newObject("Social");
-        } catch (NuxeoException e) {
+        } catch (TypeNotFoundException e) {
             log.debug(e, e);
             return null;
         }
