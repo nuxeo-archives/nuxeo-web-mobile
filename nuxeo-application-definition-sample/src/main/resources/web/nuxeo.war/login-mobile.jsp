@@ -2,12 +2,13 @@
 <!-- Nuxeo Enterprise Platform, svn $Revision: 22925 $ -->
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page language="java"%>
+<%@ page import="org.nuxeo.common.Environment"%>
 <%@ page import="org.nuxeo.runtime.api.Framework"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
-    String productName = Framework.getProperty("org.nuxeo.ecm.product.name");
-    String productVersion = Framework.getProperty("org.nuxeo.ecm.product.version");
+    String productName = Framework.getProperty(Environment.PRODUCT_NAME);
+    String productVersion = Framework.getProperty(Environment.PRODUCT_VERSION);
 %>
 <html>
   <fmt:setBundle basename="messages" var="messages" />
