@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.nuxeo.ecm.mobile</groupId>
     <artifactId>nuxeo-web-mobile-parent</artifactId>
-    <version>8.2-SNAPSHOT</version>
+    <version>8.3-SNAPSHOT</version>
   </parent>
 
   <artifactId>nuxeo-application-definition</artifactId>
