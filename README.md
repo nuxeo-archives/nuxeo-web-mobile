@@ -1,22 +1,22 @@
-# Nuxeo Web Mobile - when WebEngine meet JQuery Mobile
+# Nuxeo Web Mobile - When WebEngine meets JQuery Mobile
 
-This add-on provides a WebApp exposing Nuxeo with dedicated views for Mobile browsers. All Mobile browsers will be automatically redirected to this application.
-Note for developers: there's no guarantee the current API will be maintained since we envisage to split the data and the UI restitution.
+This add-on provides a WebApp exposing Nuxeo with dedicated views for mobile browsers. All mobile browsers will be automatically redirected to this application.
+Note for developers: there is no guarantee the current API will be maintained since we envisage to split the data and the UI restitution.
 Test and feedback are very welcome.
 
-About the Nuxeo Web Mobile application: we expose a subset of functionalities of Nuxeo DM. Here is an overview of what you can do:
+About the Nuxeo Web Mobile application: we expose a subset of functionalities of the Nuxeo Platform. Here is an overview of what you can do:
 
 - Automatic redirection to the Web Mobile application.
 - Redirection to the document into the Mobile application when JSF request asked.
 - Dedicated login page.
 - Multiple views are available for a document:
-  - Subset of Metadata
+  - Subset of metadata
   - Preview
   - Comments
   - Annotation (just the text, no display over the preview)
-  - Relation
+  - Relations
   - Content
-  - The list of contributors to each document. Clicking on a user will show his data, especially his phone number and mail. It is then possible to send him an email or start a phone call.
+  - The list of contributors to each document. Clicking on a user will show their data, especially their phone number and mail. It is then possible to send them an email or start a phone call.
 - You also have some default actions enabled:
   - Mail it (send a link to the current document to a contact from your address book)
   - Download it (download the attached file)
@@ -26,12 +26,12 @@ About the Nuxeo Web Mobile application: we expose a subset of functionalities of
   - Phone number (clickable)
   - Email (clickable)
   - Avatar (can only be set from the desktop browser)
-  - Edition of First Name, Last Name, Phone Number, mail.
+  - Edition of first name, last name, phone number, mail.
 - There are two different kinds of browsing, always available:
-  - Hierarchical: You have a root view that expose the default domain root children and your personal workspace content. Clicking on an element shows its content or the document view (if it's a leaf).
+  - Hierarchical: You have a root view that exposes the default domain root children and your personal workspace content. Clicking on an element shows its content or the document view (if it's a leaf).
   - There are two kinds of search:
      - Full text search: from the Home page and the search view
-     - faceted search: you have access to your personal and shared faceted search recorded. You can't create new faceted search from the mobile application.
+     - Faceted search: you have access to your personal and shared faceted search recorded. You cannot create new faceted search from the mobile application.
 
 This application works on all main mobile browser (WebKits - Android, iOS, BB6 -, Fennec Mobile and Windows Phone - not tested but JQuery is supposed to).
 About iOS you have also the possibility to add the application into your springboard: the browser button will be hidden and you will feel like using a built-in application.
@@ -60,6 +60,6 @@ Or manually copy the built artifacts (in nuxeo-web-mobile/target and nuxeo-appli
 
 ## About Nuxeo
 
-Nuxeo provides a modular, extensible Java-based [open source software platform for enterprise content management](http://www.nuxeo.com/en/products/ep) and packaged applications for [document management](http://www.nuxeo.com/en/products/document-management), [digital asset management](http://www.nuxeo.com/en/products/dam) and [case management](http://www.nuxeo.com/en/products/case-management). Designed by developers for developers, the Nuxeo platform offers a modern architecture, a powerful plug-in model and extensive packaging capabilities for building content applications.
+Nuxeo provides a modular, extensible Java-based [open source software platform for enterprise content management](http://www.nuxeo.com/en/products/ep) and packaged applications for [document management](http://www.nuxeo.com/en/products/document-management), [digital asset management](http://www.nuxeo.com/en/products/dam) and [case management](http://www.nuxeo.com/en/products/case-management). Designed by developers for developers, the Nuxeo Platform offers a modern architecture, a powerful plug-in model and extensive packaging capabilities for building content applications.
 
 More information on: <http://www.nuxeo.com/>
