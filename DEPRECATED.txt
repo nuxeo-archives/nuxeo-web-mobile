@@ -1,0 +1,1 @@
+The nuxeo-web-mobile modules have been deprecated since 8.3 and removed from 8.4.
