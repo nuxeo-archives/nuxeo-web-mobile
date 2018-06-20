@@ -3,11 +3,11 @@
   <parent>
     <groupId>org.nuxeo</groupId>
     <artifactId>nuxeo-addons-parent</artifactId>
-    <version>7.10-HF41-SNAPSHOT</version>
+    <version>7.10-HF42-SNAPSHOT</version>
   </parent>
   <groupId>org.nuxeo.ecm.mobile</groupId>
   <artifactId>nuxeo-web-mobile-parent</artifactId>
-  <version>7.10-HF41-SNAPSHOT</version>
+  <version>7.10-HF42-SNAPSHOT</version>
   <name>nuxeo-web-mobile-parent</name>
   <packaging>pom</packaging>
   <description>WebApp exposing Nuxeo with dedicated views for Mobile browsers</description>
